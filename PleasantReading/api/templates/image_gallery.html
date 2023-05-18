@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Gallery</title>
+</head>
+<body>
+  <h1>Image Gallery</h1>
+
+  {% for user in users %}
+    <div>
+      <h2>{{ user.userID }}</h2>
+      <img src="{{ user.img.url }}" alt="User Image">
+    </div>
+  {% endfor %}
+</body>
+</html>
