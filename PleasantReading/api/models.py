@@ -4,7 +4,7 @@ from django.dispatch import receiver
 
 
 # Create your models here.
-class User(models.Model):
+class UserInfo(models.Model):
     userID = models.CharField(max_length=128, null=False, primary_key=True)
     passwd = models.CharField(max_length=32, null=False)
     email = models.EmailField(null=False)
@@ -60,7 +60,7 @@ def beforeDeleteCollections(sender, instance, **kwargs):
 
 
 class Score(models.Model):
-    userID = models.ForeignKey('User', on_delete=models.CASCADE)
+    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
     bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE)
     score = models.DecimalField(max_digits=4, decimal_places=2)
 
@@ -86,7 +86,7 @@ class Score(models.Model):
 
 
 class Collections(models.Model):
-    userID = models.ForeignKey('User', on_delete=models.CASCADE)
+    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
     bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE, related_name='BookBasicInfo')
 
     class Meta:
@@ -108,7 +108,7 @@ def beforeDeleteCollections(sender, instance, **kwargs):
 
 
 class Comments(models.Model):
-    userID = models.ForeignKey('User', on_delete=models.CASCADE)
+    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
     bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE)
     chapter = models.IntegerField(null=False)
     text = models.TextField(null=False)
@@ -120,7 +120,7 @@ class Comments(models.Model):
 
 
 class Bookmark(models.Model):
-    userID = models.ForeignKey('User', on_delete=models.CASCADE)
+    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
     bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE)
     chapter = models.IntegerField(null=False)
 
@@ -130,5 +130,5 @@ class Bookmark(models.Model):
 
 class Manager(models.Model):
     userID = models.CharField(max_length=56, primary_key=True)
-    passwd = models.CharField(max_length=56)
+    passwd = models.CharField(max_length=56, null=False)
     email = models.EmailField(null=False)
