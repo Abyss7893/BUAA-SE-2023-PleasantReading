@@ -1,9 +1,11 @@
 <template>
     <div class="contain">
-        <HeadTop/>
+        <HeadTop />
         <div class="PersonTop">
             <div class="PersonTop_image">
-                <ElAvatar src="https://rss.sfacg.com/web/account/images/avatars/app/2010/25/1c44687f-df90-432e-8d35-cf2f46d1665b.jpg" :size="170" fit="contain"></ElAvatar>
+                <ElAvatar
+                    src="https://rss.sfacg.com/web/account/images/avatars/app/2010/25/1c44687f-df90-432e-8d35-cf2f46d1665b.jpg"
+                    :size="170" fit="contain"></ElAvatar>
             </div>
             <div class="PersonTop_text">
                 <div class="user_text">
@@ -22,33 +24,45 @@
         <div class="person_body">
             <div class="person_body_left">
                 <el-card class="box-card" :body-style="{ padding: '0px' }">
-                    <div  class="clearfix">
+                    <div class="clearfix">
                         <span class="person_body_list" style="border-bottom: none">个人中心</span>
                     </div>
                     <el-menu router active-text-color="#00c3ff" class="el-menu-vertical-demo">
                         <el-menu-item  @click="$router.push({ name: 'info' })">
-                           <el-icon><User /></el-icon>
-                            <span >个人简介</span>
+                            <el-icon>
+                                <User />
+                            </el-icon>
+                            <span>个人简介</span>
                         </el-menu-item>
-                        <el-menu-item >
-                            <el-icon><ChatLineSquare /></el-icon>
-                            <span >我的评论</span>
+                        <el-menu-item>
+                            <el-icon>
+                                <ChatLineSquare />
+                            </el-icon>
+                            <span>我的评论</span>
                         </el-menu-item>
-                        <el-menu-item  >
-                            <el-icon><Notebook /></el-icon>
-                            <span >我的笔记</span>
+                        <el-menu-item>
+                            <el-icon>
+                                <Notebook />
+                            </el-icon>
+                            <span>我的笔记</span>
                         </el-menu-item>
-                        <el-menu-item  >
-                            <el-icon><Flag /></el-icon>
-                            <span >我的书签</span>
+                        <el-menu-item>
+                            <el-icon>
+                                <Flag />
+                            </el-icon>
+                            <span>我的书签</span>
                         </el-menu-item>
-                        <el-menu-item  >
-                            <el-icon><Reading /></el-icon>
-                            <span >我的书架</span>
+                        <el-menu-item>
+                            <el-icon>
+                                <Reading />
+                            </el-icon>
+                            <span>我的书架</span>
                         </el-menu-item>
-                        <el-menu-item  >
-                            <el-icon><Back /></el-icon>
-                            <span >返回主界面</span>
+                        <el-menu-item>
+                            <el-icon>
+                                <Back />
+                            </el-icon>
+                            <span>返回主界面</span>
                         </el-menu-item>
                     </el-menu>
                 </el-card>
@@ -58,10 +72,10 @@
             </div>
         </div>
         <el-dialog title="重置密码" v-model="showPersonal" :before-close="handleClose" :close-on-click-modal="false"
-              :close-on-press-escape="false" :append-to-body="false" style="min-width: 500px;border-radius: 25px;
-              backdrop-filter: blur(5px);">
-              <PersonalDialog @submit="handleSubmit" @close="handleClose" />
-            </el-dialog>
+            :close-on-press-escape="false" :append-to-body="false" style="min-width: 500px;border-radius: 25px;
+                  backdrop-filter: blur(5px);">
+            <PersonalDialog @submit="handleSubmit" @close="handleClose" />
+        </el-dialog>
     </div>
 </template>
 
@@ -71,8 +85,8 @@ import PersonalDialog from './PersonalDialog';
 import { ElAvatar } from 'element-plus';
 import HeadTop from '../veiw/head/HeadTop';
 export default {
-   
-    components: { ElAvatar,HeadTop,PersonalDialog},
+
+    components: { ElAvatar, HeadTop, PersonalDialog },
     name: "PersonalCenter",
     inject: ["reload"],
     data() {
@@ -102,13 +116,13 @@ export default {
 
 <style scoped>
 .contain {
-  background-image: url('../../assets/personalbg.png');
-  background-size: cover;
-  
-  background-position: center;
-   position: relative;
-  width: 100%;
-  height: 100vh;
+    background-image: url('../../assets/personalbg.png');
+    background-size: cover;
+
+    background-position: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
 }
 
 .PersonTop {
@@ -190,7 +204,7 @@ export default {
     /* height: 500px; */
     margin-top: 40px;
     border-radius: 5px;
-    
+
 }
 
 .box-card {
@@ -198,7 +212,4 @@ export default {
     margin-top: 40px;
     margin-right: 30px;
 }
-
-
-
 </style>
