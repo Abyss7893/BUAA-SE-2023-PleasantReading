@@ -10,12 +10,17 @@
       <el-row :gutter="40">
         <el-col v-for="book in row" :key="book.id" :span="12">
           <div class="book-item">
-            <div class="book-img-box">
-              <img :src="book.cover" alt="Book Cover" />
-              <!-- <span>{{ book.cover }}</span> -->
-            </div>
+            <router-link :to="'/book/' + book.id">
+              <div class="book-img-box">
+                <img :src="book.cover" alt="Book Cover" />
+                <!-- <span>{{ book.cover }}</span> -->
+              </div>
+            </router-link>
+
             <div class="book-mid-info">
-              <h3 class="title">{{ book.title }}</h3>
+              <router-link :to="'/book/' + book.id">
+                <h3 class="title">{{ book.title }}</h3></router-link
+              >
 
               <div class="author">
                 <p class="name">{{ book.author }}</p>
