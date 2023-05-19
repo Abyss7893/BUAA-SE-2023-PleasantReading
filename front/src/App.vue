@@ -28,4 +28,8 @@ export default {
   padding: 0;
   text-decoration: none;
 }
+body{
+  min-width: 1500px;
+  width: 100%;
+}
 </style>
