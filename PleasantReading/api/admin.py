@@ -11,7 +11,7 @@ def validateAccessToken(accessToken):
     try:
         decoded_token = jwt.decode(accessToken, settings.SECRET_KEY, algorithms=['HS256'])
         # 在这里可以根据需要进行其他的验证，例如检查有效期等
-
+        
         # 如果验证通过，返回解码后的 token 数据
         return decoded_token
     except jwt.ExpiredSignatureError:
