@@ -25,6 +25,8 @@ from api.views import my_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('upload/', my_view, name='upload'),  # 添加上传图片的路由
+    path('login', views.login),
+    path('register', views.register),
     path('submit/', views.my_view),
     path('gallery/', views.image_gallery, name='image_gallery'),
 ]
