@@ -8,7 +8,7 @@
       <form action="" method="get">
         <div class="search">
           <input type="text" name="" id="" placeholder="想看什么我这里都有哟~" @focusin="drop" @focusout="hide" />
-          <input type="submit" value="" />
+          <button type="submit" ><el-icon><Search /></el-icon></button>
         </div>
       </form>
       <div class="dropdown-content" ref="hidden">
