@@ -3,11 +3,10 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.tokens import RefreshToken
 import json
 
-from api.admin import validateAccessToken
+from api.admin import validateAccessToken, sendVerificationEmail
 from api.models import UserInfo
 
 
@@ -52,7 +51,6 @@ def my_view(request):
     return render(request, 'test.html', {'form': form})
 
 
-@csrf_exempt
 def login(request):
     print('Yes')
     data = json.loads(request.body)
@@ -74,7 +72,6 @@ def login(request):
 
 
 
-@csrf_exempt
 def register(request):
     data = json.loads(request.body)
     username = data.get('username')
@@ -86,8 +83,9 @@ def register(request):
         if cnt != 0:
             return JsonResponse({'message': 'failed', 'error': '用户名重复'})
 
+        verificationCode = sendVerificationEmail(email)
         User.objects.create_user(username=username, password=password, email=email)
         UserInfo.objects.create(userID=username, passwd=password, email=email)
-        return JsonResponse({'message': 'successful'})
+        return JsonResponse({'message': 'successful', 'verification': verificationCode})
     except Exception as e:
         return JsonResponse({'message': 'failed', 'error': str(e)})

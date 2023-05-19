@@ -170,6 +170,13 @@ USE_I18N = True
 
 USE_TZ = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'  # 163 邮箱的 SMTP 服务器地址
+EMAIL_PORT = 25  # 163 邮箱的 SMTP 服务器端口号
+EMAIL_HOST_USER = 'abyss7893@163.com'  # 发件人邮箱账号
+EMAIL_HOST_PASSWORD = 'ZNXZSSKMVKKBCREH'  # 发件人邮箱密码
+EMAIL_USE_SSL = False  # 不使用 SSL 连接
+EMAIL_TIMEOUT = 5  # 设置超时时间为 5 秒
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
