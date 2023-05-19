@@ -39,14 +39,36 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_jwt',
     'api.apps.ApiConfig'
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+import datetime
+JWT_AUTH = {
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
+}
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -71,6 +93,30 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'PleasantReading.wsgi.application'
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://10.193.157.84:8080'
+]
+# 允许的来源（根据需要进行配置，可以是具体的域名或通配符）
+CORS_ORIGIN_WHITELIST = [
+    'http://10.193.157.84:8080/'
+    # 其他允许的来源
+]
+# 允许的请求方法
+CORS_ALLOW_METHODS = [
+    'POST',
+    'GET',
+    'PUT',
+    # 其他允许的方法
+]
+
+# 允许的请求头
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization'
+    # 其他允许的请求头
+]
 
 
 # Database
@@ -124,6 +170,13 @@ USE_I18N = True
 
 USE_TZ = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'  # 163 邮箱的 SMTP 服务器地址
+EMAIL_PORT = 25  # 163 邮箱的 SMTP 服务器端口号
+EMAIL_HOST_USER = 'abyss7893@163.com'  # 发件人邮箱账号
+EMAIL_HOST_PASSWORD = 'ZNXZSSKMVKKBCREH'  # 发件人邮箱密码
+EMAIL_USE_SSL = False  # 不使用 SSL 连接
+EMAIL_TIMEOUT = 5  # 设置超时时间为 5 秒
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -134,3 +187,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
