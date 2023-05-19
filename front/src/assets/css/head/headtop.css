@@ -38,7 +38,7 @@
 
 .head-top .search input[type="submit"] {
   padding: 10px;
-  background-color: #cd3232;
+  background-color: #f56c6c;
   cursor: pointer;
   border: none;
   border-radius: 0 10px 10px 0;
@@ -63,7 +63,7 @@
   display: inline-block;
   padding: 6px 12px;
   border-radius: 4px;
-  background-color: #cd3232;
+  background-color: #f56c6c;
   color: #fff;
   text-decoration: none;
   margin-right: 10px;

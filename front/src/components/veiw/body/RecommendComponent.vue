@@ -1,15 +1,14 @@
 <template>
   <div>
     <div class="block-col-2">
-      <el-dropdown @command="handleCommand" style="line-height: 150%;">
+      <el-dropdown @command="handleCommand" style="line-height: 150%;" trigger="click">
         <span class="demonstration">
           {{ cod
           }}<el-icon class="el-icon--right">
-            <arrow-down /><i class="arrow-down"></i
-          ></el-icon>
+            <arrow-down /><i class="arrow-down"></i></el-icon>
         </span>
         <template #dropdown>
-          <el-dropdown-menu>
+          <el-dropdown-menu class="rank-dropdown-menu">
             <!-- 按照评分降序 -->
             <el-dropdown-item command="1">按评分降序</el-dropdown-item>
             <!-- 按照评分升序 -->
@@ -138,10 +137,15 @@ export default {
 </style>
 <style scoped>
 .block-col-2 .demonstration {
-  display: inline-block; /* 将 display 属性改为 inline-block */
+  display: inline-block;
+  /* 将 display 属性改为 inline-block */
   color: var(--el-text-color-secondary);
   font-size: 14px;
   margin-bottom: 20px;
 }
 
+.rank-dropdown-menu {
+  --el-dropdown-menuItem-hover-fill: #f56c6c;
+  --el-dropdown-menuItem-hover-color: white;
+}
 </style>

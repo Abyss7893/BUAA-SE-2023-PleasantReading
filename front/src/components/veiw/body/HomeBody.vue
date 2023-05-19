@@ -5,9 +5,7 @@
     <div class="novel-body">
       <div class="category-component-wrapper">
         <CategoryComponent />
-        <!-- <p>dwdwdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</p> -->
       </div>
-      <!-- <el-divider direction="vertical"></el-divider> -->
       <div class="recommend-component-wrapper">
         <RecommendComponent />
       </div>
@@ -23,19 +21,11 @@ export default {
     CategoryComponent,
     RecommendComponent,
   },
-  
+
 };
 </script>
 
 <style scoped>
-.el-divider--vertical {
-  display: inline-block;
-  width: 1px;
-  height: 100%;
-  margin: 0 8px;
-  vertical-align: middle;
-  position: relative;
-}
 .box-center {
   margin-left: auto;
   margin-right: auto;
@@ -50,6 +40,7 @@ export default {
 
 .recommend-component-wrapper {
   float: left;
+  margin-left: 20px;
   flex-grow: 1;
 }
 </style>
