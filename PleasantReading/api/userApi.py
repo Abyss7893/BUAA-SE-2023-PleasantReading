@@ -9,17 +9,23 @@ import json
 from api.admin import validateAccessToken, sendVerificationEmail
 from api.models import UserInfo
 
+TOKEN = False
 
 # Create your views here.
 def image_gallery(request):
-    accessToken = request.headers.get('Authorization').split(' ')[1]
-    decodedToken = validateAccessToken(accessToken)
-    if decodedToken:
-        print(request.user)
+
+    if TOKEN:
+        accessToken = request.headers.get('Authorization').split(' ')[1]
+        decodedToken = validateAccessToken(accessToken)
+        if decodedToken:
+            print(request.user)
+            users = UserInfo.objects.all()
+            return render(request, 'image_gallery.html', {'users': users})
+        else:
+            return JsonResponse({'message': '请登录'})
+    else:
         users = UserInfo.objects.all()
         return render(request, 'image_gallery.html', {'users': users})
-    else:
-        return JsonResponse({'message': '请登录'})
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -30,6 +36,69 @@ class UserForm(forms.ModelForm):
             'img': forms.FileInput()
         }
 
+
+def changePwd(request):
+    data = json.loads(request.body)
+    userID = data.get('ID')
+    oldPwd = data.get('old_pwd')
+    newPwd = data.get('new_pwd')
+
+    obj = UserInfo.objects.filter(userID=userID)
+    print(obj.get().passwd)
+    if obj.count() == 0:
+        return JsonResponse({'message': 'failed', 'error': 'ID error'}, status=400)
+    else:
+        if obj.get().passwd != oldPwd:
+            return JsonResponse({'message': 'failed', 'error': 'old pwd error'}, status=400)
+        else:
+            UserInfo.objects.filter(userID=userID).update(passwd=newPwd)
+            User.objects.filter(username=userID).update(password=newPwd)
+            return JsonResponse({'message': 'success'}, status=200)
+
+
+def getInfo(request):
+    if request.method != 'GET':
+        return JsonResponse({"message": "failed", "error": "request method error"})
+    ID = request.GET.get('ID')
+    data = UserInfo.objects.filter(userID=ID)
+    if data.count() == 0:
+        return JsonResponse({"message": "failed", "error": "ID error"})
+    else:
+        email = data.get().email
+        gender = data.get().gender
+        region = data.get().region
+        motto = data.get().motto
+        birthday = data.get().birth
+        VIP = data.get().VIPDate
+        responseData = {
+            'email': email,
+            'gender': gender,
+            'region': region,
+            'motto': motto,
+            'birthday': birthday,
+            'VIPDate': VIP,
+            'message': 'login success'
+        }
+        return JsonResponse(responseData, status=200)
+
+def changeInfo(request):
+    data = json.loads(request.body)
+    ID = data.get('ID')
+    gender = data.get('gender')
+    region = data.get('region')
+    birthday = data.get('birthday')
+    motto = data.get('motto')
+    if UserInfo.objects.filter(userID=ID).count() == 0:
+        return JsonResponse({"message": "filed", "error": "ID error"})
+    if gender:
+        UserInfo.objects.filter(userID=ID).update(gender=gender)
+    if region:
+        UserInfo.objects.filter(userID=ID).update(region=region)
+    if birthday:
+        UserInfo.objects.filter(userID=ID).update(birth=birthday)
+    if motto:
+        UserInfo.objects.filter(userID=ID).update(motto=motto)
+    return JsonResponse({"message": "success"})
 
 def my_view(request):
     if request.method == 'POST':
