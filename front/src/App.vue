@@ -1,7 +1,7 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                      <LoginComponent /> -->
+                            <LoginComponent /> -->
   <div id="app">
     <RouterView></RouterView>
   </div>
@@ -28,6 +28,18 @@ export default {
   margin: 0;
   padding: 0;
   text-decoration: none;
+}
+
+.float {
+  float: left;
+}
+
+.flex {
+  display: flex;
+}
+
+.clear {
+  clear: both;
 }
 </style>
 

@@ -2,7 +2,7 @@
 <template>
   <div class="head-top">
     <div>
-      <a class="logoa" href="/"><img class="logo" src="../../../assets/logo-yixinyuedu.png" alt=""></a>
+      <a class="logoa" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt=""></a>
     </div>
     <div class="dropdown">
       <form action="" method="get">
@@ -33,7 +33,7 @@
             <ElAvatar icon="user">
             </ElAvatar>
             <template #dropdown>
-              <el-dropdown-menu>
+              <el-dropdown-menu class="dropDownMenu">
                 <el-dropdown-item icon="house">个人中心</el-dropdown-item>
                 <el-dropdown-item icon="memo">我的书架</el-dropdown-item>
                 <el-dropdown-item icon="notebook">我的书签</el-dropdown-item>
@@ -80,3 +80,9 @@ export default {
   }
 };
 </script>
+<style>
+.dropDownMenu {
+  --el-dropdown-menuItem-hover-fill: #f56c6c;
+  --el-dropdown-menuItem-hover-color: white;
+}
+</style>

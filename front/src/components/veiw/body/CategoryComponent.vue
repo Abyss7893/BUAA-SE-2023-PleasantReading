@@ -1,23 +1,42 @@
 <template>
   <!-- <div class="novel-sidebar"> -->
-  <div class="flex">
-    <div class="category">
-      <h3>分类</h3>
-      <ul>
-        <li
-          v-for="(category, index) in categories"
-          :key="index"
-          :class="{ active: category.active }"
-          @mouseover="highlightCategory(index)"
-          @mouseout="removeHighlight(index)"
-          @click="changeRoute(category.route, category.filter)"
-        >
-          {{ category.name }}
+  <div class="category float">
+    <div class="type-filter float">
+      <div class="category-title">分类</div>
+      <ul class="float">
+        <li class="float" v-for="(category, index) in categories.type" :key="index" @mouseover="highlightCategory(index)"
+          @mouseout="removeHighlight(index)">
+          {{ category }}
         </li>
       </ul>
-      <!-- </div> -->
     </div>
-    <el-divider direction="vertical"></el-divider>
+    <div class="status-filter float">
+      <div class="category-title">状态</div>
+      <ul class="float">
+        <li class="float" v-for="(category, index) in categories.status" :key="index"
+          @mouseover="highlightCategory(index)" @mouseout="removeHighlight(index)">
+          {{ category }}
+        </li>
+      </ul>
+    </div>
+    <div class="vip-filter float">
+      <div class="category-title">属性</div>
+      <ul class="float">
+        <li class="float" v-for="(category, index) in categories.vip" :key="index" @mouseover="highlightCategory(index)"
+          @mouseout="removeHighlight(index)">
+          {{ category }}
+        </li>
+      </ul>
+    </div>
+    <div class="count-filter float">
+      <div class="category-title">字数</div>
+      <ul class="float">
+        <li class="float" v-for="(category, index) in categories.count" :key="index" @mouseover="highlightCategory(index)"
+          @mouseout="removeHighlight(index)">
+          {{ category }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -26,32 +45,12 @@ export default {
   name: "CategoryComponent",
   data() {
     return {
-      categories: [
-        {
-          name: "玄幻",
-          route: "/fantasy",
-          filter: { genre: "玄幻" },
-          active: false,
-        },
-        {
-          name: "修真",
-          route: "/martial",
-          filter: { genre: "修真" },
-          active: false,
-        },
-        {
-          name: "都市",
-          route: "/city",
-          filter: { genre: "都市" },
-          active: false,
-        },
-        {
-          name: "历史",
-          route: "/history",
-          filter: { genre: "历史" },
-          active: false,
-        },
-      ],
+      categories: {
+        type: ["全部", "玄幻", "奇幻", "武侠", "仙侠", "都市", "现实", "军事", "历史", "游戏", "体育", "科幻", "诸天无限", "悬疑", "轻小说", "短篇"],
+        status: ["全部", "连载", "完本"],
+        vip: ["全部", "免费", "VIP"],
+        count: ["全部", "30万字以下", "30-50万字", "50-100万字", "100-200万字", "200万字以上"],
+      },
     };
   },
   methods: {
@@ -69,10 +68,12 @@ export default {
       });
     },
     highlightCategory(index) {
-      this.categories[index].active = true;
+      // this.categories[index].active = true;
+      console.log(this.categories[index])
     },
     removeHighlight(index) {
-      this.categories[index].active = false;
+      // this.categories[index].active = false;
+      console.log(this.categories[index])
     },
   },
 };
@@ -81,29 +82,38 @@ export default {
 <style scoped>
 .category {
   width: 200px;
-
+  margin-top: 41px;
 }
-.category li.active {
-  background-color: #f39c12;
-  color: #fff;
-  cursor: pointer;
+
+.category ul {
+  padding-bottom: 4px;
+  margin-bottom: 15px;
+  width: 200px;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.category ul li {
+  border-radius: 5px;
+  list-style: none;
+  padding: 0 4px;
+  margin: 0 8px 8px 0;
+  height: 20px;
+  font: 12px/20px PingFangSC-Regular, -apple-system, Simsun;
+  text-align: center;
+}
+
+
+
+.category .category-title {
+  margin-bottom: 15px;
+  font-size: 15px;
+  font: 15px/20px PingFangSC-Regular, -apple-system, Simsun;
+  font-weight: bold;
 }
 
 .category li:hover {
-  background-color: #3498db;
+  background-color: #f56c6c;
   color: #fff;
   cursor: pointer;
-}
-.left-sider {
-  
-}
-.el-divider--vertical {
-  display: inline-block;
-  width: 1px;
-  height: 100%;
-  margin: 0 8px;
-  vertical-align: middle;
-  position: relative;
-  float: right;
 }
 </style>
