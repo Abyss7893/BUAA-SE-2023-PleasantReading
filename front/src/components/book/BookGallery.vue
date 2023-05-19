@@ -20,20 +20,28 @@
               <div class="author">
                 <p class="name">{{ book.author }}</p>
 
-                <em>|</em>
+                <el-divider direction="vertical"></el-divider>
                 <p class="category">{{ book.category }}</p>
-                <em>|</em>
+                <!-- <em>|</em> -->
+                <el-divider direction="vertical"></el-divider>
                 <span>连载</span>
               </div>
 
               <p class="intro">{{ book.summary }}</p>
 
-              <div class="book-rating">{{ book.rating }}</div>
+              <!-- <div class="book-rating"> -->
+              <div class="book-rating-text">评分:{{ book.rating }}</div>
 
-              <el-rate v-model="book.rating" :disabled="true"></el-rate>
-              <p class="size">字数:114.5万字</p>
+              <el-rate
+                v-model="book.rating"
+                style="--el-rate-fill-color: #ff7d7dc9"
+                :disabled="true"
+              ></el-rate>
+
+              <p class="size">字数:{{ book.sizeString }}</p>
             </div>
           </div>
+          <!-- </div> -->
         </el-col>
       </el-row>
       <el-divider />
@@ -55,7 +63,7 @@
         上一页
       </el-button>
       <!-- <div > -->
-        <span class="nuber"> 第{{ this.currentPage }}页 </span>
+      <span class="nuber"> 第{{ this.currentPage }}页 </span>
       <!-- </div>/ -->
       <el-button
         type="danger"
@@ -93,8 +101,11 @@ export default {
           author: "Autdddddddddd顶顶顶顶顶顶顶顶顶顶ddddddddd",
           category: "Categd顶顶顶顶顶顶顶顶顶顶ory 1dddddddd",
 
-          summary: "Sww",
+          summary:
+            "Swwdddddddddddddddddddddddddd ddddddddd  ddddddddddd ddd  ddddddd d",
           rating: 4.5,
+          size: 1100000,
+          sizeString: "",
         },
         {
           id: 2,
@@ -102,8 +113,10 @@ export default {
           cover: require("assets/imgs/bookcv.png"),
           author: "Authow",
           category: "Categorydddddddddddddssssssssssssssssss 2",
-          summary: "Summary 2",
-          rating: 1.2,
+          summary:
+            "这里是属于斗气的世界，没有花俏艳丽的魔法，有的，仅仅是繁衍到巅峰的斗气！斗者，斗师，大斗师，斗灵，斗王，斗皇，斗宗，斗尊，斗圣，斗帝。",
+          rating: 5,
+          size: 1100000,
         },
         // Add more books as needed
       ],
@@ -116,6 +129,17 @@ export default {
   },
 
   methods: {
+    formatNumber(number) {
+      if (number >= 100000) {
+        const formattedNumber = (number / 10000).toFixed(1);
+        return `${formattedNumber}万`;
+      } else if (number >= 1000) {
+        const formattedNumber = (number / 1000).toFixed(1);
+        return `${formattedNumber}千`;
+      } else {
+        return number.toString();
+      }
+    },
     generateTestData() {
       //   const testData = [];
       for (let i = 3; i <= 205; i++) {
@@ -127,8 +151,12 @@ export default {
           author: "Author",
           category: "Category",
           summary: "Summary",
-          rating: 4.5,
+          rating: (Math.random() * 4.5).toFixed(1),
+          size: Math.round(Math.random() * 3000000),
         });
+      }
+      for (let book of this.books) {
+        book.sizeString = this.formatNumber(book.size);
       }
     },
     previousPage() {
@@ -179,15 +207,26 @@ export default {
       }
       return rows;
     },
+    // getSize(num){
+    //   if(num>10000) return toString(num/10000) + "万"
+    // }
   },
 };
 </script>
   
 <style scoped>
+.el-divider--vertical {
+  /* display: inline-block; */
+  width: 1px;
+  height: 90%;
+  /* margin: 0 8px; */
+  vertical-align: middle;
+  /* position: relative; */
+}
 .book-gallery {
   /* display: flex; */
-  border-left: 2px  solid #dfe1e3;
-  padding-left:10px ;
+  border-left: 2px solid #dfe1e3;
+  padding-left: 10px;
   flex-wrap: wrap;
   justify-content: space-between;
 }
@@ -218,28 +257,19 @@ export default {
   text-align: left;
 }
 
-/* .book-cover{
-
-} */
-.book-cover img {
-  /* position: absolute; */
-  /* top: 100%;
-  left: 50%; */
-  /* display: block;
-  min-width: 100%;
-  min-height: 100%;
-  transform: translate(-50%, -50%); */
-}
-
 .book-info {
   margin-left: 10px;
-  text-overflow: ellipsis;
+  /* text-overflow: ellipsis; */
   text-align: left;
 }
 
-.book-rating {
+.book-rating-text {
+  font-size: 12px;
   margin-top: auto;
   font-weight: bold;
+}
+.book-rating {
+  display: flex;
 }
 </style>
 
@@ -248,33 +278,45 @@ export default {
 .book-img-box {
   display: block;
 
-  height: 136px;
+  height: 186px;
   margin-right: 16px;
   position: relative;
   /* max-width: 102px;
   min-width: 102px; */
   z-index: 3;
 }
+.book-img-box img {
+  width: 100%;
+  height: 100%;
+}
 .book-mid-info {
   max-width: 280px;
   min-width: 280px;
   margin-top: 5px;
-  float: left;
+
+  /* float: left;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: nowrap; */
   /* white-space: nowrap; */
 
   /* text-overflow: ellipsis; */
 }
 .intro {
-  color: #666;
+  color: #743e13a6;
   font-size: 14px;
   max-height: 48px;
   min-height: 48px;
   line-height: 24px;
   margin-bottom: 8px;
-  overflow: hidden;
+  width: 100%;
+  font-family: kaiti;
+
+  word-break: break-all;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* 这里是超出几行省略 */
+  overflow: hidden;
 
   /* overflow: hidden; */
 }
@@ -305,6 +347,7 @@ export default {
   margin-bottom: 6px;
   display: flex;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* border-top:solid #c6b7b758; */
   /* overflow: hidden; */
 }
 .name {
@@ -320,6 +363,7 @@ export default {
   white-space: normal;
 }
 .size {
+  font-size: small;
   color: #666;
 }
 .pagination {
@@ -332,4 +376,19 @@ export default {
   max-width: 60px;
   width: 60px;
 }
+/* .book-rate {
+  --el-rate-void-color: red;
+} */
 </style>
+
+<!-- <style lang="scss" scoped>
+// .use {
+//   color: var(--el-rate-void-color);
+// }
+</style> -->
+
+<!-- <style scoped>
+.el-rate .el-rate__icon.is-active {
+    color: rgba(255, 0, 0, 0.441) !important;
+}
+</style> -->

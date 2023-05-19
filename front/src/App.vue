@@ -11,6 +11,7 @@
 // import HomeComponent from './components/home/Home.vue';
 // import LoginComponent from './components/login/LoginComponent.vue';
 // import RegisterComponent from './components/login/RegisterComponent.vue';
+// import "assets/css/public.css";
 export default {
   name: "App",
   components: {
@@ -28,4 +29,9 @@ export default {
   padding: 0;
   text-decoration: none;
 }
+</style>
+
+<style lang="scss">
+// 引入 css
+@import url(./assets/css/public.css);
 </style>

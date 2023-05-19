@@ -1,12 +1,13 @@
 <!-- 网页的主页的中间内容部分 -->
 <template>
   <div class="box-center">
+
     <div class="novel-body">
       <div class="category-component-wrapper">
         <CategoryComponent />
         <!-- <p>dwdwdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</p> -->
       </div>
-      <el-divider direction="vertical"></el-divider>
+      <!-- <el-divider direction="vertical"></el-divider> -->
       <div class="recommend-component-wrapper">
         <RecommendComponent />
       </div>
@@ -22,6 +23,7 @@ export default {
     CategoryComponent,
     RecommendComponent,
   },
+  
 };
 </script>
 
