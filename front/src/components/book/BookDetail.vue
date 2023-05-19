@@ -1,0 +1,803 @@
+<template>
+  <div class="detail">
+    <head-and-foot>
+      <div class="detail-content box-center">
+        <div class="detail-content-top">
+          <div class="book-infos-view">
+            <div class="book-infos">
+              <div class="book-img-box">
+                <img :src="detailData.cover" />
+              </div>
+              <div class="book-info-box">
+                <h1 class="book-name flex-view">
+                  {{ detailData.title }}
+                  <span>
+                    <span class="author-name">{{ detailData.author }}著</span>
+                  </span>
+                </h1>
+                <!-- <el-divider></el-divider> -->
+
+                <div class="book-state">
+                  <span class="state hidden-sm">连载</span>
+                  <span class="state hidden-sm">VIP</span>
+                  <span class="state hidden-sm">长篇</span>
+                  <span class="state hidden-sm">玄幻</span>
+                </div>
+                <div class="translators flex-view" style="">
+                  <span>字数：</span>
+                  <span class="name">{{ detailData.size }}</span>
+                </div>
+                <div class="translators flex-view" style="">
+                  <span class="rate-text">评分：</span>
+                  <span class="name rate-text">{{ detailData.rating }}</span>
+                  <el-rate
+                    v-model="detailData.rating"
+                    style="--el-rate-fill-color: #ff7d7dc9"
+                    :disabled="true"
+                  ></el-rate>
+                  <!-- <span class="name">{{ detailData.size }}</span> -->
+                </div>
+
+                <!-- <div class="translators flex-view" style="">
+                  <span>分类：</span>
+                  <span class="name">{{ detailData.category }}</span>
+                </div> -->
+                <div class="translators flex-view" style="">
+                  <span>简介：</span>
+                  <span class="name">{{ detailData.intro }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-counts hidden-sm">
+              <div class="count-item flex-view pointer" @click="gotoRead()">
+                <!-- <div class="count-img">
+                  <img src="@/assets/images/want-read-hover.svg" />
+                </div> -->
+                <div class="count-box flex-view">
+                  <div class="count-text-box">
+                    <span class="count-title">开始阅读</span>
+                  </div>
+                  <div class="count-num-box">
+                    <span class="num-text">{{ detailData.wish_count }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="count-item flex-view pointer" @click="collect()">
+                <!-- <div class="count-img">
+                  <img src="@/assets/images/recommend-hover.svg" />
+                </div> -->
+                <div class="count-box flex-view">
+                  <div class="count-text-box">
+                    <span class="count-title">收藏</span>
+                  </div>
+                  <div class="count-num-box">
+                    <span class="num-text">{{ detailData.collect_count }}</span>
+                  </div>
+                </div>
+              </div>
+              <!--              <div class="count-item flex-view">-->
+              <!--                <div class="count-img">-->
+              <!--                  <img src="@/assets/read-online-icon.svg">-->
+              <!--                </div>-->
+              <!--                <div class="count-box flex-view">-->
+              <!--                  <div class="count-text-box">-->
+              <!--                    <span class="count-title">次数</span>-->
+              <!--                  </div>-->
+              <!--                  <div class="count-num-box">-->
+              <!--                    <span class="num-text">120</span>-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </div>-->
+              <!-- <div class="count-item flex-view" @click="share()">
+                <div class="count-img">
+                  <img src="@/assets/images/share-icon.svg" />
+                </div>
+                <div class="count-box flex-view">
+                  <div class="count-text-box">
+                    <span class="count-title">分享</span>
+                  </div>
+                  <div class="count-num-box">
+                    <span class="num-text"></span>
+                    <img src="@/assets/images/wb-share.svg" class="mg-l" />
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </head-and-foot>
+  </div>
+</template>
+
+  <script>
+import HeadAndFoot from "../veiw/HeadAndFoot.vue";
+export default {
+  components: { HeadAndFoot },
+  data() {
+    return {
+      bookId: "",
+      detailData: undefined,
+      tabUnderLeft: 6,
+      tabData: ["简介", "评论"],
+      selectTabIndex: 0,
+      commentData: [],
+      recommendData: [],
+      sortIndex: 0,
+      order: "recent", // 默认排序最新
+    };
+  },
+  created() {
+    // const bookId = this.$route.params.id;
+    this.detailData = {
+      cover: require("assets/imgs/bookcv.png"),
+      title: "Title",
+      author: "Author",
+      size: "111万",
+      category: "CT1",
+      rating: 4.4,
+      intro:
+        "一个不玩原神的人，有两种可能性。一种是没有能力玩原神。因为买不起高配的手机和抽不起卡等各种自身因素，他的人生都是失败的，第二种可能：有能力却不玩原神的人，在有能力而没有玩原神的想法时，那么这个人的思想境界便低到了一个令人发指的程度。一个有能力的人不付出行动来证明自己，只能证明此人行为素质修养之低下。是灰暗的，是不被真正的社会认可的。是的 ，但是我很难想象一个精神状态正常的游戏玩家会做出“不玩原神”这种选择。原神优秀的题材与充实有趣的游戏内容，可以说目前所有开放世界游戏中最优秀的，没有之一。没有玩过原神的朋友失去的不仅仅是一次游戏的体验，而是一种最基本的对游戏的理解与精神信仰。原神明明可以在将大家的游戏体验带入一个全新的高度，可是你竟然放弃了。那今后提起游戏你必将会坠入冰冷的深渊，体验绝望的后悔与没落感。玩游戏不玩原神，就像四大名著不看红楼梦，说明这个人文学造诣和自我修养不足，他理解不了这种内在的阳春白雪的高雅艺术，他只能看到外表的辞藻堆砌，参不透其中深奥的精神内核，他整个人的层次就卡在这里了， 只能度过一个相对失败的人生。",
+    };
+
+    // 根据图书ID进行进一步的数据加载或处理
+  },
+};
+</script>
+  <style scoped lang="less">
+.rate-text {
+  padding-top: 6px;
+  padding-right: 4px;
+}
+.author-name {
+  padding-left: 30px;
+  font-size: 12px;
+  font-family: kaiti;
+}
+.box-center {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1200px;
+}
+.el-divider--horizontal {
+  display: block;
+  height: 1px;
+  width: 100%;
+  margin: 7px 0;
+  border-top: 1px var(--el-border-color) var(--el-border-style);
+}
+.hide {
+  display: none;
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  width: 1100px;
+  margin: 4px auto;
+}
+
+.flex-view {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.hidden-lg {
+  display: none !important;
+}
+
+.book-infos-view {
+  display: flex;
+  margin: 89px 0 40px;
+  overflow: hidden;
+
+  .book-infos {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: flex;
+    // margin: 6px 0;
+  }
+
+  .mobile-share-box {
+    height: 38px;
+    background: transparent;
+    padding: 0 16px;
+    margin: 12px 0;
+    font-size: 0;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+
+    .state {
+      width: 64px;
+      height: 24px;
+      line-height: 24px;
+      background: rgba(70, 132, 226, 0.1);
+      border-radius: 2px;
+      font-weight: 500;
+      font-size: 12px;
+      color: #4684e2;
+      text-align: center;
+    }
+
+    .share-img {
+      background: #fff;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      text-align: center;
+
+      img {
+        position: relative;
+        top: 4px;
+        width: 24px;
+      }
+    }
+  }
+
+  .book-img-box {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 235px;
+    flex: 0 0 235px;
+    margin: 0 0 0 0;
+
+    img {
+      width: 158px;
+      height: 211;
+      display: block;
+      margin: 0 auto;
+      border: 1px solid #eee;
+      border-radius: 4px;
+    }
+  }
+
+  .book-info-box {
+    text-align: left;
+    padding: 0;
+    margin: 0;
+  }
+
+  .book-state {
+    padding-top: 10px;
+    height: 26px;
+    line-height: 26px;
+
+    .state {
+      font-weight: 500;
+      color: #4684e2;
+      background: rgba(70, 132, 226, 0.1);
+      border-radius: 2px;
+      padding: 5px 8px;
+      margin-right: 16px;
+    }
+
+    span {
+      font-size: 14px;
+      color: #152844;
+    }
+  }
+
+  .book-name {
+    font-size: 24px;
+    line-height: 32px;
+    margin: 0 0;
+    vertical-align: bottom;
+    border-bottom: solid #6666663c;
+  }
+
+  .translators,
+  .authors {
+    line-height: 18px;
+    font-size: 14px;
+    margin: 6px 0;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+
+    .name {
+      max-width: 500px;
+      color: #315c9e;
+      white-space: normal;
+      max-height: 200px;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4; /* 这里是超出几行省略 */
+      overflow: hidden;
+    }
+  }
+
+  .tags {
+    position: absolute;
+    bottom: 20px;
+    margin-top: 16px;
+
+    .category-box {
+      color: #152844;
+      font-size: 14px;
+
+      .title {
+        color: #787878;
+      }
+    }
+  }
+
+  .book-counts {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 235px;
+    flex: 0 0 235px;
+    margin-left: 20px;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  .count-item {
+    height: 64px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .count-img {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 32px;
+    flex: 0 0 32px;
+    margin-right: 24px;
+    font-size: 0;
+
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+
+  .count-box {
+    position: relative;
+    border-bottom: 1px solid #cedce4;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    height: 100%;
+  }
+
+  .count-text-box {
+    font-size: 0;
+
+    .count-title {
+      color: #152844;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 18px;
+      display: block;
+      height: 18px;
+    }
+  }
+
+  .count-num-box {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #152844;
+  }
+}
+
+.buy-way {
+  overflow: hidden;
+
+  .title {
+    font-weight: 600;
+    font-size: 18px;
+    height: 26px;
+    line-height: 26px;
+    color: #152844;
+    margin-bottom: 12px;
+  }
+
+  .buy-way-item {
+    background: #fbfeff;
+    border: 1px solid #cedce4;
+    border-radius: 4px;
+    -webkit-box-flex: 0;
+    margin-right: 20px;
+    -ms-flex: 0 0 255px;
+    flex: 0 0 255px;
+    padding: 10px;
+
+    .name {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: #152844;
+      height: 24px;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      position: relative;
+      line-height: 24px;
+    }
+
+    .price-text {
+      color: #ff7b31;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .buy-btn {
+      cursor: pointer;
+      display: block;
+      background: #4684e2;
+      border-radius: 4px;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      height: 32px;
+      line-height: 32px;
+      width: 76px;
+      outline: none;
+      border: none;
+      margin-top: 12px;
+    }
+
+    .buy-btn img {
+      width: 12px;
+      margin-right: 2px;
+      vertical-align: middle;
+    }
+
+    .buy-btn span {
+      vertical-align: middle;
+    }
+  }
+}
+
+.book-content-view {
+  margin-top: 40px;
+  padding-bottom: 50px;
+}
+
+.main-content {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+
+  .text {
+    color: #484848;
+    font-size: 16px;
+    line-height: 26px;
+    padding-left: 12px;
+    margin: 11px 0;
+    white-space: pre-wrap;
+  }
+}
+
+.main-tab {
+  border-bottom: 1px solid #cedce4;
+}
+
+.order-view {
+  position: relative;
+  color: #6c6c6c;
+  font-size: 14px;
+  line-height: 40px;
+
+  .title {
+    margin-right: 8px;
+  }
+
+  .tab {
+    margin-right: 20px;
+    cursor: pointer;
+    color: #5f77a6;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .tab-select {
+    color: #152844;
+    font-weight: 600;
+  }
+
+  .tab-underline {
+    position: absolute;
+    bottom: 0;
+    left: 84px;
+    width: 16px;
+    height: 4px;
+    background: #4684e2;
+    -webkit-transition: left 0.3s;
+    transition: left 0.3s;
+  }
+}
+
+.recommend {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 235px;
+  flex: 0 0 235px;
+  margin-left: 20px;
+
+  .title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    color: #152844;
+    margin-bottom: 12px;
+  }
+
+  .books {
+    border-top: 1px solid #cedce4;
+
+    .book-item {
+      position: relative;
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      min-width: 255px;
+      max-width: 255px;
+      margin: 16px 0;
+      height: fit-content;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+
+      .img-view {
+        background: #eaf1f5;
+        font-size: 0;
+        text-align: center;
+        height: 156px;
+        padding: 8px 0;
+
+        img {
+          height: 100%;
+          display: block;
+          margin: 0 auto;
+          border-radius: 4px;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+        }
+      }
+
+      .info-view {
+        background: #f6f9fb;
+        text-align: center;
+        height: 108px;
+        overflow: hidden;
+        padding: 0 16px;
+
+        h3 {
+          color: #1c355a;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          margin: 12px 0 8px;
+        }
+
+        .authors {
+          color: #6f6f6f;
+          font-size: 12px;
+          line-height: 14px;
+          margin-top: 4px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .translators {
+          color: #6f6f6f;
+          font-size: 12px;
+          line-height: 14px;
+          margin-top: 4px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          //   margin: 6px 0;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+.flex-view {
+  display: flex;
+}
+
+.book-comment {
+  .title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    height: 22px;
+    color: #152844;
+    margin: 24px 0 12px;
+  }
+
+  .publish {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    .mine-img {
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 40px;
+      flex: 0 0 40px;
+      margin-right: 12px;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+    }
+
+    .content-input {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      background: #f6f9fb;
+      border-radius: 4px;
+      height: 32px;
+      line-height: 32px;
+      color: #484848;
+      padding: 5px 12px;
+      white-space: nowrap;
+      outline: none;
+      border: 0px;
+    }
+
+    .send-btn {
+      margin-left: 10px;
+      background: #4684e2;
+      border-radius: 4px;
+      -webkit-box-flex: 0;
+      -ms-flex: 0 0 80px;
+      flex: 0 0 80px;
+      color: #fff;
+      font-size: 14px;
+      text-align: center;
+      height: 32px;
+      line-height: 32px;
+      outline: none;
+      border: 0px;
+      cursor: pointer;
+    }
+  }
+
+  .tab-view {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    font-size: 14px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 24px 0;
+
+    .count-text {
+      color: #484848;
+      float: left;
+    }
+
+    .tab-box {
+      color: #5f77a6;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+
+      .tab-select {
+        color: #152844;
+      }
+
+      span {
+        cursor: pointer;
+      }
+    }
+
+    .line {
+      width: 1px;
+      height: 12px;
+      margin: 0 12px;
+      background: #cedce4;
+    }
+  }
+}
+
+.comments-list {
+  .comment-item {
+    .flex-item {
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      padding-top: 16px;
+
+      .avator {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 40px;
+        flex: 0 0 40px;
+        width: 40px;
+        height: 40px;
+        margin-right: 12px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .person {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+      }
+
+      .name {
+        color: #152844;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 22px;
+        height: 22px;
+        cursor: pointer;
+      }
+
+      .time {
+        color: #5f77a6;
+        font-size: 12px;
+        line-height: 16px;
+        height: 16px;
+        margin-top: 2px;
+      }
+
+      .float-right {
+        color: #4684e2;
+        font-size: 14px;
+        float: right;
+
+        span {
+          margin-left: 19px;
+          cursor: pointer;
+        }
+
+        .num {
+          color: #152844;
+          margin-left: 6px;
+          cursor: auto;
+        }
+      }
+    }
+  }
+}
+
+.comment-content {
+  margin-top: 8px;
+  color: #484848;
+  font-size: 14px;
+  line-height: 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed #cedce4;
+  margin-left: 52px;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.infinite-loading-container {
+  clear: both;
+  text-align: center;
+}
+</style>
+  

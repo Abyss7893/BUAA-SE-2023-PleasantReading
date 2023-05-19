@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginComponent from '../components/page/login/LoginComponent'
 import RegisterComponent from '../components/page/login/RegisterComponent'
+import BookDetail from '../components/book/BookDetail'
 // import FantasyComponent from '../components/veiw/content/category/FantasyComponent'
 // import HistoryComponent from '../components/veiw/content/category/HistoryComponent'
 // import MartialComponent from '../components/veiw/content/category/MartialComponent'
@@ -36,7 +37,13 @@ const router = createRouter({
       ]
     },
     { path: '/login', component: LoginComponent },
-    { path: '/register', component: RegisterComponent }
+    { path: '/register', component: RegisterComponent },
+    {
+      path: '/book/:id',
+      name: 'book-detail',
+      component: BookDetail
+    }
+
   ]
 })
 export default router
