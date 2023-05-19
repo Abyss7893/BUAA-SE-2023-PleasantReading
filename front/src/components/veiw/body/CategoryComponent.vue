@@ -1,38 +1,11 @@
 <template>
   <!-- <div class="novel-sidebar"> -->
   <div class="category float">
-    <div class="type-filter float">
-      <div class="category-title">分类</div>
+    <div class="float" v-for="(title, titleIndex) in categories.titles" :key="titleIndex">
+      <div class="category-title">{{ title }}</div>
       <ul class="float">
-        <li class="float" v-for="(category, index) in categories.type" :key="index" @mouseover="highlightCategory(index)"
-          @mouseout="removeHighlight(index)">
-          {{ category }}
-        </li>
-      </ul>
-    </div>
-    <div class="status-filter float">
-      <div class="category-title">状态</div>
-      <ul class="float">
-        <li class="float" v-for="(category, index) in categories.status" :key="index"
-          @mouseover="highlightCategory(index)" @mouseout="removeHighlight(index)">
-          {{ category }}
-        </li>
-      </ul>
-    </div>
-    <div class="vip-filter float">
-      <div class="category-title">属性</div>
-      <ul class="float">
-        <li class="float" v-for="(category, index) in categories.vip" :key="index" @mouseover="highlightCategory(index)"
-          @mouseout="removeHighlight(index)">
-          {{ category }}
-        </li>
-      </ul>
-    </div>
-    <div class="count-filter float">
-      <div class="category-title">字数</div>
-      <ul class="float">
-        <li class="float" v-for="(category, index) in categories.count" :key="index" @mouseover="highlightCategory(index)"
-          @mouseout="removeHighlight(index)">
+        <li class="float" v-for="(category, index) in categories.content[title]" :key="index"
+          :ref="`categoryItem_${titleIndex}_${index}`" @click="selectCategory(titleIndex, index)">
           {{ category }}
         </li>
       </ul>
@@ -46,12 +19,26 @@ export default {
   data() {
     return {
       categories: {
-        type: ["全部", "玄幻", "奇幻", "武侠", "仙侠", "都市", "现实", "军事", "历史", "游戏", "体育", "科幻", "诸天无限", "悬疑", "轻小说", "短篇"],
-        status: ["全部", "连载", "完本"],
-        vip: ["全部", "免费", "VIP"],
-        count: ["全部", "30万字以下", "30-50万字", "50-100万字", "100-200万字", "200万字以上"],
+        titles: ["分类", "状态", "属性", "字数"],
+        content: {
+          "分类": ["全部", "玄幻", "奇幻", "武侠", "仙侠", "都市", "现实", "军事", "历史", "游戏", "体育", "科幻", "诸天无限", "悬疑", "轻小说", "短篇"],
+          "状态": ["全部", "连载", "完本"],
+          "属性": ["全部", "免费", "VIP"],
+          "字数": ["全部", "30万字以下", "30-50万字", "50-100万字", "100-200万字", "200万字以上"],
+        },
       },
+      categoryItems: [], // 存储 li 元素数组的引用
     };
+  },
+  mounted() {
+    this.setRefs()
+    let categoriesContent = this.$store.state.categoriesIndex
+    console.log(categoriesContent)
+    categoriesContent.forEach((content, idx) => {
+      let elm = this.categoryItems[idx][content]
+      elm.style.backgroundColor = "#f56c6c"
+      elm.style.color = "white"
+    });
   },
   methods: {
     changeRoute(route, filter) {
@@ -67,13 +54,28 @@ export default {
         category.active = index === idx;
       });
     },
-    highlightCategory(index) {
-      // this.categories[index].active = true;
-      console.log(this.categories[index])
+    // 设置 refs
+    setRefs() {
+      this.categories.titles.forEach((title, titleIndex) => {
+        let items = this.categories.content[title];
+        let refs = [];
+        items.forEach((item, index) => {
+          refs.push(this.$refs[`categoryItem_${titleIndex}_${index}`][0]);
+        });
+        this.categoryItems.push(refs);
+      });
     },
-    removeHighlight(index) {
-      // this.categories[index].active = false;
-      console.log(this.categories[index])
+    // 点击事件处理函数
+    selectCategory(titleIndex, index) {
+      let categoriesContent = this.$store.state.categoriesIndex;
+      console.log(categoriesContent)
+      // 设置选中的 li 元素的样式
+      this.categoryItems[titleIndex][categoriesContent[titleIndex]].style.backgroundColor = "";
+      this.categoryItems[titleIndex][categoriesContent[titleIndex]].style.color = "";
+      this.categoryItems[titleIndex][index].style.backgroundColor = "#f56c6c";
+      this.categoryItems[titleIndex][index].style.color = "white";
+      // 更新 $store 中的 categoriesIndex 值
+      this.$store.commit("changeCategoriesIndex", { "title": titleIndex, "index": index });
     },
   },
 };
@@ -102,8 +104,6 @@ export default {
   text-align: center;
 }
 
-
-
 .category .category-title {
   margin-bottom: 15px;
   font-size: 15px;
@@ -112,8 +112,7 @@ export default {
 }
 
 .category li:hover {
-  background-color: #f56c6c;
-  color: #fff;
+  background-color: #fef0f0;
   cursor: pointer;
 }
 </style>

@@ -3,14 +3,13 @@
   <div class="head-nav">
     <ul>
       <div class="slider"></div>
-      <li @mouseover="slideHere" ref="firstli" @mouseout="slideAway">
-        <a href="#">首页</a>
+      <li navi-id="1" @mouseover="slideHere" ref="firstli" @mouseout="slideAway" @click="storeNavi"><a href="#">首页</a>
       </li>
-      <li @mouseover="slideHere" @mouseout="slideAway"><a href="#">全部作品</a></li>
-      <li @mouseover="slideHere" @mouseout="slideAway"><a href="#">作品排行</a></li>
-      <li @mouseover="slideHere" @mouseout="slideAway"><a href="#">完本作品</a></li>
-      <li @mouseover="slideHere" @mouseout="slideAway"><a href="#">我的书架</a></li>
-      <li @mouseover="slideHere" @mouseout="slideAway"><a href="#">我的笔记</a></li>
+      <li navi-id="2" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi"><a href="#">全部作品</a></li>
+      <li navi-id="3" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi"><a href="#">作品排行</a></li>
+      <li navi-id="4" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi"><a href="#">完本作品</a></li>
+      <li navi-id="5" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi"><a href="#">我的书架</a></li>
+      <li navi-id="6" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi"><a href="#">我的笔记</a></li>
 
     </ul>
   </div>
@@ -33,8 +32,9 @@ export default {
   watch: {
     screenWidth: {
       handler: function () {
-        this.naviLoccation = this.$refs.firstli.getBoundingClientRect()
-        this.slideAway();
+        let id = this.$store.state.navigationLoc
+        this.naviLoccation = document.querySelector(`li[navi-id="${id}"]`).getBoundingClientRect()
+        this.slideAway()
       },
     },
   },
@@ -46,7 +46,8 @@ export default {
       })()
     }
     this.slider = document.querySelector('.slider')
-    this.naviLoccation = this.$refs.firstli.getBoundingClientRect()
+    let id = this.$store.state.navigationLoc
+    this.naviLoccation = document.querySelector(`li[navi-id="${id}"] a`).getBoundingClientRect()
     this.slider.style.height = this.naviLoccation.height + "px"
     this.slider.style.width = this.naviLoccation.width + "px"
     this.slider.style.left = this.naviLoccation.left + "px"
@@ -59,11 +60,15 @@ export default {
       this.slider.style.height = rect.height + "px"
     },
     slideAway() {
-      // console.log(this.naviLoccation.width)
       this.slider.style.width = this.naviLoccation.width + "px"
       this.slider.style.left = this.naviLoccation.left + "px"
       this.slider.style.height = this.naviLoccation.height + "px"
-    }
+    },
+    storeNavi(event) {
+      const id = event.target.parentNode.getAttribute('navi-id')
+      this.naviLoccation = document.querySelector(`li[navi-id="${id}"]`).getBoundingClientRect()
+      this.$store.commit('changeNaviLoc', id)
+    },
   }
 }
 </script>

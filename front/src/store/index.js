@@ -3,11 +3,21 @@ const store = createStore({
   state() {
     return {
       isLogin: false,
+      userId: null,
+      userAvatar: null,
+      navigationLoc: 1,
+      categoriesIndex: [0, 0, 0, 0],
     }
   },
   mutations: {
     refresh(state) {
       state.isLogin = !state.isLogin
+    },
+    changeNaviLoc(state, num) {
+      state.navigationLoc = num
+    },
+    changeCategoriesIndex(state, content) {
+      state.categoriesIndex[content.title] = content.index
     }
   }
 })
