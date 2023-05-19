@@ -1,7 +1,7 @@
 <template>
-  <div class="detail">
-    <head-and-foot>
-      <div class="detail-content box-center">
+  <head-and-foot>
+    <div class="detail box-center">
+      <div class="detail-content">
         <div class="detail-content-top">
           <div class="book-infos-view">
             <div class="book-infos">
@@ -48,6 +48,7 @@
                 </div>
               </div>
             </div>
+
             <div class="book-counts hidden-sm">
               <div class="count-item flex-view pointer" @click="gotoRead()">
                 <!-- <div class="count-img">
@@ -106,8 +107,46 @@
           </div>
         </div>
       </div>
-    </head-and-foot>
-  </div>
+
+      <div class="detail-content-bottom">
+        <el-divider>
+          <!-- 目录  <el-icon><Files /></el-icon> -->
+          目录
+          <el-icon v-show="Order" @click="changeOrder" style="--color:#315c9e"><SortDown /></el-icon>
+          <el-icon v-show="!Order" @click="changeOrder" style="--color:#315c9e"><SortUp /></el-icon>
+        </el-divider>
+
+        <div class="novel-directory">
+          <div v-for="(row, index) in rows" :key="index" class="directory-row">
+            <div v-for="chapter in row" :key="chapter.id" class="chapter-title">
+              {{ chapter.title }}
+            </div>
+          </div>
+        </div>
+
+        <div class="book-content-view flex-view">
+          <div class="main-content">
+            <!--评论-->
+          </div>
+          <!-- <div class="recommend" style="">
+            <div class="title">热门推荐</div>
+            <div class="books">
+              <div class="book-item book-item" v-for="item in recommendData" @click="handleDetail(item)">
+                <div class="img-view">
+                  <img :src="item.cover">
+                </div>
+                <div class="info-view">
+                  <h3 class="book-name">{{ item.title }}</h3>
+                  <p class="authors" v-if="item.author">{{ item.author }}（作者）</p>
+                  <p class="translators" v-if="item.translator">{{ item.translator }}（译者）</p>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </head-and-foot>
 </template>
 
   <script>
@@ -116,6 +155,7 @@ export default {
   components: { HeadAndFoot },
   data() {
     return {
+      Order: true,
       bookId: "",
       detailData: undefined,
       tabUnderLeft: 6,
@@ -125,7 +165,37 @@ export default {
       recommendData: [],
       sortIndex: 0,
       order: "recent", // 默认排序最新
+      chapters: [
+        // 添加更多章节数据
+      ],
     };
+  },
+  computed: {
+    rows() {
+      const rowCount = Math.ceil(this.chapters.length / 3);
+      const rows = [];
+
+      for (let i = 0; i < rowCount; i++) {
+        const startIndex = i * 3;
+        const endIndex = startIndex + 3;
+        const row = this.chapters.slice(startIndex, endIndex);
+        rows.push(row);
+      }
+
+      return rows;
+    },
+  },
+  methods: {
+    generateChater() {
+      for (let i = 1; i <= 200; i++) {
+        i;
+        this.chapters.push({ id: i, title: "Chapter " + i });
+      }
+    },
+    changeOrder() {
+        this.Order =!this.Order; 
+      this.chapters.reverse();
+    },
   },
   created() {
     // const bookId = this.$route.params.id;
@@ -139,6 +209,7 @@ export default {
       intro:
         "一个不玩原神的人，有两种可能性。一种是没有能力玩原神。因为买不起高配的手机和抽不起卡等各种自身因素，他的人生都是失败的，第二种可能：有能力却不玩原神的人，在有能力而没有玩原神的想法时，那么这个人的思想境界便低到了一个令人发指的程度。一个有能力的人不付出行动来证明自己，只能证明此人行为素质修养之低下。是灰暗的，是不被真正的社会认可的。是的 ，但是我很难想象一个精神状态正常的游戏玩家会做出“不玩原神”这种选择。原神优秀的题材与充实有趣的游戏内容，可以说目前所有开放世界游戏中最优秀的，没有之一。没有玩过原神的朋友失去的不仅仅是一次游戏的体验，而是一种最基本的对游戏的理解与精神信仰。原神明明可以在将大家的游戏体验带入一个全新的高度，可是你竟然放弃了。那今后提起游戏你必将会坠入冰冷的深渊，体验绝望的后悔与没落感。玩游戏不玩原神，就像四大名著不看红楼梦，说明这个人文学造诣和自我修养不足，他理解不了这种内在的阳春白雪的高雅艺术，他只能看到外表的辞藻堆砌，参不透其中深奥的精神内核，他整个人的层次就卡在这里了， 只能度过一个相对失败的人生。",
     };
+    this.generateChater();
 
     // 根据图书ID进行进一步的数据加载或处理
   },
@@ -800,4 +871,27 @@ export default {
   text-align: center;
 }
 </style>
-  
+<!-- 目录的css -->
+<style scoped>
+.novel-directory {
+  /* display: flex; */
+  flex-wrap: wrap;
+  padding-top: 10px;
+}
+
+.directory-row {
+  flex: 1 0 33.33%;
+  display: flex;
+  justify-content: left;
+  border-bottom: solid rgba(138, 100, 100, 0.386) 1px;
+  margin-bottom: 5px;
+}
+
+.chapter-title {
+  width: 30%;
+  /* background-color: #f0f0f0; */
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+</style>
