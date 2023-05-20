@@ -14,7 +14,7 @@
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://bj-cynosdbmysql-grp-pt5qhzxu.sql.tencentcdb.com:20169</jdbc-url>
+      <jdbc-url>jdbc:mysql://bj-cynosdbmysql-grp-pt5qhzxu.sql.tencentcdb.com:20169/PleasantReading</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

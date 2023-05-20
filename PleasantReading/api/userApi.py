@@ -40,8 +40,8 @@ class UserForm(forms.ModelForm):
 def changePwd(request):
     data = json.loads(request.body)
     userID = data.get('ID')
-    oldPwd = data.get('old_pwd')
-    newPwd = data.get('new_pwd')
+    oldPwd = data.get('oldpwd')
+    newPwd = data.get('newpwd')
 
     obj = UserInfo.objects.filter(userID=userID)
     print(obj.get().passwd)
@@ -49,7 +49,7 @@ def changePwd(request):
         return JsonResponse({'message': 'failed', 'error': 'ID error'}, status=400)
     else:
         if obj.get().passwd != oldPwd:
-            return JsonResponse({'message': 'failed', 'error': 'old pwd error'}, status=400)
+            return JsonResponse({'message': 'failed', 'error': 'old password error'}, status=400)
         else:
             UserInfo.objects.filter(userID=userID).update(passwd=newPwd)
             User.objects.filter(username=userID).update(password=newPwd)
@@ -62,7 +62,7 @@ def getInfo(request):
     ID = request.GET.get('ID')
     data = UserInfo.objects.filter(userID=ID)
     if data.count() == 0:
-        return JsonResponse({"message": "failed", "error": "ID error"})
+        return JsonResponse({"message": "failed", "error": "id error"})
     else:
         email = data.get().email
         gender = data.get().gender
@@ -89,7 +89,7 @@ def changeInfo(request):
     birthday = data.get('birthday')
     motto = data.get('motto')
     if UserInfo.objects.filter(userID=ID).count() == 0:
-        return JsonResponse({"message": "filed", "error": "ID error"})
+        return JsonResponse({"message": "filed", "error": "id error"})
     if gender:
         UserInfo.objects.filter(userID=ID).update(gender=gender)
     if region:
@@ -133,11 +133,11 @@ def login(request):
         responseData = {
             'refresh': str(refresh),
             'access': str(accessToken),
-            'message': 'login success'
+            'message': 'success'
         }
         return JsonResponse(responseData, status=200)
     else:
-        return JsonResponse({'message': '登录失败'}, status=400)
+        return JsonResponse({'message': 'fail'}, status=400)
 
 
 
@@ -150,11 +150,10 @@ def register(request):
         print(username)
         cnt = UserInfo.objects.filter(userID=username).count()
         if cnt != 0:
-            return JsonResponse({'message': 'failed', 'error': '用户名重复'})
-
-        verificationCode = sendVerificationEmail(email)
-        User.objects.create_user(username=username, password=password, email=email)
-        UserInfo.objects.create(userID=username, passwd=password, email=email)
-        return JsonResponse({'message': 'successful', 'verification': verificationCode})
+            return JsonResponse({'message': 'failed', 'error': 'username exists'})
+        # verificationCode = sendVerificationEmail(email)
+        # User.objects.create_user(username=username, password=password, email=email)
+        # UserInfo.objects.create(userID=username, passwd=password, email=email)
+        return JsonResponse({'message': 'successful'})
     except Exception as e:
         return JsonResponse({'message': 'failed', 'error': str(e)})

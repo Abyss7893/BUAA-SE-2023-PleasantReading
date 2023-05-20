@@ -129,14 +129,20 @@ CORS_ALLOW_HEADERS = [
 #     }
 # }
 
+# 这里需要 pip install configparser
+import configparser
+config_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), 'config.ini')
+config = configparser.ConfigParser()
+config.read(config_file)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'PleasantReading',
-        'USER': 'abyss7893',
-        'PASSWORD': '19800357893Nr',
-        'HOST': 'bj-cynosdbmysql-grp-pt5qhzxu.sql.tencentcdb.com',
-        'PORT': '20169'
+        'NAME': config.get('database', 'name'),
+        'USER': config.get('database', 'user'),
+        'PASSWORD': config.get('database', 'password'),
+        'HOST': config.get('database', 'host'),
+        'PORT': config.get('database', 'port')
     }
 }
 
@@ -173,8 +179,8 @@ USE_TZ = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'  # 163 邮箱的 SMTP 服务器地址
 EMAIL_PORT = 25  # 163 邮箱的 SMTP 服务器端口号
-EMAIL_HOST_USER = 'abyss7893@163.com'  # 发件人邮箱账号
-EMAIL_HOST_PASSWORD = 'ZNXZSSKMVKKBCREH'  # 发件人邮箱密码
+EMAIL_HOST_USER = config.get('mailer', 'user')  # 发件人邮箱账号
+EMAIL_HOST_PASSWORD = config.get('mailer', 'password')  # 发件人邮箱密码
 EMAIL_USE_SSL = False  # 不使用 SSL 连接
 EMAIL_TIMEOUT = 5  # 设置超时时间为 5 秒
 
