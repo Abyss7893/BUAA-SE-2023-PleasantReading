@@ -3,15 +3,26 @@
   <div class="head-top">
     <!-- <check-login/> -->
     <div>
-      <a class="logoa" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt=""></a>
+      <a class="logoa" href="/"
+        ><img class="logo" src="~assets/logo-yixinyuedu.png" alt=""
+      /></a>
     </div>
     <div class="dropdown">
       <form action="" method="get">
         <div class="search">
-          <input type="text" name="" id="" placeholder="想看什么我这里都有哟~" @focusin="drop" @focusout="hide" />
-          <button type="submit"><el-icon>
+          <input
+            type="text"
+            name=""
+            id=""
+            placeholder="想看什么我这里都有哟~"
+            @focusin="drop"
+            @focusout="hide"
+          />
+          <button type="submit">
+            <el-icon>
               <Search />
-            </el-icon></button>
+            </el-icon>
+          </button>
         </div>
       </form>
       <div class="dropdown-content" ref="hidden">
@@ -25,7 +36,6 @@
     </div>
     <div class="login-register">
       <template v-if="!isLogin">
-
         <router-link to="/login">登录</router-link>
         <a href="#" @mousedown="login">登录</a>
         <router-link to="/register">注册</router-link>
@@ -34,14 +44,22 @@
         <div class="avatar">
           <ElDropdown trigger="click">
             <!-- 这里暂时用的是svg库里的图标，后期需要通过得到后端的数据换上人物头像 -->
-            <ElAvatar icon="user">
-            </ElAvatar>
+            <ElAvatar icon="user"> </ElAvatar>
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item icon="house">
                   <RouterLink to="/user">个人中心</RouterLink>
                 </el-dropdown-item>
-                <el-dropdown-item icon="memo">我的书架</el-dropdown-item>
+                <!-- <router-link :to="{ name: 'mybook' }">
+                  <el-dropdown-item icon="memo"
+                    >我的书架</el-dropdown-item
+                  ></router-link
+                > -->
+
+                <router-link :to="{ name: 'mybook' }">
+                  <el-dropdown-item icon="memo">我的书架</el-dropdown-item>
+                </router-link>
+
                 <el-dropdown-item icon="notebook">我的书签</el-dropdown-item>
                 <el-dropdown-item icon="user">VIP管理</el-dropdown-item>
               </el-dropdown-menu>
@@ -57,7 +75,12 @@
 <script>
 import "css/head/headtop.css";
 //import LoginComponent from "@/components/login/LoginComponent.vue";
-import { ElAvatar, ElDropdown, ElDropdownMenu, ElDropdownItem } from "element-plus";
+import {
+  ElAvatar,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem,
+} from "element-plus";
 // import CheckLogin from '../../check/checkLogin.vue';
 export default {
   name: "Head_Top",
@@ -72,20 +95,20 @@ export default {
   computed: {
     isLogin() {
       // console.log(this.$store.state.isLogin)
-      return this.$store.state.isLogin
+      return this.$store.state.isLogin;
     },
   },
   methods: {
     login() {
-      this.$store.commit('refresh')
+      this.$store.commit("refresh");
     },
     drop() {
-      this.$refs.hidden.style.display = "block"
+      this.$refs.hidden.style.display = "block";
     },
     hide() {
-      this.$refs.hidden.style.display = "none"
-    }
-  }
+      this.$refs.hidden.style.display = "none";
+    },
+  },
 };
 </script>
 <style>

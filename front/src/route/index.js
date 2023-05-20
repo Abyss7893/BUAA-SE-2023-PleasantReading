@@ -5,6 +5,7 @@ import BookDetail from '../components/book/BookDetail'
 import PersonalCenter from '../components/page/PersonalCenter'
 import InfoComponent from '../components/page/InfoComponent'
 import Reader from 'components/page/Reader'
+import MyBookBody from '../components/veiw/body/mybooks/MyBookBody'
 // import FantasyComponent from '../components/veiw/content/category/FantasyComponent'
 // import HistoryComponent from '../components/veiw/content/category/HistoryComponent'
 // import MartialComponent from '../components/veiw/content/category/MartialComponent'
@@ -56,12 +57,18 @@ const router = createRouter({
           name: 'info',
           component: InfoComponent
         }
+
       ]
     },
     {
       path: '/reader',
       component: Reader,
-
+    }
+    ,
+    {
+      path: '/mybook',
+      component: MyBookBody,
+      name: 'mybook',
     }
 
   ]
