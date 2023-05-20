@@ -19,19 +19,27 @@ from django.contrib import admin
 from django.urls import path
 
 from PleasantReading import settings
-from api import userApi
+from api import userApi, bookApi
 from api.userApi import my_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload/', my_view, name='upload'),  # 添加上传图片的路由
-    path('login', userApi.login),
-    path('register', userApi.register),
+
+    path('user/login', userApi.login),
+    path('user/register', userApi.register),
+    path('user/changepwd', userApi.changePwd),
+    path('user/changeinfo', userApi.changeInfo),
+    path('user/getinfo', userApi.getInfo),
+    path('user/setavatar', userApi.setAvatar),
+    path('user/getavatar/<str:ID>', userApi.getAvatar),
+
+    path('book/info/<int:bookid>/', bookApi.get_book_info),
+    path('book/outline/<int:bookid>/', bookApi.get_book_outline),
+    path('book/content/<int:bookid>/<int:chapter>/', bookApi.get_book_content),
+
     path('submit/', userApi.my_view),
     path('gallery/', userApi.image_gallery),
-    path('changepwd', userApi.changePwd),
-    path('changeinfo', userApi.changeInfo),
-    path('getinfo', userApi.getInfo),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
