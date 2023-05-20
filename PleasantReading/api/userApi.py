@@ -11,6 +11,7 @@ from api.models import UserInfo
 
 TOKEN = True
 
+
 # Create your views here.
 def image_gallery(request):
     if TOKEN:
@@ -22,10 +23,11 @@ def image_gallery(request):
             users = UserInfo.objects.all()
             return render(request, 'image_gallery.html', {'users': users})
         else:
-            return JsonResponse({'message': '请登录'})
+            return JsonResponse({'message': 'please login first'})
     else:
         users = UserInfo.objects.all()
         return render(request, 'image_gallery.html', {'users': users})
+
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -37,12 +39,36 @@ class UserForm(forms.ModelForm):
         }
 
 
+def my_view(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST, request.FILES)
+        if form.is_valid():
+            # print(form)
+            image = request.FILES['img']
+            ID = form.cleaned_data['userID']
+            passwd = form.cleaned_data['passwd']
+            email = form.cleaned_data['email']
+            userObj = UserInfo(userID=ID, passwd=passwd, email=email, img=image)
+            userObj.save()
+            url = userObj.img.url
+            return render(request, 'success.html', {'image_url': url})
+            # 其他处理...
+    else:
+        form = UserForm()
+
+    return render(request, 'test.html', {'form': form})
+
+
 def changePwd(request):
     data = json.loads(request.body)
     userID = data.get('ID')
     oldPwd = data.get('oldpwd')
     newPwd = data.get('newpwd')
 
+    accessToken = request.headers.get('Authorization').split(' ')[1]
+    decodedToken = validateAccessToken(accessToken)
+    if decodedToken is None:
+        return JsonResponse({'message': 'fail', 'error': 'not the login user'}, status=400)
     obj = UserInfo.objects.filter(userID=userID)
     print(obj.get().passwd)
     if obj.count() == 0:
@@ -52,14 +78,20 @@ def changePwd(request):
             return JsonResponse({'message': 'fail', 'error': 'old password error'}, status=400)
         else:
             UserInfo.objects.filter(userID=userID).update(passwd=newPwd)
-            User.objects.filter(username=userID).update(password=newPwd)
+            user = User.objects.get(username=userID)
+            user.set_password(newPwd)
+            user.save()
             return JsonResponse({'message': 'success'}, status=200)
 
 
 def getInfo(request):
     if request.method != 'GET':
-        return JsonResponse({"message": "failed", "error": "request method error"})
-    ID = request.GET.get('ID')
+        return JsonResponse({"message": "failed", "error": "request method error"}, status=404)
+    accessToken = request.headers.get('Authorization').split(' ')[1]
+    decodedToken = validateAccessToken(accessToken)
+    if decodedToken is None:
+        return JsonResponse({'message': 'fail', 'error': 'not the login user'}, status=400)
+    ID = getUserFromToken(accessToken).username
     data = UserInfo.objects.filter(userID=ID)
     if data.count() == 0:
         return JsonResponse({"message": "failed", "error": "id error"})
@@ -71,6 +103,7 @@ def getInfo(request):
         birthday = data.get().birth
         VIP = data.get().VIPDate
         responseData = {
+            'username': ID,
             'email': email,
             'gender': gender,
             'region': region,
@@ -81,15 +114,20 @@ def getInfo(request):
         }
         return JsonResponse(responseData, status=200)
 
+
 def changeInfo(request):
+    accessToken = request.headers.get('Authorization').split(' ')[1]
+    decodedToken = validateAccessToken(accessToken)
+    if decodedToken is None:
+        return JsonResponse({'message': 'fail', 'error': 'not the login user'}, status=404)
+
     data = json.loads(request.body)
-    ID = data.get('ID')
+    ID = getUserFromToken(accessToken).username
     gender = data.get('gender')
     region = data.get('region')
     birthday = data.get('birthday')
     motto = data.get('motto')
-    if UserInfo.objects.filter(userID=ID).count() == 0:
-        return JsonResponse({"message": "filed", "error": "id error"})
+
     if gender:
         UserInfo.objects.filter(userID=ID).update(gender=gender)
     if region:
@@ -99,25 +137,6 @@ def changeInfo(request):
     if motto:
         UserInfo.objects.filter(userID=ID).update(motto=motto)
     return JsonResponse({"message": "success"})
-
-def my_view(request):
-    if request.method == 'POST':
-        form = UserForm(request.POST, request.FILES)
-        if form.is_valid():
-            # print(form)
-            image = request.FILES['img']
-            ID = form.cleaned_data['userID']
-            passwd = form.cleaned_data['passwd']
-            email = form.cleaned_data['email']
-            userObj = UserInfo(userID=ID, passwd=passwd, email=email,img=image)
-            userObj.save()
-            url = userObj.img.url
-            return render(request, 'success.html', {'image_url': url})
-            # 其他处理...
-    else:
-        form = UserForm()
-
-    return render(request, 'test.html', {'form': form})
 
 
 def login(request):
@@ -140,7 +159,6 @@ def login(request):
         return JsonResponse({'message': 'fail'}, status=400)
 
 
-
 def register(request):
     data = json.loads(request.body)
     username = data.get('username')
@@ -157,3 +175,33 @@ def register(request):
         return JsonResponse({'message': 'success'})
     except Exception as e:
         return JsonResponse({'message': 'fail', 'error': str(e)})
+
+
+def setAvatar(request):
+    accessToken = request.headers.get('Authorization').split(' ')[1]
+    decodedToken = validateAccessToken(accessToken)
+    if decodedToken is None:
+        return JsonResponse({'message': 'fail', 'error': 'not the login user'}, status=404)
+
+    ID = getUserFromToken(accessToken).username
+    image = request.FILES['img']
+    print(image)
+    if image is None:
+        return JsonResponse({'message': 'fail', 'error': 'get avatar fail'}, status=403)
+
+    image.name = ID + ".jpg"
+    obj = UserInfo.objects.get(userID=ID)
+    obj.img = image
+    obj.save()
+    return JsonResponse({'message': 'success'})
+
+
+def getAvatar(request, ID):
+    if request.method != 'GET':
+        return JsonResponse({'message': 'fail', 'error': 'request method error'}, status=400)
+    try:
+        obj = UserInfo.objects.get(userID=ID)
+        avatar = obj.img
+        return JsonResponse({'message': 'success', 'url': avatar.url})
+    except:
+        return JsonResponse({'message': 'fail', 'error': 'ID error'}, status=400)
