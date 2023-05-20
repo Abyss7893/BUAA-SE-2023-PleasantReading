@@ -22,6 +22,7 @@
       <template v-else>
         <div class="avatar">
           <ElDropdown trigger="click">
+            <!-- 这里暂时用的是svg库里的图标，后期需要通过得到后端的数据换上人物头像 -->
             <ElAvatar icon="user">
             </ElAvatar>
             <template #dropdown>

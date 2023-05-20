@@ -29,12 +29,12 @@
                 </el-card>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
 import { reactive, ref } from '@vue/runtime-core'
+import axios from 'axios'
 // import { useRouter } from 'vue-router'
 // import { useStore } from 'vuex'
 
@@ -53,12 +53,26 @@ export default {
         //const store = useStore()
 
         async function register() {
-            // const res = await store.dispatch('register', userRegisterForm)
-            // if (res.code === 200) {
-            //   router.push('/login')
-            // } else {
-            //   error.value = res.msg
-            // }
+            const emailReg = /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
+            if (!emailReg.test(userRegisterForm.email)) {
+                alert('请输入正确的邮箱地址');
+                return;
+            }
+            if (userRegisterForm.password !== userRegisterForm.confirmPassword) {
+                alert('两次输入的密码不一致')
+                return
+            }
+            try {
+                const res = await axios.post('http://127.0.0.1:8888/register', userRegisterForm)
+                if (res.status === 200) {
+                    alert("注册成功")
+                } else {
+                    throw new Error('请求失败')
+                }
+            } catch (error) {
+                alert("注册失败")
+                console.log(error)
+            }
         }
         return {
             userRegisterForm,

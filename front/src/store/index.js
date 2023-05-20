@@ -25,6 +25,10 @@ const store = createStore({
     setVIP(state) {
       state.isVIP = true
     },
+    setUser(state, userId) {
+      state.userId = userId;
+      state.isLogin = true;
+    },
     changeNaviLoc(state, num) {
       state.navigationLoc = num
     },

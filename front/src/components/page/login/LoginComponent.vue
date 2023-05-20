@@ -44,8 +44,9 @@
 </template>
 
 <script>
-// import { useStore } from 'vuex'
-// import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import  axios  from 'axios'
 import { reactive, ref } from '@vue/runtime-core'
 import ForgetDialog from './ForgetPwd.vue'
 import { ElDialog, ElButton } from 'element-plus'
@@ -57,13 +58,14 @@ export default {
     ElButton
   },
   setup() {
+    const store = useStore();
+    const router= useRouter()
     let userLoginForm = reactive({
       username: "",
       password: ""
     })
     let showForget = ref(false)
     //const store = useStore()
-    //const router = useRouter()
     // const { proxy } = getCurrentInstance()
     let error = ref('')
     function showForgetDialog() {
@@ -71,7 +73,35 @@ export default {
     }
     //获取用户登录信息
     async function usreList() {
-
+      try {
+        axios.post('http://127.0.0.1:8888/login/', {
+          id: userLoginForm.username,
+          pwd: userLoginForm.password
+        }, {
+          headers: {
+            'Content-Type': 'application/json'  // 设置请求头为 JSON 格式
+          }
+        }).then(response => {
+          const token = response.data.access;
+          // 将令牌存储在本地存储中
+          localStorage.setItem('token', token);
+          console.log(token);
+          console.log(response.data.message);
+          // 更新默认请求头中的令牌
+          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          // 登录成功后的操作，例如跳转到其他页面
+          const userId = response.data.userId;
+          store.commit('setUser', userId);
+          router.push('/'); // 通过 router.push() 方法跳转到主页面
+        }).catch(error => {
+          // 处理登录错误
+          console.error(error);
+          alert("账号或密码错误")
+        });
+      } catch (error) {
+        // 处理错误
+        console.error(error);
+      }
     }
     //获取用户信息
     async function getUserInfo() {
@@ -97,13 +127,12 @@ export default {
 }
 
 #login {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+ 
   background-image: url(../../../assets/loginback.jpg);
   background-size: 100% 100%;
   background-color: #a7a8bd;
-
+  width: 100vw;
+  height: 100vh;
   #contain {
     height: 400px;
     position: absolute;

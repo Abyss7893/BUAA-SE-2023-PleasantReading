@@ -1,7 +1,7 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                                <LoginComponent /> -->
+                                      <LoginComponent /> -->
   <div id="app">
     <RouterView></RouterView>
   </div>
@@ -51,6 +51,12 @@ export default {
 
 .clear {
   clear: both;
+}
+
+a {
+  color: #262626;
+  outline: none;
+  text-decoration: none;
 }
 
 body {
