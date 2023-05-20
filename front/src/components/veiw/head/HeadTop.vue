@@ -72,7 +72,8 @@ export default {
 };
 </script>
 <style>
-.el-dropdown-item {
-  color: black;
+.personal-dropdown-menu {
+  --el-dropdown-menuItem-hover-fill: #f56c6c;
+  --el-dropdown-menuItem-hover-color: white;
 }
 </style>
