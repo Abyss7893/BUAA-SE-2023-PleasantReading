@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+import configparser
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -95,19 +96,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'PleasantReading.wsgi.application'
 
 
-CORS_ALLOWED_ORIGINS = [
-    'http://10.193.157.84:8080'
-]
-# 允许的来源（根据需要进行配置，可以是具体的域名或通配符）
-CORS_ORIGIN_WHITELIST = [
-    'http://10.193.157.84:8080/'
-    # 其他允许的来源
-]
+CORS_ALLOW_ALL_ORIGINS = True
+
 # 允许的请求方法
 CORS_ALLOW_METHODS = [
     'POST',
     'GET',
     'PUT',
+    'DELETE',
+    'OPTIONS'
     # 其他允许的方法
 ]
 
@@ -130,8 +127,9 @@ CORS_ALLOW_HEADERS = [
 # }
 
 # 这里需要 pip install configparser
-import configparser
-config_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))), 'config.ini')
+
+config_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))),
+                           'config.ini')
 config = configparser.ConfigParser()
 config.read(config_file)
 

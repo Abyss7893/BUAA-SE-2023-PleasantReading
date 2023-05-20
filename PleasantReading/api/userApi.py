@@ -6,19 +6,18 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 import json
 
-from api.admin import validateAccessToken, sendVerificationEmail
+from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
 from api.models import UserInfo
 
-TOKEN = False
+TOKEN = True
 
 # Create your views here.
 def image_gallery(request):
-
     if TOKEN:
         accessToken = request.headers.get('Authorization').split(' ')[1]
         decodedToken = validateAccessToken(accessToken)
         if decodedToken:
-            print(request.user)
+            print(getUserFromToken(accessToken))
             users = UserInfo.objects.all()
             return render(request, 'image_gallery.html', {'users': users})
         else:
@@ -46,10 +45,10 @@ def changePwd(request):
     obj = UserInfo.objects.filter(userID=userID)
     print(obj.get().passwd)
     if obj.count() == 0:
-        return JsonResponse({'message': 'failed', 'error': 'ID error'}, status=400)
+        return JsonResponse({'message': 'fail', 'error': 'ID error'}, status=400)
     else:
         if obj.get().passwd != oldPwd:
-            return JsonResponse({'message': 'failed', 'error': 'old password error'}, status=400)
+            return JsonResponse({'message': 'fail', 'error': 'old password error'}, status=400)
         else:
             UserInfo.objects.filter(userID=userID).update(passwd=newPwd)
             User.objects.filter(username=userID).update(password=newPwd)
@@ -123,8 +122,8 @@ def my_view(request):
 def login(request):
     print('Yes')
     data = json.loads(request.body)
-    username = data.get('username')
-    password = data.get('password')
+    username = data.get('id')
+    password = data.get('pwd')
     print("username = {0}, pwd = {1}".format(username, password))
     user = authenticate(request, username=username, password=password)
     if user is not None:
@@ -150,10 +149,10 @@ def register(request):
         print(username)
         cnt = UserInfo.objects.filter(userID=username).count()
         if cnt != 0:
-            return JsonResponse({'message': 'failed', 'error': 'username exists'})
+            return JsonResponse({'message': 'fail', 'error': 'username exists'})
         # verificationCode = sendVerificationEmail(email)
-        # User.objects.create_user(username=username, password=password, email=email)
-        # UserInfo.objects.create(userID=username, passwd=password, email=email)
-        return JsonResponse({'message': 'successful'})
+        User.objects.create_user(username=username, password=password, email=email)
+        UserInfo.objects.create(userID=username, passwd=password, email=email)
+        return JsonResponse({'message': 'success'})
     except Exception as e:
-        return JsonResponse({'message': 'failed', 'error': str(e)})
+        return JsonResponse({'message': 'fail', 'error': str(e)})

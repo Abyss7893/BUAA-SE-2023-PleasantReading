@@ -25,11 +25,14 @@ from api.userApi import my_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('upload/', my_view, name='upload'),  # 添加上传图片的路由
-    path('login', userApi.login),
-    path('register', userApi.register),
+
+    path('user/login', userApi.login),
+    path('user/register', userApi.register),
+    path('user/changepwd', userApi.changePwd),
+
+
     path('submit/', userApi.my_view),
     path('gallery/', userApi.image_gallery),
-    path('changepwd', userApi.changePwd),
     path('changeinfo', userApi.changeInfo),
     path('getinfo', userApi.getInfo),
 ]

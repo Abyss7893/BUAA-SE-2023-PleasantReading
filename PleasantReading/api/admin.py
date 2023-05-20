@@ -1,6 +1,7 @@
 import jwt
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 
@@ -20,6 +21,18 @@ def validateAccessToken(accessToken):
     except jwt.InvalidTokenError:
         # 无效的访问令牌
         return None
+
+def getUserFromToken(token):
+    decodedToken = validateAccessToken(token)
+    if decodedToken:
+        User = get_user_model()
+        try:
+            user_id = decodedToken['user_id']
+            user = User.objects.get(id=user_id)
+            return user
+        except:
+            pass
+    return None
 
 def sendVerificationEmail(email):
     # 生成验证码
