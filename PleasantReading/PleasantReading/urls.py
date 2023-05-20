@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 
 from PleasantReading import settings
-from api import userApi
+from api import userApi, bookApi
 from api.userApi import my_view
 
 urlpatterns = [
@@ -30,6 +30,9 @@ urlpatterns = [
     path('user/register', userApi.register),
     path('user/changepwd', userApi.changePwd),
 
+    path('book/info/<int:bookid>/', bookApi.get_book_info),
+    path('book/outline/<int:bookid>/', bookApi.get_book_outline),
+    path('book/content/<int:bookid>/<int:chapter>/', bookApi.get_book_content),
 
     path('submit/', userApi.my_view),
     path('gallery/', userApi.image_gallery),

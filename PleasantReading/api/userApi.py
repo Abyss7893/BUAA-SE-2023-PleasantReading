@@ -14,6 +14,7 @@ TOKEN = True
 # Create your views here.
 def image_gallery(request):
     if TOKEN:
+        print(request.headers.get('Authorization'))
         accessToken = request.headers.get('Authorization').split(' ')[1]
         decodedToken = validateAccessToken(accessToken)
         if decodedToken:
