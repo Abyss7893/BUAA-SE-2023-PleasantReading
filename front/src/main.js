@@ -22,6 +22,7 @@ app.directive("shake", (el) => {
 app.use(ElementPlus)
 app.use(router)
 app.use(store)
-// app.use(loginState)
+
+
 app.mount('#app')
 
