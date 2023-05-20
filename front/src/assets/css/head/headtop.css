@@ -36,23 +36,13 @@
   box-sizing: border-box;
 }
 
-.head-top .search input[type="submit"] {
-  padding: 10px;
-  background-color: #f56c6c;
-  cursor: pointer;
-  border: none;
-  border-radius: 0 10px 10px 0;
-  color: #fff;
-  font-size: 16px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
-  outline: none;
-}
-
 .head-top .search input[type="submit"]:hover {
   background-color: #d5190fde;
 }
+
 .head-top .search button[type="submit"] {
-  padding: 10px;
+  padding: 12px 10px 10px 10px;
+  width: 50px;
   background-color: #f56c6c;
   cursor: pointer;
   border: none;

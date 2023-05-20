@@ -3,7 +3,7 @@
   <div class="head-top">
     <!-- <check-login/> -->
     <div>
-      <a class="logoa" href="/"><img class="logo" src="../../../assets/logo-yixinyuedu.png" alt=""></a>
+      <a class="logoa" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt=""></a>
     </div>
     <div class="dropdown">
       <form action="" method="get">
