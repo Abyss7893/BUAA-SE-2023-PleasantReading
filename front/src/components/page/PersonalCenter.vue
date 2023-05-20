@@ -1,6 +1,11 @@
 <template>
     <div class="contain">
+        <ElDialog v-model="showPayDialog" title="支付"
+        width="30%">
+                <PayComponent/>
+            </ElDialog>
         <HeadTop />
+        
         <div class="PersonTop">
             <div class="PersonTop_image">
                 <ElAvatar
@@ -10,7 +15,7 @@
             <div class="PersonTop_text">
                 <div class="user_text">
 
-                    <div class="imageVIP">
+                    <div class="imageVIP" v-if="VIP">
                         <ElAvatar
                         src="https://pic.ntimg.cn/file/20190602/29233777_112131974087_2.jpg" :size="45" fit="contain" ></ElAvatar>
                         
@@ -24,7 +29,7 @@
                 </div>
             </div>
             <div class="PersonTop_right">
-                <el-button  icon="star" >充值会员</el-button>
+                <el-button  icon="star" @click="openPayDia()">充值会员</el-button>
                 <el-button  icon="star" >修改密码</el-button>
                 <el-button  icon="switchButton" @click="signOut">退出登录</el-button>
             </div>
@@ -86,49 +91,51 @@
 <script>
 
 //import PersonalDia from "./PersonalDialog.vue";
-import { ElAvatar, ElButton } from 'element-plus';
+import { ElAvatar, ElButton, ElDialog } from 'element-plus';
 import HeadTop from '../veiw/head/HeadTop';
 
-import { ref } from 'vue';
+import { ref,computed } from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router';
+import PayComponent from './PayComponent.vue';
 export default {
 
    name: "PersonalCenter",
     inject: ["reload"],
-    components: { ElAvatar, HeadTop, ElButton },
+    components: { ElAvatar, HeadTop, ElButton,  ElDialog,PayComponent},
     setup() {
         const store=useStore();
         const router=useRouter();
-        const avatar = ref("");
         const nickname = ref("cyx");
         const design = ref("");
-        const followCounts = ref("");
-        const fanCounts = ref("");
-        const goodCounts = ref("");
+        const showPayDialog =ref(false);
         const isfollow = ref(true);
         const followData = ref({
             fanId: "",
             followId: "",
         });
         const isfollowid = ref([]);
-
+        const VIP = computed(() => {
+            return store.state.isVip;
+        });
         function signOut() {
             store.commit('signOut');
             router.push('/');
         }
-
+        function openPayDia(){
+            showPayDialog.value=true;
+            console.log("什么情况",showPayDialog.value);
+        }
         return {
-            avatar,
             nickname,
             design,
-            followCounts,
-            fanCounts,
-            goodCounts,
             isfollow,
             followData,
             isfollowid,
+            VIP,
+            showPayDialog,
             signOut,
+            openPayDia
         }
     }
 };
@@ -150,6 +157,9 @@ export default {
     height: 200px;
     padding-top: 20px;
     background-color: white;
+    background-image: url(../../assets/personTopbg.png);
+    background-repeat: no-repeat;
+    background-position: center;
     margin-top: 12px;
     position: absolute;
     left: 50%;
@@ -186,7 +196,7 @@ export default {
     font-weight: bold;
 }
 .user_anniu{
-    margin-top: 100px;
+    margin-top: 140px;
     margin-right: 10px;
 }
 .user_qianming {

@@ -3,7 +3,7 @@ const store = createStore({
   state() {
     return {
       isLogin: false,
-      isVIP: false,
+      isVIP: true,
       userId: null,
       userAvatar: null,
       navigationLoc: 1,
