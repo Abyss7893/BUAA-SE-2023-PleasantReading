@@ -79,6 +79,12 @@ export default {
     login() {
       this.$store.commit('refresh')
     },
+    drop() {
+      this.$refs.hidden.style.display = "block"
+    },
+    hide() {
+      this.$refs.hidden.style.display = "none"
+    }
   }
 };
 </script>
