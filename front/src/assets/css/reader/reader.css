@@ -1,5 +1,7 @@
-body {
+.basic-bcg {
   background: #ede7da url(~assets/readerbcg/body_base_bg_1.png) repeat fixed;
+  padding-top: 48px;
+  overflow: hidden;
 }
 
 .center-box {
@@ -12,7 +14,7 @@ body {
 
 .center-box .text {
   border: 1px solid #d8d8d8;
-  margin: 24px 0 24px;
+  margin: 0 0 24px;
   min-height: 600px;
   padding: 60px 64px;
   background: url(~assets/readerbcg/basic_bg_1.png) repeat fixed;
@@ -121,4 +123,82 @@ body {
 
 .reader-menu dd a:hover svg path {
   fill: #f56c6c;
+}
+
+.reader-menu .panel-box {
+  left: 69px;
+  position: absolute;
+  top: 0;
+  width: 480px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+}
+
+.reader-menu .panel {
+  border: 1px solid rgba(0, 0, 0, .1);
+  padding: 40px 0 40px 24px;
+  background-color: #fff;
+  background: url("~assets/readerbcg/base_theme_1.png") repeat;
+}
+
+.reader-menu .panel h4 {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.reader-menu .panel li {
+  margin-top: 30px;
+}
+
+.reader-menu .panel .setting-list li i {
+  color: #666;
+  display: inline-block;
+  font: 12px/16px PingFangSC-Regular, -apple-system, Simsun;
+  margin-right: 16px;
+  min-width: 48px;
+  vertical-align: middle;
+}
+
+.reader-menu .panel .button {
+  padding: 36px 0 0;
+  text-align: center;
+}
+
+.reader-menu .panel .button a {
+  display: inline-block;
+  letter-spacing: normal;
+  vertical-align: middle;
+  word-spacing: normal;
+  border-radius: 2px;
+  font: 14px/34px PingFangSC-Regular, -apple-system, Simsun;
+  height: 34px;
+  width: 100px;
+}
+
+
+.reader-menu .panel .button .save-button {
+  background: #bf2c24;
+  border-color: #bf2c24;
+  color: #fff;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+  transition: color .3s, background-color .3s;
+}
+
+.reader-menu .panel .button .cancel-button {
+  height: 32px;
+  line-height: 32px;
+  margin-left: 40px;
+  width: 98px;
+  background: hsla(0, 0%, 100%, .5);
+  border: 1px solid rgba(0, 0, 0, .2);
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.reader-menu .panel .button .save-button:hover {
+  background: #ed4259;
+  border-color: #ed4259;
+  color: #fff;
 }

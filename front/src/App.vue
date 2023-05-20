@@ -1,7 +1,7 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                                      <LoginComponent /> -->
+                                        <LoginComponent /> -->
   <div id="app">
     <RouterView></RouterView>
   </div>
@@ -57,6 +57,12 @@ a {
   color: #262626;
   outline: none;
   text-decoration: none;
+}
+
+li,
+ol,
+ul {
+  list-style: none outside none;
 }
 
 body {

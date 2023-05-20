@@ -1,5 +1,5 @@
 <template>
-  <div ref="fixparent">
+  <div class="basic-bcg">
     <ElAffix>
       <ReaderMenu />
     </ElAffix>

@@ -1,17 +1,17 @@
 <template>
-  <WebHead />
+  <HeadTop />
   <ReaderBody />
   <WebFoot />
 </template>
 <script>
-import WebHead from '../veiw/head/WebHead.vue';
+import HeadTop from '../veiw/head/HeadTop.vue';
 import WebFoot from '../veiw/foot/WebFoot.vue';
 import ReaderBody from '../veiw/body/ReaderBody.vue';
 
 export default {
   name: "ReaderComponent",
   components: {
-    WebHead,
+    HeadTop,
     WebFoot,
     ReaderBody,
 
