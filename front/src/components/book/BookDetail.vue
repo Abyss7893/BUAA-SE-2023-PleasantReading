@@ -187,7 +187,7 @@ export default {
   },
   methods: {
     generateChater() {
-      for (let i = 1; i <= 200; i++) {
+      for (let i = 1; i <= 400; i++) {
         i;
         this.chapters.push({ id: i, title: "Chapter " + i });
       }

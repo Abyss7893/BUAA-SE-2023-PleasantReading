@@ -1,6 +1,7 @@
 <!-- 网页头部顶侧，包含logo、登录&&注册、搜索栏等 -->
 <template>
   <div class="head-top">
+    <!-- <check-login/> -->
     <div>
       <a class="logoa" href="/"><img class="logo" src="../../../assets/logo-yixinyuedu.png" alt=""></a>
     </div>
@@ -45,6 +46,7 @@
 import "css/head/headtop.css";
 //import LoginComponent from "@/components/login/LoginComponent.vue";
 import { ElAvatar, ElDropdown, ElDropdownMenu, ElDropdownItem } from "element-plus";
+// import CheckLogin from '../../check/checkLogin.vue';
 export default {
   name: "Head_Top",
   components: {
@@ -53,6 +55,7 @@ export default {
     ElDropdown,
     ElDropdownItem,
     ElDropdownMenu,
+    // CheckLogin,
   },
   computed: {
     isLogin() {

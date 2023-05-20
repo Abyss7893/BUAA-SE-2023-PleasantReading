@@ -4,7 +4,7 @@ import router from './route/index'
 import store from './store/index'
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
+// import loginState from './store/loginState'
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
@@ -20,5 +20,6 @@ app.directive("shake", (el) => {
 app.use(ElementPlus)
 app.use(router)
 app.use(store)
+// app.use(loginState)
 app.mount('#app')
 
