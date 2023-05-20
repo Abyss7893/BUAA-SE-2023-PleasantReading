@@ -4,7 +4,8 @@ import router from './route/index'
 import store from './store/index'
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
+import axios from 'axios'
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)

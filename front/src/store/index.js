@@ -13,6 +13,10 @@ const store = createStore({
     refresh(state) {
       state.isLogin = !state.isLogin
     },
+    setUser(state, userId) {
+      state.userId = userId;
+      state.isLogin = true;
+    },
     changeNaviLoc(state, num) {
       state.navigationLoc = num
     },
