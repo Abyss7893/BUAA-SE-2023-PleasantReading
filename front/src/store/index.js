@@ -25,6 +25,9 @@ const store = createStore({
     setVIP(state) {
       state.isVIP = true
     },
+    signOut(state){
+      state.isLogin=false;
+    },
     setUser(state, userId) {
       state.userId = userId;
       state.isLogin = true;
