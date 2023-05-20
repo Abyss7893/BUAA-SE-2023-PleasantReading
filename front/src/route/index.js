@@ -4,11 +4,13 @@ import RegisterComponent from '../components/page/login/RegisterComponent'
 import BookDetail from '../components/book/BookDetail'
 import PersonalCenter from '../components/page/PersonalCenter'
 import InfoComponent from '../components/page/InfoComponent'
+import Reader from 'components/page/Reader'
 // import FantasyComponent from '../components/veiw/content/category/FantasyComponent'
 // import HistoryComponent from '../components/veiw/content/category/HistoryComponent'
 // import MartialComponent from '../components/veiw/content/category/MartialComponent'
 // import CityComponent from '../components/veiw/content/category/CityComponent'
 import Home from 'components/page/Home'
+
 import 'css/home.css'
 const router = createRouter({
   history: createWebHistory(),
@@ -46,15 +48,20 @@ const router = createRouter({
       component: BookDetail
     },
     {
-      path:'/user',
-      component:PersonalCenter,
-      children:[
+      path: '/user',
+      component: PersonalCenter,
+      children: [
         {
-          path:'info',
-          name:'info',
-          component:InfoComponent
+          path: 'info',
+          name: 'info',
+          component: InfoComponent
         }
       ]
+    },
+    {
+      path: '/reader',
+      component: Reader,
+
     }
 
   ]
