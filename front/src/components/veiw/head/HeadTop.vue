@@ -5,13 +5,24 @@
     <div>
       <a class="logoa" href="/"><img class="logo" src="../../../assets/logo-yixinyuedu.png" alt=""></a>
     </div>
-    <form action="" method="get">
-      <div class="search">
-        <input type="text" name="" id="" placeholder="查询" />
-        <input type="submit" value="" />
+    <div class="dropdown">
+      <form action="" method="get">
+        <div class="search">
+          <input type="text" name="" id="" placeholder="想看什么我这里都有哟~" @focusin="drop" @focusout="hide" />
+          <button type="submit"><el-icon>
+              <Search />
+            </el-icon></button>
+        </div>
+      </form>
+      <div class="dropdown-content" ref="hidden">
+        <div class="first-want">大家都想看</div>
+        <div class="want">重生之我在北航卖西瓜</div>
+        <div class="want">青春北航男童不会梦到清华女学长</div>
+        <div class="want">你还爱我吗</div>
+        <div class="want">占位符1</div>
+        <div class="want">占位符2</div>
       </div>
-    </form>
-
+    </div>
     <div class="login-register">
       <template v-if="!isLogin">
 
