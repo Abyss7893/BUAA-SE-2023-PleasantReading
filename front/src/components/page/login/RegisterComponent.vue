@@ -35,12 +35,13 @@
 <script>
 import { reactive, ref } from '@vue/runtime-core'
 import axios from 'axios'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 // import { useStore } from 'vuex'
 
 export default {
     name: "RegisterComponent",
     setup() {
+        const router=useRouter()
         let userRegisterForm = reactive({
             email: "",
             username: "",
@@ -63,16 +64,35 @@ export default {
                 return
             }
             try {
-                const res = await axios.post('http://127.0.0.1:8888/register', userRegisterForm)
+                const res = await axios.post('http://154.8.183.51/user/register', userRegisterForm,
+                {
+                        headers: {
+                            'content-type': 'application/json'
+                        }
+                    })
                 if (res.status === 200) {
-                    alert("注册成功")
+                    console.log(res.data.message)
+                    if(res.data.message==='success'){
+                        const isTo = confirm('注册成功!是否跳转到登录界面');
+                        if (isTo) {
+                            router.push('/login');
+                        }
+                    }
+                    
+                    else
+                    alert("账号已存在")
                 } else {
                     throw new Error('请求失败')
                 }
+
             } catch (error) {
                 alert("注册失败")
                 console.log(error)
             }
+            userRegisterForm.email = "";
+            userRegisterForm.username = "";
+            userRegisterForm.password = "";
+            userRegisterForm.confirmPassword = "";
         }
         return {
             userRegisterForm,
