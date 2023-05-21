@@ -8,6 +8,15 @@ const store = createStore({
       userAvatar: null,
       navigationLoc: 1,
       categoriesIndex: [0, 0, 0, 0],
+      userInfo:{
+        username: null,
+        gender: null,
+        birthday: "2000-01-01",
+        email: null,
+        motto: "这个人很懒,什么也没留下。",
+        nickname: null,
+        VIPDate:null,
+      },
       themes: [
         {
           "name": "默认",
@@ -40,7 +49,12 @@ const store = createStore({
           "bg2": require('assets/imgs/readerbcg/lightpink/basic.png'),
         },
       ],
-      readerSettings: [null, "default", 18, 800],
+      readerSettings: [{
+        "name": "默认",
+        "color": "hsla(40,60%,95%,.8)",
+        "bg1": require('assets/imgs/readerbcg/default/body.png'),
+        "bg2": require('assets/imgs/readerbcg/default/basic.png'),
+      }, "yahei", 18, 800],
 
     }
   },
@@ -59,8 +73,8 @@ const store = createStore({
     setVIP(state) {
       state.isVIP = true
     },
-    signOut(state){
-      state.isLogin=false;
+    signOut(state) {
+      state.isLogin = false;
     },
     setUser(state, userId) {
       state.userId = userId;
@@ -74,8 +88,10 @@ const store = createStore({
     },
     setReaderSettings(state, settings) {
       state.readerSettings = settings
+    },
+    updateUserInfo(state,userInfo){
+      state.userInfo=userInfo
     }
-
-  }
+  },
 })
 export default store
