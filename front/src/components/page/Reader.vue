@@ -14,7 +14,6 @@ export default {
     HeadTop,
     WebFoot,
     ReaderBody,
-
   },
 
 }
