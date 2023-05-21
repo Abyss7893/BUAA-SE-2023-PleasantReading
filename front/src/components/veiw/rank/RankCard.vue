@@ -129,4 +129,12 @@ export default {
   min-width: 100%;
   background-color: rgba(157, 50, 50, 0.034);
 }
+.el-card {
+  transition: all 0.5s;
+  border-radius: 15px;
+  /* background-color: rgba(255, 0, 0, 0.1); */
+}
+.el-card:hover {
+  margin-top: -7px;
+}
 </style>

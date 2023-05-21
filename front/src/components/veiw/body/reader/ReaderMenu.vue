@@ -1,9 +1,9 @@
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <div class="reader-menu float">
+  <div class="reader-menu float" :style="{ marginLeft: menuLoc }">
     <dl>
-      <dd :class="isddAct"><a @click="openSettings"><svg t="1684569489333" class="icon" viewBox="0 0 1024 1024"
-            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="41510" width="16" height="16">
+      <dd><a><svg t="1684569489333" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            p-id="41510" width="16" height="16">
             <path
               d="M838.3 895.9H197.9c-53.9 0-97.7-43.8-97.7-97.7V236.7c0-53.9 43.8-97.7 97.7-97.7h640.3c53.9 0 97.7 43.8 97.7 97.7v561.4c0.1 53.9-43.7 97.8-97.6 97.8zM197.9 203.8c-18.1 0-32.9 14.8-32.9 32.9v561.4c0 18.1 14.8 32.9 32.9 32.9h640.3c18.1 0 32.9-14.8 32.9-32.9V236.7c0-18.1-14.8-32.9-32.9-32.9H197.9z"
               fill="#262626" p-id="41511"></path>
@@ -44,8 +44,8 @@
               d="M300.083008 464.834794c0 27.928073 22.735817 50.64854 50.66389 50.64854 27.927049 0 50.662867-22.720468 50.662867-50.64854 0-27.928073-22.735817-50.66389-50.662867-50.66389C322.817802 414.171927 300.083008 436.907745 300.083008 464.834794"
               fill="#262626" p-id="2413"></path>
           </svg><span>评论</span></a></dd>
-      <dd><a href=""><svg t="1684569420958" class="icon" viewBox="0 0 1036 1024" version="1.1"
-            xmlns="http://www.w3.org/2000/svg" p-id="37778" width="16" height="16">
+      <dd :class="isddAct"><a @click="changeSettings"><svg t="1684569420958" class="icon" viewBox="0 0 1036 1024"
+            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="37778" width="16" height="16">
             <path
               d="M1017.6 467.2c0-19.2 0-38.4-6.4-51.2 0-25.6-12.8-44.8-38.4-51.2-38.4-6.4-70.4-25.6-96-70.4-19.2-38.4-25.6-76.8-12.8-115.2 6.4-19.2 0-38.4-12.8-64-44.8-44.8-102.4-76.8-166.4-96-19.2-6.4-38.4 0-64 12.8-25.6 32-64 44.8-108.8 44.8-38.4 0-76.8-19.2-108.8-44.8-25.6-25.6-51.2-19.2-64-12.8-44.8 32-96 57.6-153.6 102.4-25.6 12.8-32 38.4-25.6 57.6 12.8 38.4 6.4 83.2-12.8 121.6-12.8 32-44.8 57.6-89.6 70.4H44.8c-12.8 6.4-25.6 19.2-32 44.8v19.2c-6.4 25.6-12.8 51.2-12.8 70.4 0 32 0 70.4 12.8 96 0 25.6 19.2 44.8 44.8 51.2 38.4 6.4 70.4 25.6 96 70.4 19.2 38.4 25.6 76.8 12.8 115.2-6.4 19.2 0 38.4 12.8 64 38.4 38.4 89.6 70.4 166.4 102.4h12.8c12.8 0 32-6.4 44.8-19.2 25.6-32 64-44.8 108.8-44.8 38.4 0 76.8 19.2 108.8 44.8 12.8 12.8 25.6 19.2 44.8 19.2h19.2c57.6-25.6 108.8-51.2 166.4-96 19.2-12.8 32-38.4 19.2-57.6-12.8-38.4-6.4-83.2 12.8-121.6 19.2-32 51.2-57.6 96-70.4h12.8c19.2-6.4 32-25.6 38.4-44.8l6.4-19.2c-19.2-32-12.8-51.2-12.8-76.8 0-19.2-6.4-32-6.4-51.2z m-224 384c-32 32-76.8 57.6-134.4 76.8-38.4-38.4-96-64-153.6-64-57.6 0-115.2 25.6-153.6 64-51.2-19.2-96-51.2-128-76.8 19.2-57.6 12.8-115.2-19.2-160-32-57.6-70.4-89.6-128-102.4V512c0-25.6 0-51.2 6.4-83.2 57.6-19.2 96-51.2 128-96 32-57.6 38.4-115.2 19.2-160 32-32 76.8-57.6 134.4-76.8 44.8 44.8 96 70.4 153.6 70.4 57.6 0 115.2-25.6 153.6-64 51.2 19.2 96 51.2 128 76.8-19.2 57.6-12.8 115.2 19.2 160 32 57.6 70.4 89.6 128 102.4 6.4 25.6 6.4 51.2 6.4 83.2 0 19.2 0 38.4-6.4 70.4-57.6 19.2-102.4 57.6-128 102.4-32 51.2-38.4 108.8-25.6 153.6z"
               fill="#262626" p-id="37779"></path>
@@ -60,121 +60,43 @@
 
     </div> -->
     <!-- 设置面板浮层 -->
-    <div class="panel-box" :style="{ display: this.settingsDisplay }">
-      <div class="panel setting">
-        <h4 class="lang">设置</h4>
-        <div class="setting-list">
-          <ul>
-            <li class="theme-list"><i>阅读主题</i><span v-for="(theme, themeId) in themes" :key="themeId"
-                :style="{ background: theme.color }" :title="theme.name" @click="changeAct(theme.name)"><svg
-                  t="1684599952852" class="icon" viewBox="0 0 1459 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                  p-id="1460" width="16" height="16">
-                  <path
-                    d="M1439.080665 18.734797a66.336804 66.336804 0 0 0-93.766391 1.361753l-818.024224 842.341234-413.389174-425.499045a66.336804 66.336804 0 0 0-95.176778 92.404639l460.75871 474.473504a66.336804 66.336804 0 0 0 95.176778 0l865.685564-891.364327a66.28817 66.28817 0 0 0-1.361753-93.766392z"
-                    p-id="1461" :fill=theme.color></path>
-                </svg></span>
-            </li>
-            <li><i>正文字体</i></li>
-            <li><i>字体大小</i></li>
-            <li><i>页面宽度</i></li>
-          </ul>
-          <div class="button">
-            <a href="#" class="save-button" @click="saveSettings">保存</a>
-            <a href="#" class="cancel-button" @click="cancelSettings">取消</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <ReaderSettingsPanel ref="child1" :style="{ display: settingsDisplay }" />
   </div>
 </template>
 <script>
 import 'css/reader/reader.css'
-
+import ReaderSettingsPanel from './ReaderSettingsPanel.vue';
 export default {
   name: "ReaderMenu",
   components: {
-
+    ReaderSettingsPanel,
   },
-  created() {
-    this.theme = this.$store.state.readerSettings[0] === null ? this.$store.state.themes[0] : this.$store.state.readerSettings[0]
-    this.themes = this.$store.state.themes
-  },
-  mounted() {
-    this.ddList = document.querySelectorAll('.reader-menu dd')
-    this.setTheme(this.theme.name)
+  data() {
+    return {
+      pageWidth: 800,
+      settingsExist: false,
+    }
   },
   computed: {
+    isddAct() {
+      if (this.settingsExist)
+        return "act"
+      else
+        return null
+    },
     settingsDisplay() {
       if (this.settingsExist)
         return "block"
       else
         return "none"
     },
-    isddAct() {
-      if (this.settingsExist)
-        return "act"
-      else
-        return null
+    menuLoc() {
+      return -(this.pageWidth / 2) - 68 + 'px'
     }
-  },
-  data() {
-    return {
-      settingsExist: false,
-      themes: null,
-      ddList: null,
-      theme: null,
-      fontStyle: "default",
-      fontSize: 18,
-      pageWidth: 800,
-
-    };
   },
   methods: {
     panelInit() {
       this.settingsExist = false
-    },
-    setTheme(themeName) {
-      // set class 'act'
-      const spans = document.querySelectorAll('.theme-list span[title]'); // 获取所有具有title属性的span元素
-      spans.forEach(span => {
-        if (span.getAttribute('title') === themeName) { // 检查title属性是否等于要查找的值
-          // 执行操作，例如将该元素存储在变量中或添加样式等
-          span.classList.add('act')
-          return
-        }
-      });
-      let old = this.theme
-      this.themes.forEach(theme => {
-        if (theme.name === themeName)
-          this.theme = theme
-        return
-      });
-      // set the bcg
-      let body = document.getElementsByClassName("basic-bcg")[0]
-      let text = document.getElementsByClassName("text")[0]
-      let chapterControl = document.getElementsByClassName("chapter-control")[0]
-      let panel = document.getElementsByClassName("panel")[0]
-      body.style.backgroundImage = `url(${this.theme.bg1})`;
-      text.style.backgroundImage = `url(${this.theme.bg2})`;
-      chapterControl.style.backgroundImage = `url(${this.theme.bg2})`;
-      panel.style.backgroundColor = this.theme.color
-      this.ddList.forEach(dd => {
-        dd.style.backgroundImage = `url(${this.theme.bg2})`;
-      });
-      return old
-    },
-    undoAct(themeName) {
-      const spans = document.querySelectorAll('.theme-list span[title]'); // 获取所有具有title属性的span元素
-      spans.forEach(span => {
-        if (span.getAttribute('title') === themeName) { // 检查title属性是否等于要查找的值
-          // 执行操作，例如将该元素存储在变量中或添加样式等
-          span.classList.remove('act')
-          return
-        }
-      });
-    },
-    changeAct(themeName) {
-      this.undoAct(this.setTheme(themeName).name)
     },
     changeVisiable(pannelName) {
       switch (pannelName) {
@@ -186,29 +108,17 @@ export default {
           break;
       }
     },
-    openSettings() {
-      this.panelInit()
-      this.changeVisiable("settings")
+    changeSettings() {
+      if (!this.settingsExist) {
+        this.panelInit()
+        this.changeVisiable("settings")
+      } else {
+        this.$refs.child1.cancelSettings()
+      }
     },
-    saveInfo() {
-      this.$store.commit("setReaderSettings", [this.theme, this.fontStyle, this.fontSize, this.pageWidth])
-    },
-    readInfo() {
-      this.theme = this.$store.state.readerSettings[0]
-      this.fontStyle = this.$store.state.readerSettings[1]
-      this.fontSize = this.$store.state.readerSettings[2]
-      this.pageWidth = this.$store.state.readerSettings[3]
-    },
-    saveSettings() {
-      this.saveInfo()
-      this.changeVisiable("settings")
-    },
-    cancelSettings() {
-      this.undoAct(this.theme.name)
-      this.readInfo()
-      this.setTheme(this.theme.name)
-      this.changeVisiable("settings")
-    },
+    setPageWidth(width) {
+      this.pageWidth = width
+    }
   },
 }
 </script>

@@ -16,7 +16,7 @@ export default {
 };
 </script>
   
-<style>
+<style scoped>
 .title {
   padding: 14px;
   overflow: hidden;

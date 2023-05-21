@@ -136,6 +136,24 @@
 
 }
 
+.reader-menu .panel-box .close-panel-button {
+  cursor: pointer;
+  position: absolute;
+  left: 100%;
+  margin-left: -36px;
+  padding-top: 8px;
+
+}
+
+.reader-menu .panel-box .close-panel-button .close-panel-button-icon {
+  transition: .5s;
+}
+
+.reader-menu .panel-box .close-panel-button .close-panel-button-icon:hover {
+  color: #1a1a1a;
+  transform: rotate(90deg);
+}
+
 .reader-menu .panel {
   border: 1px solid rgba(0, 0, 0, .1);
   padding: 40px 0 40px 24px;
@@ -206,7 +224,7 @@
   color: #fff;
 }
 
-.reader-menu .setting .setting-list span {
+.reader-menu .setting .setting-list li span {
   cursor: pointer;
   display: inline-block;
   text-align: center;
@@ -225,8 +243,12 @@
   margin-top: 10px;
 }
 
-.reader-menu .setting .setting-list li.theme-list span.act {
+.reader-menu .setting .setting-list li.theme-list span.act,
+.reader-menu .setting .setting-list li.font-list span.act,
+.reader-menu .setting .setting-list li.size-list span.act {
+  background: #fff0f2;
   border: 1px solid #ed4259;
+  color: #ed4259;
 }
 
 .reader-menu .setting .setting-list li.theme-list span.act .icon path {
@@ -239,4 +261,54 @@
   width: 69px;
   position: relative;
   z-index: 101;
+}
+
+.reader-menu .setting .setting-list li.font-list span {
+  background: hsla(0, 0%, 100%, .5);
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 2px;
+  height: 34px;
+  margin-right: 16px;
+  transition: color .3s;
+  width: 78px;
+  font: 14px/34px PingFangSC-Regular, HelveticaNeue-Light, Helvetica Neue Light, Microsoft YaHei, "sans-serif";
+}
+
+.reader-menu .setting .setting-list li cite {
+  background: hsla(0, 0%, 100%, .5);
+  border: 1px solid #e5e5e5;
+  border-radius: 2px;
+  display: inline-block;
+  height: 34px;
+  vertical-align: middle;
+  width: 270px;
+  font-style: normal;
+}
+
+.reader-menu .setting .setting-list li cite span {
+  width: 89px;
+  height: 34px;
+  line-height: 34px;
+}
+
+.reader-menu .setting .setting-list li cite span:hover .icon path {
+  fill: #ed4259;
+}
+
+.reader-menu .setting .setting-list li cite b {
+  border-right: 1px solid #e5e5e5;
+  display: inline-block;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.reader-menu .setting .setting-list li cite .number {
+  color: #a6a6a6;
+  cursor: default;
+  font-size: 18px;
+  width: 90px;
+}
+
+.reader-menu .setting .setting-list li .icon {
+  margin-top: 6px;
 }
