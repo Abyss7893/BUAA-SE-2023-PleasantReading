@@ -65,8 +65,6 @@ export default {
       password: ""
     })
     let showForget = ref(false)
-    //const store = useStore()
-    // const { proxy } = getCurrentInstance()
     let error = ref('')
     function showForgetDialog() {
       showForget.value = false
@@ -74,7 +72,7 @@ export default {
     //获取用户登录信息
     async function usreList() {
       try {
-        axios.post('http://127.0.0.1:8888/login/', {
+        axios.post('http://154.8.183.51/user/login', {
           id: userLoginForm.username,
           pwd: userLoginForm.password
         }, {
@@ -92,24 +90,26 @@ export default {
           // 登录成功后的操作，例如跳转到其他页面
           const userId = response.data.userId;
           store.commit('setUser', userId);
-          router.push('/'); // 通过 router.push() 方法跳转到主页面
+          const isTo = confirm('登录成功!是否跳转到登录界面');
+          if (isTo) {
+            router.push('/');
+          }
         }).catch(error => {
           // 处理登录错误
+          userLoginForm.password = userLoginForm.username = ""
           console.error(error);
           alert("账号或密码错误")
         });
       } catch (error) {
         // 处理错误
+        userLoginForm.password = userLoginForm.username = ""
         console.error(error);
       }
-    }
-    //获取用户信息
-    async function getUserInfo() {
-
+      
     }
     return {
       userLoginForm, error, showForget,
-      usreList, getUserInfo, showForgetDialog
+      usreList, showForgetDialog
     }
   }
 }

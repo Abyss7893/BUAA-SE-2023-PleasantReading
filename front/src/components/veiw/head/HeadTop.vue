@@ -37,7 +37,6 @@
     <div class="login-register">
       <template v-if="!isLogin">
         <router-link to="/login">登录</router-link>
-        <a href="#" @mousedown="login">登录</a>
         <router-link to="/register">注册</router-link>
       </template>
       <template v-else>
@@ -74,34 +73,26 @@
 
 <script>
 import "css/head/headtop.css";
-//import LoginComponent from "@/components/login/LoginComponent.vue";
 import {
   ElAvatar,
   ElDropdown,
   ElDropdownMenu,
   ElDropdownItem,
 } from "element-plus";
-// import CheckLogin from '../../check/checkLogin.vue';
 export default {
   name: "Head_Top",
   components: {
-    //LoginComponent
     ElAvatar,
     ElDropdown,
     ElDropdownItem,
     ElDropdownMenu,
-    // CheckLogin,
   },
   computed: {
     isLogin() {
-      // console.log(this.$store.state.isLogin)
       return this.$store.state.isLogin;
     },
   },
   methods: {
-    login() {
-      this.$store.commit("refresh");
-    },
     drop() {
       this.$refs.hidden.style.display = "block";
     },

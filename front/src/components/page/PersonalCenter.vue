@@ -71,7 +71,7 @@
                             </el-icon>
                             <span>我的书架</span>
                         </el-menu-item>
-                        <el-menu-item>
+                        <el-menu-item @click="$router.push('/')">
                             <el-icon>
                                 <Back />
                             </el-icon>
