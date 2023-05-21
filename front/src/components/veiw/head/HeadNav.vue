@@ -114,7 +114,10 @@ export default {
       this.naviLoccation = document
         .querySelector(`li[navi-id="${id}"]`)
         .getBoundingClientRect();
-      if (id === '5') {
+      if (id === "1") {
+        this.$router.push({ name: "home" });
+      }
+      if (id === "5") {
         this.$router.push({ name: "mybook" });
       }
       console.log(id);
