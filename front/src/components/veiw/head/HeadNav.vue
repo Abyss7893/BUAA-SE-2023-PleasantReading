@@ -36,16 +36,16 @@
       >
         <a href="#">完本作品</a>
       </li>
-      <router-link :to="{ name: 'mybook' }">
-        <li
-          navi-id="5"
-          @mouseover="slideHere"
-          @mouseout="slideAway"
-          @click="storeNavi"
-        >
-          <a href="#">我的书架</a>
-        </li>
-      </router-link>
+      <!-- <router-link :to="{ name: 'mybook' }"> -->
+      <li
+        navi-id="5"
+        @mouseover="slideHere"
+        @mouseout="slideAway"
+        @click="storeNavi"
+      >
+        <a href="#">我的书架</a>
+      </li>
+      <!-- </router-link> -->
       <li
         navi-id="6"
         @mouseover="slideHere"
@@ -114,10 +114,10 @@ export default {
       this.naviLoccation = document
         .querySelector(`li[navi-id="${id}"]`)
         .getBoundingClientRect();
-      // if (id === 5) {
-      //   this.$router.push({ name: "mybook" });
-      // }
-      // console.log(id);
+      if (id === '5') {
+        this.$router.push({ name: "mybook" });
+      }
+      console.log(id);
       this.$store.commit("changeNaviLoc", id);
     },
   },

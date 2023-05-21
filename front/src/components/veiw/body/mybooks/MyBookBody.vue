@@ -52,7 +52,7 @@ export default {
   created() {
     for (let i = 0; i < 99; i++) {
       this.mybooks.push({
-        name: "逆天邪神",
+        name: "逆天邪ddddddddddddddddddd神",
         cover: require("../../../../assets/imgs/bookcv.png"),
       });
     }
