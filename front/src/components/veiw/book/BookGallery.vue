@@ -9,44 +9,8 @@
       <!-- <el-col v-for="book in displayedBooks" :key="book.id" :span="12"> -->
       <el-row :gutter="40">
         <el-col v-for="book in row" :key="book.id" :span="12">
-          <div class="book-item">
-            <router-link :to="'/book/' + book.id">
-              <div class="book-img-box">
-                <img :src="book.cover" alt="Book Cover" />
-                <!-- <span>{{ book.cover }}</span> -->
-              </div>
-            </router-link>
-
-            <div class="book-mid-info">
-              <router-link :to="'/book/' + book.id">
-                <h3 class="title">{{ book.title }}</h3></router-link
-              >
-
-              <div class="author">
-                <p class="name">{{ book.author }}</p>
-
-                <el-divider direction="vertical"></el-divider>
-                <p class="category">{{ book.category }}</p>
-                <!-- <em>|</em> -->
-                <el-divider direction="vertical"></el-divider>
-                <span>连载</span>
-              </div>
-
-              <p class="intro">{{ book.summary }}</p>
-
-              <!-- <div class="book-rating"> -->
-              <div class="book-rating-text">评分:{{ book.rating }}</div>
-
-              <el-rate
-                v-model="book.rating"
-                style="--el-rate-fill-color: #ff7d7dc9"
-                :disabled="true"
-              ></el-rate>
-
-              <p class="size">字数:{{ book.sizeString }}</p>
-            </div>
-          </div>
           <!-- </div> -->
+            <book-mini-card :book="book"></book-mini-card>
         </el-col>
       </el-row>
       <el-divider />
@@ -94,8 +58,9 @@
   
   
   <script>
+import BookMiniCard from './BookMiniCard.vue';
 export default {
-  components: {},
+  components: {BookMiniCard},
   data() {
     return {
       books: [

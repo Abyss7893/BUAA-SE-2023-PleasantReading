@@ -6,6 +6,8 @@
   background: linear-gradient(to right, #e4534cde, #e1a7a4de);
   color: #fff;
   font-size: 14px;
+  /* position: fixed; */
+  /* bottom: 0; */
 }
 
 .footer .footer-left p,

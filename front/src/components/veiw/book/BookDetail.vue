@@ -51,9 +51,6 @@
 
             <div class="book-counts hidden-sm">
               <div class="count-item flex-view pointer" @click="gotoRead()">
-                <!-- <div class="count-img">
-                  <img src="@/assets/images/want-read-hover.svg" />
-                </div> -->
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">开始阅读</span>
@@ -64,9 +61,6 @@
                 </div>
               </div>
               <div class="count-item flex-view pointer" @click="collect()">
-                <!-- <div class="count-img">
-                  <img src="@/assets/images/recommend-hover.svg" />
-                </div> -->
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">收藏</span>
@@ -76,75 +70,60 @@
                   </div>
                 </div>
               </div>
-              <!--              <div class="count-item flex-view">-->
-              <!--                <div class="count-img">-->
-              <!--                  <img src="@/assets/read-online-icon.svg">-->
-              <!--                </div>-->
-              <!--                <div class="count-box flex-view">-->
-              <!--                  <div class="count-text-box">-->
-              <!--                    <span class="count-title">次数</span>-->
-              <!--                  </div>-->
-              <!--                  <div class="count-num-box">-->
-              <!--                    <span class="num-text">120</span>-->
-              <!--                  </div>-->
-              <!--                </div>-->
-              <!--              </div>-->
-              <!-- <div class="count-item flex-view" @click="share()">
-                <div class="count-img">
-                  <img src="@/assets/images/share-icon.svg" />
-                </div>
+              <div class="count-item flex-view pointer" @click="comment()">
                 <div class="count-box flex-view">
                   <div class="count-text-box">
-                    <span class="count-title">分享</span>
+                    <span class="count-title">评论</span>
                   </div>
                   <div class="count-num-box">
-                    <span class="num-text"></span>
-                    <img src="@/assets/images/wb-share.svg" class="mg-l" />
+                    <span class="num-text">{{ detailData.collect_count }}</span>
                   </div>
-                </div>
-              </div> -->
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-content-bottom">
-        <el-divider>
-          <!-- 目录  <el-icon><Files /></el-icon> -->
-          目录
-          <el-icon v-show="Order" @click="changeOrder" style="--color:#315c9e"><SortDown /></el-icon>
-          <el-icon v-show="!Order" @click="changeOrder" style="--color:#315c9e"><SortUp /></el-icon>
-        </el-divider>
-
-        <div class="novel-directory">
-          <div v-for="(row, index) in rows" :key="index" class="directory-row">
-            <div v-for="chapter in row" :key="chapter.id" class="chapter-title">
-              {{ chapter.title }}
-            </div>
-          </div>
-        </div>
-
-        <div class="book-content-view flex-view">
-          <div class="main-content">
-            <!--评论-->
-          </div>
-          <!-- <div class="recommend" style="">
-            <div class="title">热门推荐</div>
-            <div class="books">
-              <div class="book-item book-item" v-for="item in recommendData" @click="handleDetail(item)">
-                <div class="img-view">
-                  <img :src="item.cover">
-                </div>
-                <div class="info-view">
-                  <h3 class="book-name">{{ item.title }}</h3>
-                  <p class="authors" v-if="item.author">{{ item.author }}（作者）</p>
-                  <p class="translators" v-if="item.translator">{{ item.translator }}（译者）</p>
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
+      <transition name="el-zoom-in-top">
+        <div v-show="isContent" class="detail-content-bottom">
+          <el-divider>
+            目录
+            <el-icon
+              v-show="Order"
+              @click="changeOrder"
+              style="--color: #315c9e"
+              ><SortDown
+            /></el-icon>
+            <el-icon
+              v-show="!Order"
+              @click="changeOrder"
+              style="--color: #315c9e"
+              ><SortUp
+            /></el-icon>
+          </el-divider>
+
+          <div class="novel-directory">
+            <div
+              v-for="(row, index) in rows"
+              :key="index"
+              class="directory-row"
+            >
+              <div
+                v-for="chapter in row"
+                :key="chapter.id"
+                class="chapter-title"
+              >
+                {{ chapter.title }}
+              </div>
+            </div>
+          </div>
+
+          <div class="book-content-view flex-view">
+            <div class="main-content"></div>
+          </div>
+        </div>
+      </transition>
+      <div v-show="!isContent"></div>
     </div>
   </head-and-foot>
 </template>
@@ -168,6 +147,7 @@ export default {
       chapters: [
         // 添加更多章节数据
       ],
+      isContent: true,
     };
   },
   computed: {
@@ -193,8 +173,11 @@ export default {
       }
     },
     changeOrder() {
-        this.Order =!this.Order; 
+      this.Order = !this.Order;
       this.chapters.reverse();
+    },
+    comment() {
+      this.isContent = !this.isContent;
     },
   },
   created() {
