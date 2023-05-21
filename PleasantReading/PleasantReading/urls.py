@@ -29,7 +29,7 @@ urlpatterns = [
     path('user/register', userApi.register),
     path('user/changepwd', userApi.changePwd),
     path('user/changeinfo', userApi.changeInfo),
-    path('user/getinfo', userApi.getInfo),
+    path('user/getinfo/<str:ID>', userApi.getInfo),
     path('user/setavatar', userApi.setAvatar),
     path('user/getavatar/<str:ID>', userApi.getAvatar),
 

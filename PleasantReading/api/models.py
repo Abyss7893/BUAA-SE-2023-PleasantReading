@@ -10,7 +10,7 @@ class UserInfo(models.Model):
     email = models.EmailField(null=False)
     img = models.ImageField(upload_to='UserImg', default='user_img.jpg', verbose_name=u"上传头像")
     gender = models.CharField(max_length=32, null=True)
-    region = models.CharField(max_length=128, null=True)
+    nickname = models.CharField(max_length=128, null=True)
     motto = models.CharField(max_length=128, null=True)
     birth = models.DateField(null=True)
     VIPDate = models.DateField(null=True)
@@ -132,3 +132,9 @@ class Manager(models.Model):
     userID = models.CharField(max_length=56, primary_key=True)
     passwd = models.CharField(max_length=56, null=False)
     email = models.EmailField(null=False)
+
+
+class History(models.Model):
+    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
+    bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE)
+    chapter = models.IntegerField(null=False)
