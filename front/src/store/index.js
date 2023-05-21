@@ -3,7 +3,7 @@ const store = createStore({
   state() {
     return {
       isLogin: false,
-      isVIP: false,
+      isVIP: true,
       userId: null,
       userAvatar: null,
       navigationLoc: 1,
@@ -58,6 +58,9 @@ const store = createStore({
     },
     setVIP(state) {
       state.isVIP = true
+    },
+    signOut(state){
+      state.isLogin=false;
     },
     setUser(state, userId) {
       state.userId = userId;

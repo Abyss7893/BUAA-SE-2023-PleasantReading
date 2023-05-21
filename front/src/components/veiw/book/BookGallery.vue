@@ -293,7 +293,18 @@ export default {
 .book-img-box img {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+
+  transition-property: all;
+  transition-duration: 0.5s;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+  /* z-index: 10; */
 }
+.book-img-box img:hover {
+  transform: scale(1.1);
+}
+
 .book-mid-info {
   max-width: 280px;
   min-width: 280px;
@@ -343,6 +354,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  padding: 0px;
   /* text-overflow: ellipsis; */
   /* white-space: normal; */
   /* background: #030958; */

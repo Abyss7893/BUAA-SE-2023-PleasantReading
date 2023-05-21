@@ -1,6 +1,11 @@
 <template>
     <div class="contain">
+        <ElDialog v-model="showPayDialog" title="支付"
+        width="30%">
+                <PayComponent/>
+            </ElDialog>
         <HeadTop />
+        
         <div class="PersonTop">
             <div class="PersonTop_image">
                 <ElAvatar
@@ -9,16 +14,24 @@
             </div>
             <div class="PersonTop_text">
                 <div class="user_text">
-                    <div class="user_name">
-                        <span> 小明 </span>
+
+                    <div class="imageVIP" v-if="VIP">
+                        <ElAvatar
+                        src="https://pic.ntimg.cn/file/20190602/29233777_112131974087_2.jpg" :size="45" fit="contain" ></ElAvatar>
+                        
                     </div>
                     <div class="user_qianming">
                         <span> {{ design }}</span>
                     </div>
                     <div class="user_anniu">
-                        <el-button class="el-icon-edit">编辑</el-button>
+                        <el-button class="el-icon-edit">上传头像</el-button>
                     </div>
                 </div>
+            </div>
+            <div class="PersonTop_right">
+                <el-button  icon="star" @click="openPayDia()">充值会员</el-button>
+                <el-button  icon="star" >修改密码</el-button>
+                <el-button  icon="switchButton" @click="signOut">退出登录</el-button>
             </div>
         </div>
         <div class="person_body">
@@ -71,46 +84,60 @@
                 <router-view></router-view>
             </div>
         </div>
-        <el-dialog title="重置密码" v-model="showPersonal" :before-close="handleClose" :close-on-click-modal="false"
-            :close-on-press-escape="false" :append-to-body="false" style="min-width: 500px;border-radius: 25px;
-                  backdrop-filter: blur(5px);">
-            <PersonalDialog @submit="handleSubmit" @close="handleClose" />
-        </el-dialog>
+
     </div>
 </template>
 
 <script>
-import PersonalDialog from './PersonalDialog';
+
 //import PersonalDia from "./PersonalDialog.vue";
-import { ElAvatar } from 'element-plus';
+import { ElAvatar, ElButton, ElDialog } from 'element-plus';
 import HeadTop from '../veiw/head/HeadTop';
+
+import { ref,computed } from 'vue';
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router';
+import PayComponent from './PayComponent.vue';
 export default {
 
-    components: { ElAvatar, HeadTop, PersonalDialog },
-    name: "PersonalCenter",
+   name: "PersonalCenter",
     inject: ["reload"],
-    data() {
+    components: { ElAvatar, HeadTop, ElButton,  ElDialog,PayComponent},
+    setup() {
+        const store=useStore();
+        const router=useRouter();
+        const nickname = ref("cyx");
+        const design = ref("");
+        const showPayDialog =ref(false);
+        const isfollow = ref(true);
+        const followData = ref({
+            fanId: "",
+            followId: "",
+        });
+        const isfollowid = ref([]);
+        const VIP = computed(() => {
+            return store.state.isVip;
+        });
+        function signOut() {
+            store.commit('signOut');
+            router.push('/');
+        }
+        function openPayDia(){
+            showPayDialog.value=true;
+            console.log("什么情况",showPayDialog.value);
+        }
         return {
-            avatar: "",
-            nickname: "cyx",
-            v: 1,
-            design: "",
-            followCounts: "",
-            fanCounts: "",
-            goodCounts: "",
-            isfollow: true,
-            followData: {
-                fanId: "",
-                followId: "",
-            },
-            isfollowid: [],
-        };
-    },
-    methods: {
-        edit() {
-            this.$refs.dia.open();
-        },
-    },
+            nickname,
+            design,
+            isfollow,
+            followData,
+            isfollowid,
+            VIP,
+            showPayDialog,
+            signOut,
+            openPayDia
+        }
+    }
 };
 </script>
 
@@ -130,12 +157,25 @@ export default {
     height: 200px;
     padding-top: 20px;
     background-color: white;
+    background-image: url(../../assets/personTopbg.png);
+    background-repeat: no-repeat;
+    background-position: center;
     margin-top: 12px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     border-radius: 5px;
+}
+.PersonTop_right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.PersonTop_right .el-button {
+    margin-top: 30px;
 }
 
 
@@ -152,9 +192,13 @@ export default {
 }
 
 .user_name {
+    margin-left: 10px;
     font-weight: bold;
 }
-
+.user_anniu{
+    margin-top: 140px;
+    margin-right: 10px;
+}
 .user_qianming {
     font-size: 14px;
     color: #999;
