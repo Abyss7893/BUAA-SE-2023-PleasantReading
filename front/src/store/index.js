@@ -8,6 +8,15 @@ const store = createStore({
       userAvatar: null,
       navigationLoc: 1,
       categoriesIndex: [0, 0, 0, 0],
+      userInfo:{
+        username: null,
+        gender: null,
+        birthday: "2000-01-01",
+        email: null,
+        motto: "这个人很懒,什么也没留下。",
+        nickname: null,
+        VIPDate:null,
+      },
       themes: [
         {
           "name": "默认",
@@ -74,8 +83,10 @@ const store = createStore({
     },
     setReaderSettings(state, settings) {
       state.readerSettings = settings
+    },
+    updateUserInfo(state,userInfo){
+      state.userInfo=userInfo
     }
-
-  }
+  },
 })
 export default store

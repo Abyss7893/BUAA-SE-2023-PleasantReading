@@ -22,7 +22,7 @@
                                 <el-icon><Avatar /></el-icon>
                                 账户名
                             </template>
-                            {{ info.account }}
+                            {{ info.username }}
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
                             <template #label>
@@ -39,8 +39,7 @@
                             <el-icon><Clock /></el-icon>
                             年龄
                         </template>
-                        <ElInput v-if="editing" v-model="info.age"></ElInput>
-                        <span v-else>{{ info.age }}</span>
+                        <span >{{ age }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
                         <template #label>
@@ -62,27 +61,23 @@
                             <el-icon><ChatDotSquare /></el-icon>
                             个人简介
                         </template>
-                        <ElInput v-if="editing" v-model="info.signature"></ElInput>
-                        <span v-else>{{ info.signature }}</span>
+                        <ElInput v-if="editing" v-model="info.motto"></ElInput>
+                        <span v-else>{{ info.motto }}</span>
                     </ElDescriptionsItem>
                 </div>
                 
             </ElDescriptions>
         </el-card>
-        <!-- <el-dialog title="重置密码" v-model="showPersonal" :before-close="handleClose" :close-on-click-modal="false"
-          :close-on-press-escape="false" :append-to-body="false" style="min-width: 500px;border-radius: 25px;
-          backdrop-filter: blur(5px);">
-          <PersonalDialog @submit="handleSubmit" @close="handleClose" />
-        </el-dialog> -->
     </div>
 </template>
 
 <script>
 // import PersonalDialog from './PersonalDialog';
-import { defineComponent,ref } from 'vue';
+import { defineComponent ,ref,computed} from 'vue';
 import { ElButton ,ElCard,ElDescriptions, ElDescriptionsItem,ElIcon,ElInput,ElDatePicker} from 'element-plus';
 import { reactive } from 'vue';
-
+import { useStore} from 'vuex';
+import axios from 'axios';
 export default defineComponent({
     name: 'InfoComponent',
     components: {
@@ -95,32 +90,60 @@ export default defineComponent({
     ElDatePicker
 },
     setup() {
-        const info = reactive({
-            account: 'binjie09',
-            name: '小明',
-            age: 18,
-            gender: '男',
-            birthday: '2005-06-29',
-            email: '123456@qq.com',
-            signature: '这个人很懒，什么都没留下。',
+        const store=useStore()
+        const state = reactive({
+            info:null,
         });
-        let editing =ref(false)
-        let showPersonal = ref(false)
+        state.info = store.state.userInfo;
+        let editing=ref(false);
+
+        // 计算属性：根据生日计算年龄
+        const age = computed(() => {
+            return computeAge(state.info.birthday);
+        });
+
+        // 计算年龄的函数
+        function computeAge(birthday) {
+            const birthDate = new Date(birthday);
+            const currentDate = new Date();
+            state.info.birthday= birthDate.toLocaleDateString('zh-CN').replace(/\//g, '-');
+            let age = currentDate.getFullYear() - birthDate.getFullYear();
+            const monthDiff = currentDate.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
         const handleEdit = () => {
-            editing.value=!editing.value
+            editing.value=!editing.value;
+            if (editing.value) {
+                // 编辑状态下不执行保存操作
+                return;
+            }
+            store.commit('updateUserInfo',state.info)
+            console.log(store.state.userInfo)
+            // TODO: 接下来需要做的是把修改的值传回数据库中
+            axios({
+                method: 'post',
+                url: 'http://154.8.183.51/user/changeinfo',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(store.state.userInfo)
+            })
+                .then(response => {
+                    alert("修改成功");
+                    console.log(response);
+                })
+                .catch(error => {
+                    alert("修改失败");
+                    console.log(error);
+                });
+
         };
-        function showPersonalDialog() {
-            showPersonal.value = false
-        }
-        function  handleClose() {
-            showPersonal.value = false;
-        }
-        function handleSubmit() {
-            showPersonal.value = false;
-        }
         return {
-            info, showPersonal,editing,
-            handleEdit, showPersonalDialog,handleClose,handleSubmit
+            ...state, editing,age,
+            handleEdit
         };
     },
 });
