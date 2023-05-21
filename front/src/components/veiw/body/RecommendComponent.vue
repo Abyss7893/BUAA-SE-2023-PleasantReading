@@ -27,7 +27,7 @@
 
 <script>
 // import { handleError } from 'vue';
-import BookGallery from "../../book/BookGallery.vue";
+import BookGallery from "../book/BookGallery.vue";
 export default {
   components: { BookGallery },
   name: "NovelList",

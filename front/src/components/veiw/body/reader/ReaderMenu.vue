@@ -2,8 +2,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <div class="reader-menu float">
     <dl>
-      <dd><a href=""><svg t="1684569489333" class="icon" viewBox="0 0 1024 1024" version="1.1"
-            xmlns="http://www.w3.org/2000/svg" p-id="41510" width="16" height="16">
+      <dd :class="isddAct"><a @click="openSettings"><svg t="1684569489333" class="icon" viewBox="0 0 1024 1024"
+            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="41510" width="16" height="16">
             <path
               d="M838.3 895.9H197.9c-53.9 0-97.7-43.8-97.7-97.7V236.7c0-53.9 43.8-97.7 97.7-97.7h640.3c53.9 0 97.7 43.8 97.7 97.7v561.4c0.1 53.9-43.7 97.8-97.6 97.8zM197.9 203.8c-18.1 0-32.9 14.8-32.9 32.9v561.4c0 18.1 14.8 32.9 32.9 32.9h640.3c18.1 0 32.9-14.8 32.9-32.9V236.7c0-18.1-14.8-32.9-32.9-32.9H197.9z"
               fill="#262626" p-id="41511"></path>
@@ -60,19 +60,27 @@
 
     </div> -->
     <!-- 设置面板浮层 -->
-    <div class="panel-box">
+    <div class="panel-box" :style="{ display: this.settingsDisplay }">
       <div class="panel setting">
         <h4 class="lang">设置</h4>
         <div class="setting-list">
           <ul>
-            <li><i>阅读主题</i></li>
+            <li class="theme-list"><i>阅读主题</i><span v-for="(theme, themeId) in themes" :key="themeId"
+                :style="{ background: theme.color }" :title="theme.name" @click="changeAct(theme.name)"><svg
+                  t="1684599952852" class="icon" viewBox="0 0 1459 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                  p-id="1460" width="16" height="16">
+                  <path
+                    d="M1439.080665 18.734797a66.336804 66.336804 0 0 0-93.766391 1.361753l-818.024224 842.341234-413.389174-425.499045a66.336804 66.336804 0 0 0-95.176778 92.404639l460.75871 474.473504a66.336804 66.336804 0 0 0 95.176778 0l865.685564-891.364327a66.28817 66.28817 0 0 0-1.361753-93.766392z"
+                    p-id="1461" :fill=theme.color></path>
+                </svg></span>
+            </li>
             <li><i>正文字体</i></li>
             <li><i>字体大小</i></li>
             <li><i>页面宽度</i></li>
           </ul>
           <div class="button">
-            <a href="#" class="save-button">保存</a>
-            <a href="#" class="cancel-button">取消</a>
+            <a href="#" class="save-button" @click="saveSettings">保存</a>
+            <a href="#" class="cancel-button" @click="cancelSettings">取消</a>
           </div>
         </div>
       </div>
@@ -87,7 +95,121 @@ export default {
   components: {
 
   },
+  created() {
+    this.theme = this.$store.state.readerSettings[0] === null ? this.$store.state.themes[0] : this.$store.state.readerSettings[0]
+    this.themes = this.$store.state.themes
+  },
+  mounted() {
+    this.ddList = document.querySelectorAll('.reader-menu dd')
+    this.setTheme(this.theme.name)
+  },
+  computed: {
+    settingsDisplay() {
+      if (this.settingsExist)
+        return "block"
+      else
+        return "none"
+    },
+    isddAct() {
+      if (this.settingsExist)
+        return "act"
+      else
+        return null
+    }
+  },
+  data() {
+    return {
+      settingsExist: false,
+      themes: null,
+      ddList: null,
+      theme: null,
+      fontStyle: "default",
+      fontSize: 18,
+      pageWidth: 800,
 
+    };
+  },
+  methods: {
+    panelInit() {
+      this.settingsExist = false
+    },
+    setTheme(themeName) {
+      // set class 'act'
+      const spans = document.querySelectorAll('.theme-list span[title]'); // 获取所有具有title属性的span元素
+      spans.forEach(span => {
+        if (span.getAttribute('title') === themeName) { // 检查title属性是否等于要查找的值
+          // 执行操作，例如将该元素存储在变量中或添加样式等
+          span.classList.add('act')
+          return
+        }
+      });
+      let old = this.theme
+      this.themes.forEach(theme => {
+        if (theme.name === themeName)
+          this.theme = theme
+        return
+      });
+      // set the bcg
+      let body = document.getElementsByClassName("basic-bcg")[0]
+      let text = document.getElementsByClassName("text")[0]
+      let chapterControl = document.getElementsByClassName("chapter-control")[0]
+      let panel = document.getElementsByClassName("panel")[0]
+      body.style.backgroundImage = `url(${this.theme.bg1})`;
+      text.style.backgroundImage = `url(${this.theme.bg2})`;
+      chapterControl.style.backgroundImage = `url(${this.theme.bg2})`;
+      panel.style.backgroundColor = this.theme.color
+      this.ddList.forEach(dd => {
+        dd.style.backgroundImage = `url(${this.theme.bg2})`;
+      });
+      return old
+    },
+    undoAct(themeName) {
+      const spans = document.querySelectorAll('.theme-list span[title]'); // 获取所有具有title属性的span元素
+      spans.forEach(span => {
+        if (span.getAttribute('title') === themeName) { // 检查title属性是否等于要查找的值
+          // 执行操作，例如将该元素存储在变量中或添加样式等
+          span.classList.remove('act')
+          return
+        }
+      });
+    },
+    changeAct(themeName) {
+      this.undoAct(this.setTheme(themeName).name)
+    },
+    changeVisiable(pannelName) {
+      switch (pannelName) {
+        case "settings":
+          this.settingsExist = !this.settingsExist
+          break;
+
+        default:
+          break;
+      }
+    },
+    openSettings() {
+      this.panelInit()
+      this.changeVisiable("settings")
+    },
+    saveInfo() {
+      this.$store.commit("setReaderSettings", [this.theme, this.fontStyle, this.fontSize, this.pageWidth])
+    },
+    readInfo() {
+      this.theme = this.$store.state.readerSettings[0]
+      this.fontStyle = this.$store.state.readerSettings[1]
+      this.fontSize = this.$store.state.readerSettings[2]
+      this.pageWidth = this.$store.state.readerSettings[3]
+    },
+    saveSettings() {
+      this.saveInfo()
+      this.changeVisiable("settings")
+    },
+    cancelSettings() {
+      this.undoAct(this.theme.name)
+      this.readInfo()
+      this.setTheme(this.theme.name)
+      this.changeVisiable("settings")
+    },
+  },
 }
 </script>
 <style>
