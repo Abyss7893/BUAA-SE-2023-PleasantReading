@@ -14,8 +14,8 @@
                             </el-icon>
                             昵称
                         </template>
-                        <ElInput v-if="editing" v-model="info.name" style="border: none;"></ElInput>
-                        <span v-else>{{ info.name }}</span>
+                        <ElInput v-if="editing" v-model="info.nickname" style="border: none;"></ElInput>
+                        <span v-else>{{ info.nickname }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
                             <template #label>
