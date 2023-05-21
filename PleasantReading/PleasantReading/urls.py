@@ -33,9 +33,9 @@ urlpatterns = [
     path('user/setavatar', userApi.setAvatar),
     path('user/getavatar/<str:ID>', userApi.getAvatar),
 
-    path('book/info/<int:bookid>/', bookApi.get_book_info),
-    path('book/outline/<int:bookid>/', bookApi.get_book_outline),
-    path('book/content/<int:bookid>/<int:chapter>/', bookApi.get_book_content),
+    path('book/info/<int:bookid>/', bookApi.getBookInfo),
+    path('book/outline/<int:bookid>/', bookApi.getBookOutline),
+    path('book/content/<int:bookid>/<int:chapter>/', bookApi.getBookContent),
 
     path('submit/', userApi.my_view),
     path('gallery/', userApi.image_gallery),
