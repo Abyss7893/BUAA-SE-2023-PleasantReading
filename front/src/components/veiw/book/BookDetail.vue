@@ -150,7 +150,7 @@
 </template>
 
   <script>
-import HeadAndFoot from "../veiw/HeadAndFoot.vue";
+import HeadAndFoot from "../HeadAndFoot.vue";
 export default {
   components: { HeadAndFoot },
   data() {

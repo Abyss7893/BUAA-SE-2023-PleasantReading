@@ -117,6 +117,10 @@ export default {
       if (id === "1") {
         this.$router.push({ name: "home" });
       }
+      if(id ==="3"){
+        this.$router.push({ name: "rank" });
+      }
+      
       if (id === "5") {
         this.$router.push({ name: "mybook" });
       }
