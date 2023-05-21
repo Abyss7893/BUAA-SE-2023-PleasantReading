@@ -1,42 +1,44 @@
 <template>
   <div class="book-rank">
     <h1 style="padding-bottom: 15px">小说排行榜！</h1>
-    <!-- <el-divider width-="100%"></el-divider> -->
-    <el-space direction="vertical" alignment="start" :size="30">
-      <el-row style="width: 100%" gutter="20">
-        <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="booklist" title="收藏周榜"></rank-card>
-        </el-col>
-        <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="booklist" title="人气周榜"></rank-card>
-        </el-col>
-        <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="booklist" title="好评周榜"></rank-card>
-        </el-col>
-      </el-row>
-      <el-row style="width: 100%" gutter="20">
-        <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="booklist" title="收藏月榜"></rank-card>
-        </el-col>
-        <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="booklist" title="人气月榜"></rank-card>
-        </el-col>
-        <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="booklist" title="好评月榜"></rank-card>
-        </el-col>
-      </el-row>
-      <el-row style="width: 100%" gutter="20">
-        <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="booklist" title="收藏总榜"></rank-card>
-        </el-col>
-        <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="booklist" title="人气总榜"></rank-card>
-        </el-col>
-        <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="booklist" title="好评总榜"></rank-card>
-        </el-col>
-      </el-row>
-    </el-space>
+    <!-- <transition name="el-zoom-in-top"> -->
+      <!-- <el-divider width-="100%"></el-divider> -->
+      <el-space direction="vertical" alignment="start" :size="30">
+        <el-row style="width: 100%" gutter="20">
+          <el-col span="8" style="max-width: 30%">
+            <rank-card :booklist="booklist" title="收藏周榜"></rank-card>
+          </el-col>
+          <el-col span="8" style="max-width: 30%">
+            <rank-card :booklist="booklist" title="人气周榜"></rank-card>
+          </el-col>
+          <el-col span="8" style="max-width: 30%">
+            <rank-card :booklist="booklist" title="好评周榜"></rank-card>
+          </el-col>
+        </el-row>
+        <el-row style="width: 100%" gutter="20">
+          <el-col span="8" style="max-width: 30%">
+            <rank-card :booklist="booklist" title="收藏月榜"></rank-card>
+          </el-col>
+          <el-col span="8" style="max-width: 30%">
+            <rank-card :booklist="booklist" title="人气月榜"></rank-card>
+          </el-col>
+          <el-col span="8" style="max-width: 30%">
+            <rank-card :booklist="booklist" title="好评月榜"></rank-card>
+          </el-col>
+        </el-row>
+        <el-row style="width: 100%" gutter="20">
+          <el-col span="8" style="max-width: 30%">
+            <rank-card :booklist="booklist" title="收藏总榜"></rank-card>
+          </el-col>
+          <el-col span="8" style="max-width: 30%">
+            <rank-card :booklist="booklist" title="人气总榜"></rank-card>
+          </el-col>
+          <el-col span="8" style="max-width: 30%">
+            <rank-card :booklist="booklist" title="好评总榜"></rank-card>
+          </el-col>
+        </el-row>
+      </el-space>
+    <!-- </transition> -->
   </div>
 </template>
 
