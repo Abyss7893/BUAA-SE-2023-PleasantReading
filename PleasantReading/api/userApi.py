@@ -6,7 +6,12 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 import json
 import os
+import platform
+from django.shortcuts import render
+from django.template import loader
+from django.core.mail import EmailMessage
 
+from PleasantReading.settings import EMAIL_HOST_USER
 from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
 from api.models import UserInfo
 
@@ -139,11 +144,9 @@ def changeInfo(request):
 
 
 def login(request):
-    print('Yes')
     data = json.loads(request.body)
     username = data.get('id')
     password = data.get('pwd')
-    print("username = {0}, pwd = {1}".format(username, password))
     user = authenticate(request, username=username, password=password)
     if user is not None:
         refresh = RefreshToken.for_user(user)
@@ -164,7 +167,6 @@ def register(request):
     password = data.get('password')
     email = data.get('email')
     try:
-        print(username)
         cnt = UserInfo.objects.filter(userID=username).count()
         if cnt != 0:
             return JsonResponse({'message': 'fail', 'error': 'username exists'})
@@ -209,3 +211,34 @@ def getAvatar(request, ID):
         return JsonResponse({'message': 'success', 'url': SERVER_URL + avatar.url})
     except:
         return JsonResponse({'message': 'fail', 'error': 'ID error'}, status=400)
+
+
+def userSendEmail(request):
+    data = json.loads(request.body)
+    username = data.get('id')
+    email = data.get('email')
+    pwd = data.get('pwd')
+    obj = UserInfo.objects.filter(userID=username, email=email)
+    if obj.count() == 0:
+        return JsonResponse({'message': 'fail', 'error': 'not match'}, status=400)
+    string = username + '/' + pwd
+    if platform.system() == "Linux":
+        url = os.path.join("http://154.8.183.51/user/sending/", string)
+    else:
+        url = os.path.join("http://127.0.0.1:8888/user/sending/", string)
+    email_title = r"怡心阅读密码重置"
+    email_body = loader.render_to_string('email_reset.html', {'url': url})
+    try:
+        msg = EmailMessage(email_title, email_body, EMAIL_HOST_USER, [email])
+        msg.content_subtype = 'html'
+        send_status = msg.send()
+        return JsonResponse({'message': 'success', 'status': send_status}, status=200)
+    except Exception as e:
+       return JsonResponse({'message': 'fail', 'error': str(e)}, status=400)
+
+def userCheck(request, ID, pwd):
+    obj = UserInfo.objects.get(userID=ID)
+    obj.passwd = pwd
+    obj.save()
+    weburl = "https://imgloc.com/i/ViGR5E"
+    return render(request, 'email_check.html', {'url': weburl})
