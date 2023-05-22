@@ -104,12 +104,12 @@ export default {
   created() {
     // this.generateTestData();
     var defaultOptions = {
-        category: '',
-        vip: '',
-        range: '',
-        order: '',
-        status: '',
-        page: ''
+      category: "",
+      vip: "",
+      range: "",
+      order: "",
+      status: "",
+      page: "",
     };
     this.flashData(defaultOptions);
   },
@@ -126,6 +126,25 @@ export default {
         return number.toString();
       }
     },
+    booksInit() {
+      this.books = [];
+      for (let i = 1; i <= 10; i++) {
+        this.books.push({
+          id: i,
+          title: `Book ${i}`,
+          status: "加载中",
+          cover: require("assets/imgs/img_loading.gif"),
+          author: "加载中",
+          category: "加载中",
+          summary: "加载中",
+          vip: "加载中",
+          rating: 0,
+          size: 0,
+          simpleSizes: "加载中",
+        });
+      }
+    },
+
     generateTestData() {
       // const testData = [];
       for (let i = 3; i <= 205; i++) {
@@ -150,6 +169,7 @@ export default {
       }
     },
     flashData(defaultOptions) {
+      this.booksInit();
       var booklist;
       getBookList(defaultOptions).then((res1) => {
         booklist = res1.books;

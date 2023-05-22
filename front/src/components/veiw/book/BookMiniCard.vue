@@ -26,7 +26,7 @@
         <el-tag class="mx-4" effect="plain" type="danger">{{
           book.vip
         }}</el-tag>
-               <el-tag class="mx-4" effect="plain" type="danger">{{
+        <el-tag class="mx-4" effect="plain" type="danger">{{
           book.simpleSizes
         }}</el-tag>
       </el-space>
@@ -56,7 +56,7 @@
             :disabled="true"
           ></el-rate>
 
-          <p class="size">字数:{{ book.sizeString }}</p>
+          <p class="size">字数:{{ book.size }}</p>
         </div>
         <!-- <div class="rightside">
           <el-tag class="ml-2" type="danger">Tag 5</el-tag>
@@ -126,7 +126,7 @@ export default {
 }
 .book-img-box {
   display: block;
-
+  margin-top: 15px;
   height: 186px;
   margin-right: 16px;
   position: relative;
@@ -138,6 +138,8 @@ export default {
 .book-img-box img {
   width: 100%;
   height: 100%;
+  max-width: 131px;
+  min-height: 186px;
   overflow: hidden;
 
   transition-property: all;
