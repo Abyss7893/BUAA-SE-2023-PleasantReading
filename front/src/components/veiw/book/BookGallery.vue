@@ -10,7 +10,7 @@
       <el-row :gutter="40">
         <el-col v-for="book in row" :key="book.id" :span="12">
           <!-- </div> -->
-            <book-mini-card :book="book"></book-mini-card>
+          <book-mini-card :book="book"></book-mini-card>
         </el-col>
       </el-row>
       <el-divider />
@@ -59,44 +59,59 @@
   
   <script>
 // import axios from 'axios';
-import BookMiniCard from './BookMiniCard.vue';
+import { getBookDetiles, getBookList } from "@/api/api";
+import BookMiniCard from "./BookMiniCard.vue";
 export default {
-  components: {BookMiniCard},
+  components: { BookMiniCard },
   data() {
     return {
       books: [
-        {
-          id: 1,
-          title: "Book顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶 1",
-          cover: require("assets/imgs/bookcv.png"),
-          author: "Autdddddddddd顶顶顶顶顶顶顶顶顶顶ddddddddd",
-          category: "Categd顶顶顶顶顶顶顶顶顶顶ory 1dddddddd",
-
-          summary:
-            "Swwdddddddddddddddddddddddddd ddddddddd  ddddddddddd ddd  ddddddd d",
-          rating: 4.5,
-          size: 1100000,
-          sizeString: "",
-        },
-        {
-          id: 2,
-          title: "Book 2",
-          cover: require("assets/imgs/bookcv.png"),
-          author: "Authow",
-          category: "Categorydddddddddddddssssssssssssssssss 2",
-          summary:
-            "这里是属于斗气的世界，没有花俏艳丽的魔法，有的，仅仅是繁衍到巅峰的斗气！斗者，斗师，大斗师，斗灵，斗王，斗皇，斗宗，斗尊，斗圣，斗帝。",
-          rating: 5,
-          size: 1100000,
-        },
+        // {
+        //   id: 1,
+        //   title: "Book顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶 1",
+        //   cover: require("assets/imgs/bookcv.png"),
+        //   author: "Autdddddddddd顶顶顶顶顶顶顶顶顶顶ddddddddd",
+        //   category: "Categd顶顶",
+        //   summary:
+        //     "Swwdddddddddddddddddddddddddd ddddddddd  ddddddddddd ddd  ddddddd d",
+        //   rating: 4.5,
+        //   size: 1100000,
+        //   sizeString: "",
+        //   status: "连载",
+        //   vip: "VIP",
+        //   simpleSizes: this.getSimpleSize(1100000),
+        // },
+        // {
+        //   id: 2,
+        //   title: "Book 2",
+        //   cover: require("assets/imgs/bookcv.png"),
+        //   author: "Authow",
+        //   category: "Catego",
+        //   vip: "VIP",
+        //   summary:
+        //     "这里是属于斗气的世界，没有花俏艳丽的魔法，有的，仅仅是繁衍到巅峰的斗气！斗者，斗师，大斗师，斗灵，斗王，斗皇，斗宗，斗尊，斗圣，斗帝。",
+        //   rating: 5,
+        //   size: 1100000,
+        //   status: "连载",
+        //   simpleSizes: this.getSimpleSize(1100000),
+        // },
         // Add more books as needed
       ],
       currentPage: 1, // 当前页数
-      pageSize: 20,
+      pageSize: 10,
     };
   },
   created() {
-    this.generateTestData();
+    // this.generateTestData();
+    var defaultOptions = {
+        category: '',
+        vip: '',
+        range: '',
+        order: '',
+        status: '',
+        page: ''
+    };
+    this.flashData(defaultOptions);
   },
 
   methods: {
@@ -112,23 +127,52 @@ export default {
       }
     },
     generateTestData() {
-      //   const testData = [];
+      // const testData = [];
       for (let i = 3; i <= 205; i++) {
         this.books.push({
           id: i,
           title: `Book ${i}`,
-
+          status: "连载",
           cover: require("assets/imgs/bookcv.png"),
           author: "Author",
           category: "Category",
           summary: "Summary",
+          vip: "VIP",
+
           rating: (Math.random() * 4.5).toFixed(1),
           size: Math.round(Math.random() * 3000000),
+          simpleSizes: this.getSimpleSize(Math.round(Math.random() * 3000000)),
         });
       }
+
       for (let book of this.books) {
         book.sizeString = this.formatNumber(book.size);
       }
+    },
+    flashData(defaultOptions) {
+      var booklist;
+      getBookList(defaultOptions).then((res1) => {
+        booklist = res1.books;
+        this.books = [];
+        for (let bookid of booklist) {
+          getBookDetiles(bookid).then((res) => {
+            var data = res;
+            this.books.push({
+              id: data.id,
+              cover: data.cover,
+              title: data.title,
+              author: data.author,
+              size: this.formatNumber(data.cnt),
+              category: data.category,
+              rating: parseFloat(data.score).toFixed(1),
+              summary: data.brief,
+              vip: data.vip ? "VIP" : "免费",
+              status: data.status,
+              simpleSizes: this.getSimpleSize(data.cnt),
+            });
+          });
+        }
+      });
     },
     previousPage() {
       if (this.currentPage > 1) {
@@ -147,6 +191,11 @@ export default {
     },
     lastPage() {
       this.currentPage = Math.ceil(this.books.length / this.pageSize);
+    },
+    getSimpleSize(size) {
+      if (size > 1000000) return "长篇";
+      else if (size) return "中篇";
+      return "短篇";
     },
   },
 

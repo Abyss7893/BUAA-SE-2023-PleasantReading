@@ -20,7 +20,9 @@
                 <div class="book-state">
                   <span class="state hidden-sm">{{ detailData.status }}</span>
                   <span class="state hidden-sm">{{ detailData.vip }}</span>
-                  <span class="state hidden-sm">{{ simpleSizes }}</span>
+                  <span class="state hidden-sm">{{
+                    detailData.simpleSizes
+                  }}</span>
                   <span class="state hidden-sm">{{ detailData.category }}</span>
                 </div>
                 <div class="translators flex-view" style="">
@@ -85,8 +87,8 @@
         </div>
       </div>
       <transition name="el-zoom-in-top">
-        <div v-show="isContent" >
-          <el-divider >
+        <div v-show="isContent">
+          <el-divider>
             目录
             <el-icon
               v-show="Order"
@@ -107,14 +109,18 @@
               v-for="(row, index) in rows"
               :key="index"
               class="directory-row"
+             
             >
+              <!-- <a href="#"> -->
               <div
                 v-for="chapter in row"
                 :key="chapter.id"
                 class="chapter-title"
+                
               >
                 {{ chapter.title }}
               </div>
+              <!-- </a> -->
             </div>
           </div>
 
@@ -148,6 +154,7 @@ export default {
         intro: "正在加载",
         vip: "正在加载",
         status: "正在加载",
+        simpleSizes: "正在加载",
       },
       tabUnderLeft: 6,
       tabData: ["简介", "评论"],
@@ -175,11 +182,6 @@ export default {
       }
 
       return rows;
-    },
-    simpleSizes() {
-      if (this.detailData.size > 1000000) return "长篇";
-      else if (this.detailData.size > 200000) return "中篇";
-      else return "短篇";
     },
   },
   methods: {
@@ -229,13 +231,16 @@ export default {
         vip: data.vip ? "VIP" : "免费",
         status: data.status,
       };
+      if (data.cnt > 1000000) this.detailData.simpleSizes = "长篇";
+      else if (data.cnt > 200000) this.detailData.simpleSizes = "中篇";
+      else this.detailData.simpleSizes = "短篇";
     });
     // this.generateChater();
     getBookContent(this.bookId).then((bookContents) => {
       console.log(bookContents);
       let i = 1;
       for (let content of bookContents.outline) {
-        this.chapters.push({ id: i, title: content[0] });
+        this.chapters.push({ id: i, title: content });
         i++;
       }
     });
@@ -262,7 +267,7 @@ export default {
   // background-color: rgba(99, 93, 93, 0.039);
   border-radius: 1%;
   box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
-  margin-bottom:10px ;
+  margin-bottom: 10px;
 }
 .el-divider--horizontal {
   display: block;
@@ -350,7 +355,7 @@ export default {
     -ms-flex: 0 0 235px;
     flex: 0 0 235px;
     margin: 0 0 0 0;
-   
+
     img {
       width: 158px;
       height: 211px;
@@ -358,7 +363,8 @@ export default {
       margin: 0 auto;
       border: 1px solid #eee;
       border-radius: 4px;
-      box-shadow: 0 4px 8px 0 rgba(90, 8, 8, 0.322), 0 6px 20px 0 rgba(49, 0, 0, 0)
+      box-shadow: 0 4px 8px 0 rgba(90, 8, 8, 0.322),
+        0 6px 20px 0 rgba(49, 0, 0, 0);
     }
   }
 

@@ -20,7 +20,49 @@ function getBookContent(bookid) {
     });
 }
 
+function getBookList(options) {
+    // 设置默认参数
+    var defaultOptions = {
+        category: '',
+        vip: '',
+        range: '',
+        order: '',
+        status: '',
+        page: ''
+    };
+
+    // 合并默认参数和传入的参数
+    var mergedOptions = { ...defaultOptions, ...options };
+
+    // 构建 URL
+    var url = back+'/book/filter/?category=' + mergedOptions.category +
+        '&vip=' + mergedOptions.vip +
+        '&range=' + mergedOptions.range +
+        '&order=' + mergedOptions.order +
+        '&status=' + mergedOptions.status +
+        '&page=' + mergedOptions.page;
+
+    var config = {
+        method: 'get',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    return axios(config)
+        .then(function (response) {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(function (error) {
+            throw error;
+        });
+}
+
+// 使用示例
+
 
 export {
-    getBookDetiles, getBookContent
+    getBookDetiles, getBookContent, getBookList
 }

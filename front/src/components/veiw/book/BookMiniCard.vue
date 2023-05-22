@@ -14,27 +14,54 @@
       >
 
       <div class="author">
-        <p class="name">{{ book.author }}</p>
-
-        <el-divider direction="vertical"></el-divider>
-        <p class="category">{{ book.category }}</p>
-        <!-- <em>|</em> -->
-        <el-divider direction="vertical"></el-divider>
-        <span>连载</span>
+        <p class="name">{{ book.author }}著</p>
       </div>
+      <el-space size="10%">
+        <el-tag class="mx-4" effect="plain" type="danger">
+          <p class="category">{{ book.category }}</p></el-tag
+        >
+        <el-tag class="mx-4" effect="plain" type="danger">{{
+          book.status
+        }}</el-tag>
+        <el-tag class="mx-4" effect="plain" type="danger">{{
+          book.vip
+        }}</el-tag>
+               <el-tag class="mx-4" effect="plain" type="danger">{{
+          book.simpleSizes
+        }}</el-tag>
+      </el-space>
+      <!-- <div class="author">
+        <el-divider direction="vertical"></el-divider>
+       
+        <el-divider direction="vertical"></el-divider>
+        <span>{{ book.status }}</span>
+      </div> -->
+      <!-- <div class="book-state">
+        <span class="state hidden-sm">{{ book.status }}</span>
+        <span class="state hidden-sm">{{ book.vip }}</span>
+        <span class="state hidden-sm">{{ book.simpleSizes }}</span>
+        <span class="state hidden-sm">{{ book.category }}</span>
+      </div> -->
 
       <p class="intro">{{ book.summary }}</p>
 
       <!-- <div class="book-rating"> -->
-      <div class="book-rating-text">评分:{{ book.rating }}</div>
+      <div class="otherintro" style="display: flex">
+        <div class="leftside">
+          <div class="book-rating-text">评分:{{ book.rating }}</div>
 
-      <el-rate
-        v-model="rating"
-        style="--el-rate-fill-color: #ff7d7dc9"
-        :disabled="true"
-      ></el-rate>
+          <el-rate
+            v-model="rating"
+            style="--el-rate-fill-color: #ff7d7dc9"
+            :disabled="true"
+          ></el-rate>
 
-      <p class="size">字数:{{ book.sizeString }}</p>
+          <p class="size">字数:{{ book.sizeString }}</p>
+        </div>
+        <!-- <div class="rightside">
+          <el-tag class="ml-2" type="danger">Tag 5</el-tag>
+        </div> -->
+      </div>
     </div>
   </div>
   <!-- </transition> -->
@@ -49,11 +76,22 @@ export default {
   data() {
     return { rating: this.book.rating };
   },
-
 };
 </script>
 
 <style scpoed>
+.state {
+  width: 64px;
+  height: 24px;
+  line-height: 24px;
+  background: rgba(70, 132, 226, 0.1);
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: 12px;
+  color: #4684e2;
+  text-align: center;
+}
+
 .book-item {
   width: 100%;
   height: 100%;
@@ -107,7 +145,7 @@ export default {
   transition-timing-function: ease;
   transition-delay: 0s;
   border-radius: 4%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   /* z-index: 10; */
 }
 .book-img-box img:hover {
@@ -132,7 +170,8 @@ export default {
   max-height: 48px;
   min-height: 48px;
   line-height: 24px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  margin-top: 6px;
   width: 100%;
   font-family: kaiti;
 
@@ -177,7 +216,7 @@ export default {
   /* overflow: hidden; */
 }
 .name {
-  max-width: 100px;
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
