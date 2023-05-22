@@ -27,7 +27,7 @@ class BookBasicInfo(models.Model):
     wordsCnt = models.IntegerField(default=0)
     category = models.CharField(max_length=64, null=False)
     profile = models.TextField(null=True)
-    img = models.ImageField(upload_to='BookImg', verbose_name=u"图书封面", default='')
+    img = models.ImageField(upload_to='BookImg', verbose_name=u"图书封面", default='default.jpg')
     collections = models.IntegerField()
     isVIP = models.BooleanField(default=False)
 
