@@ -6,21 +6,25 @@
     </div>
     <div class="bubble">
       <p>下次不要忘记密码噢QAQ</p>
-  </div>
+   </div>
     <div class="form-container">
       <el-form ref="form" :model="formData" :rules="rules" label-width="100px">
         <el-form-item label="邮箱" prop="email">
           <el-input v-model.trim="formData.email" />
+          
+            <el-button v-if="!waitCheck" @click="verifyEmail" icon="message" round>验证邮箱</el-button>
+            <el-button v-else type="success" icon="check" circle/>
         </el-form-item>
+        <el-form-item label="账号" prop="username" >
+            <el-input  v-model.trim="formData.username" />
+          </el-form-item>
         <el-form-item label="新密码" prop="password">
           <el-input type="password" v-model.trim="formData.password" />
         </el-form-item>
         <el-form-item label="确认密码" prop="confirmPassword">
           <el-input type="password" v-model.trim="formData.confirmPassword" />
         </el-form-item>
-        <el-form-item label="验证码" required>
-          <el-input v-model.trim="verificationCode" />
-        </el-form-item>
+
         <el-form-item>
           <el-button type="primary" @click="submitForm" :loading="submitting">提交</el-button>
           <el-button @click="resetForm">重置</el-button>
@@ -34,6 +38,7 @@
 import { ref } from 'vue';
 import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
 import '../../../../node_modules/element-plus/theme-chalk/index.css';
+import axios from 'axios';
 
 export default {
   components: {
@@ -44,10 +49,13 @@ export default {
   },
   emits: ['submit'],
   setup(_, { emit }) {
+
+    let waitCheck=ref(false)
     const formData = ref({
       email: '',
       password: '',
       confirmPassword: '',
+      username:''
     });
     const rules = {
       email: [
@@ -61,6 +69,9 @@ export default {
       confirmPassword: [
         { required: true, message: '请输入确认密码', trigger: 'blur' },
         { validator: validateConfirmPassword, trigger: 'blur' }
+      ],
+      username: [
+        { required: true, message: '请输入账号', trigger: 'blur' }
       ]
     };
 
@@ -72,13 +83,9 @@ export default {
         callback();
       }
     }
-
-    const verificationCode = ref('');
-
     // 提交表单
     const submitting = ref(false);
     function submitForm() {
-      formData.value.verificationCode = verificationCode.value;
       submitting.value = true;
       // TODO: 校验验证码、发送修改密码请求等操作
       setTimeout(() => {
@@ -89,11 +96,12 @@ export default {
 
     // 重置表单
     function resetForm() {
-      verificationCode.value = '';
+      waitCheck.value=false;
       formData.value = {
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        username:''
       };
       document.querySelectorAll('.el-form-item.is-error').forEach((item) => {
         item.classList.remove('is-error');
@@ -102,14 +110,37 @@ export default {
         item.style.display = 'none';
       });
     }
+    //验证邮箱
+    function verifyEmail() {
+      waitCheck.value = true;
+      const email = formData.value.email;
+      const username = formData.value.username;
+      // 使用 axios 发送请求
+      axios.post('/url', { email, username },
+      {
+        headers: {
+            'Content-Type': 'application/json'
+          }
+      })
+        .then(response => {
+          waitCheck.value=true;
+          console.log(response);
+          // TODO：根据需求处理响应结果
+        })
+        .catch(error => {
+          console.error(error);
+          // TODO：根据需求处理错误情况
+        });
+    }
 
     return {
       formData,
       rules,
-      verificationCode,
+      waitCheck,
       submitting,
       submitForm,
       resetForm,
+      verifyEmail
     };
   },
 };
@@ -166,16 +197,6 @@ export default {
     border-bottom: 20px solid lightgray; 
     border-right: 20px solid transparent;
 }
-/* .bubble::before {
-    content: "";
-    position: absolute;
-    display: block;
-    top: 100%; 
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-top: 10px solid #877f7f; 
-} */
+
 
 </style>
