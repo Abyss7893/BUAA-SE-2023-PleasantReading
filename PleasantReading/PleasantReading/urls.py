@@ -36,6 +36,9 @@ urlpatterns = [
     path('book/info/<int:bookid>/', bookApi.getBookInfo),
     path('book/outline/<int:bookid>/', bookApi.getBookOutline),
     path('book/content/<int:bookid>/<int:chapter>/', bookApi.getBookContent),
+    path('book/mark/<int:bookid>/<int:chapter>', bookApi.updateBookmark),
+    path('book/filter/', bookApi.bookFilter),
+    path('book/search/', bookApi.bookSearch),
 
     path('submit/', userApi.my_view),
     path('gallery/', userApi.image_gallery),
