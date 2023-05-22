@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 import json
+import os
 
 from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
 from api.models import UserInfo
@@ -187,11 +188,16 @@ def setAvatar(request):
     if image is None:
         return JsonResponse({'message': 'fail', 'error': 'get avatar fail'}, status=403)
 
-    image.name = ID + ".jpg"
     obj = UserInfo.objects.get(userID=ID)
+    var = obj.img.name
+    if var != "UserImg/user_img.jpg" and os.path.exists(SERVER_URL + var):
+        os.remove(SERVER_URL + var)
+    image.name = ID + ".jpg"
     obj.img = image
     obj.save()
-    return JsonResponse({'message': 'success'})
+    obj = UserInfo.objects.get(userID=ID)
+    avatar = obj.img
+    return JsonResponse({'message': 'success', 'avatarUrl': SERVER_URL + avatar.url})
 
 
 def getAvatar(request, ID):
