@@ -11,7 +11,7 @@ from api.models import UserInfo
 
 TOKEN = True
 
-
+SERVER_URL= "http://154.8.183.51"
 # Create your views here.
 def image_gallery(request):
     if TOKEN:
@@ -84,36 +84,34 @@ def changePwd(request):
             return JsonResponse({'message': 'success'}, status=200)
 
 
-def getInfo(request):
+def getInfo(request, ID):
     if request.method != 'GET':
-        return JsonResponse({"message": "failed", "error": "request method error"}, status=404)
-    accessToken = request.headers.get('Authorization').split(' ')[1]
-    decodedToken = validateAccessToken(accessToken)
-    if decodedToken is None:
-        return JsonResponse({'message': 'fail', 'error': 'not the login user'}, status=400)
-    ID = getUserFromToken(accessToken).username
-    data = UserInfo.objects.filter(userID=ID)
-    if data.count() == 0:
-        return JsonResponse({"message": "failed", "error": "id error"})
-    else:
-        email = data.get().email
-        gender = data.get().gender
-        region = data.get().region
-        motto = data.get().motto
-        birthday = data.get().birth
-        VIP = data.get().VIPDate
-        responseData = {
-            'username': ID,
-            'email': email,
-            'gender': gender,
-            'region': region,
-            'motto': motto,
-            'birthday': birthday,
-            'VIPDate': VIP,
-            'message': 'login success'
-        }
-        return JsonResponse(responseData, status=200)
-
+        return JsonResponse({'message': 'fail', 'error': 'request method error'}, status=400)
+    try:
+        data = UserInfo.objects.filter(userID=ID)
+        if data.count() == 0:
+            return JsonResponse({"message": "failed", "error": "id error"})
+        else:
+            email = data.get().email
+            gender = data.get().gender
+            nickname = data.get().nickname
+            motto = data.get().motto
+            birthday = data.get().birth
+            VIP = data.get().VIPDate
+            responseData = {
+                'username': ID,
+                'email': email,
+                'gender': gender,
+                'nickname': nickname,
+                'motto': motto,
+                'birthday': birthday,
+                'VIPDate': VIP,
+                'message': 'login success'
+            }
+            return JsonResponse(responseData, status=200)
+    except:
+        return JsonResponse({'message': 'fail', 'error': 'ID error'}, status=400)
+    
 
 def changeInfo(request):
     accessToken = request.headers.get('Authorization').split(' ')[1]
@@ -124,14 +122,14 @@ def changeInfo(request):
     data = json.loads(request.body)
     ID = getUserFromToken(accessToken).username
     gender = data.get('gender')
-    region = data.get('region')
+    nickname = data.get('nickname')
     birthday = data.get('birthday')
     motto = data.get('motto')
 
     if gender:
         UserInfo.objects.filter(userID=ID).update(gender=gender)
-    if region:
-        UserInfo.objects.filter(userID=ID).update(region=region)
+    if nickname:
+        UserInfo.objects.filter(userID=ID).update(nickname=nickname)
     if birthday:
         UserInfo.objects.filter(userID=ID).update(birth=birthday)
     if motto:
@@ -171,7 +169,7 @@ def register(request):
             return JsonResponse({'message': 'fail', 'error': 'username exists'})
         # verificationCode = sendVerificationEmail(email)
         User.objects.create_user(username=username, password=password, email=email)
-        UserInfo.objects.create(userID=username, passwd=password, email=email)
+        UserInfo.objects.create(userID=username, passwd=password, email=email, nickname=username)
         return JsonResponse({'message': 'success'})
     except Exception as e:
         return JsonResponse({'message': 'fail', 'error': str(e)})
@@ -202,6 +200,6 @@ def getAvatar(request, ID):
     try:
         obj = UserInfo.objects.get(userID=ID)
         avatar = obj.img
-        return JsonResponse({'message': 'success', 'url': avatar.url})
+        return JsonResponse({'message': 'success', 'url': SERVER_URL + avatar.url})
     except:
         return JsonResponse({'message': 'fail', 'error': 'ID error'}, status=400)
