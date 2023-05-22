@@ -103,7 +103,7 @@ import WebFoot from '../veiw/foot/WebFoot.vue';
 import { ElAvatar, ElButton, ElDialog } from 'element-plus';
 import HeadTop from '../veiw/head/HeadTop';
 //import axios from 'axios';
-import { ref,computed } from 'vue';
+import { ref,computed} from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router';
 import PayComponent from './PayComponent.vue';
@@ -116,7 +116,6 @@ export default {
         const test=ref(false)
         const store=useStore();
         const router=useRouter();
-        const avatar=store.state.userAvatar
         const design = ref("");
         const showPayDialog =ref(false);
         const isfollow = ref(true);
@@ -128,7 +127,11 @@ export default {
         const VIP = computed(() => {
             return store.state.isVip;
         });
+        const avatar = computed(() => {
+            return store.state.userAvatar
+        })
         router.push({ name: 'info' });
+ 
         function signOut() {
             store.commit('signOut');
             router.push('/');

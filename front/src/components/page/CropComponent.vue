@@ -14,7 +14,7 @@
 <script>
 import Cropper from 'cropperjs'
 import '../../../node_modules/cropperjs/dist/cropper.min.css'
-//import axios from 'axios';
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 export default {
     name: 'HelloWorld',
@@ -25,7 +25,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['tempAvatar']), // 将 test 属性从 Vuex 模块中读取出来
+        ...mapGetters(['tempAvatar']), // 将 tempAvatar 属性从 Vuex 模块中读取出来
         imageSrc() {
             console.log(this.tempAvatar)
             return this.tempAvatar // 使用 test 计算属性代替直接引用 test 属性
@@ -47,13 +47,39 @@ export default {
                 zoomOnWheel: false,
             })
         },
+        dataURLToBlob(dataURL) {
+            const byteString = atob(dataURL.split(',')[1]);
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+
+            return new Blob([ab], { type: 'image/jpeg' });
+        },
         sureSava() {
-            this.afterImg = this.myCropper.getCroppedCanvas({
+            const dataURL = this.myCropper.getCroppedCanvas({
                 imageSmoothingQuality: 'high'
             }).toDataURL('image/jpeg')
-            console.log("fasong")
+            const blob = this.dataURLToBlob(dataURL);
+            const formData = new FormData();
+            formData.append('img', blob);
+
+            axios.post('http://154.8.183.51/user/setavatar', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(response => {
+                console.log("上传成功")
+                console.log(response.data.avatarUrl)
+                this.$store.commit('setAvatarUrl', response.data.avatarUrl);
+                console.log(response.data)
+            }).catch(error => {
+                console.error(error)
+            })
             this.$emit('close');
-            console.log("diaoyong")
+
         }
     },
 }
