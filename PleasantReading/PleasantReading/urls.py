@@ -20,7 +20,6 @@ from django.urls import path
 
 from PleasantReading import settings
 from api import userApi, bookApi
-from api.userApi import my_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
