@@ -5,14 +5,20 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db.models import Q, F, FloatField, Case, When, Value
+from rest_framework import serializers
 import json
 from datetime import date
 
 from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
-from api.models import UserInfo, BookBasicInfo, Collections, BookContext, Bookmark
+from api.models import UserInfo, BookBasicInfo, Collections, BookContext, Bookmark, Comments
 
 SERVER_URL = "http://154.8.183.51"
-BOOKS_IN_PAGE = 10
+BK2PG = 10
+CM2PG = 5
+NT2PG = 5
+
+def getPages(pages, num):
+    return max((pages + num - 1) // num, 1)
 
 def notAnonymous(request):
     if len(request.headers.get('Authorization').split(' ')) > 1:
@@ -156,9 +162,9 @@ def bookFilter(request):
             books = books.order_by('-wordsCnt')
     if request.GET.get('page'):
         page = eval(request.GET.get('page'))
-        books = books[(page-1)*BOOKS_IN_PAGE:page*BOOKS_IN_PAGE]
+        books = books[(page-1)*BK2PG:page*BK2PG]
     books = list(books.values_list('bookID', flat=True))
-    return JsonResponse({'books': books, 'pages': max(1, (num+BOOKS_IN_PAGE-1) // BOOKS_IN_PAGE)})
+    return JsonResponse({'books': books, 'pages': getPages(num, BK2PG)})
 
 def bookSearch(request):
     if request.method != 'GET':
@@ -169,10 +175,46 @@ def bookSearch(request):
         num = books.count()
         if request.GET.get('page'):
             page = eval(request.GET.get('page'))
-            books = books[(page - 1) * BOOKS_IN_PAGE:page * BOOKS_IN_PAGE]
+            books = books[(page - 1) * BK2PG:page * BK2PG]
         books = list(books.values_list('bookID', flat=True))
-        return JsonResponse({'books': books, 'pages': max(1, (num + BOOKS_IN_PAGE - 1) // BOOKS_IN_PAGE)})
+        return JsonResponse({'books': books, 'pages': getPages(num, BK2PG)})
     else:
         return JsonResponse({'message': 'blank content'}, status=400)
 
+def getBookNotes(request, bookid, chapter, page):
+    if request.method != 'GET':
+        return JsonResponse({'message': 'invalid request'}, status=400)
+    if not notAnonymous(request):
+        return JsonResponse({'notes': [], 'pages': 1})
+    userid=getUsername(request)
+    comments = Comments.objects.filter(bookID=bookid, userID=userid, chapter=chapter, visible=False)
+    num = comments.count()
+    comments = comments[(page-1) * NT2PG:page*NT2PG]
+    return JsonResponse({'notes': list(comments.values_list('text', flat=True)), 'pages': getPages(num, NT2PG)})
+
+class CommentSerializer(serializers.ModelSerializer):
+    userid = serializers.CharField(source='userID.userID')
+    nickname = serializers.CharField(source='userID.nickname')
+    avatar = serializers.ImageField(source='userID.img')
+    text = serializers.CharField()
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        avatar_url = 'http://154.8.183.51' + ret['avatar']
+        ret['avatar'] = avatar_url
+        return ret
+
+    class Meta:
+        model = Comments
+        fields = ['userid', 'nickname', 'avatar', 'text']
+
+def getComments(request, bookid, chapter, page):
+    if (request.method != 'GET'):
+        return JsonResponse({'message': 'invalid request'}, status=400)
+    comments = Comments.objects.filter(bookID=bookid, chapter=chapter, visible=True)
+    num = comments.count()
+    print(num)
+    comments = comments[(page-1) * CM2PG:page*CM2PG]
+    serializer = CommentSerializer(comments, many=True)
+    return JsonResponse({'comments': serializer.data, 'pages': getPages(num, CM2PG)})
 
