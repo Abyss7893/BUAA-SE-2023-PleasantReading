@@ -55,8 +55,8 @@ export default {
     for (let i = 0; i < 10; i++) {
       this.booklist.push({
         cover: require("../../../assets/imgs/bookcv.png"),
-        author: "dsda",
-        name: "name",
+        author: "唐氏三少",
+        name: "斗罗大陆",
         state: ["VIP", "玄幻", "短篇"],
       });
     }

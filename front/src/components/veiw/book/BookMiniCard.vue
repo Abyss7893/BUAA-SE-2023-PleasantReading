@@ -41,6 +41,7 @@
 </template>
 
 <script>
+// import { getBookDetiles } from '@/api/api';
 export default {
   props: {
     book: Object,
@@ -48,6 +49,7 @@ export default {
   data() {
     return { rating: this.book.rating };
   },
+
 };
 </script>
 

@@ -84,6 +84,7 @@ export default {
 <style scoped>
 .category {
   width: 200px;
+  min-width: 200px;
   margin-top: 41px;
 }
 

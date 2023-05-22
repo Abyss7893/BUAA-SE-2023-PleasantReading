@@ -9,8 +9,8 @@
       <div class="first-top">
         <img :src="booklist[0].cover" class="image" />
         <div class="first">
-          <h2 class="book-name">{{ booklist[0].name }} aaaaaaaaaaaaaaaaaaa</h2>
-          <p class="author">{{ booklist[0].author }}aaaaaaaaa著</p>
+          <h2 class="book-name">{{ booklist[0].name }} </h2>
+          <p class="author">{{ booklist[0].author }}著</p>
           <el-space size="10%">
             <el-tag class="mx-4" effect="plain" type="danger">{{
               booklist[0].state[0]
@@ -25,6 +25,7 @@
         </div>
       </div>
     </div>
+
     <div class="text item">
       <span style="white-space: pre"> {{ " " }}</span>
     </div>
@@ -75,7 +76,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 50%;
+  max-width: 100%;
   padding-bottom: 2%;
 }
 .card-header {
@@ -96,7 +97,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 50%;
+  max-width: 100%;
   padding-bottom: 2%;
 }
 .first-top {

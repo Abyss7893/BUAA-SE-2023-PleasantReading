@@ -5,7 +5,7 @@
         <div class="detail-content-top">
           <div class="book-infos-view">
             <div class="book-infos">
-              <div class="book-img-box">
+              <div class="book-img-box-detail">
                 <img :src="detailData.cover" />
               </div>
               <div class="book-info-box">
@@ -18,10 +18,10 @@
                 <!-- <el-divider></el-divider> -->
 
                 <div class="book-state">
-                  <span class="state hidden-sm">连载</span>
-                  <span class="state hidden-sm">VIP</span>
-                  <span class="state hidden-sm">长篇</span>
-                  <span class="state hidden-sm">玄幻</span>
+                  <span class="state hidden-sm">{{ detailData.status }}</span>
+                  <span class="state hidden-sm">{{ detailData.vip }}</span>
+                  <span class="state hidden-sm">{{ simpleSizes }}</span>
+                  <span class="state hidden-sm">{{ detailData.category }}</span>
                 </div>
                 <div class="translators flex-view" style="">
                   <span>字数：</span>
@@ -129,14 +129,26 @@
 </template>
 
   <script>
+import { getBookDetiles } from "@/api/api";
 import HeadAndFoot from "../HeadAndFoot.vue";
+
 export default {
   components: { HeadAndFoot },
   data() {
     return {
       Order: true,
       bookId: "",
-      detailData: undefined,
+      detailData: {
+        cover: require("assets/imgs/bookcv.png"),
+        title: "正在加载",
+        author: "正在加载",
+        size: "0",
+        category: "正在加载",
+        rating: 0,
+        intro: "正在加载",
+        vip: "正在加载",
+        status: "正在加载",
+      },
       tabUnderLeft: 6,
       tabData: ["简介", "评论"],
       selectTabIndex: 0,
@@ -164,6 +176,11 @@ export default {
 
       return rows;
     },
+    simpleSizes() {
+      if (this.detailData.size > 1000000) return "长篇";
+      else if (this.detailData.size > 200000) return "中篇";
+      else return "短篇";
+    },
   },
   methods: {
     generateChater() {
@@ -179,25 +196,39 @@ export default {
     comment() {
       this.isContent = !this.isContent;
     },
+    formatNumber(number) {
+      if (number >= 100000) {
+        const formattedNumber = (number / 10000).toFixed(1);
+        return `${formattedNumber}万`;
+      } else if (number >= 1000) {
+        const formattedNumber = (number / 1000).toFixed(1);
+        return `${formattedNumber}千`;
+      } else {
+        return number.toString();
+      }
+    },
   },
   created() {
-    // const bookId = this.$route.params.id;
-    this.detailData = {
-      cover: require("assets/imgs/bookcv.png"),
-      title: "Title",
-      author: "Author",
-      size: "111万",
-      category: "CT1",
-      rating: 4.4,
-      intro:
-        "一个不玩原神的人，有两种可能性。一种是没有能力玩原神。因为买不起高配的手机和抽不起卡等各种自身因素，他的人生都是失败的，第二种可能：有能力却不玩原神的人，在有能力而没有玩原神的想法时，那么这个人的思想境界便低到了一个令人发指的程度。一个有能力的人不付出行动来证明自己，只能证明此人行为素质修养之低下。是灰暗的，是不被真正的社会认可的。是的 ，但是我很难想象一个精神状态正常的游戏玩家会做出“不玩原神”这种选择。原神优秀的题材与充实有趣的游戏内容，可以说目前所有开放世界游戏中最优秀的，没有之一。没有玩过原神的朋友失去的不仅仅是一次游戏的体验，而是一种最基本的对游戏的理解与精神信仰。原神明明可以在将大家的游戏体验带入一个全新的高度，可是你竟然放弃了。那今后提起游戏你必将会坠入冰冷的深渊，体验绝望的后悔与没落感。玩游戏不玩原神，就像四大名著不看红楼梦，说明这个人文学造诣和自我修养不足，他理解不了这种内在的阳春白雪的高雅艺术，他只能看到外表的辞藻堆砌，参不透其中深奥的精神内核，他整个人的层次就卡在这里了， 只能度过一个相对失败的人生。",
-    };
+    const bookId = this.$route.params.id;
+    getBookDetiles(bookId).then((data) => {
+      console.log(data);
+      this.detailData = {
+        cover: data.cover,
+        title: data.title,
+        author: data.author,
+        size: this.formatNumber(data.cnt),
+        category: data.category,
+        rating: parseFloat(data.score).toFixed(1),
+        intro: data.brief,
+        vip: data.vip ? "VIP" : "免费",
+        status: data.status,
+      };
+    });
     this.generateChater();
-
     // 根据图书ID进行进一步的数据加载或处理
   },
 };
-</script>
+</script >
   <style scoped lang="less">
 .rate-text {
   padding-top: 6px;
@@ -294,7 +325,7 @@ export default {
     }
   }
 
-  .book-img-box {
+  .book-img-box-detail {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 235px;
     flex: 0 0 235px;
@@ -302,7 +333,7 @@ export default {
 
     img {
       width: 158px;
-      height: 211;
+      height: 211px;
       display: block;
       margin: 0 auto;
       border: 1px solid #eee;
@@ -429,12 +460,17 @@ export default {
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;
+    
     height: 100%;
+  }
+  .count-box:hover {
+
+    border-bottom: 3px solid #f73f1152;
+    
   }
 
   .count-text-box {
     font-size: 0;
-
     .count-title {
       color: #152844;
       font-weight: 600;
@@ -443,6 +479,9 @@ export default {
       display: block;
       height: 18px;
     }
+    // .count-title:hoe {
+    //   color: #152844;
+    // }
   }
 
   .count-num-box {

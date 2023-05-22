@@ -58,6 +58,7 @@
   
   
   <script>
+// import axios from 'axios';
 import BookMiniCard from './BookMiniCard.vue';
 export default {
   components: {BookMiniCard},
@@ -133,6 +134,7 @@ export default {
       if (this.currentPage > 1) {
         this.currentPage--;
       }
+      // axios.post('/url')
     },
     firstPage() {
       this.currentPage = 1;
