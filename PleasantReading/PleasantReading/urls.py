@@ -31,6 +31,8 @@ urlpatterns = [
     path('user/getinfo/<str:ID>', userApi.getInfo),
     path('user/setavatar', userApi.setAvatar),
     path('user/getavatar/<str:ID>', userApi.getAvatar),
+    path('user/sendemail', userApi.userSendEmail),
+    path('user/sending/<str:ID>/<str:pwd>', userApi.userCheck),
 
     path('book/info/<int:bookid>/', bookApi.getBookInfo),
     path('book/outline/<int:bookid>/', bookApi.getBookOutline),
