@@ -144,11 +144,9 @@ def changeInfo(request):
 
 
 def login(request):
-    print('Yes')
     data = json.loads(request.body)
     username = data.get('id')
     password = data.get('pwd')
-    print("username = {0}, pwd = {1}".format(username, password))
     user = authenticate(request, username=username, password=password)
     if user is not None:
         refresh = RefreshToken.for_user(user)
@@ -169,7 +167,6 @@ def register(request):
     password = data.get('password')
     email = data.get('email')
     try:
-        print(username)
         cnt = UserInfo.objects.filter(userID=username).count()
         if cnt != 0:
             return JsonResponse({'message': 'fail', 'error': 'username exists'})
@@ -237,7 +234,7 @@ def userSendEmail(request):
         send_status = msg.send()
         return JsonResponse({'message': 'success', 'status': send_status}, status=200)
     except Exception as e:
-       return JsonResponse({'message': 'fail', 'error': "send email error"}, status=400)
+       return JsonResponse({'message': 'fail', 'error': str(e)}, status=400)
 
 def userCheck(request, ID, pwd):
     obj = UserInfo.objects.get(userID=ID)

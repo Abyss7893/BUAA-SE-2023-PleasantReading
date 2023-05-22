@@ -19,8 +19,8 @@ class UserInfo(models.Model):
 class BookBasicInfo(models.Model):
     bookID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128, null=False)
-    totScore = models.DecimalField(max_digits=15, decimal_places=2)
-    rateNumber = models.IntegerField()
+    totScore = models.DecimalField(max_digits=15, decimal_places=2, default=0)
+    rateNumber = models.IntegerField(default=0)
     author = models.CharField(max_length=128, null=True)
     status = models.CharField(max_length=64, null=False, default='连载')
     onShelf = models.BooleanField(default=True)
@@ -33,7 +33,7 @@ class BookBasicInfo(models.Model):
 
 
 class BookContext(models.Model):
-    bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE)
+    bookID = models.IntegerField(null=False)
     chapter = models.IntegerField()
     title = models.CharField(max_length=128, null=True)
     text = models.TextField(null=False)
@@ -60,8 +60,8 @@ def beforeDeleteCollections(sender, instance, **kwargs):
 
 
 class Score(models.Model):
-    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
-    bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE)
+    userID = models.CharField(max_length=128, null=False)
+    bookID = models.IntegerField(null=False)
     score = models.DecimalField(max_digits=4, decimal_places=2)
 
     class Meta:
@@ -86,8 +86,8 @@ class Score(models.Model):
 
 
 class Collections(models.Model):
-    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
-    bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE, related_name='BookBasicInfo')
+    userID = models.CharField(max_length=128, null=False)
+    bookID = models.IntegerField(null=False)
 
     class Meta:
         indexes = [models.Index(fields=['userID', 'bookID'])]
@@ -108,8 +108,8 @@ def beforeDeleteCollections(sender, instance, **kwargs):
 
 
 class Comments(models.Model):
-    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
-    bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE)
+    userID = models.CharField(max_length=128, null=False)
+    bookID = models.IntegerField(null=False)
     chapter = models.IntegerField(null=False)
     text = models.TextField(null=False)
     visible = models.BooleanField(default=True)
@@ -120,8 +120,8 @@ class Comments(models.Model):
 
 
 class Bookmark(models.Model):
-    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
-    bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE)
+    userID = models.CharField(max_length=128, null=False)
+    bookID = models.IntegerField(null=False)
     chapter = models.IntegerField(null=False)
 
     class Meta:
@@ -129,12 +129,12 @@ class Bookmark(models.Model):
 
 
 class Manager(models.Model):
-    userID = models.CharField(max_length=56, primary_key=True)
+    userID = models.CharField(max_length=128, null=False)
     passwd = models.CharField(max_length=56, null=False)
     email = models.EmailField(null=False)
 
 
 class History(models.Model):
-    userID = models.ForeignKey('UserInfo', on_delete=models.CASCADE)
-    bookID = models.ForeignKey('BookBasicInfo', on_delete=models.CASCADE)
+    userID = models.CharField(max_length=128, null=False)
+    bookID = models.IntegerField(null=False)
     chapter = models.IntegerField(null=False)
