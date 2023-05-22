@@ -1,5 +1,5 @@
 <template>
-  <div class="panel-box" :style="{ display: this.settingsDisplay }">
+  <div class="panel-box">
     <a class="close-panel-button" @click="cancelSettings"><el-icon class="close-panel-button-icon" size="26"
         color="#a6a6a6">
         <Close />
@@ -58,10 +58,9 @@
 </template>
 <script>
 import 'css/reader/reader.css'
-import { ElIcon } from 'element-plus'
 export default {
   name: "ReaderSettingsPanel",
-  components: { ElIcon },
+  components: {},
   created() {
     this.themes = this.$store.state.themes
   },
@@ -113,11 +112,13 @@ export default {
       let body = document.getElementsByClassName("basic-bcg")[0]
       let text = document.getElementsByClassName("text")[0]
       let chapterControl = document.getElementsByClassName("chapter-control")[0]
-      let panel = document.getElementsByClassName("panel")[0]
+      let panels = document.getElementsByClassName("panel")
       body.style.backgroundImage = `url(${this.theme.bg1})`;
       text.style.backgroundImage = `url(${this.theme.bg2})`;
       chapterControl.style.backgroundImage = `url(${this.theme.bg2})`;
-      panel.style.backgroundColor = this.theme.color
+      for (let index = 0; index < panels.length; index++) {
+        panels[index].style.backgroundColor = this.theme.color
+      }
       this.ddList.forEach(dd => {
         dd.style.backgroundImage = `url(${this.theme.bg2})`;
       });

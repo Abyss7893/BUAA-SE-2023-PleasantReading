@@ -1,9 +1,9 @@
 <template>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  <div class="reader-menu float" :style="{ marginLeft: menuLoc }">
+  <div class="reader-menu float" :style="[{ marginLeft: menuLoc }, { top: menuTop }]">
     <dl>
-      <dd><a><svg t="1684569489333" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
-            p-id="41510" width="16" height="16">
+      <dd :class="isCatalogAct"><a @click="changeCatalog"><svg t="1684569489333" class="icon" viewBox="0 0 1024 1024"
+            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="41510" width="16" height="16">
             <path
               d="M838.3 895.9H197.9c-53.9 0-97.7-43.8-97.7-97.7V236.7c0-53.9 43.8-97.7 97.7-97.7h640.3c53.9 0 97.7 43.8 97.7 97.7v561.4c0.1 53.9-43.7 97.8-97.6 97.8zM197.9 203.8c-18.1 0-32.9 14.8-32.9 32.9v561.4c0 18.1 14.8 32.9 32.9 32.9h640.3c18.1 0 32.9-14.8 32.9-32.9V236.7c0-18.1-14.8-32.9-32.9-32.9H197.9z"
               fill="#262626" p-id="41511"></path>
@@ -44,7 +44,7 @@
               d="M300.083008 464.834794c0 27.928073 22.735817 50.64854 50.66389 50.64854 27.927049 0 50.662867-22.720468 50.662867-50.64854 0-27.928073-22.735817-50.66389-50.662867-50.66389C322.817802 414.171927 300.083008 436.907745 300.083008 464.834794"
               fill="#262626" p-id="2413"></path>
           </svg><span>评论</span></a></dd>
-      <dd :class="isddAct"><a @click="changeSettings"><svg t="1684569420958" class="icon" viewBox="0 0 1036 1024"
+      <dd :class="isSettingAct"><a @click="changeSettings"><svg t="1684569420958" class="icon" viewBox="0 0 1036 1024"
             version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="37778" width="16" height="16">
             <path
               d="M1017.6 467.2c0-19.2 0-38.4-6.4-51.2 0-25.6-12.8-44.8-38.4-51.2-38.4-6.4-70.4-25.6-96-70.4-19.2-38.4-25.6-76.8-12.8-115.2 6.4-19.2 0-38.4-12.8-64-44.8-44.8-102.4-76.8-166.4-96-19.2-6.4-38.4 0-64 12.8-25.6 32-64 44.8-108.8 44.8-38.4 0-76.8-19.2-108.8-44.8-25.6-25.6-51.2-19.2-64-12.8-44.8 32-96 57.6-153.6 102.4-25.6 12.8-32 38.4-25.6 57.6 12.8 38.4 6.4 83.2-12.8 121.6-12.8 32-44.8 57.6-89.6 70.4H44.8c-12.8 6.4-25.6 19.2-32 44.8v19.2c-6.4 25.6-12.8 51.2-12.8 70.4 0 32 0 70.4 12.8 96 0 25.6 19.2 44.8 44.8 51.2 38.4 6.4 70.4 25.6 96 70.4 19.2 38.4 25.6 76.8 12.8 115.2-6.4 19.2 0 38.4 12.8 64 38.4 38.4 89.6 70.4 166.4 102.4h12.8c12.8 0 32-6.4 44.8-19.2 25.6-32 64-44.8 108.8-44.8 38.4 0 76.8 19.2 108.8 44.8 12.8 12.8 25.6 19.2 44.8 19.2h19.2c57.6-25.6 108.8-51.2 166.4-96 19.2-12.8 32-38.4 19.2-57.6-12.8-38.4-6.4-83.2 12.8-121.6 19.2-32 51.2-57.6 96-70.4h12.8c19.2-6.4 32-25.6 38.4-44.8l6.4-19.2c-19.2-32-12.8-51.2-12.8-76.8 0-19.2-6.4-32-6.4-51.2z m-224 384c-32 32-76.8 57.6-134.4 76.8-38.4-38.4-96-64-153.6-64-57.6 0-115.2 25.6-153.6 64-51.2-19.2-96-51.2-128-76.8 19.2-57.6 12.8-115.2-19.2-160-32-57.6-70.4-89.6-128-102.4V512c0-25.6 0-51.2 6.4-83.2 57.6-19.2 96-51.2 128-96 32-57.6 38.4-115.2 19.2-160 32-32 76.8-57.6 134.4-76.8 44.8 44.8 96 70.4 153.6 70.4 57.6 0 115.2-25.6 153.6-64 51.2 19.2 96 51.2 128 76.8-19.2 57.6-12.8 115.2 19.2 160 32 57.6 70.4 89.6 128 102.4 6.4 25.6 6.4 51.2 6.4 83.2 0 19.2 0 38.4-6.4 70.4-57.6 19.2-102.4 57.6-128 102.4-32 51.2-38.4 108.8-25.6 153.6z"
@@ -55,10 +55,7 @@
           </svg><span>设置</span></a></dd>
     </dl>
     <!-- 目录面板浮层 -->
-    <!-- <div class="panel catalog">
-      <h4 class="lang">123</h4>
-
-    </div> -->
+    <ReaderCatalogPanel ref="child2" :style="{ display: catalogDisplay }" />
     <!-- 设置面板浮层 -->
     <ReaderSettingsPanel ref="child1" :style="{ display: settingsDisplay }" />
   </div>
@@ -66,23 +63,37 @@
 <script>
 import 'css/reader/reader.css'
 import ReaderSettingsPanel from './ReaderSettingsPanel.vue';
+import ReaderCatalogPanel from './ReaderCatalogPanel.vue';
 export default {
   name: "ReaderMenu",
   components: {
     ReaderSettingsPanel,
+    ReaderCatalogPanel,
   },
   data() {
     return {
       pageWidth: 800,
+      Top: null,
       settingsExist: false,
+      catalogExist: true,
     }
   },
+  mounted() {
+    window.addEventListener('scroll', () => {
+      this.Top = document.getElementsByClassName("center-box")[0].getBoundingClientRect().top
+    }, true)
+    this.catalogExist = !this.catalogExist
+  },
   computed: {
-    isddAct() {
+    isSettingAct() {
       if (this.settingsExist)
         return "act"
-      else
-        return null
+      return null
+    },
+    isCatalogAct() {
+      if (this.catalogExist)
+        return "act"
+      return null
     },
     settingsDisplay() {
       if (this.settingsExist)
@@ -90,20 +101,40 @@ export default {
       else
         return "none"
     },
+    catalogDisplay() {
+      if (this.catalogExist)
+        return "block"
+      else
+        return "none"
+    },
     menuLoc() {
       return -(this.pageWidth / 2) - 68 + 'px'
-    }
+    },
+    menuTop() {
+      if (this.Top < 0)
+        return "0"
+      else
+        return this.Top + "px"
+    },
+  },
+  watch: {
+    catalogExist() {
+      this.$refs.child2.scrollToThisChapter()
+    },
   },
   methods: {
     panelInit() {
       this.settingsExist = false
+      this.catalogExist = false
     },
     changeVisiable(pannelName) {
       switch (pannelName) {
         case "settings":
           this.settingsExist = !this.settingsExist
-          break;
-
+          break
+        case "catalog":
+          this.catalogExist = !this.catalogExist
+          break
         default:
           break;
       }
@@ -118,6 +149,14 @@ export default {
     },
     setPageWidth(width) {
       this.pageWidth = width
+    },
+    changeCatalog() {
+      if (!this.catalogExist) {
+        this.panelInit()
+        this.changeVisiable("catalog")
+      } else {
+        this.panelInit()
+      }
     }
   },
 }
