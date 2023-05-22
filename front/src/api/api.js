@@ -11,8 +11,16 @@ function getBookDetiles(bookid) {
         return data;
     });
 }
+function getBookContent(bookid) {
+    var url = back + "/book/outline/" + bookid;
+    return axios.get(url).then(res => {
+        var data = res.data;
+        console.log(data);
+        return data;
+    });
+}
 
 
 export {
-    getBookDetiles
+    getBookDetiles, getBookContent
 }

@@ -85,8 +85,8 @@
         </div>
       </div>
       <transition name="el-zoom-in-top">
-        <div v-show="isContent" class="detail-content-bottom">
-          <el-divider>
+        <div v-show="isContent" >
+          <el-divider >
             目录
             <el-icon
               v-show="Order"
@@ -129,9 +129,9 @@
 </template>
 
   <script>
-import { getBookDetiles } from "@/api/api";
+import { getBookDetiles, getBookContent } from "@/api/api";
 import HeadAndFoot from "../HeadAndFoot.vue";
-
+// import getBookContent from
 export default {
   components: { HeadAndFoot },
   data() {
@@ -184,10 +184,16 @@ export default {
   },
   methods: {
     generateChater() {
-      for (let i = 1; i <= 400; i++) {
-        i;
-        this.chapters.push({ id: i, title: "Chapter " + i });
-      }
+      // for (let i = 1; i <= 400; i++) {
+      //   i;
+      //   this.chapters.push({ id: i, title: "Chapter " + i });
+      // }
+      getBookContent(this.bookId).then((bookContents) => {
+        console.log(bookContents);
+        for (let content of bookContents.outline) {
+          this.chapters.push(content);
+        }
+      });
     },
     changeOrder() {
       this.Order = !this.Order;
@@ -209,8 +215,8 @@ export default {
     },
   },
   created() {
-    const bookId = this.$route.params.id;
-    getBookDetiles(bookId).then((data) => {
+    this.bookId = this.$route.params.id;
+    getBookDetiles(this.bookId).then((data) => {
       console.log(data);
       this.detailData = {
         cover: data.cover,
@@ -224,7 +230,15 @@ export default {
         status: data.status,
       };
     });
-    this.generateChater();
+    // this.generateChater();
+    getBookContent(this.bookId).then((bookContents) => {
+      console.log(bookContents);
+      let i = 1;
+      for (let content of bookContents.outline) {
+        this.chapters.push({ id: i, title: content[0] });
+        i++;
+      }
+    });
     // 根据图书ID进行进一步的数据加载或处理
   },
 };
@@ -243,6 +257,12 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 1200px;
+  border-left: solid 1px rgba(255, 0, 0, 0.13);
+  border-right: solid 1px rgba(255, 0, 0, 0.13);
+  // background-color: rgba(99, 93, 93, 0.039);
+  border-radius: 1%;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
+  margin-bottom:10px ;
 }
 .el-divider--horizontal {
   display: block;
@@ -330,7 +350,7 @@ export default {
     -ms-flex: 0 0 235px;
     flex: 0 0 235px;
     margin: 0 0 0 0;
-
+   
     img {
       width: 158px;
       height: 211px;
@@ -338,6 +358,7 @@ export default {
       margin: 0 auto;
       border: 1px solid #eee;
       border-radius: 4px;
+      box-shadow: 0 4px 8px 0 rgba(90, 8, 8, 0.322), 0 6px 20px 0 rgba(49, 0, 0, 0)
     }
   }
 
@@ -460,13 +481,11 @@ export default {
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    
+
     height: 100%;
   }
   .count-box:hover {
-
     border-bottom: 3px solid #f73f1152;
-    
   }
 
   .count-text-box {
@@ -915,5 +934,8 @@ export default {
   padding: 10px;
   text-align: center;
   border-radius: 5px;
+}
+.chapter-title:hover {
+  background-color: rgba(249, 26, 26, 0.144);
 }
 </style>

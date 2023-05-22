@@ -94,6 +94,7 @@ export default {
   position: relative;
   /* max-width: 102px;
   min-width: 102px; */
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
   z-index: 3;
 }
 .book-img-box img {
@@ -105,6 +106,8 @@ export default {
   transition-duration: 0.5s;
   transition-timing-function: ease;
   transition-delay: 0s;
+  border-radius: 4%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
   /* z-index: 10; */
 }
 .book-img-box img:hover {
