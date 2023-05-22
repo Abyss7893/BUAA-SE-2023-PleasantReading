@@ -104,6 +104,18 @@ export default {
               console.log("获取信息失败")
               console.error(error)
             })
+          axios.get(`http://154.8.183.51/user/getavatar/${userLoginForm.username}`, {
+            
+          })
+            .then(response => {
+              
+              const url = response.data.url;
+              store.commit('setAvatarUrl', url);
+              console.log(url)
+            })
+            .catch(error => {
+              console.error(error);
+            });
           if (isTo) {
             router.push('/');
           }

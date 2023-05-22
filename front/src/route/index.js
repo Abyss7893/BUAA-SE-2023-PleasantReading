@@ -12,7 +12,7 @@ import RankBody from '../components/veiw/rank/RankBody'
 // import MartialComponent from '../components/veiw/content/category/MartialComponent'
 // import CityComponent from '../components/veiw/content/category/CityComponent'
 import Home from 'components/page/Home'
-
+//import HelloWorld from '../components/page/HelloWolrd'
 import 'css/home.css'
 const router = createRouter({
   history: createWebHistory(),
@@ -43,6 +43,7 @@ const router = createRouter({
       ]
     },
     { path: '/login', component: LoginComponent },
+    // { path:'/test',name:'test',component:HelloWorld},
     { path: '/register', component: RegisterComponent },
     {
       path: '/book/:id',
