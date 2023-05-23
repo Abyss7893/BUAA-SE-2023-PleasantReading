@@ -1,5 +1,8 @@
 <template>
     <div class="contain">
+        <ElDialog v-model="test" :destroy-on-close="true" >
+                <CropComponent @close="test = false"/>
+            </ElDialog>
         <ElDialog v-model="showPayDialog" title="支付"
         width="30%">
                 <PayComponent/>
@@ -8,9 +11,7 @@
         
         <div class="PersonTop">
             <div class="PersonTop_image">
-                <ElAvatar
-                    src="https://rss.sfacg.com/web/account/images/avatars/app/2010/25/1c44687f-df90-432e-8d35-cf2f46d1665b.jpg"
-                    :size="170" fit="contain"></ElAvatar>
+                <ElAvatar :src="avatar" shape="circle" fit="fill" :size="140"></ElAvatar>
             </div>
             <div class="PersonTop_text">
                 <div class="user_text">
@@ -24,8 +25,9 @@
                         <span> {{ design }}</span>
                     </div>
                     <div class="user_anniu">
-                        <el-button class="el-icon-edit">上传头像</el-button>
+                        <el-button class="el-icon-edit" @click="setAvatar">上传头像</el-button>
                     </div>
+                    
                 </div>
             </div>
             <div class="PersonTop_right">
@@ -84,17 +86,24 @@
                 <router-view></router-view>
             </div>
         </div>
-
+        <div class="foot">
+            <WebFoot/>
+        </div>
+        
     </div>
 </template>
 
 <script>
 
 //import PersonalDia from "./PersonalDialog.vue";
+//import Cropper from 'cropperjs';
+import CropComponent from './CropComponent.vue'
+import '../../../node_modules/cropperjs/dist/cropper.min.css'
+import WebFoot from '../veiw/foot/WebFoot.vue';
 import { ElAvatar, ElButton, ElDialog } from 'element-plus';
 import HeadTop from '../veiw/head/HeadTop';
-
-import { ref,computed } from 'vue';
+//import axios from 'axios';
+import { ref,computed} from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router';
 import PayComponent from './PayComponent.vue';
@@ -102,11 +111,11 @@ export default {
 
    name: "PersonalCenter",
     inject: ["reload"],
-    components: { ElAvatar, HeadTop, ElButton,  ElDialog,PayComponent},
+    components: { ElAvatar, HeadTop, ElButton,  ElDialog,PayComponent, WebFoot, CropComponent },
     setup() {
+        const test=ref(false)
         const store=useStore();
         const router=useRouter();
-        const nickname = ref("cyx");
         const design = ref("");
         const showPayDialog =ref(false);
         const isfollow = ref(true);
@@ -118,6 +127,11 @@ export default {
         const VIP = computed(() => {
             return store.state.isVip;
         });
+        const avatar = computed(() => {
+            return store.state.userAvatar
+        })
+        router.push({ name: 'info' });
+ 
         function signOut() {
             store.commit('signOut');
             router.push('/');
@@ -126,16 +140,40 @@ export default {
             showPayDialog.value=true;
             console.log("什么情况",showPayDialog.value);
         }
+        function setAvatar() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept='image/*'
+            input.click();
+            input.addEventListener('change', () => {
+                const imageFile = input.files[0];
+                // 创建一个 FileReader 对象，将文件读取成 base64 编码的字符串
+                const reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function (event) {
+                    const dataURL = event.target.result;
+                    store.commit('setTempAvatar',dataURL)
+                    test.value=true
+                }
+            });
+        }
+        function closeCrop(){
+            test.value=false;
+            console.log(test)
+        }
         return {
-            nickname,
+            avatar,
             design,
             isfollow,
             followData,
             isfollowid,
             VIP,
             showPayDialog,
+            test,
             signOut,
-            openPayDia
+            openPayDia,
+            setAvatar,
+            closeCrop
         }
     }
 };
@@ -151,7 +189,10 @@ export default {
     width: 100%;
     height: 100vh;
 }
-
+.userAvatar{
+    margin-top: 10px;
+    margin-left: 20px;
+}
 .PersonTop {
     width: 1000px;
     height: 200px;
@@ -172,12 +213,20 @@ export default {
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-start;
+    margin-right: 20px;
 }
 
 .PersonTop_right .el-button {
     margin-top: 30px;
 }
-
+.PersonTop_image{
+    margin-left: 20px;
+    margin-top: 10px;
+}
+.el-avatar>img{
+    width: 100%;
+    height: 100%;
+}
 
 .PersonTop_text {
     height: 120px;
@@ -191,10 +240,7 @@ export default {
     line-height: 30px;
 }
 
-.user_name {
-    margin-left: 10px;
-    font-weight: bold;
-}
+
 .user_anniu{
     margin-top: 140px;
     margin-right: 10px;
@@ -255,5 +301,10 @@ export default {
     height: 380px;
     margin-top: 40px;
     margin-right: 30px;
+}
+.foot{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 </style>

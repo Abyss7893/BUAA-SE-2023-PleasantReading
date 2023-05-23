@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 const store = createStore({
   state() {
     return {
+      tempAvatar:null,
       isLogin: false,
       isVIP: true,
       userId: null,
@@ -58,6 +59,10 @@ const store = createStore({
 
     }
   },
+  getters : {
+  tempAvatar: state => state.tempAvatar,
+  // ...
+},
   mutations: {
     refresh(state) {
       state.isLogin = !state.isLogin
@@ -70,6 +75,9 @@ const store = createStore({
         state.isVIP = false
       }
     },
+    setTempAvatar(state,url){
+      state.tempAvatar=url
+    },
     setVIP(state) {
       state.isVIP = true
     },
@@ -79,6 +87,9 @@ const store = createStore({
     setUser(state, userId) {
       state.userId = userId;
       state.isLogin = true;
+    },
+    setAvatarUrl(state,url){
+      state.userAvatar=url
     },
     changeNaviLoc(state, num) {
       state.navigationLoc = num
