@@ -8,8 +8,8 @@
                 <span>注意,付款时请备注您的账号</span>
             </div>
             <div class="image">
-                <img v-if="radio1=='1'" src="../../assets/wx.jpg"/>
-                <img v-else src="../../assets/zfb.jpg"/>
+                <img v-if="radio1=='1'" src="../../../assets/wx.jpg"/>
+                <img v-else src="../../../assets/zfb.jpg"/>
             </div>
         </ElDialog>
         <div class="payWay">

@@ -72,14 +72,12 @@ export default {
             
             // 使用 Axios 发送 POST 请求
             axios.post('http://154.8.183.51/user/changepwd', data)
-                .then(response => {
+                .then(() => {
                     alert("修改密码成功")
                     emit('close')
-                    console.log(response.data);
                 })
-                .catch(error => {
+                .catch(() => {
                     alert("修改密码失败")
-                    console.log(error);
                 });
         };
 

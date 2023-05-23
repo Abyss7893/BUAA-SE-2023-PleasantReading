@@ -53,7 +53,7 @@
               </el-icon>
               <span>个人简介</span>
             </el-menu-item>
-            <el-menu-item>
+            <el-menu-item @click="$router.push({ name: 'comment' })">
               <el-icon>
                 <ChatLineSquare />
               </el-icon>
@@ -71,7 +71,7 @@
               </el-icon>
               <span>我的书签</span>
             </el-menu-item>
-            <el-menu-item>
+            <el-menu-item @click="$router.push('/mybook')">
               <el-icon>
                 <Reading />
               </el-icon>
@@ -100,8 +100,8 @@
 
 //import PersonalDia from "./PersonalDialog.vue";
 //import Cropper from 'cropperjs';
-import CropComponent from './CropComponent.vue'
-import ChangePwd from './ChangePwd.vue';
+import CropComponent from './Personal/CropComponent.vue'
+import ChangePwd from './Personal/ChangePwd.vue';
 import '../../../node_modules/cropperjs/dist/cropper.min.css'
 import WebFoot from '../veiw/foot/WebFoot.vue';
 import { ElAvatar, ElButton, ElDialog } from 'element-plus';
@@ -110,7 +110,7 @@ import HeadTop from '../veiw/head/HeadTop';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router';
-import PayComponent from './PayComponent.vue';
+import PayComponent from './Personal/PayComponent.vue';
 export default {
 
   name: "PersonalCenter",
@@ -164,7 +164,6 @@ export default {
     }
     function closeCrop() {
       test.value = false;
-      console.log(test)
     }
     return {
       avatar,

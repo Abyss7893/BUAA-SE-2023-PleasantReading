@@ -121,7 +121,6 @@ export default defineComponent({
                 return;
             }
             store.commit('updateUserInfo',state.info)
-            console.log(store.state.userInfo)
             // TODO: 接下来需要做的是把修改的值传回数据库中
             axios({
                 method: 'post',
@@ -131,13 +130,12 @@ export default defineComponent({
                 },
                 data: JSON.stringify(store.state.userInfo)
             })
-                .then(response => {
+                .then(() => {
                     alert("修改成功");
-                    console.log(response);
                 })
-                .catch(error => {
+                .catch(() => {
                     alert("修改失败");
-                    console.log(error);
+
                 });
 
         };

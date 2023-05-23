@@ -13,7 +13,7 @@
 
 <script>
 import Cropper from 'cropperjs'
-import '../../../node_modules/cropperjs/dist/cropper.min.css'
+import '../../../../node_modules/cropperjs/dist/cropper.min.css'
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 export default {
@@ -71,10 +71,7 @@ export default {
                     'Content-Type': 'multipart/form-data'
                 }
             }).then(response => {
-                console.log("上传成功")
-                console.log(response.data.avatarUrl)
-                this.$store.commit('setAvatarUrl', response.data.avatarUrl);
-                console.log(response.data)
+                this.$store.commit('setAvatarUrl', response.data.avatarUrl);  
             }).catch(error => {
                 console.error(error)
             })

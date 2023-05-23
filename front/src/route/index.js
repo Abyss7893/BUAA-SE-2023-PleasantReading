@@ -3,10 +3,11 @@ import LoginComponent from '../components/page/login/LoginComponent'
 import RegisterComponent from '../components/page/login/RegisterComponent'
 import BookDetail from '../components/veiw/book/BookDetail'
 import PersonalCenter from '../components/page/PersonalCenter'
-import InfoComponent from '../components/page/InfoComponent'
+import InfoComponent from '../components/page/Personal/InfoComponent'
 import Reader from 'components/page/Reader'
 import MyBookBody from '../components/veiw/body/mybooks/MyBookBody'
 import RankBody from '../components/veiw/rank/RankBody'
+import MyComment from '../components/page/Personal/MyComment'
 // import FantasyComponent from '../components/veiw/content/category/FantasyComponent'
 // import HistoryComponent from '../components/veiw/content/category/HistoryComponent'
 // import MartialComponent from '../components/veiw/content/category/MartialComponent'
@@ -58,8 +59,12 @@ const router = createRouter({
           path: 'info',
           name: 'info',
           component: InfoComponent
-        }
-
+        },
+        {
+          path: 'comment',
+          name: 'comment',
+          component: MyComment
+        },
       ]
     },
     // {
