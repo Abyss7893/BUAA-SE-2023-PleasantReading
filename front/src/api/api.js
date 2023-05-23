@@ -26,7 +26,9 @@ function getBookCharpter(bookid, chapter) {
         method: 'get',
         url: 'http://154.8.183.51/book/content/' + bookid + '/' + chapter,
         headers: {
+            'Authorization': 'Bearer {{ACCESS_TOKEN}}',
             'Content-Type': 'application/json'
+
         }
     };
 
