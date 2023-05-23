@@ -45,6 +45,8 @@
 </template>
 <script>
 import 'css/reader/reader.css'
+import { getBookDetiles, getBookCharpter } from "@/api/api";
+import { nextTick } from 'vue';
 export default {
   name: "ReaderComponent",
   data() {
@@ -70,6 +72,28 @@ export default {
     markTheChapter() {
 
     },
+    initChapter() {
+      // console.log(0)
+      // this.bookInfo.bookId =this.$route.params.bookid;
+      this.bookInfo.chapterId =parseInt(this.$route.params.chapter);
+      console.log([this.bookInfo.bookId,this.bookInfo.chapterId]);
+      getBookDetiles(this.$route.params.bookid).then((data) => {
+        this.bookInfo.bookName=data.title;
+        this.bookInfo.bookId=data.id;
+        this.bookInfo.bookAuthor =data.author;
+        console.log(data);
+        getBookCharpter(this.$route.params.bookid,this.$route.params.chapter).then((data2) => {
+        this.chapterInfo.chapterTitle=data2.chaptertitle;//TODO
+        // this.chapterInfo.paragraphs =[data.content];
+        console.log(data2);
+    });
+    });
+
+    }
   },
+  created(){
+    nextTick(this.initChapter()) ;
+    // this.initChapter()
+  }
 }
 </script>

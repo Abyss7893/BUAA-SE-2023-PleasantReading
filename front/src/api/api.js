@@ -19,7 +19,26 @@ function getBookContent(bookid) {
         return data;
     });
 }
+function getBookCharpter(bookid, chapter) {
+    var axios = require('axios');
 
+    var config = {
+        method: 'get',
+        url: 'http://154.8.183.51/book/content/' + bookid + '/' + chapter,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    return axios(config)
+        .then(function (response) {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(function (error) {
+            throw error;
+        });
+}
 function getBookList(options) {
     // 设置默认参数
     var defaultOptions = {
@@ -35,7 +54,7 @@ function getBookList(options) {
     var mergedOptions = { ...defaultOptions, ...options };
 
     // 构建 URL
-    var url = back+'/book/filter/?category=' + mergedOptions.category +
+    var url = back + '/book/filter/?category=' + mergedOptions.category +
         '&vip=' + mergedOptions.vip +
         '&range=' + mergedOptions.range +
         '&order=' + mergedOptions.order +
@@ -64,5 +83,5 @@ function getBookList(options) {
 
 
 export {
-    getBookDetiles, getBookContent, getBookList
+    getBookDetiles, getBookContent, getBookList, getBookCharpter
 }

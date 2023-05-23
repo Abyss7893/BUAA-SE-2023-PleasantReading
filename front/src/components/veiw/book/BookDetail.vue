@@ -115,6 +115,7 @@
                 v-for="chapter in row"
                 :key="chapter.id"
                 class="chapter-title"
+                @click="gotoReadChapter(chapter.id)"
               >
                 {{ chapter.title }}
               </div>
@@ -213,6 +214,16 @@ export default {
         return number.toString();
       }
     },
+    gotoRead(){
+      this.$router.push({
+              path: "/reader/"+this.bookId+'/1',
+            });
+    },
+    gotoReadChapter(chapterId){
+      this.$router.push({
+              path: "/reader/"+this.bookId+'/'+chapterId,
+            });
+    }
   },
   created() {
     this.bookId = this.$route.params.id;

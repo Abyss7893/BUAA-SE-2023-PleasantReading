@@ -62,8 +62,13 @@ const router = createRouter({
 
       ]
     },
+    // {
+    //   path: '/reader',
+    //   component: Reader,
+    // },
     {
-      path: '/reader',
+      path: '/reader/:bookid/:chapter',
+      name:'reader',
       component: Reader,
     }
     ,
