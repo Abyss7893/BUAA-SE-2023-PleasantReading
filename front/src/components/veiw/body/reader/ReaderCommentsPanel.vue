@@ -28,7 +28,7 @@
           </li>
         </ul>
         <div class="comment-input-box">
-          <form action="POST"><textarea wrap="soft" rows="4" placeholder="发送一条友善的评论~"> </textarea><input type="button"
+          <form action="POST"><textarea wrap="soft" rows="4" placeholder="发送一条友善的评论~"></textarea><input type="button"
               value="发送">
           </form>
         </div>

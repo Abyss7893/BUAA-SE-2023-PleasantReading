@@ -56,6 +56,10 @@ const store = createStore({
         "bg1": require('assets/imgs/readerbcg/default/body.png'),
         "bg2": require('assets/imgs/readerbcg/default/basic.png'),
       }, "yahei", 18, 800],
+      // booklist:{
+      //   page:0,
+      //   books:[]
+      // }
 
     }
   },
@@ -102,7 +106,7 @@ const store = createStore({
     },
     updateUserInfo(state,userInfo){
       state.userInfo=userInfo
-      state.isLogin=true
+      // state.isLogin=true
     }
   },
 })

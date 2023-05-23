@@ -141,7 +141,7 @@ export default {
         };
     },
     components: { ElDialog }
-};
+}; 
 
 </script>
 
