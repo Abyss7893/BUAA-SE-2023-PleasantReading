@@ -9,6 +9,7 @@
       }"
       ref="startComponentRef"
     >
+      <img src="../../../assets/logo-yixinyuedu.png" class="start-image" />
       <div style="height: 40%">
         <div class="content">
           <h1 class="quote">
@@ -93,7 +94,7 @@ export default {
     },
   },
   created() {
-    this.switch = 0;
+    this.switch = Math.floor(Math.random() * this.strs.length);
     this.v = 1600 / this.strs[this.switch].length;
     let imgs = require
       .context("../../../assets/imgs/homepage/", false, /.jpg$/)
@@ -109,6 +110,22 @@ export default {
 </script>
 
 <style scoped>
+.start-image {
+  max-width: 32%;
+  /* backdrop-filter: blur(3px) invert(5%); */
+  /* border-radius: 30px; */
+  /* box-shadow:inset(0.5, 0.5, 0.5, 0 ); */
+  /* border: solid rgba(212, 184, 6, 0.164) 1px; */
+  transition: all 0.5s;
+}
+.start-image:hover {
+  scale: 1.1;
+  max-width: 32%;
+  backdrop-filter: blur(3px) invert(5%);
+  border-radius: 30px;
+  /* box-shadow:inset(0.5, 0.5, 0.5, 0 ); */
+  border: solid rgba(212, 184, 6, 0.164) 1px;
+}
 .startquote {
   font-family: kaiti;
   max-width: 700px;
@@ -169,12 +186,13 @@ export default {
   border: none;
   border-radius: 24px;
   cursor: pointer;
-  backdrop-filter: blur(10px) invert(20%);
+  backdrop-filter: blur(3px) invert(5%);
   bottom: 0px;
   transition: all 0.5s;
 }
 .start-button:hover {
   /* position: fixed; */
+  backdrop-filter: blur(10px) invert(15%);
   scale: 1.1;
 }
 .slide-up {
