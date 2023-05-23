@@ -1,121 +1,222 @@
 <template>
-    <div>
-    <!-- 支付弹窗 -->
-        <!-- 支付方式选择，按钮显示 -->
-        <div class="pay-dialog-body" v-if="payBtn">
-            <p>请选择支付方式：</p>
-            <el-radio-group v-model="payMethod" size="large">
-                <el-radio-button label="微信支付" />
-                <el-radio-button label="线下支付" />
+    <div class="site-content">
+        <div class="payWay">
+            <p>支付方式</p>
+            <el-radio-group v-model="radio1">
+                <el-radio label="1" size="large" border>微信支付</el-radio>
+                <el-radio label="2" size="large" border>支付宝支付</el-radio>
             </el-radio-group>
-            <div >
-                <p>请选择充值挡位</p>
-                <ElRadioGroup v-model="money">
-                    <el-radio label="充值一个月" size="large" border>￥30(充值一个月)</el-radio>
-                    <el-radio label="充值一个季度" size="large" border>￥90(充值一个季度)</el-radio>
-                    <el-radio label="充值一整年" size="large" border>￥300(充值一整年)</el-radio>
-                    
-                </ElRadioGroup>
-                <p >
-                    选择{{ money }}
-                </p>
-            </div>
-            <div>
-                <ElButton @click="handlePayWxQRcode(payInfoRow)" style="margin-left: 260px; margin-top: 20px; ">确认充值</ElButton>
-            </div>
         </div>
-        <!-- 支付方式选择完成，按钮消失 -->
-        <div v-else>
-            <div>
-                使用 
-                <span v-if="payForWx" class="pay-for-method-1">微信</span>
-                扫一扫二维码进行支付
+        <section class="sec-spacer sec-color">
+            
+            <div class="container">
+                <div class="spacer3"></div>
+                <div class="row pricing-style1">
+                    <div class="col-md-4 col-sm-4">
+                        <div class="pricing-plan">
+                            <div class="pricing-head">
+                                <div class="name">
+                                    包月VIP
+                                </div>
+                                <div class="price">
+                                    <span class="value">
+                                        ￥9
+                                    </span>
+                                    <span class="duration">
+                                        per month
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="pricing-body">
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-check"></i> 可以阅读VIP书籍
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                            <div class="pricing-footer button1">
+                                <a href="#" class="p-button" @click="handlePurchase(30)">购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="pricing-plan">
+                            <div class="pricing-head">
+                                <div class="name">
+                                    季度VIP
+                                </div>
+                                <div class="price">
+                                    <span class="value">
+                                        ￥30
+                                    </span>
+                                    <span class="duration">
+                                        per quarter
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="pricing-body">
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-check"></i> 可以阅读VIP书籍
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-check"></i> 价格更加实惠
+                                    </li>
+                                    <br/>
+                                    <br/>
+                                </ul>
+                            </div>
+                            <div class="pricing-footer">
+                                <a href="#" class="p-button button2" @click="handlePurchase(90)">购买</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <div class="pricing-plan">
+                            <div class="pricing-head">
+                                <div class="name">
+                                    年度VIP
+                                </div>
+                                <div class="price">
+                                    <span class="value">
+                                        ￥99
+                                    </span>
+                                    <span class="duration">
+                                        per year
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="pricing-body">
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-check"></i> 可以免费阅读VIP书籍
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-remove"></i> 价格超级实惠
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-remove"></i> 可以vx管理员提出诉求
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="pricing-footer button3">
+                                <a href="#" class="p-button" @click="handlePurchase(249)">购买</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- 微信支付二维码 -->
-            <div id="qrcodeImg"></div>
-            <div>注：若二维码过期失效，请刷新页面重新进入支付！</div>
-        </div>
-
+        </section>
     </div>
 </template>
 
 <script>
-import QRCode from 'qrcodejs2';
-import { ElButton, ElRadioGroup } from 'element-plus';
+
+// import axios from 'axios';
+import { ref } from 'vue';
+import { ElDialog } from 'element-plus';
 export default {
-    components:{ ElButton, ElRadioGroup },
-    data() {
-        return {
-            modal3: false,    // 是否打开支付弹窗
-            payBtn: true,    // 是否显示方式选择按钮
-            payInfoRow: {},    // 该条订单数据
-            payForWx: false,    // 是否微信支付
-            timer: '',    // 定时器
-            money:"充值一个月",
-            payMethod : '微信支付',
-        }
-    },
-    methods: {
-        qrcode(url) {  // 前端根据 URL 生成微信支付二维码
-            return new QRCode('qrcodeImg', {
-                width: 100,
-                height: 100,
-                text: url,
-                colorDark: '#000',
-                colorLight: '#fff'
+    name: "PricingTable",
+    setup() {
+        const radio1=ref('1')
+        function handlePurchase() {
+             ElDialog({
+                title: '扫码支付',
+                message: `
+          <img src="../../assets/wx.jpg" style="max-width: 100%">
+        `,
             });
-        },
-
-        handlePayWxQRcode(row) {  // 获取微信支付二维码
-            this.$api.order.getWxPayCode({    // 这里根据不同的后端接口去修改
-                totalFee: row.totalAmount * 100,
-                outTradeNo: row.orderSn,
-            }).then(res => {
-                this.payBtn = false;
-                this.qrcode(res.data.url);    // 例如：res.data.url 的值为 "weixin://wxpay/bizpayurl?pr=......"，根据这个值生成相对应的微信支付二维码
-                this.payForWx = true;
-                this.timer = setInterval(() => {    // 通过定时器每间隔一会去请求查询微信支付状态（具体参数根据项目需要而定）
-                    this.handleQueryWxPayStatus(row, res.data.outTradeNo);
-                }, 1000);
-            })
-        },
-        handleQueryWxPayStatus(row, sn) {  // 查询微信支付状态
-            this.$api.order.queryWxPayStatus({    // 这里根据不同的后端接口去修改
-                totalFee: row.totalAmount * 100,
-                outTradeNo: sn,
-            }).then(res => {
-                if (res.data.paySuccess) {    // 当查询到支付成功时
-                    this.$message({
-                        type: 'success',
-                        message: '支付成功！'
-                    });
-                    this.closePayDialog();    // 关闭支付弹窗
-                    // 这里可以加个刷新订单列表的接口请求函数的调用
-                }
-            })
-        },
+        }
+        return {
+            radio1,
+            handlePurchase
+        };
     },
+    components: {  }
+};
 
-}
 </script>
 
-<style>
-.el-radio {
-  width: 200px;
+<style scoped>
+  @keyframes animate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
 }
 
+ p {
+    font-size: 24px;
+    background-image: linear-gradient(45deg, #f7d157, #ffcc71, #e8a63a, #f7d157);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: animate 5s ease infinite;
+  }
 
-
-#qrcodeImg {
-    margin: 10px;
+  
+@import url('https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css');
+body {
+    background-color: #fff;
+    font-family: 'Poppins', sans-serif;
+    line-height: 24px;
+    font-size: 16px;
+    color: lightblue;
 }
-
-.pay-for-method-1 {
-    font-weight: bold;
-    color: #67c23a;
+main > section {
+    padding: 70px 0;
 }
+.payWay{
+    font-size: 25px;
+}
+.button1{
+    margin-top: 81px;
+}
+.button2{
+    margin-bottom: 7px;
+}
+.button3{
+    margin-top: 21px;
+}
+.sec-color {
+    background-color: white;
+}
+.sec-spacer {
+    padding: 50px 0;
+}
+.spacer3 {
+    height: 30px;
+}
+.pricing-style1{
+    width: 100%;
+}
+.name{
+    margin-left: 15px;
+}
+.pricing-style1 .pricing-plan {position: relative;text-align: center;padding: 25px;margin-bottom: 35px;background-color: #f5f5f5;border-radius: 4px;}
+.sec-color .pricing-style1 .pricing-plan {background-color: lightcyan;height: 400px;}
+.pricing-style1 .pricing-plan .badge {position: absolute;top: 16px;transform: rotate(90deg);right: 0px;padding: 5px;background: #fff;color: #337ab7;border-radius: 0;font-size: 11px;}
+.pricing-style1 .pricing-head .name {padding-bottom: 25px;font-size: 15px;color: #444;letter-spacing: 1px;}
+.pricing-style1 .pricing-plan.featured .pricing-head .name {color: #fff;}
+.pricing-style1 .pricing-plan.featured {background-color: #337ab7;}
+.pricing-style1 .pricing-head .price {display: inline-block;background-color: #337ab7;color: #fff;padding: 28px 25px;border-radius: 50%;}
+.pricing-style1 .pricing-plan.featured .pricing-head .price {background-color: #fff;color: #337ab7;}
+.pricing-style1 .pricing-head .price sup {font-size: 16px;line-height: normal;top: 2px;margin-right: 1px;vertical-align: top;font-weight: lighter;}
+.pricing-style1 .pricing-head span.value {display: block;font-size: 26px;line-height: normal;font-weight: 600;}
+.pricing-style1 .pricing-head span.duration {display: block;font-size: 11px;margin-top: -6px;}
+.pricing-style1 .pricing-body {padding-top: 40px;}
+.pricing-style1 .pricing-body ul {padding-left: 0;list-style: none;font-size: 12px;color: #666;}
+.pricing-style1 .pricing-plan.featured .pricing-body ul {color: #fff;}
+.pricing-style1 .pricing-body ul li:nth-child(n+2) {padding-top: 12px;}
+.pricing-style1 .pricing-footer {padding-top: 30px;}
+.pricing-style1 .pricing-footer .p-button {display: inline-block; padding: 8px 20px;font-size: 13px;min-width: 130px;text-transform: uppercase;background-color: #337ab7;border-radius: 20px;color: #fff;text-decoration: none;-webkit-transition: .3s all ease;transition: .3s all ease;}
+.pricing-style1 .pricing-footer .p-button:hover {background-color: #1f5f96;color: rgba(255, 255, 255, 0.8);}
+.pricing-style1 .pricing-plan.featured .pricing-footer .p-button {background: #fff;color: #337ab7;-webkit-transition: .3s all ease;transition: .3s all ease;}
+.pricing-style1 .pricing-plan.featured .pricing-footer .p-button:hover {background: rgba(255, 255, 255, 0.8);}
 
-.pay-for-method-2 {
-    font-weight: bold;
-    color: #409eff;
-}</style>
+/* color stylesheet */
+/* link(rel="stylesheet", href="css/colors/blue.css", id="colorSelect") */
+</style>
