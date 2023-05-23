@@ -250,7 +250,7 @@ export default {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
       const tmpbook = this.books.slice(startIndex, endIndex);
-      console.log(tmpbook);
+      // console.log(tmpbook);
       const rows = [];
       let row = [];
       for (let i = 0; i < tmpbook.length; i++) {

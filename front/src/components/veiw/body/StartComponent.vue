@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <div
       class="start-component"
       :class="{ 'start-component-hidden': !showComponent }"
@@ -34,6 +34,16 @@ export default {
         this.$emit("hide");
       }, 500);
     },
+  },
+  created() {
+    let imgs = require
+      .context("../../../assets/imgs/homepage/", false, /.jpg$/)
+      .keys();
+    let img = imgs[Math.floor(Math.random() * imgs.length)];
+    // let path = ;
+    // console.log(path);
+    this.backgroundImage = require("../../../assets/imgs/homepage/"+img.substring(2));
+  
   },
 };
 </script>

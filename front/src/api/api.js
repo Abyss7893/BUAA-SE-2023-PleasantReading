@@ -15,7 +15,7 @@ function getBookContent(bookid) {
     var url = back + "/book/outline/" + bookid;
     return axios.get(url).then(res => {
         var data = res.data;
-        console.log(data);
+        // console.log(data);
         return data;
     });
 }
@@ -32,7 +32,7 @@ function getBookCharpter(bookid, chapter) {
 
     return axios(config)
         .then(function (response) {
-            console.log(response.data);
+            // console.log(response.data);
             return response.data;
         })
         .catch(function (error) {
@@ -71,7 +71,7 @@ function getBookList(options) {
 
     return axios(config)
         .then(function (response) {
-            console.log(response.data);
+            // console.log(response.data);
             return response.data;
         })
         .catch(function (error) {
