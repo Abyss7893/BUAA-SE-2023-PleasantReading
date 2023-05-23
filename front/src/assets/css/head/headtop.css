@@ -27,6 +27,7 @@
 }
 
 .head-top .search input[type="text"] {
+  word-break: break-al;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 10px 0 0 10px;
