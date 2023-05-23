@@ -4,14 +4,14 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.db.models import Q, F, FloatField, Case, When, Value, CharField, OuterRef, Subquery
+from django.db.models import Q, F, FloatField, Case, When, Value, CharField, OuterRef, Subquery, Count
 from rest_framework import serializers
 from django.db.models.functions import Concat
 import json
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
-from api.models import UserInfo, BookBasicInfo, Collections, BookContext, Bookmark, Comments, Score
+from api.models import UserInfo, BookBasicInfo, Collections, BookContext, Bookmark, Comments, Score, History
 
 SERVER_URL = "http://154.8.183.51"
 BK2PG = 10
@@ -91,7 +91,9 @@ def getBookContent(request, bookid, chapter):
             return JsonResponse({"message": "failed"}, status=400)
         is_marked = False
         if notAnonymous(request):
-            is_marked = Bookmark.objects.filter(bookID=bookid, chapter=chapter, userID=getUsername(request)).count() > 0
+            userid = getUsername(request)
+            is_marked = Bookmark.objects.filter(bookID=bookid, chapter=chapter, userID=userid).count() > 0
+            History.objects.create(bookID=bookid, userID=userid, chapter=chapter, timestamp=date.today())
         if book.isVIP:
             if notAnonymous(request):
                 if isVIP(request):
@@ -163,6 +165,16 @@ def bookFilter(request):
             books = books.order_by('wordsCnt')
         elif method == 'wordsdec':
             books = books.order_by('-wordsCnt')
+        elif method == 'weekpop' or method == 'monthpop' or method == 'yearpop':
+            if method == 'weekpop':
+                days=7
+            elif method == 'monthpop':
+                days=30
+            else:
+                days=365
+            stamp = date.today() - timedelta(days=days)
+            history_within_month = History.objects.filter(timestamp__gte=stamp, bookID=OuterRef('bookID'))
+            books = books.annotate(num_reads=Subquery(history_within_month.values('bookID').annotate(count=Count('bookID')).values('count'))).order_by('-num_reads')
     if request.GET.get('page'):
         page = eval(request.GET.get('page'))
         books = books[(page-1)*BK2PG:page*BK2PG]
@@ -285,3 +297,24 @@ def putScore(request, bookid, score):
     Score.objects.create(userID=userid, bookID=bookid, score=eval(score))
     return JsonResponse({'message': 'success'})
 
+def getMarks(request):
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    userid = getUsername(request)
+    marks = Bookmark.objects.filter(userID=userid)
+    subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name')[:1]
+    marks = marks.annotate(name=Subquery(subquery.values('name')))
+    marks = marks.values('bookID', 'name', 'chapter')
+    return JsonResponse({'marks': list(marks)})
+
+def getLastVisit(request):
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    userid = getUsername(request)
+    ret = History.objects.filter(userID=userid)
+    if ret.count() == 0:
+        return JsonResponse({'message': 'no record'}, status=400)
+    ret = ret.last()
+    return JsonResponse({'bookid': ret.bookID,
+                         'name': BookBasicInfo.objects.get(bookID=ret.bookID).name,
+                         'chapter': ret.chapter})

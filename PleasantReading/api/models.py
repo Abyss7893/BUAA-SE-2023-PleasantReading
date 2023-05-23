@@ -142,3 +142,4 @@ class History(models.Model):
     userID = models.CharField(max_length=128, null=False)
     bookID = models.IntegerField(null=False)
     chapter = models.IntegerField(null=False)
+    timestamp = models.DateField(null=False)
