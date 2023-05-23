@@ -5,6 +5,7 @@
 }
 
 .center-box {
+  position: relative;
   width: 800px;
   margin: auto;
   padding: auto;
@@ -18,6 +19,14 @@
   min-height: 600px;
   padding: 60px 64px;
   background: url("~assets/imgs/readerbcg/default/basic.png") repeat fixed;
+}
+
+.center-box .bookmark {
+  cursor: pointer;
+  position: absolute;
+  left: 100%;
+  margin-left: -64px;
+  /* padding-top: 8px; */
 }
 
 .text .chapter-title {
@@ -91,6 +100,7 @@
   width: 60px;
   left: 50%;
   margin-left: -468px;
+  z-index: 100;
 }
 
 .reader-menu dd {
@@ -138,7 +148,6 @@
   min-width: 480px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
   background: url("~assets/imgs/readerbcg/default/base.png") repeat;
-
 }
 
 .reader-menu .panel-box .close-panel-button {
@@ -147,7 +156,6 @@
   left: 100%;
   margin-left: -36px;
   padding-top: 8px;
-
 }
 
 .reader-menu .panel-box .close-panel-button .close-panel-button-icon {
@@ -327,7 +335,6 @@
   position: relative;
   padding-left: 24px;
   margin-top: 24px;
-  height: 100px;
   overflow: auto;
   height: 50vh
 }
@@ -353,4 +360,133 @@
 
 .reader-menu .catalog ul li.act a {
   color: #ed4259;
+}
+
+.reader-menu .comments {
+  width: 600px;
+  float: left;
+  padding-bottom: 24px;
+  padding-right: 24px;
+}
+
+.reader-menu .comments .comments-box {
+  color: #262626;
+}
+
+.reader-menu .comments .comments-box ul {
+  height: 50vh;
+  overflow: auto;
+}
+
+.reader-menu .comments .comments-box li {
+  min-height: 100px;
+  margin-top: 16px;
+  float: left;
+  position: relative;
+}
+
+.reader-menu .comments .comments-box li .comment-avatar {
+  margin-top: 16px;
+  border-radius: 100%;
+  background-color: #1a1a1a;
+  float: left;
+  width: 48px;
+  height: 48px;
+}
+
+.reader-menu .comments .comments-box li .comment-text {
+  float: left;
+  width: 500px;
+}
+
+.reader-menu .comments .comments-box li .comment-name {
+  float: left;
+  font: 16px/20px PingFangSC-Regular, -apple-system, Simsun;
+  margin: 14px 0 0 10px;
+}
+
+.reader-menu .comments .comments-box li .comment-time {
+  float: left;
+  font: 12px/16px PingFangSC-Regular, -apple-system, Simsun;
+  margin-left: 10px;
+  padding-top: 19px;
+}
+
+.reader-menu .comments .comments-box li .comment-content {
+  float: left;
+  font-family: STKaiti, Kaiti;
+  margin: 12px 0 0 10px;
+  width: 500px;
+  height: 40px;
+  overflow: hidden;
+}
+
+.reader-menu .comments .comments-box li i {
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  margin-left: -16px;
+  cursor: pointer;
+  color: #262626;
+  transition: color .3s, background-color .3s;
+  width: 20px;
+  height: 12px;
+  text-align: center;
+  background-color: #94919120;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 4px;
+}
+
+.reader-menu .comments .comments-box li i:hover {
+  color: #ed4259;
+  border: 1px solid #ed425928;
+  background-color: #ed425928;
+}
+
+.reader-menu .comments .comments-box li i:hover svg path {
+  fill: #ed4259;
+}
+
+.reader-menu .comments .comments-box li i div {
+  margin: -2px 0 0;
+  font: 16px/20px PingFangSC-Regular, -apple-system, Simsun;
+  line-height: 0;
+}
+
+.reader-menu .comments .comments-box .comment-input-box {
+  border-top: 1px solid #e5e5e5;
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+.reader-menu .comments .comments-box .comment-input-box textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: STKaiti, Kaiti;
+  outline: none;
+  width: 100%;
+  height: auto;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.reader-menu .comments .comments-box .comment-input-box input[type="button"] {
+  float: right;
+  margin-top: 12px;
+  padding: 10px;
+  width: 50px;
+  background-color: #f56c6c;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 12px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  outline: none;
+}
+
+.reader-menu .comments .comments-box .comment-input-box input[type="button"]:hover {
+  background-color: #d5190fde;
 }

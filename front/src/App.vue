@@ -1,7 +1,7 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                                        <LoginComponent /> -->
+                                            <LoginComponent /> -->
   <div id="app">
     <RouterView></RouterView>
   </div>
@@ -39,6 +39,16 @@ export default {
   margin: 0;
   padding: 0;
   text-decoration: none;
+
+  -moz-user-select: none;
+  /* 火狐国产版需要 */
+  -webkit-user-select: none;
+  /* Safari、Chrome 等需要 */
+  -ms-user-select: none;
+  /* IE10+ 需要 */
+  user-select: none;
+  /* 标准语法，其他浏览器需要 */
+
 }
 
 .float {

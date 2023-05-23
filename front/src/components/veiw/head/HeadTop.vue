@@ -3,21 +3,12 @@
   <div class="head-top">
     <!-- <check-login/> -->
     <div>
-      <a class="logoa" href="/"
-        ><img class="logo" src="~assets/logo-yixinyuedu.png" alt=""
-      /></a>
+      <a class="logoa" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt="" /></a>
     </div>
     <div class="dropdown">
       <form action="" method="get">
         <div class="search">
-          <input
-            type="text"
-            name=""
-            id=""
-            placeholder="想看什么我这里都有哟~"
-            @focusin="drop"
-            @focusout="hide"
-          />
+          <input type="text" name="" id="" placeholder="想看什么我这里都有哟~" @focusin="drop" @focusout="hide" />
           <button type="submit">
             <el-icon>
               <Search />
@@ -45,22 +36,24 @@
             <!-- 这里暂时用的是svg库里的图标，后期需要通过得到后端的数据换上人物头像 -->
             <ElAvatar :src="avatar"> </ElAvatar>
             <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item icon="house">
-                  <RouterLink to="/user">个人中心</RouterLink>
-                </el-dropdown-item>
-                <!-- <router-link :to="{ name: 'mybook' }">
+              <el-dropdown-menu class="personal-dropdown-menu">
+
+                <RouterLink to="/user">
+                  <el-dropdown-item icon="house">个人中心</el-dropdown-item>
+                </RouterLink>
+
+              <!-- <router-link :to="{ name: 'mybook' }">
                   <el-dropdown-item icon="memo"
                     >我的书架</el-dropdown-item
                   ></router-link
-                > -->
+                                              > -->
 
                 <router-link :to="{ name: 'mybook' }">
                   <el-dropdown-item icon="memo">我的书架</el-dropdown-item>
                 </router-link>
-
                 <el-dropdown-item icon="notebook">我的书签</el-dropdown-item>
                 <el-dropdown-item icon="user">VIP管理</el-dropdown-item>
+                <el-dropdown-item icon="switchButton" @click="signOut">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </ElDropdown>
@@ -88,7 +81,7 @@ export default {
     ElDropdownMenu,
   },
   computed: {
-    avatar(){
+    avatar() {
       return this.$store.state.userAvatar;
     },
     isLogin() {
@@ -101,6 +94,10 @@ export default {
     },
     hide() {
       this.$refs.hidden.style.display = "none";
+    },
+    signOut() {
+      this.$store.commit("signOut")
+      this.$router.push('/');
     },
   },
 };

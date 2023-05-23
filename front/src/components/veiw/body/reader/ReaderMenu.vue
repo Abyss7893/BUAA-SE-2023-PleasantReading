@@ -11,7 +11,7 @@
               d="M695.1 455.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM695.1 578.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM695.1 701.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM379.1 281.1c-17.9 0-32.4-14.5-32.4-32.4V115.4c0-17.9 14.5-32.4 32.4-32.4s32.4 14.5 32.4 32.4v133.2c0 17.9-14.5 32.5-32.4 32.5zM657.1 281.1c-17.9 0-32.4-14.5-32.4-32.4V115.4c0-17.9 14.5-32.4 32.4-32.4s32.4 14.5 32.4 32.4v133.2c0 17.9-14.5 32.5-32.4 32.5z"
               fill="#262626" p-id="41512"></path>
           </svg><span>目录</span></a></dd>
-      <dd><a href=""><svg t="1684569110214" class="icon" viewBox="0 0 1024 1024" version="1.1"
+      <dd><a @click="highlightSelectedText"><svg t="1684569110214" class="icon" viewBox="0 0 1024 1024" version="1.1"
             xmlns="http://www.w3.org/2000/svg" p-id="32295">
             <path
               d="M248.065 833C235.527 833 223 845.6 223 864.497 223 883.395 235.527 896 248.065 896h469.88C730.473 896 743 883.395 743 864.497 743 845.6 736.736 833 724.21 833H248.064zM458.906 593.553a5.182 5.182 0 0 0 7.185 0l104.312-100.427c3.36-3.229 1.066-8.9-3.593-8.9h-77.75V228.761a7.763 7.763 0 0 0-7.764-7.761h-37.599a7.761 7.761 0 0 0-7.76 7.761v255.465h-77.75c-4.658 0-6.946 5.671-3.592 8.9l104.311 100.427z"
@@ -29,8 +29,8 @@
               d="M502.173191 708.726523c8.139378 8.138354 8.139378 21.332864 0 29.471219l0 0c-8.138354 8.139378-21.332864 8.139378-29.471219 0L261.234723 526.730493c-8.139378-8.138354-8.139378-21.331841 0-29.471219l0 0c8.138354-8.138354 21.332864-8.138354 29.471219 0L502.173191 708.726523 502.173191 708.726523zM290.705941 526.470573c-8.138354 8.139378-21.332864 8.139378-29.471219 0l0 0c-8.139378-8.138354-8.139378-21.331841 0-29.471219l211.467249-211.467249c8.138354-8.138354 21.332864-8.138354 29.471219 0l0 0c8.139378 8.139378 8.139378 21.332864 0 29.472242L290.705941 526.470573 290.705941 526.470573zM290.705941 526.470573M737.565339 483.569484c15.624862-0.010233 28.296463 12.648065 28.304649 28.271904l0 0c0.010233 15.623839-12.648065 28.296463-28.271904 28.304649l-405.963988 0.233314c-15.623839 0.010233-28.29544-12.647041-28.304649-28.271904l0 0c-0.00921-15.623839 12.649088-28.29544 28.271904-28.304649L737.565339 483.569484 737.565339 483.569484z"
               fill="#262626" p-id="45633"></path>
           </svg><span>返回书页</span></a></dd>
-      <dd><a href=""><svg t="1684579497399" class="icon" viewBox="0 0 1024 1024" version="1.1"
-            xmlns="http://www.w3.org/2000/svg" p-id="2409" width="16" height="16">
+      <dd :class="isCommentsAct"><a @click="changeComments"><svg t="1684579497399" class="icon" viewBox="0 0 1024 1024"
+            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2409" width="16" height="16">
             <path
               d="M622.56056 464.834794c0 27.928073 22.73684 50.64854 50.664913 50.64854 27.956725 0 50.693566-22.720468 50.693566-50.64854 0-27.928073-22.73684-50.66389-50.693566-50.66389C645.2974 414.171927 622.56056 436.907745 622.56056 464.834794"
               fill="#262626" p-id="2410"></path>
@@ -58,17 +58,20 @@
     <ReaderCatalogPanel ref="child2" :style="{ display: catalogDisplay }" />
     <!-- 设置面板浮层 -->
     <ReaderSettingsPanel ref="child1" :style="{ display: settingsDisplay }" />
+    <ReaderCommentsPanel ref="child3" :style="{ display: commentsDisplay }" />
   </div>
 </template>
 <script>
 import 'css/reader/reader.css'
 import ReaderSettingsPanel from './ReaderSettingsPanel.vue';
 import ReaderCatalogPanel from './ReaderCatalogPanel.vue';
+import ReaderCommentsPanel from './ReaderCommentsPanel.vue';
 export default {
   name: "ReaderMenu",
   components: {
     ReaderSettingsPanel,
     ReaderCatalogPanel,
+    ReaderCommentsPanel,
   },
   data() {
     return {
@@ -76,6 +79,7 @@ export default {
       Top: null,
       settingsExist: false,
       catalogExist: true,
+      commentsExist: false,
     }
   },
   mounted() {
@@ -95,6 +99,11 @@ export default {
         return "act"
       return null
     },
+    isCommentsAct() {
+      if (this.commentsExist)
+        return "act"
+      return null
+    },
     settingsDisplay() {
       if (this.settingsExist)
         return "block"
@@ -103,6 +112,12 @@ export default {
     },
     catalogDisplay() {
       if (this.catalogExist)
+        return "block"
+      else
+        return "none"
+    },
+    commentsDisplay() {
+      if (this.commentsExist)
         return "block"
       else
         return "none"
@@ -126,6 +141,7 @@ export default {
     panelInit() {
       this.settingsExist = false
       this.catalogExist = false
+      this.commentsExist = false
     },
     changeVisiable(pannelName) {
       switch (pannelName) {
@@ -134,6 +150,9 @@ export default {
           break
         case "catalog":
           this.catalogExist = !this.catalogExist
+          break
+        case "comments":
+          this.commentsExist = !this.commentsExist
           break
         default:
           break;
@@ -157,9 +176,19 @@ export default {
       } else {
         this.panelInit()
       }
-    }
+    },
+    changeComments() {
+      if (!this.commentsExist) {
+        this.panelInit()
+        this.changeVisiable("comments")
+      } else {
+        this.panelInit()
+      }
+    },
+
   },
 }
+
 </script>
 <style>
 .lang {
