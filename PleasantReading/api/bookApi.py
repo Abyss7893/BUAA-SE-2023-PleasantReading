@@ -52,7 +52,7 @@ def getBookInfo(request, bookid):
         book = res.first()
         favcnt = 0
         if notAnonymous(request):
-            favcnt = Collections.objects.filter(bookID=bookid, userID=UserInfo.objects.get(userID=getUsername(request))).count()
+            favcnt = Collections.objects.filter(bookID=bookid, userID=getUsername(request)).count()
         data = {
             'id': book.bookID,
             'title': book.name,
@@ -108,7 +108,7 @@ def updateBookmark(request, bookid, chapter):
     if request.method == 'POST':
         if mark.count() > 0:
             return JsonResponse({'message': 'bookmark exists'}, status=400)
-        Bookmark.objects.create(bookID=BookBasicInfo.objects.get(bookID=bookid), userID=UserInfo.objects.get(userID=userid), chapter=chapter)
+        Bookmark.objects.create(bookID=bookid, userID=userid, chapter=chapter)
         return JsonResponse({'message': 'success'})
     elif request.method == 'DELETE':
         if mark.count() == 0:
@@ -209,7 +209,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ['userid', 'nickname', 'avatar', 'text']
 
 def getComments(request, bookid, chapter, page):
-    if (request.method != 'GET'):
+    if request.method != 'GET':
         return JsonResponse({'message': 'invalid request'}, status=400)
     comments = Comments.objects.filter(bookID=bookid, chapter=chapter, visible=True)
     num = comments.count()
@@ -217,4 +217,34 @@ def getComments(request, bookid, chapter, page):
     comments = comments[(page-1) * CM2PG:page*CM2PG]
     serializer = CommentSerializer(comments, many=True)
     return JsonResponse({'comments': serializer.data, 'pages': getPages(num, CM2PG)})
+
+class FavorBookSerializer(serializers.ModelSerializer):
+    bookid = serializers.CharField(source='BookBasicInfo.userID')
+    name = serializers.CharField(source='BookBasicInfo.name')
+    cover = serializers.ImageField(source='BookBasicInfo.img')
+    class Meta:
+        model = BookBasicInfo
+        fields = ['bookid', 'name', 'cover']
+
+def getFavor(request):
+    if request.method != 'GET':
+        return JsonResponse({'message': 'invalid request'}, status=400)
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    userid = getUsername(request)
+    collections = Collections.objects.filter(userID=userid).values_list('bookID', flat=True)
+    books = BookBasicInfo.objects.filter(onShelf=True, bookID__in=collections)
+    serializer = FavorBookSerializer(books, many=True)
+    return JsonResponse({'books': serializer.data})
+
+def updateFavor(request, bookid):
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    userid = getUsername(request)
+    if request.method == 'PUT':
+        Collections.objects.create(userID=userid, bookID=bookid)
+    elif request.method == 'DELETE':
+        favs = Collections.objects.filter(userID=userid, bookID=bookid)
+        favs.delete()
+    return JsonResponse({'message': 'success'})
 
