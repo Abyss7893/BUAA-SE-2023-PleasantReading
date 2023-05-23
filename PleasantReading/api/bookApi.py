@@ -4,8 +4,9 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.db.models import Q, F, FloatField, Case, When, Value
+from django.db.models import Q, F, FloatField, Case, When, Value, CharField, OuterRef, Subquery
 from rest_framework import serializers
+from django.db.models.functions import Concat
 import json
 from datetime import date
 
@@ -88,7 +89,7 @@ def getBookContent(request, bookid, chapter):
             return JsonResponse({"message": "failed"}, status=400)
         is_marked = False
         if notAnonymous(request):
-            is_marked = Bookmark.objects.filter(bookID_id=bookid, chapter=chapter, userID=getUsername(request)).count() > 0
+            is_marked = Bookmark.objects.filter(bookID=bookid, chapter=chapter, userID=getUsername(request)).count() > 0
         if book.isVIP:
             if notAnonymous(request):
                 if isVIP(request):
@@ -192,36 +193,29 @@ def getBookNotes(request, bookid, chapter, page):
     comments = comments[(page-1) * NT2PG:page*NT2PG]
     return JsonResponse({'notes': list(comments.values_list('text', flat=True)), 'pages': getPages(num, NT2PG)})
 
-class CommentSerializer(serializers.ModelSerializer):
-    userid = serializers.CharField(source='userID.userID')
-    nickname = serializers.CharField(source='userID.nickname')
-    avatar = serializers.ImageField(source='userID.img')
-    text = serializers.CharField()
-
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        avatar_url = 'http://154.8.183.51' + ret['avatar']
-        ret['avatar'] = avatar_url
-        return ret
-
-    class Meta:
-        model = Comments
-        fields = ['userid', 'nickname', 'avatar', 'text']
 
 def getComments(request, bookid, chapter, page):
     if request.method != 'GET':
         return JsonResponse({'message': 'invalid request'}, status=400)
     comments = Comments.objects.filter(bookID=bookid, chapter=chapter, visible=True)
     num = comments.count()
-    print(num)
-    comments = comments[(page-1) * CM2PG:page*CM2PG]
-    serializer = CommentSerializer(comments, many=True)
-    return JsonResponse({'comments': serializer.data, 'pages': getPages(num, CM2PG)})
+    subquery = UserInfo.objects.filter(userID=OuterRef('userID')).values('nickname', 'img')[:1]
+    comments = comments.annotate(
+        nickname=Subquery(subquery.values('nickname')),
+        img=Concat(Value(SERVER_URL), Subquery(subquery.values('img')), output_field=CharField())
+    )
+    comments = comments.values('userID', 'nickname', 'img', 'text')
+    return JsonResponse({'comments': list(comments), 'pages': getPages(num, CM2PG)})
 
 class FavorBookSerializer(serializers.ModelSerializer):
-    bookid = serializers.CharField(source='BookBasicInfo.userID')
-    name = serializers.CharField(source='BookBasicInfo.name')
-    cover = serializers.ImageField(source='BookBasicInfo.img')
+    bookid = serializers.CharField(source='bookID')
+    name = serializers.CharField()
+    cover = serializers.ImageField(source='img')
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        avatar_url = SERVER_URL + ret['cover']
+        ret['cover'] = avatar_url
+        return ret
     class Meta:
         model = BookBasicInfo
         fields = ['bookid', 'name', 'cover']
@@ -232,8 +226,9 @@ def getFavor(request):
     if not notAnonymous(request):
         return JsonResponse({'message': 'login please'}, status=401)
     userid = getUsername(request)
-    collections = Collections.objects.filter(userID=userid).values_list('bookID', flat=True)
-    books = BookBasicInfo.objects.filter(onShelf=True, bookID__in=collections)
+    collections = Collections.objects.filter(userID=userid)
+    book_ids = [collection.bookID for collection in collections]
+    books = BookBasicInfo.objects.filter(onShelf=True, bookID__in=book_ids)
     serializer = FavorBookSerializer(books, many=True)
     return JsonResponse({'books': serializer.data})
 
@@ -248,3 +243,22 @@ def updateFavor(request, bookid):
         favs.delete()
     return JsonResponse({'message': 'success'})
 
+def submitNotes(request, bookid, chapter):
+    if request.method != 'POST':
+        return JsonResponse({'message': 'error'}, status=400)
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    data = json.loads(request.body)
+    userid = getUsername(request)
+    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=False)
+    return JsonResponse({'message': 'success'})
+
+def submitComments(request, bookid, chapter):
+    if request.method != 'POST':
+        return JsonResponse({'message': 'error'}, status=400)
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    data = json.loads(request.body)
+    userid = getUsername(request)
+    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=True)
+    return JsonResponse({'message': 'success'})
