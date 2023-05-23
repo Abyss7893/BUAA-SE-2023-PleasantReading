@@ -1,12 +1,17 @@
 <template>
   <HeadTop />
   <div class="contain">
+
     <ElDialog v-model="test" :destroy-on-close="true">
       <CropComponent @close="test = false" />
     </ElDialog>
-    <ElDialog v-model="showPayDialog" title="支付" width="30%">
+    <ElDialog v-model="showPayDialog" title="支付" :destroy-on-close="true" width="30%">
       <PayComponent />
     </ElDialog>
+    <ElDialog v-model="showChangePwd" title="修改密码" :destroy-on-close="true" width="25%">
+      <ChangePwd @close="showChangePwd = false" />
+    </ElDialog>
+
 
     <div class="PersonTop">
       <div class="PersonTop_image">
@@ -31,7 +36,7 @@
       </div>
       <div class="PersonTop_right">
         <el-button icon="star" @click="openPayDia()">充值会员</el-button>
-        <el-button icon="star">修改密码</el-button>
+        <el-button icon="star" @click="showChangePwd = true">修改密码</el-button>
         <el-button icon="switchButton" @click="signOut">退出登录</el-button>
       </div>
     </div>
@@ -85,6 +90,8 @@
         <router-view></router-view>
       </div>
     </div>
+
+
   </div>
   <WebFoot />
 </template>
@@ -94,6 +101,7 @@
 //import PersonalDia from "./PersonalDialog.vue";
 //import Cropper from 'cropperjs';
 import CropComponent from './CropComponent.vue'
+import ChangePwd from './ChangePwd.vue';
 import '../../../node_modules/cropperjs/dist/cropper.min.css'
 import WebFoot from '../veiw/foot/WebFoot.vue';
 import { ElAvatar, ElButton, ElDialog } from 'element-plus';
@@ -107,7 +115,7 @@ export default {
 
   name: "PersonalCenter",
   inject: ["reload"],
-  components: { ElAvatar, HeadTop, ElButton, ElDialog, PayComponent, WebFoot, CropComponent },
+  components: { ElAvatar, HeadTop, ElButton, ElDialog, PayComponent, WebFoot, CropComponent, ChangePwd },
   setup() {
     const test = ref(false)
     const store = useStore();
@@ -115,6 +123,7 @@ export default {
     const design = ref("");
     const showPayDialog = ref(false);
     const isfollow = ref(true);
+    const showChangePwd = ref(false)
     const followData = ref({
       fanId: "",
       followId: "",
@@ -165,6 +174,7 @@ export default {
       isfollowid,
       VIP,
       showPayDialog,
+      showChangePwd,
       test,
       signOut,
       openPayDia,
@@ -183,7 +193,7 @@ export default {
   background-position: center;
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 90vh;
 }
 
 .userAvatar {
