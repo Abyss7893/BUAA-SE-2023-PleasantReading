@@ -158,7 +158,7 @@ export default {
   }
 
   
-@import url('https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css');
+/* @import url('https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css'); */
 body {
     background-color: #fff;
     font-family: 'Poppins', sans-serif;

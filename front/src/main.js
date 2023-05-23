@@ -1,9 +1,7 @@
 import { createApp } from 'vue'
-<<<<<<< HEAD
-import vuetyped from 'vue3typed'
-=======
 
->>>>>>> a38170724539145ca537acb44895efb1dde67647
+import vuetyped from 'vue3typed'
+
 import App from './App.vue'
 import router from './route/index'
 import store from './store/index'
@@ -29,9 +27,8 @@ app.directive("shake", (el) => {
 app.use(ElementPlus)
 app.use(router)
 app.use(store)
-<<<<<<< HEAD
+
 app.use(vuetyped)
-=======
->>>>>>> a38170724539145ca537acb44895efb1dde67647
+
 app.mount('#app')
 
