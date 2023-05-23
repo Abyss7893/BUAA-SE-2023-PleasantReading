@@ -88,6 +88,11 @@ export default {
     }, true)
     this.catalogExist = !this.catalogExist
   },
+  unmounted() {
+    window.removeEventListener('scroll', () => {
+      this.Top = document.getElementsByClassName("center-box")[0].getBoundingClientRect().top
+    })
+  },
   computed: {
     isSettingAct() {
       if (this.settingsExist)
