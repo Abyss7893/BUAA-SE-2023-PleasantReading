@@ -11,7 +11,7 @@ import json
 from datetime import date
 
 from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
-from api.models import UserInfo, BookBasicInfo, Collections, BookContext, Bookmark, Comments
+from api.models import UserInfo, BookBasicInfo, Collections, BookContext, Bookmark, Comments, Score
 
 SERVER_URL = "http://154.8.183.51"
 BK2PG = 10
@@ -22,6 +22,8 @@ def getPages(pages, num):
     return max((pages + num - 1) // num, 1)
 
 def notAnonymous(request):
+    if 'Authorization' not in request.headers:
+        return False
     if len(request.headers.get('Authorization').split(' ')) > 1:
         accessToken = request.headers.get('Authorization').split(' ')[1]
         decodedToken = validateAccessToken(accessToken)
@@ -262,3 +264,24 @@ def submitComments(request, bookid, chapter):
     userid = getUsername(request)
     Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=True)
     return JsonResponse({'message': 'success'})
+
+def getScore(request, bookid):
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    userid = getUsername(request)
+    ret = Score.objects.filter(userID=userid, bookID=bookid)
+    if ret.count() == 0:
+        return JsonResponse({'message': 'no score'}, status=404)
+    else:
+        return JsonResponse({'message': 'success', 'score': ret.first().score})
+
+def putScore(request, bookid, score):
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    userid = getUsername(request)
+    ret = Score.objects.filter(userID=userid, bookID=bookid)
+    if ret.count() > 0:
+        return JsonResponse({'message': 'score exist'}, status=400)
+    Score.objects.create(userID=userid, bookID=bookid, score=eval(score))
+    return JsonResponse({'message': 'success'})
+
