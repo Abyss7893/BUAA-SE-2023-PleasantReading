@@ -102,16 +102,16 @@ export default {
     };
   },
   created() {
-    // this.generateTestData();
-    var defaultOptions = {
-      category: "",
-      vip: "",
-      range: "",
-      order: "",
-      status: "",
-      page: "",
-    };
-    this.flashData(defaultOptions);
+    this.generateTestData();
+    // var defaultOptions = {
+    //   category: "",
+    //   vip: "",
+    //   range: "",
+    //   order: "",
+    //   status: "",
+    //   page: "",
+    // };
+    // this.flashData(defaultOptions);
   },
 
   methods: {

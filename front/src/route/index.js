@@ -12,7 +12,7 @@ import RankBody from '../components/veiw/rank/RankBody'
 // import MartialComponent from '../components/veiw/content/category/MartialComponent'
 // import CityComponent from '../components/veiw/content/category/CityComponent'
 import Home from 'components/page/Home'
-
+import AllBook from '../components/veiw/body/AllBook'
 import 'css/home.css'
 const router = createRouter({
   history: createWebHistory(),
@@ -75,6 +75,11 @@ const router = createRouter({
       path: '/rank',
       component: RankBody,
       name: 'rank',
+    },
+    {
+      path: '/allbook',
+      component: AllBook,
+      name: 'allbook',
     }
 
   ]
