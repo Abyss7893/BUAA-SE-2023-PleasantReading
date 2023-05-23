@@ -5,7 +5,7 @@
     <ElDialog v-model="test" :destroy-on-close="true">
       <CropComponent @close="test = false" />
     </ElDialog>
-    <ElDialog v-model="showPayDialog" title="支付" :destroy-on-close="true" width="30%">
+    <ElDialog v-model="showPayDialog" title="充值VIP" :destroy-on-close="true" width="70%">
       <PayComponent />
     </ElDialog>
     <ElDialog v-model="showChangePwd" title="修改密码" :destroy-on-close="true" width="25%">
@@ -226,7 +226,7 @@ export default {
 }
 
 .PersonTop_right .el-button {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .PersonTop_image {

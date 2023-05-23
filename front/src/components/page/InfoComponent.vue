@@ -148,7 +148,7 @@ export default defineComponent({
     },
 });
 </script>
-<style>
+<style scoped>
 
 .el-input {
   border: none;
