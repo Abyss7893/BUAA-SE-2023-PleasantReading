@@ -66,12 +66,12 @@ export default {
             }
             // 创建一个对象来保存表单数据
             const data = {
-                oldPwd: form.oldPwd, // TODO：请替换成真实的旧密码
-                newPwd: form.newPwd
+                oldpwd: form.oldPwd, // TODO：请替换成真实的旧密码
+                newpwd: form.newPwd
             };
             
             // 使用 Axios 发送 POST 请求
-            axios.post('http://154.8.183.51/user/changeinfo', data)
+            axios.post('http://154.8.183.51/user/changepwd', data)
                 .then(response => {
                     alert("修改密码成功")
                     emit('close')
