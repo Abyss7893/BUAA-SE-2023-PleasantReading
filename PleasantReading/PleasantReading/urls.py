@@ -42,6 +42,8 @@ urlpatterns = [
     path('book/search/', bookApi.bookSearch),
     path('book/notes/<int:bookid>/<int:chapter>/<int:page>/', bookApi.getBookNotes),
     path('book/comments/<int:bookid>/<int:chapter>/<int:page>/', bookApi.getComments),
+    path('book/favor/', bookApi.getFavor),
+    path('book/favor/<int:bookid>', bookApi.updateFavor),
 
 
     path('manager/register', managerApi.managerRegister),

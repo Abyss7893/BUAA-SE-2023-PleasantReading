@@ -67,7 +67,6 @@ def my_view(request):
 
 def changePwd(request):
     data = json.loads(request.body)
-    userID = data.get('ID')
     oldPwd = data.get('oldpwd')
     newPwd = data.get('newpwd')
 
@@ -75,6 +74,7 @@ def changePwd(request):
     decodedToken = validateAccessToken(accessToken)
     if decodedToken is None:
         return JsonResponse({'message': 'fail', 'error': 'not the login user'}, status=400)
+    userID = getUserFromToken(accessToken).username
     obj = UserInfo.objects.filter(userID=userID)
     print(obj.get().passwd)
     if obj.count() == 0:
@@ -240,5 +240,8 @@ def userCheck(request, ID, pwd):
     obj = UserInfo.objects.get(userID=ID)
     obj.passwd = pwd
     obj.save()
+    user = User.objects.get(username=ID)
+    user.set_password(pwd)
+    user.save()
     weburl = "https://imgloc.com/i/ViGR5E"
     return render(request, 'email_check.html', {'url': weburl})
