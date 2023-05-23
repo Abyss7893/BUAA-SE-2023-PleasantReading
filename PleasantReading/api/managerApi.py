@@ -132,7 +132,7 @@ def uploadChapter(request):
         return JsonResponse({'message': 'fail', 'error': 'bookID error'}, status=400)
     if BookContext.objects.filter(bookID=bookID,chapter=chapter).count() != 0:
         return JsonResponse({'message': 'fail', 'error': 'this chapter has existed'}, status=400)
-    BookContext.objects.create(bookID_id=bookID, chapter=chapter, text=context, title=title)
+    BookContext.objects.create(bookID=bookID, chapter=chapter, text=context, title=title)
     return JsonResponse({"message": "success"})
 
 def reloadChapter(request):
@@ -149,6 +149,11 @@ def reloadChapter(request):
     if title is not None:
         obj.title = title
     if context is not None:
+        preLen = len(obj.text)
+        nowLen = len(context)
         obj.text = context
+        book = BookBasicInfo.objects.get(bookID=bookID)
+        book.wordsCnt = book.wordsCnt + nowLen - preLen
+        book.save()
     obj.save()
     return JsonResponse({"message": "success"})

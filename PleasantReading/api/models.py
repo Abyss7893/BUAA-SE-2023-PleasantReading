@@ -47,15 +47,17 @@ class BookContext(models.Model):
     ):
         super(BookContext, self).save()
         length = len(self.text)
+        pre = BookBasicInfo.objects.get(bookID=self.bookID).wordsCnt
         BookBasicInfo.objects.filter(bookID=self.bookID).\
-            update(wordsCnt=BookBasicInfo.wordsCnt + length)
+            update(wordsCnt=pre + length)
 
 # trigger
 @receiver(pre_delete, sender=BookContext)
 def beforeDeleteCollections(sender, instance, **kwargs):
     length = len(instance.text)
+    pre = BookBasicInfo.objects.get(bookID=instance.bookID).wordsCnt
     BookBasicInfo.objects.filter(bookID=instance.bookID). \
-        update(wordsCnt=BookBasicInfo.wordsCnt - length)
+        update(pre - length)
 
 
 
@@ -71,10 +73,10 @@ class Score(models.Model):
         self, force_insert=False, force_update=False, using=None, update_fields=None
     ):
         super(Score, self).save()
-        BookBasicInfo.objects.filter(bookID=self.bookID). \
-            update(totScore=BookBasicInfo.totScore + self.score)
-        BookBasicInfo.objects.filter(bookID=self.bookID). \
-            update(rateNumber=BookBasicInfo.rateNumber + 1)
+        obj = BookBasicInfo.objects.get(bookID=self.bookID)
+        obj.totScore = obj.totScore + self.score
+        obj.rateNumber = obj.rateNumber + 1
+        obj.save()
 
     """
         Attention! 
@@ -96,14 +98,16 @@ class Collections(models.Model):
         self, force_insert=False, force_update=False, using=None, update_fields=None
     ):
         super(Collections, self).save()
+        collections = BookBasicInfo.objects.get(bookID=self.bookID).collections
         BookBasicInfo.objects.filter(bookID=self.bookID).\
-            update(collections=BookBasicInfo.collections+1)
+            update(collections=collections+1)
 
 # trigger
 @receiver(pre_delete, sender=Collections)
 def beforeDeleteCollections(sender, instance, **kwargs):
-    BookBasicInfo.objects.filter(bookID=instance.bookID). \
-        update(collections=BookBasicInfo.collections - 1)
+    obj = BookBasicInfo.objects.get(bookID=instance.bookID)
+    obj.collections = obj.collections - 1
+    obj.save()
 
 
 
