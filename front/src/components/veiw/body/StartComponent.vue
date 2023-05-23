@@ -1,8 +1,18 @@
 <template>
-  <div class="start-component" :style="{ backgroundImage: `url(${backgroundImage})` }" ref="startComponentRef">
-    <div class="content">
-      <h1 class="quote">{{ quote }}</h1>
-      <button class="start-button" @click="hideComponent">开始</button>
+  <div >
+    <div
+      class="start-component"
+      :class="{ 'start-component-hidden': !showComponent }"
+      :style="{
+        backgroundImage: `url(${backgroundImage})`,
+        marginTop: showComponent ? '' : 'calc(-104vh )',
+      }"
+      ref="startComponentRef"
+    >
+      <div class="content">
+        <h1 class="quote">{{ quote }}</h1>
+        <button class="start-button" @click="hideComponent">开始</button>
+      </div>
     </div>
   </div>
 </template>
@@ -13,15 +23,16 @@ export default {
     return {
       backgroundImage: require("../../../assets/imgs/PontdArcole_ZH-CN5348049357_1920x1080.jpg"),
       quote: "这里是引言",
+      showComponent: true,
     };
   },
   methods: {
     hideComponent() {
-      this.$refs.startComponentRef.classList.add('slide-up');
-      this.$emit('hidetrigger');
-      // setTimeout(() => {
-      //   this.$emit('hide');
-      // }, 500);
+      this.showComponent = !this.showComponent;
+      // this.$refs.startComponentRef.classList.add('slide-up');
+      setTimeout(() => {
+        this.$emit("hide");
+      }, 500);
     },
   },
 };
@@ -29,16 +40,20 @@ export default {
 
 <style scoped>
 .start-component {
+  margin-top: -3%;
   /* position: fixed; */
-  /* top:0; */
   width: 100vw;
-  height: 100vh;
+  height: 104vh;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9998;
+  z-index: 9999;
+  transition: all 0.5s;
+}
+.start-component-hidden {
+  margin-top: -100px;
 }
 
 .content {
@@ -62,7 +77,7 @@ export default {
 }
 
 .slide-up {
-  animation: slideUp 0.5s forwards;
+  transition: 0.5s forwards;
 }
 
 @keyframes slideUp {

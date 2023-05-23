@@ -1,15 +1,12 @@
 <!-- 网页的主页的中间内容部分 -->
 <template>
-  <div>
-    <ElAffix v-if="!showStartComponent">
-      <WebHead />
+  <div style="display: flex; flex-direction: column">
+    <start-component @hide="hideStartComponent" />
+    <ElAffix>
+      <WebHead style="margin: 0,position:fixed;" />
     </ElAffix>
-
-    <transition name="slide-up" mode="out-in">
-      <start-component v-if="showStartComponent" @hidetrigger="hideContent" />
-    </transition>
-    <transition name="slide-up">
-      <div class="box-center" v-show="showContent">
+    <div>
+      <div class="box-center">
         <div class="novel-body">
           <div class="category-component-wrapper">
             <CategoryComponent />
@@ -19,11 +16,11 @@
           </div>
         </div>
       </div>
-    </transition>
-    <FootComponents v-if="!showStartComponent" />
+    </div>
+
+    <FootComponents v-if="showHeadAndFoot" />
   </div>
 </template>
-
 <script>
 import WebHead from "../head/WebHead.vue";
 import FootComponents from "../foot/WebFoot.vue";
@@ -44,21 +41,13 @@ export default {
   },
   data() {
     return {
-      showStartComponent: true,
-      showContent: false,
+      showHeadAndFoot: false,
     };
   },
   methods: {
     hideStartComponent() {
-      this.showStartComponent = false;
-    },
-    hideContent() {
       setTimeout(() => {
-        this.showContent = true;
-      }, 600);
-
-      setTimeout(() => {
-        this.hideStartComponent();
+        this.showHeadAndFoot = true;
       }, 500);
     },
   },
@@ -70,7 +59,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 1200px;
-  z-index: 9999;
 }
 
 .category-component-wrapper {

@@ -1,9 +1,12 @@
 import { createApp } from 'vue'
+import VueTypedJs from 'vue-typed-js'
 import App from './App.vue'
 import router from './route/index'
 import store from './store/index'
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
+
 // import loginState from './store/loginState'
 import axios from 'axios'
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
@@ -22,7 +25,6 @@ app.directive("shake", (el) => {
 app.use(ElementPlus)
 app.use(router)
 app.use(store)
-
-
+app.use(VueTypedJs)
 app.mount('#app')
 

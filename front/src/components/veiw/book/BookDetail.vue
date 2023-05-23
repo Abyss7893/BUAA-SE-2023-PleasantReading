@@ -109,14 +109,12 @@
               v-for="(row, index) in rows"
               :key="index"
               class="directory-row"
-             
             >
               <!-- <a href="#"> -->
               <div
                 v-for="chapter in row"
                 :key="chapter.id"
                 class="chapter-title"
-                
               >
                 {{ chapter.title }}
               </div>
@@ -145,7 +143,7 @@ export default {
       Order: true,
       bookId: "",
       detailData: {
-        cover: require("assets/imgs/bookcv.png"),
+        cover: require("assets/imgs/img_loading.gif"),
         title: "正在加载",
         author: "正在加载",
         size: "0",
@@ -354,17 +352,21 @@ export default {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 235px;
     flex: 0 0 235px;
-    margin: 0 0 0 0;
+    margin: 15px 0 15px 0;
 
     img {
       width: 158px;
-      height: 211px;
+      height:  211px;
       display: block;
       margin: 0 auto;
       border: 1px solid #eee;
       border-radius: 4px;
       box-shadow: 0 4px 8px 0 rgba(90, 8, 8, 0.322),
         0 6px 20px 0 rgba(49, 0, 0, 0);
+      transition: 0.5s;
+    }
+    img:hover {
+      scale: 1.1;
     }
   }
 

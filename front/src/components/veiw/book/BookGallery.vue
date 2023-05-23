@@ -102,16 +102,16 @@ export default {
     };
   },
   created() {
-    this.generateTestData();
-    // var defaultOptions = {
-    //   category: "",
-    //   vip: "",
-    //   range: "",
-    //   order: "",
-    //   status: "",
-    //   page: "",
-    // };
-    // this.flashData(defaultOptions);
+    // this.generateTestData();
+    var defaultOptions = {
+      category: "",
+      vip: "",
+      range: "",
+      order: "",
+      status: "",
+      page: "",
+    };
+    this.flashData(defaultOptions);
   },
 
   methods: {
@@ -173,11 +173,24 @@ export default {
       var booklist;
       getBookList(defaultOptions).then((res1) => {
         booklist = res1.books;
-        this.books = [];
+        let i = 0;
         for (let bookid of booklist) {
           getBookDetiles(bookid).then((res) => {
             var data = res;
-            this.books.push({
+            // this.books.push({
+            //   id: data.id,
+            //   cover: data.cover,
+            //   title: data.title,
+            //   author: data.author,
+            //   size: this.formatNumber(data.cnt),
+            //   category: data.category,
+            //   rating: parseFloat(data.score).toFixed(1),
+            //   summary: data.brief,
+            //   vip: data.vip ? "VIP" : "免费",
+            //   status: data.status,
+            //   simpleSizes: this.getSimpleSize(data.cnt),
+            // })
+            this.books[i] = {
               id: data.id,
               cover: data.cover,
               title: data.title,
@@ -189,7 +202,8 @@ export default {
               vip: data.vip ? "VIP" : "免费",
               status: data.status,
               simpleSizes: this.getSimpleSize(data.cnt),
-            });
+            };
+            i++;
           });
         }
       });

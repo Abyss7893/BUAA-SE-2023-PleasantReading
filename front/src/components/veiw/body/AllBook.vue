@@ -38,6 +38,12 @@ export default {
 
     ElAffix,
   },
+  created() {
+    // this.naviLoccation = document
+    //   .querySelector(`li[navi-id="${id}"]`)
+    //   .getBoundingClientRect();
+    // this.$store.commit("changeNaviLoc", id);
+  },
 };
 </script>
   
