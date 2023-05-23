@@ -138,7 +138,7 @@ export default {
 .book-img-box img {
   width: 100%;
   height: 100%;
-  max-width: 131px;
+  max-width: 1316px;
   min-height: 186px;
   overflow: hidden;
 
