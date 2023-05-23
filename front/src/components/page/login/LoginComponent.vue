@@ -113,22 +113,21 @@ export default {
               store.commit('setAvatarUrl', url);
               console.log(url)
             })
-            .catch(error => {
-              console.error(error);
+            .catch(()=> {
+              alert("账号或密码错误")
             });
           if (isTo) {
             router.push('/');
           }
-        }).catch(error => {
+        }).catch(()=> {
           // 处理登录错误
           userLoginForm.password = userLoginForm.username = ""
-          console.error(error);
           alert("账号或密码错误")
         });
-      } catch (error) {
+      } catch (_) {
         // 处理错误
         userLoginForm.password = userLoginForm.username = ""
-        console.error(error);
+
       }
       
     }

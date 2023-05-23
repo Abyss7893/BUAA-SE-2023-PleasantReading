@@ -9,12 +9,9 @@
    </div>
     <div class="form-container">
       <el-form ref="form" :model="formData" :rules="rules" label-width="100px">
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model.trim="formData.email" />
-          
-            <el-button v-if="!waitCheck" @click="verifyEmail" icon="message" round>验证邮箱</el-button>
-            <el-button v-else type="success" icon="check" circle/>
-        </el-form-item>
+        <el-form-item label="邮箱" prop="email" >
+            <el-input  v-model.trim="formData.email" />
+          </el-form-item>
         <el-form-item label="账号" prop="username" >
             <el-input  v-model.trim="formData.username" />
           </el-form-item>
@@ -30,15 +27,17 @@
           <el-button @click="resetForm">重置</el-button>
         </el-form-item>
       </el-form>
+      <div class="loader"></div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import { ref } from 'vue';
 import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
 import '../../../../node_modules/element-plus/theme-chalk/index.css';
-import axios from 'axios';
+//import axios from 'axios';
 
 export default {
   components: {
@@ -84,14 +83,41 @@ export default {
       }
     }
     // 提交表单
-    const submitting = ref(false);
+    
     function submitForm() {
-      submitting.value = true;
-      // TODO: 校验验证码、发送修改密码请求等操作
-      setTimeout(() => {
-        submitting.value = false;
-        emit('submit', formData.value);
+      const data = {
+        email: formData.value.email,
+        id: formData.value.username,
+        pwd: formData.value.password,
+      };
+      const loader = document.querySelector('.loader');
+      loader.classList.add('visible'); // 显示加载器
+      const intervalId = setInterval(() => {
+        console.log('1');
       }, 1000);
+      axios.post('http://154.8.183.51/user/sendemail', data)
+        .then(response => {
+          console.log(response.data);
+          alert("邮箱验证码已发送,请查收")
+          emit('submit')
+          // 处理响应数据
+        })
+        .catch(error => {
+          if(error.response.data.error=='not match'){
+            alert("用户名与邮箱不匹配")
+          }
+          else{
+            alert("已超时,请重新处理")
+          }
+          // 处理错误
+        })
+        .finally(() => {
+          clearInterval(intervalId);
+          waitCheck.value = false;
+          loader.classList.remove('visible'); // 隐藏加载器
+        });
+      
+      
     }
 
     // 重置表单
@@ -110,43 +136,41 @@ export default {
         item.style.display = 'none';
       });
     }
-    //验证邮箱
-    function verifyEmail() {
-      waitCheck.value = true;
-      const email = formData.value.email;
-      const username = formData.value.username;
-      // 使用 axios 发送请求
-      axios.post('/url', { email, username },
-      {
-        headers: {
-            'Content-Type': 'application/json'
-          }
-      })
-        .then(response => {
-          waitCheck.value=true;
-          console.log(response);
-          // TODO：根据需求处理响应结果
-        })
-        .catch(error => {
-          console.error(error);
-          // TODO：根据需求处理错误情况
-        });
-    }
+   
 
     return {
       formData,
       rules,
       waitCheck,
-      submitting,
+      
       submitForm,
-      resetForm,
-      verifyEmail
+      resetForm
     };
   },
 };
 </script>
 
 <style>
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.loader.visible {
+  display: block;
+}
+.loader:not(.visible) {
+  display: none;
+}
 
 .container {
   display: flex;
