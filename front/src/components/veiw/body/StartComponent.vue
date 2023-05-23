@@ -10,7 +10,9 @@
       ref="startComponentRef"
     >
       <div class="content">
-        <h1 class="quote">{{ quote }}</h1>
+        <h1 class="quote">
+          {{ "你好，" + username }}
+        </h1>
         <button class="start-button" @click="hideComponent">开始</button>
       </div>
     </div>
@@ -18,11 +20,12 @@
 </template>
 
 <script>
+// import store from "@/store";
+// import { useStore } from "vuex";
 export default {
   data() {
     return {
       backgroundImage: require("../../../assets/imgs/PontdArcole_ZH-CN5348049357_1920x1080.jpg"),
-      quote: "这里是引言",
       showComponent: true,
     };
   },
@@ -35,6 +38,14 @@ export default {
       }, 500);
     },
   },
+  computed: {
+    username() {
+      // const store = this.$store.state;
+      console.log("是否登录");
+      console.log( this.$store.state.isLogin);
+      return this.$store.state.isLogin ?this.$store.state.userInfo.username : "读者";
+    },
+  },
   created() {
     let imgs = require
       .context("../../../assets/imgs/homepage/", false, /.jpg$/)
@@ -42,8 +53,8 @@ export default {
     let img = imgs[Math.floor(Math.random() * imgs.length)];
     // let path = ;
     // console.log(path);
-    this.backgroundImage = require("../../../assets/imgs/homepage/"+img.substring(2));
-  
+    this.backgroundImage = require("../../../assets/imgs/homepage/" +
+      img.substring(2));
   },
 };
 </script>

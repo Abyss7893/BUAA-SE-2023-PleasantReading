@@ -68,7 +68,7 @@ const router = createRouter({
     // },
     {
       path: '/reader/:bookid/:chapter',
-      name:'reader',
+      name: 'reader',
       component: Reader,
     }
     ,
