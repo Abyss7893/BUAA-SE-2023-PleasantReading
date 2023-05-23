@@ -5,7 +5,7 @@
     <ElDialog v-model="test" :destroy-on-close="true">
       <CropComponent @close="test = false" />
     </ElDialog>
-    <ElDialog v-model="showPayDialog" title="充值VIP" :destroy-on-close="true" width="70%">
+    <ElDialog v-model="showPayDialog" title="充值VIP" :destroy-on-close="true" width="900px">
       <PayComponent />
     </ElDialog>
     <ElDialog v-model="showChangePwd" title="修改密码" :destroy-on-close="true" width="25%">

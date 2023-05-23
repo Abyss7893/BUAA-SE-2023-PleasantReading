@@ -87,7 +87,6 @@ export default {
 
             } catch (error) {
                 alert("注册失败")
-                console.log(error)
             }
             userRegisterForm.email = "";
             userRegisterForm.username = "";

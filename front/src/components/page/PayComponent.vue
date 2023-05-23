@@ -1,5 +1,17 @@
 <template>
     <div class="site-content">
+        <ElDialog v-model="showPay" width="700px">
+            <div class="text">
+                <span>由于缺乏营业执照未能通过支付宝、微信的核验,只能采取扫码付款留下备注的方式开通VIP</span>
+            </div>
+            <div class="note">
+                <span>注意,付款时请备注您的账号</span>
+            </div>
+            <div class="image">
+                <img v-if="radio1=='1'" src="../../assets/wx.jpg"/>
+                <img v-else src="../../assets/zfb.jpg"/>
+            </div>
+        </ElDialog>
         <div class="payWay">
             <p>支付方式</p>
             <el-radio-group v-model="radio1">
@@ -11,8 +23,8 @@
             
             <div class="container">
                 <div class="spacer3"></div>
-                <div class="row pricing-style1">
-                    <div class="col-md-4 col-sm-4">
+                <div class="pricing-style1">
+                    <div class="Rectangle">
                         <div class="pricing-plan">
                             <div class="pricing-head">
                                 <div class="name">
@@ -36,11 +48,12 @@
                                 </ul>
                             </div>
                             <div class="pricing-footer button1">
-                                <a href="#" class="p-button" @click="handlePurchase(30)">购买</a>
+                                <a href="#" class="p-button" @click="showPay=true">购买</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-4">
+
+                    <div class="Rectangle">
                         <div class="pricing-plan">
                             <div class="pricing-head">
                                 <div class="name">
@@ -63,16 +76,15 @@
                                     <li>
                                         <i class="fa fa-check"></i> 价格更加实惠
                                     </li>
-                                    <br/>
-                                    <br/>
+                                    
                                 </ul>
                             </div>
                             <div class="pricing-footer">
-                                <a href="#" class="p-button button2" @click="handlePurchase(90)">购买</a>
+                                <a href="#" class="p-button button2" @click="showPay = true">购买</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-4">
+                    <div class="Rectangle">
                         <div class="pricing-plan">
                             <div class="pricing-head">
                                 <div class="name">
@@ -101,7 +113,7 @@
                                 </ul>
                             </div>
                             <div class="pricing-footer button3">
-                                <a href="#" class="p-button" @click="handlePurchase(249)">购买</a>
+                                <a href="#" class="p-button" @click="showPay = true">购买</a>
                             </div>
                         </div>
                     </div>
@@ -114,26 +126,21 @@
 <script>
 
 // import axios from 'axios';
-import { ref } from 'vue';
 import { ElDialog } from 'element-plus';
+import { ref } from 'vue';
+//import { ElDialog } from 'element-plus';
 export default {
     name: "PricingTable",
     setup() {
         const radio1=ref('1')
-        function handlePurchase() {
-             ElDialog({
-                title: '扫码支付',
-                message: `
-          <img src="../../assets/wx.jpg" style="max-width: 100%">
-        `,
-            });
-        }
+        const showPay=ref(false)
         return {
             radio1,
-            handlePurchase
+            showPay,
+           
         };
     },
-    components: {  }
+    components: { ElDialog }
 };
 
 </script>
@@ -154,10 +161,24 @@ export default {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+    margin-bottom: 20px;
     animation: animate 5s ease infinite;
   }
 
-  
+.text{
+    color: gray;
+    margin-left: 40px;
+    text-decoration: line-through;
+    margin-bottom:10px
+}
+.note{
+    color: #ed4242;
+    font-weight: bold;
+    font-size: 20px;
+}
+.image {
+    margin-left: 200px;
+}
 /* @import url('https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css'); */
 body {
     background-color: #fff;
@@ -176,22 +197,31 @@ main > section {
     margin-top: 81px;
 }
 .button2{
-    margin-bottom: 7px;
+    margin-top: 53px;
 }
 .button3{
-    margin-top: 21px;
+    margin-top: 23px;
 }
 .sec-color {
     background-color: white;
 }
 .sec-spacer {
     padding: 50px 0;
+    
 }
 .spacer3 {
     height: 30px;
 }
 .pricing-style1{
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.Rectangle{
+    display: inline-block;
+    width: 280px;
+    margin-right: 0px;
 }
 .name{
     margin-left: 15px;
