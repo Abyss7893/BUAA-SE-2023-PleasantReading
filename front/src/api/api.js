@@ -88,7 +88,7 @@ function getMyBook() {
     method: 'get',
     url: 'http://154.8.183.51/book/favor',
     headers: {
-      'Authorization': 'Bearer ' + token,
+      'Authorization': `Bearer ${token}`,
       // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
       'Content-Type': 'application/json',
     }
