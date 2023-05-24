@@ -321,6 +321,7 @@ export default {
   display: block;
 
   height: 186px;
+  max-height: 186px;
   margin-right: 16px;
   position: relative;
   /* max-width: 102px;

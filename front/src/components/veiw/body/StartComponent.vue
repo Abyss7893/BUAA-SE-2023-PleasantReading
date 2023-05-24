@@ -18,7 +18,7 @@
           </h1>
         </div>
       </div>
-      <div v-if="this.$store.state.isLogin" style="max-height: 300px ;">
+      <div v-if="this.$store.state.isLogin" style="max-height: 300px">
         <h1 class="quote" style="text-align: center">最近阅读</h1>
         <slide-card></slide-card>
       </div>

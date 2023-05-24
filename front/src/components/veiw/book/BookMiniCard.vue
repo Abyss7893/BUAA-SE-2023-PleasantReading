@@ -138,10 +138,10 @@ export default {
 .book-img-box img {
   width: 100%;
   height: 100%;
-  max-width: 1316px;
+  max-width: 131px;
   min-height: 186px;
   overflow: hidden;
-
+  max-height: 186px;
   transition-property: all;
   transition-duration: 0.5s;
   transition-timing-function: ease;
