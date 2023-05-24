@@ -1,6 +1,7 @@
 <!-- 网页的主页的中间内容部分 -->
 <template>
   <div style="display: flex; flex-direction: column">
+    
     <start-component @hide="hideStartComponent" />
     <ElAffix>
       <WebHead style="margin: 0,position:fixed;" />
@@ -18,7 +19,7 @@
       </div>
     </div>
 
-    <FootComponents v-if="showHeadAndFoot" />
+    <FootComponents  />
   </div>
 </template>
 <script>
@@ -51,6 +52,7 @@ export default {
       }, 500);
     },
   },
+  
 };
 </script>
 
