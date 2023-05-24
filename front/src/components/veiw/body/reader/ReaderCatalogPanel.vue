@@ -8,123 +8,50 @@
       <h4 class="lang">目录</h4>
       <ul ref="clist" v-infinite-scroll="load">
         <li v-for="(chapter, chapterId) in chapters.slice(0, this.chapterVisiableCount)" :key="chapterId"
-          :ref="'li' + chapterId"><a>{{
-            chapter.name
+          :ref="'li' + chapterId"><a :href="'/reader/' + this.$route.params.bookid + '/' + (chapterId + 1)">{{
+            chapter
           }}</a></li>
       </ul>
     </div>
   </div>
 </template>
 <script>
+import { getBookContent } from "@/api/api";
+
 export default {
   name: "ReaderCatalogPanel",
   created() {
-    this.chapterVisiableCount = parseInt(this.thisChapter / 20) * 20 + 60
+    this.$nextTick(this.initCatalog());
+    this.thisChapter = parseInt(this.$route.params.chapter) - 1;
+    this.chapterVisiableCount = parseInt(this.thisChapter / 20) * 20 + 60;
   },
   mounted() {
-    this.$refs["li" + this.thisChapter][0].classList.add('act')
+    this.$refs["li" + this.thisChapter][0].classList.add("act");
   },
   data() {
     return {
       chapterVisiableCount: 20,
-      thisChapter: 3,
+      thisChapter: 1,
       chapters: [
-        { name: "陨落的天才" },
-        { name: "斗气大陆" },
-        { name: "客人" },
-        { name: "云岚宗" },
-        { name: "聚气散" },
-        { name: "炼药师" },
-        { name: "休！" },
-        { name: "神秘的老者" },
-        { name: "药老！" },
-        { name: "借钱" },
-        { name: "坊市" },
-        { name: "离他远点" },
-        { name: "黑铁片" },
-        { name: "吸掌" },
-        { name: "陨落的天才" },
-        { name: "斗气大陆" },
-        { name: "客人" },
-        { name: "云岚宗" },
-        { name: "聚气散" },
-        { name: "炼药师" },
-        { name: "休！" },
-        { name: "神秘的老者" },
-        { name: "药老！" },
-        { name: "借钱" },
-        { name: "坊市" },
-        { name: "离他远点" },
-        { name: "黑铁片" },
-        { name: "吸掌" },
-        { name: "陨落的天才" },
-        { name: "斗气大陆" },
-        { name: "客人" },
-        { name: "云岚宗" },
-        { name: "聚气散" },
-        { name: "炼药师" },
-        { name: "休！" },
-        { name: "神秘的老者" },
-        { name: "药老！" },
-        { name: "借钱" },
-        { name: "坊市" },
-        { name: "离他远点" },
-        { name: "黑铁片" },
-        { name: "吸掌" },
-        { name: "陨落的天才" },
-        { name: "斗气大陆" },
-        { name: "客人" },
-        { name: "云岚宗" },
-        { name: "聚气散" },
-        { name: "炼药师" },
-        { name: "休！" },
-        { name: "神秘的老者" },
-        { name: "药老！" },
-        { name: "借钱" },
-        { name: "坊市" },
-        { name: "离他远点" },
-        { name: "黑铁片" },
-        { name: "吸掌" },
-        { name: "陨落的天才" },
-        { name: "斗气大陆" },
-        { name: "客人" },
-        { name: "云岚宗" },
-        { name: "聚气散" },
-        { name: "炼药师" },
-        { name: "休！" },
-        { name: "神秘的老者" },
-        { name: "药老！" },
-        { name: "借钱" },
-        { name: "坊市" },
-        { name: "离他远点" },
-        { name: "黑铁片" },
-        { name: "吸掌" },
-        { name: "陨落的天才" },
-        { name: "斗气大陆" },
-        { name: "客人" },
-        { name: "云岚宗" },
-        { name: "聚气散" },
-        { name: "炼药师" },
-        { name: "休！" },
-        { name: "神秘的老者" },
-        { name: "药老！" },
-        { name: "借钱" },
-        { name: "坊市" },
-        { name: "离他远点" },
-        { name: "黑铁片" },
-        { name: "吸掌" },
+        "目录加载中...",
       ],
-    }
+    };
   },
   methods: {
     setCatalogInvisiable() {
-      this.$parent.changeVisiable("catalog")
+      this.$parent.changeVisiable("catalog");
     },
     scrollToThisChapter() {
-      this.$refs.clist.scrollTop = this.$refs["li" + this.thisChapter][0].offsetTop
+      this.$refs.clist.scrollTop = this.$refs["li" + this.thisChapter][0].offsetTop;
     },
     load() {
-      this.chapterVisiableCount += 20
+      this.chapterVisiableCount += 20;
+    },
+    initCatalog() {
+      getBookContent(this.$route.params.bookid).then((data) => {
+        this.chapters = data.outline;
+        // console.log(this.chapters)
+      });
     },
   },
 }

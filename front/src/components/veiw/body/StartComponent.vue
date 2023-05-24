@@ -10,7 +10,7 @@
       ref="startComponentRef"
     >
       <img src="../../../assets/logo-yixinyuedu.png" class="start-image" />
-      <div style="height: 40%">
+      <div style="height: 15%">
         <div class="content">
           <h1 class="quote">
             {{ "你好，" + username }}
@@ -18,15 +18,30 @@
           </h1>
         </div>
       </div>
-      <button class="start-button" @click="hideComponent">开始</button>
+      <div v-if="this.$store.state.isLogin" style="max-height: 300px ;">
+        <h1 class="quote" style="text-align: center">最近阅读</h1>
+        <slide-card></slide-card>
+      </div>
+      <button
+        v-if="this.$store.state.isLogin"
+        class="start-button"
+        @click="hideComponent"
+      >
+        探索更多 >
+      </button>
+      <button v-else class="start-button" @click="hideComponent">
+        开始探索 >
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import SlideCard from "./other/SlideCard.vue";
 // import store from "@/store";
 // import { useStore } from "vuex";
 export default {
+  components: { SlideCard },
   data() {
     return {
       backgroundImage: require("../../../assets/imgs/PontdArcole_ZH-CN5348049357_1920x1080.jpg"),
@@ -174,12 +189,16 @@ export default {
   font-size: 24px;
   color: #fff;
   margin-bottom: 20px;
+  max-height: 100px;
+  text-shadow: 1px 1px #0000004d;
 }
 
 .start-button {
   /* position: fixed; */
+  /* position: fixed; */
   min-height: 20px;
   padding: 12px 24px;
+  margin-top: 5%;
   background-color: #0000002b;
   color: #000;
   font-size: 18px;
@@ -187,7 +206,7 @@ export default {
   border-radius: 24px;
   cursor: pointer;
   backdrop-filter: blur(3px) invert(5%);
-  bottom: 0px;
+  /* bottom: 200px; */
   transition: all 0.5s;
 }
 .start-button:hover {

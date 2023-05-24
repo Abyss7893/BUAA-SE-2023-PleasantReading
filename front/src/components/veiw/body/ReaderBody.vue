@@ -1,6 +1,6 @@
 <template>
   <div class="basic-bcg">
-    <ReaderMenu />
+    <ReaderMenu ref="child1" />
     <!-- 包裹在容器中，限定宽高，并传入文本内容 -->
     <ReaderComponent />
 

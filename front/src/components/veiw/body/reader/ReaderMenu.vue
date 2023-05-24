@@ -91,7 +91,7 @@ export default {
   unmounted() {
     window.removeEventListener('scroll', () => {
       this.Top = document.getElementsByClassName("center-box")[0].getBoundingClientRect().top
-    })
+    }, true)
   },
   computed: {
     isSettingAct() {
