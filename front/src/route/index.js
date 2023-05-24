@@ -22,26 +22,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home,
-      children: [
-        {
-          path: 'fantasy',
-          name: 'fantasy'
-        },
-        {
-          path: 'martial',
-          name: 'martial'
-        },
-        {
-
-          path: 'city',
-          name: 'city'
-        },
-        {
-
-          path: 'history',
-          name: 'history'
-        },
-      ]
     },
     { path: '/login', component: LoginComponent },
     // { path:'/test',name:'test',component:HelloWorld},
@@ -67,16 +47,12 @@ const router = createRouter({
         },
       ]
     },
-    // {
-    //   path: '/reader',
-    //   component: Reader,
-    // },
+
     {
       path: '/reader/:bookid/:chapter',
       name: 'reader',
       component: Reader,
-    }
-    ,
+    },
     {
       path: '/mybook',
       component: MyBookBody,
