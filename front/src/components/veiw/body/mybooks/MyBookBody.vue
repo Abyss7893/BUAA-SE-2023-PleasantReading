@@ -3,34 +3,39 @@
     <!-- <el-space direction="vertical" alignment="start" :size="30"> -->
     <div class="box-center">
       <el-divider />
-      <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
-        <el-col
-          v-for="o in colsize"
-          :key="(ro - 1) * colsize + o - 1"
-          :span="24 / colsize"
-        >
-          <book-card
-            :cover="mybooks[(ro - 1) * colsize + o - 1].cover"
-            :name="mybooks[(ro - 1) * colsize + o - 1].name"
-          ></book-card>
-        </el-col>
-        <el-divider />
-      </el-row>
-      <div v-if="mybooks.length % colsize > 0">
-        <el-row gutter="60">
+      <div v-if="mybooks.length === 0">
+        <el-empty description="暂无书籍" />
+      </div>
+      <div v-else>
+        <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
           <el-col
-            v-for="o in mybooks.length % colsize"
-            :key="(rownum - 1) * colsize + o - 1"
+            v-for="o in colsize"
+            :key="(ro - 1) * colsize + o - 1"
             :span="24 / colsize"
           >
             <book-card
-              :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
-              :name="mybooks[(rownum - 1) * colsize + o - 1].name"
-              @click="gotoRead"
-            />
+              :cover="mybooks[(ro - 1) * colsize + o - 1].cover"
+              :name="mybooks[(ro - 1) * colsize + o - 1].name"
+            ></book-card>
           </el-col>
           <el-divider />
         </el-row>
+        <div v-if="mybooks.length % colsize > 0">
+          <el-row gutter="60">
+            <el-col
+              v-for="o in mybooks.length % colsize"
+              :key="(rownum - 1) * colsize + o - 1"
+              :span="24 / colsize"
+            >
+              <book-card
+                :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
+                :name="mybooks[(rownum - 1) * colsize + o - 1].name"
+                @click="gotoRead"
+              />
+            </el-col>
+            <el-divider />
+          </el-row>
+        </div>
       </div>
     </div>
     <!-- </el-space> -->

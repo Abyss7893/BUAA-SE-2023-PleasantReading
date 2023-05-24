@@ -135,18 +135,6 @@ function getBookComments(bookid, chapter, page) {
     });
 }
 
-function submitBookComment(bookid, chapter, comment) {
-  var token = localStorage.getItem("token")
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  return axios({
-    method: 'post',
-    url: 'http://154.8.183.51/book/comments/' + bookid + '/' + chapter,
-    data: { "text": comment },
-  }).catch(function (data) {
-    return data;
-  });
-}
-
 function addBookmark(bookid, chapter) {
   var token = localStorage.getItem("token")
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -171,14 +159,8 @@ function deletBookmark(bookid, chapter) {
   });
 }
 
+
+
 export {
-  getBookDetiles,
-  getBookContent,
-  getBookList,
-  getBookCharpter,
-  getBookComments,
-  addBookmark,
-  getMyBook,
-  deletBookmark,
-  submitBookComment,
+  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments, addBookmark, getMyBook, deletBookmark
 }
