@@ -129,7 +129,6 @@ export default {
               })
               .catch(() => {
                 // 处理错误情况
-
               });
             axios
               .get(

@@ -114,21 +114,22 @@ export default {
       this.naviLoccation = document
         .querySelector(`li[navi-id="${id}"]`)
         .getBoundingClientRect();
+      this.$store.commit("changeNaviLoc", id);
       if (id === "1") {
         this.$router.push({ name: "home" });
       }
-      if(id ==="2"){
+      if (id === "2") {
         this.$router.push({ name: "allbook" });
       }
-      if(id ==="3"){
+      if (id === "3") {
         this.$router.push({ name: "rank" });
       }
-      
+
       if (id === "5") {
         this.$router.push({ name: "mybook" });
       }
-      console.log(id);
-      this.$store.commit("changeNaviLoc", id);
+      // console.log(id);
+      // this.$store.commit("changeNaviLoc", id);
     },
   },
 };

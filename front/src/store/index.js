@@ -106,7 +106,7 @@ const store = createStore({
     },
     updateUserInfo(state,userInfo){
       state.userInfo=userInfo
-      // state.isLogin=true
+      state.isLogin=true
     }
   },
 })

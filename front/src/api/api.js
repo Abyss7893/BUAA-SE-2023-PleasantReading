@@ -81,6 +81,28 @@ function getBookList(options) {
       throw error;
     });
 }
+function getMyBook() {
+  var axios = require('axios');
+
+  var config = {
+    method: 'get',
+    url: 'http://154.8.183.51/book/favor',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      'Content-Type': 'application/json',
+    }
+  };
+
+  return axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 // 使用示例
 
@@ -119,5 +141,5 @@ function addBookmark() {
 }
 
 export {
-  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments, addBookmark
+  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments, addBookmark, getMyBook
 }
