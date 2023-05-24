@@ -66,7 +66,7 @@
 <script>
 import { reactive } from 'vue';
 import axios from 'axios'
-
+import { useRouter } from 'vue-router';
 export default{
   
   setup(){
@@ -79,6 +79,7 @@ export default{
       pwd: '',
       email:''
     })
+    const router=useRouter()
     function register(){
        axios
         .post(
@@ -118,6 +119,7 @@ export default{
         )
         .then(() => {
           alert("登陆成功")
+          router.push('/manage')
         })
         .catch(() => {
           alert("登录失败,账号或密码错误");
