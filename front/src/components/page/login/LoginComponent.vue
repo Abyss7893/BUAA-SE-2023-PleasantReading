@@ -114,8 +114,6 @@ export default {
             const token = response.data.access;
             // 将令牌存储在本地存储中
             localStorage.setItem("token", token);
-            console.log(token);
-            console.log(response.data.message);
             // 更新默认请求头中的令牌
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             // 登录成功后的操作，例如跳转到其他页面
@@ -127,17 +125,11 @@ export default {
               .get(`http://154.8.183.51/user/getinfo/${userLoginForm.username}`)
               .then((response) => {
                 // 从响应数据中获取用户信息，并保存到 vuex 的 userInfo 中
-                console.log(response);
-                store.commit("changeLoginState");
-
                 store.commit("updateUserInfo", response.data);
-
-                console.log("获取信息成功");
               })
-              .catch((error) => {
+              .catch(() => {
                 // 处理错误情况
-                console.log("获取信息失败");
-                console.error(error);
+
               });
             axios
               .get(
@@ -147,7 +139,6 @@ export default {
               .then((response) => {
                 const url = response.data.url;
                 store.commit("setAvatarUrl", url);
-                console.log(url);
               })
               .catch(() => {
                 alert("账号或密码错误");
