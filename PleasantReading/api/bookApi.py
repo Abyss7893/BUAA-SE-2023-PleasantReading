@@ -97,13 +97,13 @@ def getBookContent(request, bookid, chapter):
         if book.isVIP:
             if notAnonymous(request):
                 if isVIP(request):
-                    return JsonResponse({"content": content.first().text, "chaptertitle": content.first().title, "marked": is_marked})
+                    return JsonResponse({"content": content.first().text.split('\n'), "chaptertitle": content.first().title, "marked": is_marked})
                 else:
                     return JsonResponse({"message": "vip only"}, status=403)
             else:
                 return JsonResponse({"message": "login please"}, status=401)
         else:
-            return JsonResponse({"content": content.first().text, "chaptertitle": content.first().title, "marked": is_marked})
+            return JsonResponse({"content": content.first().text.split('\n'), "chaptertitle": content.first().title, "marked": is_marked})
 
 def updateBookmark(request, bookid, chapter):
     if not notAnonymous(request):
