@@ -116,6 +116,7 @@ class Comments(models.Model):
     bookID = models.IntegerField(null=False)
     chapter = models.IntegerField(null=False)
     text = models.TextField(null=False)
+    timestamp = models.DateField(default='2023-05-24', null=False)
     visible = models.BooleanField(default=True)
 
     class Meta:

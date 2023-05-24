@@ -10,6 +10,8 @@ import platform
 from django.shortcuts import render
 from django.template import loader
 from django.core.mail import EmailMessage
+from django.utils.crypto import get_random_string
+
 
 from PleasantReading.settings import EMAIL_HOST_USER
 from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
@@ -194,7 +196,7 @@ def setAvatar(request):
     var = obj.img.name
     if var != "UserImg/user_img.jpg" and os.path.exists(SERVER_URL + var):
         os.remove(SERVER_URL + var)
-    image.name = ID + ".jpg"
+    image.name = get_random_string(length=8) + ".jpg"
     obj.img = image
     obj.save()
     obj = UserInfo.objects.get(userID=ID)

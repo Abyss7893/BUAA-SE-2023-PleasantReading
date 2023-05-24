@@ -207,6 +207,19 @@ def getBookNotes(request, bookid, chapter, page):
     comments = comments[(page-1) * NT2PG:page*NT2PG]
     return JsonResponse({'notes': list(comments.values_list('text', flat=True)), 'pages': getPages(num, NT2PG)})
 
+def getAllNotes(request):
+    if request.method != 'GET':
+        return JsonResponse({'message': 'invalid request'}, status=400)
+    if not notAnonymous(request):
+        return JsonResponse({'notes': [], 'pages': 1})
+    userid = getUsername(request)
+    notes = Comments.objects.filter(userID=userid, visible=False)
+    subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name')[:1]
+    notes = notes.annotate(
+        name=Subquery(subquery.values('name'))
+    )
+    notes = notes.values('bookID', 'name', 'chapter', 'text')
+    return JsonResponse({'notes': list(notes)})
 
 def getComments(request, bookid, chapter, page):
     if request.method != 'GET':
@@ -216,9 +229,10 @@ def getComments(request, bookid, chapter, page):
     subquery = UserInfo.objects.filter(userID=OuterRef('userID')).values('nickname', 'img')[:1]
     comments = comments.annotate(
         nickname=Subquery(subquery.values('nickname')),
-        img=Concat(Value(SERVER_URL), Subquery(subquery.values('img')), output_field=CharField())
+        img=Concat(Value(SERVER_URL+'/media/'), Subquery(subquery.values('img')), output_field=CharField())
     )
-    comments = comments.values('userID', 'nickname', 'img', 'text')
+    comments = comments.values('userID', 'nickname', 'img', 'text', 'timestamp')
+    comments = comments[(page - 1) * CM2PG:page * CM2PG]
     return JsonResponse({'comments': list(comments), 'pages': getPages(num, CM2PG)})
 
 class FavorBookSerializer(serializers.ModelSerializer):
@@ -264,7 +278,7 @@ def submitNotes(request, bookid, chapter):
         return JsonResponse({'message': 'login please'}, status=401)
     data = json.loads(request.body)
     userid = getUsername(request)
-    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=False)
+    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=False, timestamp=date.today())
     return JsonResponse({'message': 'success'})
 
 def submitComments(request, bookid, chapter):
@@ -274,7 +288,7 @@ def submitComments(request, bookid, chapter):
         return JsonResponse({'message': 'login please'}, status=401)
     data = json.loads(request.body)
     userid = getUsername(request)
-    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=True)
+    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=True, timestamp=date.today())
     return JsonResponse({'message': 'success'})
 
 def getScore(request, bookid):

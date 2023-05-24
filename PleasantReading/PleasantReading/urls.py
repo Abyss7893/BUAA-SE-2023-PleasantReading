@@ -50,6 +50,7 @@ urlpatterns = [
     path('book/score/<int:bookid>/<str:score>', bookApi.putScore),
     path('book/marks/', bookApi.getMarks),
     path('book/lastVisit/', bookApi.getLastVisit),
+    path('book/notes/', bookApi.getAllNotes),
 
     path('manager/register', managerApi.managerRegister),
     path('manager/login', managerApi.login),
