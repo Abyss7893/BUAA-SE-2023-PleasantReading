@@ -12,7 +12,7 @@
             <div class="comment-avatar"><img :src="comment.img" alt=""></div>
             <div class="comment-text">
               <div class="comment-name">{{ comment.nickname }}</div>
-              <div class="comment-time">{{ comment.time }}</div>
+              <div class="comment-time">{{ comment.timestamp }}</div>
               <div class="comment-content" :ref="commentId" v-html="replaceLineBreaks(comment.text)"></div>
             </div>
             <i :style="{
@@ -29,8 +29,8 @@
         </ul>
         <ul class="no-comments" v-if="this.comments.length == 0">还没有人留下评论，快来留下你的见解吧！</ul>
         <div class="comment-input-box">
-          <form action="POST"><textarea wrap="soft" rows="4" placeholder="发送一条友善的评论~"></textarea><input type="button"
-              value="发送">
+          <form action="POST"><textarea @focusin="textEXRows" @focusout="textINRows" ref="mycomment" wrap="soft" rows="1"
+              placeholder="发送一条友善的评论~"></textarea><input type="button" value="发送" @click="submitComment">
           </form>
         </div>
       </div>
@@ -38,12 +38,12 @@
   </div>
 </template>
 <script>
-import { getBookComments } from "@/api/api";
+import { getBookComments, submitBookComment } from "@/api/api";
 export default {
   name: "ReaderCommentsPanel",
   data() {
     return {
-      commentsNum: 8,
+      commentsNum: 5,
       comments: []
     }
   },
@@ -87,16 +87,49 @@ export default {
     replaceLineBreaks(text) {
       return text // .replace(/\n/g, '<br>')
     },
-    load() {
-      this.commentsNum += 8
+    textEXRows() {
+      this.$refs.mycomment.rows = 5
     },
-    initComments() {
-      getBookComments(this.$route.params.bookid, this.$route.params.bookid, 1).then((data) => {
+    textINRows() {
+      this.$refs.mycomment.rows = 1
+    },
+    load() {
+      console.log(this.commentsNum)
+      if (this.commentsNum % 5 != 0)
+        return
+      this.commentsNum += 5
+      this.$nextTick(this.getComments())
+      this.commentsNum = this.comments.length
+    },
+    // 获取评论，一次五条
+    getComments() {
+      getBookComments(this.$route.params.bookid, this.$route.params.chapter, this.commentsNum / 5).then((data) => {
         let len = data.comments.length
         for (let index = 0; index < len; index++) {
           this.comments.push(data.comments[index])
         }
       });
+    },
+    submitComment() {
+      if (this.$refs.mycomment.value.length == 0)
+        return
+      submitBookComment(this.$route.params.bookid, this.$route.params.bookid, this.$refs.mycomment.value).then((data) => {
+        const code = data.request.status
+        switch (code) {
+          case 200:
+            this.$refs.mycomment.value = ''
+            // location.reload();
+            break;
+          case 401:
+            alert("用户未登录！或登录失效！请重新登录")
+            break;
+          default:
+            break;
+        }
+      })
+    },
+    initComments() {
+      this.getComments()
     },
   },
 

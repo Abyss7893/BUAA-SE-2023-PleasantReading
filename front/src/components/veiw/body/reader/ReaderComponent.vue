@@ -123,7 +123,10 @@ export default {
         // console.log(data);
         getBookCharpter(this.$route.params.bookid, this.$route.params.chapter).then((data2) => {
           this.chapterInfo.chapterTitle = data2.chaptertitle;//TODO
-          this.chapterInfo.chapterCount = data2.content.length
+          this.chapterInfo.chapterCount = 0
+          for (let index = 0; index < data2.content.length; index++) {
+            this.chapterInfo.chapterCount += data2.content[index].length
+          }
           this.chapterInfo.paragraphs = data2.content;
           this.chapterInfo.marked = data2.marked
           // console.log(data2);
