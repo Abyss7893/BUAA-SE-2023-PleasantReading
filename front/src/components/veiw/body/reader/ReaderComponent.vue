@@ -32,8 +32,8 @@
       </div>
       <popOver>
         <div class="chapter-content">
-          <p v-for="(paragraph, paragraphId) in chapterInfo.paragraphs" :key="paragraphId" :id="paragraphId"
-            v-html="paragraph"></p>
+          <p v-for="(paragraph, paragraphId) in chapterInfo.paragraphs" :key="paragraphId" :id="paragraphId">{{ paragraph
+          }}</p>
         </div>
       </popOver>
     </div>
@@ -48,7 +48,7 @@
 </template>
 <script>
 import 'css/reader/reader.css'
-import { getBookDetiles, getBookCharpter, addBookmark } from "@/api/api";
+import { getBookDetiles, getBookCharpter, addBookmark, deletBookmark } from "@/api/api";
 import { nextTick } from 'vue';
 import popOver from './popOver.vue';
 export default {
@@ -74,11 +74,42 @@ export default {
   },
   methods: {
     markTheChapter() {
-
-      addBookmark(this.$route.params.bookid, this.$route.params.chapter).then((data) => {
-        if (data.message === "login please")
-          alert("请先登录！")
-      })
+      if (!this.chapterInfo.marked)
+        addBookmark(this.$route.params.bookid, this.$route.params.chapter).then((data) => {
+          const code = data.request.status
+          switch (code) {
+            case 200:
+              alert("添加书签成功！")
+              this.chapterInfo.marked = true
+              break
+            case 401:
+              alert("用户未登录！或登录失效！请重新登录")
+              break;
+            case 400:
+              alert("书签已添加！")
+              break
+            default:
+              break;
+          }
+        })
+      else
+        deletBookmark(this.$route.params.bookid, this.$route.params.chapter).then((data) => {
+          const code = data.request.status
+          switch (code) {
+            case 200:
+              alert("删除书签成功！")
+              this.chapterInfo.marked = false
+              break
+            case 401:
+              alert("用户未登录！或登录失效！请重新登录")
+              break;
+            case 400:
+              alert("该处没有书签！")
+              break
+            default:
+              break;
+          }
+        })
     },
     initChapter() {
       // console.log(0)
@@ -89,13 +120,13 @@ export default {
         this.bookInfo.bookName = data.title;
         this.bookInfo.bookId = data.id;
         this.bookInfo.bookAuthor = data.author;
-        console.log(data);
+        // console.log(data);
         getBookCharpter(this.$route.params.bookid, this.$route.params.chapter).then((data2) => {
           this.chapterInfo.chapterTitle = data2.chaptertitle;//TODO
           this.chapterInfo.chapterCount = data2.content.length
-          this.chapterInfo.paragraphs = [data2.content];
+          this.chapterInfo.paragraphs = data2.content;
           this.chapterInfo.marked = data2.marked
-          console.log(data2);
+          // console.log(data2);
         });
       });
     },

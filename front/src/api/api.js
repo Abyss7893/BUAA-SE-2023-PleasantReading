@@ -1,7 +1,7 @@
 import axios from 'axios'
 // import VueAxios from 'vue-axios'
 var back = "http://154.8.183.51/";
-var token = localStorage.getItem("token")
+
 
 
 function getBookDetiles(bookid) {
@@ -22,17 +22,17 @@ function getBookContent(bookid) {
   });
 }
 function getBookCharpter(bookid, chapter) {
+  var token = localStorage.getItem("token")
   var axios = require('axios');
 
   var config = {
     method: 'get',
     url: 'http://154.8.183.51/book/content/' + bookid + '/' + chapter,
     headers: {
-      // 'Authorization': 'Bearer {{ACCESS_TOKEN}}',
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     }
   };
-
   return axios(config)
     .then(function (response) {
       // console.log(response.data);
@@ -82,6 +82,7 @@ function getBookList(options) {
     });
 }
 function getMyBook() {
+  var token = localStorage.getItem("token")
   var axios = require('axios');
 
   var config = {
@@ -108,7 +109,6 @@ function getMyBook() {
 
 function getBookComments(bookid, chapter, page) {
   var axios = require('axios');
-
   var config = {
     method: 'get',
     url: 'http://154.8.183.51/book/comments/' + bookid + '/' + chapter + '/' + page,
@@ -124,22 +124,32 @@ function getBookComments(bookid, chapter, page) {
     });
 }
 
-function addBookmark() {
-
+function addBookmark(bookid, chapter) {
+  var token = localStorage.getItem("token")
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  console.log(axios.defaults.headers.common['Authorization'])
+  // console.log(axios.defaults.headers.common['Authorization'])
   return axios({
     method: 'post',
-    url: 'http://154.8.183.51/book/mark/1/1',
-  }).then(function (response) {
-    // console.log(response.data);
-    return response.data;
-  })
-    .catch(function (error) {
-      throw error;
-    });
+    url: 'http://154.8.183.51/book/mark/' + bookid + '/' + chapter,
+  }).catch(function (data) {
+    return data;
+  });
 }
 
+function deletBookmark(bookid, chapter) {
+  var token = localStorage.getItem("token")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  // console.log(axios.defaults.headers.common['Authorization'])
+  return axios({
+    method: 'delete',
+    url: 'http://154.8.183.51/book/mark/' + bookid + '/' + chapter,
+  }).catch(function (data) {
+    return data;
+  });
+}
+
+
+
 export {
-  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments, addBookmark, getMyBook
+  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments, addBookmark, getMyBook, deletBookmark
 }
