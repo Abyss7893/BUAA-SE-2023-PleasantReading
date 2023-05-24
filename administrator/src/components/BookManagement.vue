@@ -4,7 +4,7 @@
       <button class="button-big">添加书籍</button>
     </div>
     <div class="table">
-      <ElTable :data="tableData">
+      <ElTable :data="tableData" :default-sort="{ prop: 'id', order: 'increasing' }" style="width: 1150px;">
         <ElTableColumn
           fixed
           prop="id"
@@ -13,7 +13,7 @@
           width="100px"
         ></ElTableColumn>
         <ElTableColumn prop="cover" label="封面" sortable width="105px">
-          <template v-slot="row">
+          <template v-slot="{row}">
             <img
               :src="row.cover"
               style="width: 80px; height: 80px"
@@ -25,40 +25,44 @@
           prop="title"
           label="作品名称"
           width="125px"
+          sortable
         ></ElTableColumn>
         <ElTableColumn
           prop="author"
           label="作 者"
           width="100px"
+          sortable
         ></ElTableColumn>
         <ElTableColumn
           prop="category"
           label="分类"
           width="110px"
+          sortable
         ></ElTableColumn>
-        <ElTableColumn prop="status" label="状态" width="80px"></ElTableColumn>
-        <ElTableColumn prop="cnt" label="字数" width="110px"></ElTableColumn>
+        <ElTableColumn prop="status" label="状态" width="80px" sortable></ElTableColumn>
+        <ElTableColumn prop="cnt" label="字数" width="110px" sortable></ElTableColumn>
         <ElTableColumn
           prop="favorcnt"
           label="收藏人数"
           width="110px"
+          sortable
         ></ElTableColumn>
-        <ElTableColumn prop="vip" label="VIP书目" width="100px"></ElTableColumn>
+        <ElTableColumn prop="vip" label="VIP书目" width="100px" sortable></ElTableColumn>
         <ElTableColumn label="Operations">
           <div class="button">
             <div class="button1">
-              <el-button>Edit</el-button>
+              <el-button>设置封面</el-button>
             </div>
             <div class="button2">
-              <el-button size="small">Edit</el-button>
+              <el-button size="small">修改信息</el-button>
             </div>
           </div>
           <div class="button">
             <div class="button3">
-              <el-button>Edit</el-button>
+              <el-button>更新图书</el-button>
             </div>
             <div class="button4">
-              <el-button size="small">Edit</el-button>
+              <el-button size="small">更新章节</el-button>
             </div>
           </div>
         </ElTableColumn>
@@ -70,18 +74,23 @@
 <script>
 import { ElTable, ElTableColumn, ElButton } from "element-plus";
 import { getBookDetiles, getBookList } from "@/api/api";
-import { reactive } from "vue";
+import { reactive} from "vue";
 export default {
   setup() {
     let tableData = reactive([]);
     function getdata() {
       getBookList().then((books) => {
+        
+        let sbooks= books.books;
+        console.log(sbooks)
+        sbooks.sort((a, b) => (a - b))
         // console.log(books);
-        for (let bookid of books.books) {
+        for (let bookid of sbooks) {
           getBookDetiles(bookid).then((book) => {
-            // console.log(book);
+            console.log(book);
             tableData.push(book);
           });
+          
         }
         console.log(tableData);
       });
@@ -96,6 +105,10 @@ export default {
 </script>
 
 <style  scoped>
+
+.el-table__body-wrapper {
+  overflow-x: auto;
+}
 .head {
   margin-top: 100px;
   display: flex;
@@ -108,6 +121,7 @@ export default {
   background-color: transparent;
 }
 .table {
+    width: 1150px;
   margin-top: 50px;
   border: 1px solid #ccc;
 }
@@ -122,7 +136,7 @@ export default {
   background-color: transparent;
   text-decoration: solid;
   cursor: pointer;
-  font-size: 25px;
+  font-size: 15px;
 }
 .button button:hover {
   text-decoration: underline;
