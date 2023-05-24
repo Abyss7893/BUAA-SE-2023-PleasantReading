@@ -26,6 +26,7 @@
             <book-card
               :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
               :name="mybooks[(rownum - 1) * colsize + o - 1].name"
+              @click="gotoRead"
             />
           </el-col>
           <el-divider />
@@ -40,15 +41,23 @@
 import { getMyBook } from "@/api/api";
 import HeadAndFoot from "../../HeadAndFoot.vue";
 import BookCard from "./BookCard.vue";
+// import { nextTick } from "vue";
 
 export default {
   components: { BookCard, HeadAndFoot },
   data() {
     return {
       mybooks: [],
-      rownum: 0,
+      rownum: 1,
       colsize: 6,
     };
+  },
+  methods: {
+    gotoRead() {
+      this.$router.push({
+        path: "/reader/" + this.bookId + "/1",
+      });
+    },
   },
   created() {
     // for (let i = 0; i < 99; i++) {
@@ -57,11 +66,15 @@ export default {
     //     cover: require("../../../../assets/imgs/bookcv.png"),
     //   });
     // }
-    // this.rownum = Math.ceil(this.mybooks.length / this.colsize);
-    getMyBook().then((data) => {
-      for (let book of data["books"]) {
-        this.mybooks.push(book);
-      }
+
+    this.$nextTick(() => {
+      getMyBook().then((data) => {
+        console.log(data);
+        for (let book of data.books) {
+          this.mybooks.push(book);
+        }
+        this.rownum = Math.ceil(this.mybooks.length / this.colsize);
+      });
     });
   },
 };
