@@ -1,7 +1,7 @@
 import axios from 'axios'
 // import VueAxios from 'vue-axios'
 var back = "http://154.8.183.51/";
-
+var token = localStorage.getItem("token")
 function getBookDetiles(bookid) {
     var url = back + "/book/info/" + bookid;
     return axios.get(url).then(res => {
@@ -87,15 +87,15 @@ function getMyBook() {
         method: 'get',
         url: 'http://154.8.183.51/book/favor',
         headers: {
-            'Authorization': 'Bearer {{ACCESS_TOKEN}}',
-            'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-            'Content-Type': 'application/json'
+            'Authorization': 'Bearer '+token,
+            // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+            'Content-Type': 'application/json',
         }
     };
 
     return axios(config)
         .then(function (response) {
-            // console.log(JSON.stringify(response.data));
+            console.log(JSON.stringify(response.data));
             return response.data;
         })
         .catch(function (error) {
