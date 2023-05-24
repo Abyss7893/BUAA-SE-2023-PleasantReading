@@ -48,6 +48,8 @@ urlpatterns = [
     path('book/comments/<int:bookid>/<int:chapter>', bookApi.submitComments),
     path('book/score/<int:bookid>/', bookApi.getScore),
     path('book/score/<int:bookid>/<str:score>', bookApi.putScore),
+    path('book/marks/', bookApi.getMarks),
+    path('book/lastVisit/', bookApi.getLastVisit),
 
     path('manager/register', managerApi.managerRegister),
     path('manager/login', managerApi.login),
