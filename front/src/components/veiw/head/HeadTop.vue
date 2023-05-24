@@ -38,15 +38,15 @@
             <template #dropdown>
               <el-dropdown-menu class="personal-dropdown-menu">
 
-                <RouterLink to="/user">
+                <a href="/user">
                   <el-dropdown-item icon="house">个人中心</el-dropdown-item>
-                </RouterLink>
+                </a>
 
               <!-- <router-link :to="{ name: 'mybook' }">
                   <el-dropdown-item icon="memo"
                     >我的书架</el-dropdown-item
                   ></router-link
-                                              > -->
+                                                    > -->
 
                 <router-link :to="{ name: 'mybook' }">
                   <el-dropdown-item icon="memo">我的书架</el-dropdown-item>

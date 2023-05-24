@@ -92,7 +92,6 @@ export default {
         // eslint-disable-next-line no-undef
         const highlight = new Highlight(...this.selectionRanges)
         CSS.highlights.set("highlight1", highlight)
-        console.log(this.nowSelection)
         this.nowSelection.removeAllRanges();
         this.showMenu = false
       }

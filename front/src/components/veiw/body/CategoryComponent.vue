@@ -33,7 +33,7 @@ export default {
   mounted() {
     this.setRefs()
     let categoriesContent = this.$store.state.categoriesIndex
-    console.log(categoriesContent)
+    // console.log(categoriesContent)
     categoriesContent.forEach((content, idx) => {
       let elm = this.categoryItems[idx][content]
       elm.style.backgroundColor = "#f56c6c"
@@ -68,7 +68,7 @@ export default {
     // 点击事件处理函数
     selectCategory(titleIndex, index) {
       let categoriesContent = this.$store.state.categoriesIndex;
-      console.log(categoriesContent)
+      // console.log(categoriesContent)
       // 设置选中的 li 元素的样式
       this.categoryItems[titleIndex][categoriesContent[titleIndex]].style.backgroundColor = "";
       this.categoryItems[titleIndex][categoriesContent[titleIndex]].style.color = "";
