@@ -331,6 +331,9 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  max-width: 136px;
+  min-height: 186px;
+  max-height: 186px;
 
   transition-property: all;
   transition-duration: 0.5s;
