@@ -1,188 +1,145 @@
 <template>
-    <div class="container">
-        <div class="head">
-            <button class="button-big">添加书籍</button>
-        </div>
-        <div class="table">
-                <ElTable :data="tableData"  >
-                    <ElTableColumn fixed prop="id" label="书籍id" sortable width="100px"></ElTableColumn>
-                    <ElTableColumn prop="cover" label="封面" sortable width="105px">
-                        <template v-slot>
-                            <img src="https://bpic.588ku.com/back_origin_min_pic/21/01/25/85d10e649555f29a960dd1a1c8fe3e7f.jpg" style="width: 80px;height: 80px;" alt="">
-                        </template>
-                    </ElTableColumn>
-                    <ElTableColumn prop="title" label="作品名称" width="125px"></ElTableColumn>
-                    <ElTableColumn prop="author" label="作者" width="100px"></ElTableColumn>
-                    <ElTableColumn prop="category" label="分类" width="110px"></ElTableColumn>
-                    <ElTableColumn prop="status" label="状态" width="80px"></ElTableColumn>
-                    <ElTableColumn prop="cnt" label="字数" width="110px"></ElTableColumn>
-                    <ElTableColumn prop="favorcnt" label="收藏人数" width="110px"></ElTableColumn>
-                    <ElTableColumn prop="vip" label="VIP书目" width="100px"></ElTableColumn>
-                     <ElTableColumn label="Operations" >
-                        <div class="button">
-                            <div class="button1">
-                                <el-button  >Edit</el-button>
-                            </div>
-                            <div class="button2">
-                                <el-button size="small" >Edit</el-button>
-                            </div>
-                        </div>
-                        <div class="button">
-                            <div class="button3">
-                                <el-button  >Edit</el-button>
-                            </div>
-                            <div class="button4">
-                                <el-button size="small" >Edit</el-button>
-                            </div>
-                        </div>
-                    </ElTableColumn>
-                </ElTable>
-        </div>
+  <div class="container">
+    <div class="head">
+      <button class="button-big">添加书籍</button>
     </div>
-    
+    <div class="table">
+      <ElTable :data="tableData">
+        <ElTableColumn
+          fixed
+          prop="id"
+          label="书籍id"
+          sortable
+          width="100px"
+        ></ElTableColumn>
+        <ElTableColumn prop="cover" label="封面" sortable width="105px">
+          <template v-slot="row">
+            <img
+              :src="row.cover"
+              style="width: 80px; height: 80px"
+              alt=""
+            />
+          </template>
+        </ElTableColumn>
+        <ElTableColumn
+          prop="title"
+          label="作品名称"
+          width="125px"
+        ></ElTableColumn>
+        <ElTableColumn
+          prop="author"
+          label="作 者"
+          width="100px"
+        ></ElTableColumn>
+        <ElTableColumn
+          prop="category"
+          label="分类"
+          width="110px"
+        ></ElTableColumn>
+        <ElTableColumn prop="status" label="状态" width="80px"></ElTableColumn>
+        <ElTableColumn prop="cnt" label="字数" width="110px"></ElTableColumn>
+        <ElTableColumn
+          prop="favorcnt"
+          label="收藏人数"
+          width="110px"
+        ></ElTableColumn>
+        <ElTableColumn prop="vip" label="VIP书目" width="100px"></ElTableColumn>
+        <ElTableColumn label="Operations">
+          <div class="button">
+            <div class="button1">
+              <el-button>Edit</el-button>
+            </div>
+            <div class="button2">
+              <el-button size="small">Edit</el-button>
+            </div>
+          </div>
+          <div class="button">
+            <div class="button3">
+              <el-button>Edit</el-button>
+            </div>
+            <div class="button4">
+              <el-button size="small">Edit</el-button>
+            </div>
+          </div>
+        </ElTableColumn>
+      </ElTable>
+    </div>
+  </div>
 </template>
 
 <script>
-import { ElTable, ElTableColumn,ElButton } from 'element-plus';
-
-
+import { ElTable, ElTableColumn, ElButton } from "element-plus";
+import { getBookDetiles, getBookList } from "@/api/api";
+import { reactive } from "vue";
 export default {
-    setup() {
-        const tableData = [
-            {
-                cover:'312',
-                id: "2016-05-03",
-                title: "Tom",
-                author: "California",
-                category: "Los Angeles",
-                status: "No. 189, Grove St, Los Angeles",
-                cnt: "CA 90036",
-                favorcnt: "Home",
-                vip:'false',
-            },
-            {
-                cover: '312',
-                id: "2016-05-03",
-                title: "Tom",
-                author: "California",
-                category: "Los Angeles",
-                status: "No. 189, Grove St, Los Angeles",
-                cnt: "CA 90036",
-                favorcnt: "Home",
-                vip: 'false',
-            },
-            {
-                cover: '312',
-                id: "2016-05-03",
-                title: "Tom",
-                author: "California",
-                category: "Los Angeles",
-                status: "No. 189, Grove St, Los Angeles",
-                cnt: "CA 90036",
-                favorcnt: "Home",
-                vip: 'false',
-            },
-            {
-                cover: '312',
-                id: "2016-05-03",
-                title: "Tom",
-                author: "California",
-                category: "Los Angeles",
-                status: "No. 189, Grove St, Los Angeles",
-                cnt: "CA 90036",
-                favorcnt: "Home",
-                vip: 'false',
-            },
-            {
-                cover: '312',
-                id: "2016-05-03",
-                title: "Tom",
-                author: "California",
-                category: "Los Angeles",
-                status: "No. 189, Grove St, Los Angeles",
-                cnt: "CA 90036",
-                favorcnt: "Home",
-                vip: 'false',
-            },
-            {
-                cover: '312',
-                id: "2016-05-03",
-                title: "Tom",
-                author: "California",
-                category: "Los Angeles",
-                status: "No. 189, Grove St, Los Angeles",
-                cnt: "CA 90036",
-                favorcnt: "Home",
-                vip: 'false',
-            },
-            {
-                cover: '312',
-                id: "2016-05-03",
-                title: "Tom",
-                author: "California",
-                category: "Los Angeles",
-                status: "No. 189, Grove St, Los Angeles",
-                cnt: "CA 90036",
-                favorcnt: "Home",
-                vip: 'false',
-            },
-        ];
-        return {
-            tableData,
-        };
-    },
-    components: { ElTable, ElTableColumn, ElButton }
-}
+  setup() {
+    let tableData = reactive([]);
+    function getdata() {
+      getBookList().then((books) => {
+        // console.log(books);
+        for (let bookid of books.books) {
+          getBookDetiles(bookid).then((book) => {
+            // console.log(book);
+            tableData.push(book);
+          });
+        }
+        console.log(tableData);
+      });
+    }
+    getdata();
+    return {
+      tableData,
+    };
+  },
+  components: { ElTable, ElTableColumn, ElButton },
+};
 </script>
 
 <style  scoped>
-
-.head{
-    margin-top: 100px;
-    display: flex;
-    justify-content: center;
-    text-align: center; 
+.head {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }
-.head button{
-    border: none;
-    outline: none;
-    background-color: transparent;
+.head button {
+  border: none;
+  outline: none;
+  background-color: transparent;
 }
-.table{
-    margin-top: 50px;
-    border: 1px solid #ccc;
+.table {
+  margin-top: 50px;
+  border: 1px solid #ccc;
 }
-.button{
-    display: flex;
-    justify-content: space-between;
+.button {
+  display: flex;
+  justify-content: space-between;
 }
-.button button{
-    margin-right: 0px;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    text-decoration:solid;
-    cursor: pointer;
-    font-size: 25px;
+.button button {
+  margin-right: 0px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  text-decoration: solid;
+  cursor: pointer;
+  font-size: 25px;
 }
-.button button:hover{
-    text-decoration: underline;
+.button button:hover {
+  text-decoration: underline;
 }
-.button1 button{
-    
-    color: rgb(4, 249, 82);
+.button1 button {
+  color: rgb(4, 249, 82);
 }
-.button2 button{
-    margin-right: 10px;
-    color: rgb(200, 6, 6);
+.button2 button {
+  margin-right: 10px;
+  color: rgb(200, 6, 6);
 }
-.button3 button{
-    
-    color: rgb(70, 75, 72);
+.button3 button {
+  color: rgb(70, 75, 72);
 }
-.button4 button{
-    margin-right: 10px;
-    color: rgb(120, 90, 189);
+.button4 button {
+  margin-right: 10px;
+  color: rgb(120, 90, 189);
 }
 .button-big {
   background: linear-gradient(to right, #2ecc71, #3498db);
