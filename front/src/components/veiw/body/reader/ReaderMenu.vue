@@ -20,8 +20,8 @@
               d="M173.722 738.095V153.117c0-42.732 34.622-77.371 77.33-77.371h415.202c33.63 0 60.892 27.275 60.892 60.92v576.13c0 11.116-9.005 20.125-20.115 20.125H225.144c-19.168 0-37.592 2.245-51.422 15.523v-10.349z m700.883-538.04c-13.448 1.284-23.327 13.351-23.327 26.867V866.1c0 46.479-37.659 84.155-84.115 84.155H209.927c-19.996 0-36.205-16.217-36.205-36.222V823.75c0-21.583 17.492-39.083 39.065-39.083h494.244c39.676 0 71.837-32.176 71.837-71.87v-576.13C778.868 74.442 728.449 24 666.254 24H251.05C179.778 24 122 81.805 122 153.112v760.92c0 48.584 39.366 87.968 87.927 87.968h557.236C842.185 1002 903 941.157 903 866.1V225.81c0-15.126-12.972-27.224-28.395-25.754z"
               p-id="32297" fill="#262626"></path>
           </svg><span>书架</span></a></dd>
-      <dd><a href=""><svg t="1684569584776" class="icon" viewBox="0 0 1024 1024" version="1.1"
-            xmlns="http://www.w3.org/2000/svg" p-id="45631" width="16" height="16">
+      <dd><a :href="'/book/' + this.$route.params.bookid"><svg t="1684569584776" class="icon" viewBox="0 0 1024 1024"
+            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="45631" width="16" height="16">
             <path
               d="M511.347131 65.214281c-246.678192 0-446.650643 199.972451-446.650643 446.650643s199.972451 446.650643 446.650643 446.650643 446.650643-199.972451 446.650643-446.650643S758.025323 65.214281 511.347131 65.214281zM510.744403 894.491391c-211.92262 0-383.720382-171.797761-383.720382-383.720382s171.797761-383.720382 383.720382-383.720382 383.720382 171.797761 383.720382 383.720382S722.667024 894.491391 510.744403 894.491391z"
               fill="#262626" p-id="45632"></path>
@@ -55,7 +55,7 @@
           </svg><span>设置</span></a></dd>
     </dl>
     <!-- 目录面板浮层 -->
-    <ReaderCatalogPanel ref="child2" :style="{ display: catalogDisplay }" />
+    <ReaderCatalogPanel ref="child2" :style="{ visibility: catalogDisplay }" />
     <!-- 设置面板浮层 -->
     <ReaderSettingsPanel ref="child1" :style="{ display: settingsDisplay }" />
     <ReaderCommentsPanel ref="child3" :style="{ display: commentsDisplay }" />
@@ -78,20 +78,20 @@ export default {
       pageWidth: 800,
       Top: null,
       settingsExist: false,
-      catalogExist: true,
+      catalogExist: false,
       commentsExist: false,
     }
   },
   mounted() {
-    window.addEventListener('scroll', () => {
-      this.Top = document.getElementsByClassName("center-box")[0].getBoundingClientRect().top
-    }, true)
-    this.catalogExist = !this.catalogExist
+    window.addEventListener("scroll", this.updateTop, true);
   },
-  unmounted() {
-    window.removeEventListener('scroll', () => {
-      this.Top = document.getElementsByClassName("center-box")[0].getBoundingClientRect().top
-    }, true)
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.updateTop, true);
+  },
+  watch: {
+    catalogExist() {
+      this.$refs.child2.scrollToThisChapter()
+    }
   },
   computed: {
     isSettingAct() {
@@ -117,9 +117,9 @@ export default {
     },
     catalogDisplay() {
       if (this.catalogExist)
-        return "block"
+        return "visible"
       else
-        return "none"
+        return "hidden"
     },
     commentsDisplay() {
       if (this.commentsExist)
@@ -137,12 +137,10 @@ export default {
         return this.Top + "px"
     },
   },
-  watch: {
-    catalogExist() {
-      this.$refs.child2.scrollToThisChapter()
-    },
-  },
   methods: {
+    updateTop() {
+      this.Top = document.getElementsByClassName("center-box")[0].getBoundingClientRect().top;
+    },
     panelInit() {
       this.settingsExist = false
       this.catalogExist = false

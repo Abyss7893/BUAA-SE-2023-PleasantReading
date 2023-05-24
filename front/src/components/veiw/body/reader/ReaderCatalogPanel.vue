@@ -8,9 +8,10 @@
       <h4 class="lang">目录</h4>
       <ul ref="clist" v-infinite-scroll="load">
         <li v-for="(chapter, chapterId) in chapters.slice(0, this.chapterVisiableCount)" :key="chapterId"
-          :ref="'li' + chapterId"><a :href="'/reader/' + this.$route.params.bookid + '/' + (chapterId + 1)">{{
-            chapter
-          }}</a></li>
+          :class="this.thisChapter == chapterId ? 'act' : ''"><a
+            :href="'/reader/' + this.$route.params.bookid + '/' + (chapterId + 1)">{{
+              chapter
+            }}</a></li>
       </ul>
     </div>
   </div>
@@ -21,12 +22,10 @@ import { getBookContent } from "@/api/api";
 export default {
   name: "ReaderCatalogPanel",
   created() {
-    this.$nextTick(this.initCatalog());
     this.thisChapter = parseInt(this.$route.params.chapter) - 1;
-    this.chapterVisiableCount = parseInt(this.thisChapter / 20) * 20 + 60;
   },
   mounted() {
-    this.$refs["li" + this.thisChapter][0].classList.add("act");
+    this.initCatalog();
   },
   data() {
     return {
@@ -42,15 +41,20 @@ export default {
       this.$parent.changeVisiable("catalog");
     },
     scrollToThisChapter() {
-      this.$refs.clist.scrollTop = this.$refs["li" + this.thisChapter][0].offsetTop;
+      this.$refs.clist.scrollTop = parseInt((this.thisChapter + 2) / 2) * 42 - 60;
     },
     load() {
       this.chapterVisiableCount += 20;
+      if (this.chapters.length - this.chapterVisiableCount < 20)
+        this.chapterVisiableCount = this.chapters.length
     },
     initCatalog() {
       getBookContent(this.$route.params.bookid).then((data) => {
         this.chapters = data.outline;
-        // console.log(this.chapters)
+        this.$nextTick(() => {
+          this.scrollToThisChapter()
+          this.chapterVisiableCount = parseInt(this.thisChapter / 20) * 20 + 60;
+        });
       });
     },
   },

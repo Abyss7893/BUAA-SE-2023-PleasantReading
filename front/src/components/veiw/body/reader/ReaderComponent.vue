@@ -48,7 +48,7 @@
 </template>
 <script>
 import 'css/reader/reader.css'
-import { getBookDetiles, getBookCharpter } from "@/api/api";
+import { getBookDetiles, getBookCharpter, addBookmark } from "@/api/api";
 import { nextTick } from 'vue';
 import popOver from './popOver.vue';
 export default {
@@ -63,9 +63,9 @@ export default {
       },
       chapterInfo: {
         chapterTitle: "加载中",
-        chapterCount: "9999",
+        chapterCount: 9999,
         paragraphs: ["书籍内容正在赶来的路上，请耐心等待哟~"],
-        marked: true,
+        marked: false,
       },
     }
   },
@@ -75,6 +75,10 @@ export default {
   methods: {
     markTheChapter() {
 
+      addBookmark(this.$route.params.bookid, this.$route.params.chapter).then((data) => {
+        if (data.message === "login please")
+          alert("请先登录！")
+      })
     },
     initChapter() {
       // console.log(0)
@@ -88,8 +92,10 @@ export default {
         console.log(data);
         getBookCharpter(this.$route.params.bookid, this.$route.params.chapter).then((data2) => {
           this.chapterInfo.chapterTitle = data2.chaptertitle;//TODO
+          this.chapterInfo.chapterCount = data2.content.length
           this.chapterInfo.paragraphs = [data2.content];
-          // console.log(data.content);
+          this.chapterInfo.marked = data2.marked
+          console.log(data2);
         });
       });
     },

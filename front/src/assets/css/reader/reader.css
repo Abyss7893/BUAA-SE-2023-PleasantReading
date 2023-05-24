@@ -378,8 +378,13 @@
   overflow: auto;
 }
 
+.reader-menu .comments .comments-box ul.no-comments {
+  font: 16px/24px PingFangSC-Regular, -apple-system, Simsun;
+  margin-top: 24px;
+  height: 30px;
+}
+
 .reader-menu .comments .comments-box li {
-  min-height: 100px;
   margin-top: 16px;
   float: left;
   position: relative;
@@ -388,10 +393,15 @@
 .reader-menu .comments .comments-box li .comment-avatar {
   margin-top: 16px;
   border-radius: 100%;
-  background-color: #1a1a1a;
+  background-color: rgba(255, 255, 255, 0);
   float: left;
   width: 48px;
   height: 48px;
+  overflow: hidden;
+}
+
+.reader-menu .comments .comments-box li .comment-avatar img {
+  width: 48px;
 }
 
 .reader-menu .comments .comments-box li .comment-text {
