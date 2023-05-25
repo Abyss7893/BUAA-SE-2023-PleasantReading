@@ -143,7 +143,12 @@
 </template>
 
   <script>
-import { getBookDetiles, getBookContent, addColection } from "@/api/api";
+import {
+  getBookDetiles,
+  getBookContent,
+  addColection,
+  deleteColection,
+} from "@/api/api";
 import HeadAndFoot from "../HeadAndFoot.vue";
 // import getBookContent from
 export default {
@@ -196,12 +201,21 @@ export default {
   methods: {
     collect() {
       var bookid = this.bookId;
-      addColection(bookid).then((bool) => {
-        console.log(bool);
-        if (bool) {
-          this.isColected = true;
-        }
-      });
+      if (!this.isColected)
+        addColection(bookid).then((bool) => {
+          console.log(bool);
+          if (bool) {
+            this.isColected = true;
+          }
+        });
+      else {
+        deleteColection(bookid).then((bool) => {
+          console.log(bool);
+          if (bool) {
+            this.isColected = true;
+          }
+        });
+      }
     },
     generateChater() {
       // for (let i = 1; i <= 400; i++) {
@@ -248,19 +262,18 @@ export default {
     this.bookId = this.$route.params.id;
     getBookDetiles(this.bookId).then((data) => {
       // console.log(data);
-      this.isColected= data.fav,
-      this.detailData = {
-
-        cover: data.cover,
-        title: data.title,
-        author: data.author,
-        size: this.formatNumber(data.cnt),
-        category: data.category,
-        rating: parseFloat(data.score).toFixed(1),
-        intro: data.brief,
-        vip: data.vip ? "VIP" : "免费",
-        status: data.status,
-      };
+      (this.isColected = data.fav),
+        (this.detailData = {
+          cover: data.cover,
+          title: data.title,
+          author: data.author,
+          size: this.formatNumber(data.cnt),
+          category: data.category,
+          rating: parseFloat(data.score).toFixed(1),
+          intro: data.brief,
+          vip: data.vip ? "VIP" : "免费",
+          status: data.status,
+        });
       if (data.cnt > 1000000) this.detailData.simpleSizes = "长篇";
       else if (data.cnt > 200000) this.detailData.simpleSizes = "中篇";
       else this.detailData.simpleSizes = "短篇";

@@ -7,7 +7,7 @@
         <el-empty description="暂无书籍" />
       </div>
       <div v-else>
-        <el-row v-for="ro in rownum -1" :key="ro" gutter="60">
+        <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
           <el-col
             v-for="o in colsize"
             :key="(ro - 1) * colsize + o - 1"
@@ -16,15 +16,15 @@
             <book-card
               :cover="mybooks[(ro - 1) * colsize + o - 1].cover"
               :name="mybooks[(ro - 1) * colsize + o - 1].name"
-              :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid"
+              :bookid="mybooks[(ro - 1) * colsize + o - 1].bookid"
             ></book-card>
           </el-col>
           <el-divider />
         </el-row>
-        <div v-if="(mybooks.length-(rownum-1)*colsize) > 0">
+        <div v-if="mybooks.length - (rownum - 1) * colsize > 0">
           <el-row gutter="60">
             <el-col
-              v-for="o in (mybooks.length-(rownum-1)*colsize)"
+              v-for="o in mybooks.length - (rownum - 1) * colsize"
               :key="(rownum - 1) * colsize + o - 1"
               :span="24 / colsize"
             >
@@ -32,7 +32,6 @@
                 :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
                 :name="mybooks[(rownum - 1) * colsize + o - 1].name"
                 :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid"
-              
               />
             </el-col>
             <el-divider />
@@ -59,9 +58,7 @@ export default {
       colsize: 6,
     };
   },
-  methods: {
-
-  },
+  methods: {},
   created() {
     // for (let i = 0; i < 99; i++) {
     //   this.mybooks.push({
@@ -74,10 +71,14 @@ export default {
       getMyBook().then((data) => {
         console.log(data);
         for (let book of data.books) {
-          this.mybooks.push(book);
+          this.mybooks.push({
+            name: book.name,
+            cover: book.cover,
+            bookid: book.bookid,
+          });
         }
         this.rownum = Math.ceil(this.mybooks.length / this.colsize);
-        console.log(this.rownum);
+        console.log(this.mybooks);
       });
     });
   },
