@@ -11,7 +11,7 @@
               d="M695.1 455.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM695.1 578.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM695.1 701.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM379.1 281.1c-17.9 0-32.4-14.5-32.4-32.4V115.4c0-17.9 14.5-32.4 32.4-32.4s32.4 14.5 32.4 32.4v133.2c0 17.9-14.5 32.5-32.4 32.5zM657.1 281.1c-17.9 0-32.4-14.5-32.4-32.4V115.4c0-17.9 14.5-32.4 32.4-32.4s32.4 14.5 32.4 32.4v133.2c0 17.9-14.5 32.5-32.4 32.5z"
               fill="#262626" p-id="41512"></path>
           </svg><span>目录</span></a></dd>
-      <dd><a @click="highlightSelectedText"><svg t="1684569110214" class="icon" viewBox="0 0 1024 1024" version="1.1"
+      <dd><a @click="addToFavor"><svg t="1684569110214" class="icon" viewBox="0 0 1024 1024" version="1.1"
             xmlns="http://www.w3.org/2000/svg" p-id="32295">
             <path
               d="M248.065 833C235.527 833 223 845.6 223 864.497 223 883.395 235.527 896 248.065 896h469.88C730.473 896 743 883.395 743 864.497 743 845.6 736.736 833 724.21 833H248.064zM458.906 593.553a5.182 5.182 0 0 0 7.185 0l104.312-100.427c3.36-3.229 1.066-8.9-3.593-8.9h-77.75V228.761a7.763 7.763 0 0 0-7.764-7.761h-37.599a7.761 7.761 0 0 0-7.76 7.761v255.465h-77.75c-4.658 0-6.946 5.671-3.592 8.9l104.311 100.427z"
@@ -66,6 +66,7 @@ import 'css/reader/reader.css'
 import ReaderSettingsPanel from './ReaderSettingsPanel.vue';
 import ReaderCatalogPanel from './ReaderCatalogPanel.vue';
 import ReaderCommentsPanel from './ReaderCommentsPanel.vue';
+import { addBookToFavor } from "@/api/api";
 export default {
   name: "ReaderMenu",
   components: {
@@ -188,7 +189,21 @@ export default {
         this.panelInit()
       }
     },
-
+    addToFavor() {
+      addBookToFavor(this.$route.params.bookid).then((data) => {
+        const code = data.request.status
+        switch (code) {
+          case 200:
+            alert("收藏成功！")
+            break;
+          case 401:
+            alert("用户未登录！或登录失效！请重新登录")
+            break;
+          default:
+            break;
+        }
+      })
+    },
   },
 }
 

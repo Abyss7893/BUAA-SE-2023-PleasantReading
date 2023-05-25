@@ -121,12 +121,24 @@ export default {
         this.bookInfo.bookId = data.id;
         this.bookInfo.bookAuthor = data.author;
         // console.log(data);
-        getBookCharpter(this.$route.params.bookid, this.$route.params.chapter).then((data2) => {
-          this.chapterInfo.chapterTitle = data2.chaptertitle;//TODO
-          this.chapterInfo.chapterCount = data2.content.length
-          this.chapterInfo.paragraphs = data2.content;
-          this.chapterInfo.marked = data2.marked
-          // console.log(data2);
+        getBookCharpter(this.$route.params.bookid, this.$route.params.chapter).then((data) => {
+
+          if (!data.status && data.response.status == 401) {
+            alert("该书籍仅供vip阅读！而您甚至未登录！")
+            return
+          } else if (!data.status && data.response.status == 403) {
+            alert("该书籍仅供vip阅读！")
+            return
+          } else {
+            let data2 = data.data
+            this.chapterInfo.chapterTitle = data2.chaptertitle;//TODO
+            this.chapterInfo.chapterCount = 0
+            for (let index = 0; index < data2.content.length; index++) {
+              this.chapterInfo.chapterCount += data2.content[index].length
+            }
+            this.chapterInfo.paragraphs = data2.content;
+            this.chapterInfo.marked = data2.marked
+          }
         });
       });
     },

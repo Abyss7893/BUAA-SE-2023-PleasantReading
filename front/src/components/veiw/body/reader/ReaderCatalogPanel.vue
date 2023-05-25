@@ -8,7 +8,7 @@
       <h4 class="lang">目录</h4>
       <ul ref="clist" v-infinite-scroll="load">
         <li v-for="(chapter, chapterId) in chapters.slice(0, this.chapterVisiableCount)" :key="chapterId"
-          :class="this.thisChapter == chapterId ? 'act' : ''"><a
+          :class="this.thisChapter == chapterId ? 'act' : ''" :ref="chapterId"><a
             :href="'/reader/' + this.$route.params.bookid + '/' + (chapterId + 1)">{{
               chapter
             }}</a></li>
@@ -41,7 +41,7 @@ export default {
       this.$parent.changeVisiable("catalog");
     },
     scrollToThisChapter() {
-      this.$refs.clist.scrollTop = parseInt((this.thisChapter + 2) / 2) * 42 - 60;
+      this.$refs.clist.scrollTop = this.$refs[this.thisChapter][0].offsetTop
     },
     load() {
       this.chapterVisiableCount += 20;

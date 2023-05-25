@@ -46,7 +46,7 @@
                   <el-dropdown-item icon="memo"
                     >我的书架</el-dropdown-item
                   ></router-link
-                                                    > -->
+                                                        > -->
 
                 <router-link :to="{ name: 'mybook' }">
                   <el-dropdown-item icon="memo">我的书架</el-dropdown-item>
@@ -90,10 +90,12 @@ export default {
   },
   methods: {
     drop() {
-      this.$refs.hidden.style.display = "block";
+      this.$refs.hidden.style.maxHeight = '500px';
+      this.$refs.hidden.style.paddingBottom = '10px'
     },
     hide() {
-      this.$refs.hidden.style.display = "none";
+      this.$refs.hidden.style.maxHeight = '0';
+      this.$refs.hidden.style.paddingBottom = '0'
     },
     signOut() {
       this.$store.commit("signOut")

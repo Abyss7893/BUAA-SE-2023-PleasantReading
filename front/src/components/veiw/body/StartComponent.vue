@@ -19,8 +19,10 @@
         </div>
       </div>
       <div v-if="this.$store.state.isLogin" style="max-height: 300px">
-        <h1 class="quote" style="text-align: center">最近阅读</h1>
-        <slide-card></slide-card>
+        <h1 class="quote" style="text-align: center" v-if="showLastRead">
+          最近阅读
+        </h1>
+        <slide-card > </slide-card>
       </div>
       <button
         v-if="this.$store.state.isLogin"
@@ -44,6 +46,7 @@ export default {
   components: { SlideCard },
   data() {
     return {
+      showLastRead: true,
       backgroundImage: require("../../../assets/imgs/PontdArcole_ZH-CN5348049357_1920x1080.jpg"),
       showComponent: true,
       i: 0,
@@ -83,6 +86,10 @@ export default {
           this.typingreverse();
         }, 2000);
       }
+    },
+    changeShowLastRead() {
+      console.log(this.showLastRead);
+      this.showLastRead = !this.showLastRead;
     },
     typingreverse() {
       if (this.i > 0) {

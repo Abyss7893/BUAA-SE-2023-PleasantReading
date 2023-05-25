@@ -5,12 +5,14 @@ var back = "http://154.8.183.51/";
 
 
 function getBookDetiles(bookid) {
+  var token = localStorage.getItem("token")
   var axios = require('axios');
 
   var config = {
     method: 'get',
     url: 'http://154.8.183.51/book/info/' + bookid,
     headers: {
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     }
   };
@@ -45,12 +47,8 @@ function getBookCharpter(bookid, chapter) {
     }
   };
   return axios(config)
-    .then(function (response) {
-      // console.log(response.data);
-      return response.data;
-    })
     .catch(function (error) {
-      throw error;
+      return error;
     });
 }
 function getBookList(options) {
@@ -135,6 +133,18 @@ function getBookComments(bookid, chapter, page) {
     });
 }
 
+function submitBookComment(bookid, chapter, comment) {
+  var token = localStorage.getItem("token")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios({
+    method: 'post',
+    url: 'http://154.8.183.51/book/comments/' + bookid + '/' + chapter,
+    data: { "text": comment },
+  }).catch(function (data) {
+    return data;
+  });
+}
+
 function addBookmark(bookid, chapter) {
   var token = localStorage.getItem("token")
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -150,7 +160,6 @@ function addBookmark(bookid, chapter) {
 function deletBookmark(bookid, chapter) {
   var token = localStorage.getItem("token")
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  // console.log(axios.defaults.headers.common['Authorization'])
   return axios({
     method: 'delete',
     url: 'http://154.8.183.51/book/mark/' + bookid + '/' + chapter,
@@ -159,8 +168,48 @@ function deletBookmark(bookid, chapter) {
   });
 }
 
+function addBookToFavor(bookid) {
+  var token = localStorage.getItem("token")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios({
+    method: 'put',
+    url: 'http://154.8.183.51/book/favor/' + bookid
+  }).catch(function (data) {
+    return data;
+  });
+}
+function addColection(bookid) {
+  var axios = require('axios');
+  var token = localStorage.getItem("token")
+  var config = {
+    method: 'put',
+    url: 'http://154.8.183.51/book/favor/' + bookid,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  };
+  // console.log(config);
 
+  return axios(config)
+    .then(function () {
+      // console.log(JSON.stringify(response.data));
+      return true;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 export {
-  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments, addBookmark, getMyBook, deletBookmark
+  getBookDetiles,
+  getBookContent,
+  getBookList,
+  getBookCharpter,
+  getBookComments,
+  addBookmark,
+  getMyBook,
+  deletBookmark, addColection,
+  submitBookComment,
+  addBookToFavor
 }
