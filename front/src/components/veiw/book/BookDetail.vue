@@ -259,6 +259,7 @@ export default {
     },
   },
   created() {
+    
     this.bookId = this.$route.params.id;
     getBookDetiles(this.bookId).then((data) => {
       // console.log(data);

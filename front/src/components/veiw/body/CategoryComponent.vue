@@ -112,7 +112,10 @@ export default {
       this.categoryItems[titleIndex][index].style.backgroundColor = "#f56c6c";
       this.categoryItems[titleIndex][index].style.color = "white";
 
-      var Option=this.$route.query;
+      var Option={};
+      for(let key in this.$route.query){
+        Option[key]=this.$route.query[key];
+      }
       // if (!("category" in this.$route.query))
       //   Option = {
       //     category: "null",
@@ -140,6 +143,7 @@ export default {
       // Option["data"] = new Date().getTime();
       console.log(Option);
       this.$router.push({ name: "Child", query: Option });
+
       // this.$router.push({
       //   path: `/allbook/${Option.category}/${Option.property}/${Option.status}/${Option.wordCount}/${Option.sort}`,
       // });

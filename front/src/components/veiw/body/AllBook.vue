@@ -28,27 +28,10 @@ import { ElAffix } from "element-plus";
 import CategoryComponent from "./CategoryComponent.vue";
 import RecommendComponent from "./RecommendComponent.vue";
 export default {
-  props: {
-    category: {
-      type: String,
-      default: "",
-    },
-    property: {
-      type: String,
-      default: "",
-    },
-    status: {
-      type: String,
-      default: "",
-    },
-    wordCount: {
-      type: String,
-      default: "",
-    },
-    sort: {
-      type: String,
-      default: "",
-    },
+  data() {
+    return {
+      Option: {},
+    };
   },
   name: "HomeBody",
   components: {
@@ -60,25 +43,26 @@ export default {
 
     ElAffix,
   },
-  computed: {
-    Option() {
-      return {
-        category: this.category,
-        vip: this.property == "VIP"?"true":"false",
-        status: this.status,
-        range: this.wordCount,
-        order: this.sort,
-      };
-    },
-  },
+  computed: {},
   created() {
-    console.log({
-      category: this.category,
-      vip: this.property == "VIP",
-      status: this.status,
-      range: this.wordCount,
-      order: this.sort,
-    });
+    for (let key in this.$route.query) {
+      if (key === "property") {
+        if (this.$route.query[key] === "VIP") this.Option["vip"] = "true";
+        else if (this.$route.query[key] === "FREE")
+          this.Option["vip"] = "false";
+        else this.Option['vip'] = "";
+      }
+      if (key === "wordCount")this.Option['range'] = this.$route.query[key];
+      this.Option[key] = this.$route.query[key];
+      console.log(key, this.Option[key]);
+    }
+    // console.log({
+    //   category: this.category,
+    //   vip: this.property == "VIP",
+    //   status: this.status,
+    //   range: this.wordCount,
+    //   order: this.sort,
+    // });
     // this.naviLoccation = document
     //   .querySelector(`li[navi-id="${id}"]`)
     //   .getBoundingClientRect();
