@@ -2,21 +2,20 @@ import { createStore } from 'vuex'
 const store = createStore({
   state() {
     return {
-      tempAvatar:null,
+      tempAvatar: null,
       isLogin: false,
       isVIP: true,
       userId: null,
       userAvatar: null,
-      navigationLoc: 1,
       categoriesIndex: [0, 0, 0, 0],
-      userInfo:{
+      userInfo: {
         username: null,
         gender: null,
         birthday: "2000-01-01",
         email: null,
         motto: "这个人很懒,什么也没留下。",
         nickname: null,
-        VIPDate:null,
+        VIPDate: null,
       },
       themes: [
         {
@@ -63,40 +62,42 @@ const store = createStore({
 
     }
   },
-  getters : {
-  tempAvatar: state => state.tempAvatar,
-  // ...
-},
+  getters: {
+    tempAvatar: state => state.tempAvatar,
+    // ...
+  },
   mutations: {
     refresh(state) {
-      state.isLogin = !state.isLogin
+      state.isLogin = false
+      state.isVIP = false
     },
     changeLoginState(state) {
       if (this.state.isLogin) {
+        localStorage.removeItem('token')
         state.isLogin = false
+        state.isVIP = false
       } else {
         state.isLogin = true
         state.isVIP = false
       }
     },
-    setTempAvatar(state,url){
-      state.tempAvatar=url
+    setTempAvatar(state, url) {
+      state.tempAvatar = url
     },
     setVIP(state) {
       state.isVIP = true
     },
     signOut(state) {
+      localStorage.removeItem('token')
       state.isLogin = false;
+      state.isVIP = false
     },
     setUser(state, userId) {
       state.userId = userId;
       state.isLogin = true;
     },
-    setAvatarUrl(state,url){
-      state.userAvatar=url
-    },
-    changeNaviLoc(state, num) {
-      state.navigationLoc = num
+    setAvatarUrl(state, url) {
+      state.userAvatar = url
     },
     changeCategoriesIndex(state, content) {
       state.categoriesIndex[content.title] = content.index
@@ -104,10 +105,10 @@ const store = createStore({
     setReaderSettings(state, settings) {
       state.readerSettings = settings
     },
-    updateUserInfo(state,userInfo){
-      state.userInfo=userInfo
-      state.isLogin=true
-    }
+    updateUserInfo(state, userInfo) {
+      state.userInfo = userInfo
+      state.isLogin = true
+    },
   },
 })
 export default store

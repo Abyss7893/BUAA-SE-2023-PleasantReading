@@ -1,7 +1,7 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                                                      <LoginComponent /> -->
+                                                        <LoginComponent /> -->
   <div id="app">
     <RouterView :key="$route.fullPath"></RouterView>
   </div>
@@ -30,7 +30,10 @@ export default {
     window.addEventListener('beforeunload', () => {
       sessionStorage.setItem('store', JSON.stringify(this.$store.state));
     });
-  }
+  },
+  unmounted() {
+    localStorage.removeItem('token')
+  },
 };
 </script>
 

@@ -84,6 +84,7 @@ export default {
               break
             case 401:
               alert("用户未登录！或登录失效！请重新登录")
+              this.$store.commit('refresh')
               break;
             case 400:
               alert("书签已添加！")
@@ -102,6 +103,7 @@ export default {
               break
             case 401:
               alert("用户未登录！或登录失效！请重新登录")
+              this.$store.commit('refresh')
               break;
             case 400:
               alert("该处没有书签！")
