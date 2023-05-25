@@ -8,7 +8,7 @@
     <div class="dropdown">
       <div class="search">
         <input ref="keywords" type="text" name="" id="" placeholder="想看什么我这里都有哟~" @focusin="drop" @focusout="hide" />
-        <button @click="searchBooks">
+        <button @click="searchBooks()">
           <el-icon>
             <Search />
           </el-icon>
@@ -41,7 +41,7 @@
                   <el-dropdown-item icon="memo"
                     >我的书架</el-dropdown-item
                   ></router-link
-                                                                                              > -->
+                                                                                                          > -->
 
                 <router-link :to="{ name: 'mybook' }">
                   <el-dropdown-item icon="memo">我的书架</el-dropdown-item>
@@ -102,7 +102,8 @@ export default {
       this.$router.push('/');
     },
     searchBooks(keywords) {
-      keywords = keywords || this.$refs.keywords.value
+      if (!keywords)
+        keywords = this.$refs.keywords.value
       this.$router.push({ path: '/search', query: { "keywords": keywords, page: 1 } })
     },
   },

@@ -28,7 +28,6 @@
 </template>
 <script>
 import "css/head/headnav.css";
-import { random } from "lodash";
 
 export default {
   name: "Head_Nav",
@@ -38,7 +37,6 @@ export default {
       naviLoccation: null,
       slider: null,
       screenWidth: null,
-      sliderLoc: -100,
     };
   },
   watch: {
@@ -78,11 +76,8 @@ export default {
   },
   methods: {
     dealTheNoneSlider() {
-      if (random(2) > 1)
-        this.slider.style.left = '-100px'
-      else
-        this.slider.style.left = 'calc(100% + 100px)'
-      this.sliderLoc = this.slider.style.left
+      this.slider.style.visibility = "hidden"
+      this.slider.style.opacity = 0
       this.naviLoccation = null
     },
     swithPathToId(path) {
@@ -103,6 +98,8 @@ export default {
       }
     },
     slideHere(event) {
+      this.slider.style.visibility = "visible"
+      this.slider.style.opacity = 1
       const rect = event.target.getBoundingClientRect();
       this.slider.style.width = rect.width + "px";
       this.slider.style.left = rect.left + "px";
@@ -114,7 +111,8 @@ export default {
         this.slider.style.left = this.naviLoccation.left + "px";
         this.slider.style.height = this.naviLoccation.height + "px";
       } else {
-        this.slider.style.left = this.sliderLoc
+        this.slider.style.visibility = "hidden"
+        this.slider.style.opacity = 0
       }
     },
     storeNavi(event) {
