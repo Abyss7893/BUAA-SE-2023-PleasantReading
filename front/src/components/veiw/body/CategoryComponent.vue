@@ -1,11 +1,20 @@
 <template>
   <!-- <div class="novel-sidebar"> -->
   <div class="category float">
-    <div class="float" v-for="(title, titleIndex) in categories.titles" :key="titleIndex">
+    <div
+      class="float"
+      v-for="(title, titleIndex) in categories.titles"
+      :key="titleIndex"
+    >
       <div class="category-title">{{ title }}</div>
       <ul class="float">
-        <li class="float" v-for="(category, index) in categories.content[title]" :key="index"
-          :ref="`categoryItem_${titleIndex}_${index}`" @click="selectCategory(titleIndex, index)">
+        <li
+          class="float"
+          v-for="(category, index) in categories.content[title]"
+          :key="index"
+          :ref="`categoryItem_${titleIndex}_${index}`"
+          @click="selectCategory(titleIndex, index)"
+        >
           {{ category }}
         </li>
       </ul>
@@ -21,23 +30,47 @@ export default {
       categories: {
         titles: ["分类", "状态", "属性", "字数"],
         content: {
-          "分类": ["全部", "玄幻", "奇幻", "武侠", "仙侠", "都市", "现实", "军事", "历史", "游戏", "体育", "科幻", "诸天无限", "悬疑", "轻小说", "短篇"],
-          "状态": ["全部", "连载", "完本"],
-          "属性": ["全部", "免费", "VIP"],
-          "字数": ["全部", "30万字以下", "30-50万字", "50-100万字", "100-200万字", "200万字以上"],
+          分类: [
+            "全部",
+            "玄幻",
+            "奇幻",
+            "武侠",
+            "仙侠",
+            "都市",
+            "现实",
+            "军事",
+            "历史",
+            "游戏",
+            "体育",
+            "科幻",
+            "诸天无限",
+            "悬疑",
+            "轻小说",
+            "短篇",
+          ],
+          状态: ["全部", "连载", "完本"],
+          属性: ["全部", "免费", "VIP"],
+          字数: [
+            "全部",
+            "30万字以下",
+            "30-50万字",
+            "50-100万字",
+            "100-200万字",
+            "200万字以上",
+          ],
         },
       },
       categoryItems: [], // 存储 li 元素数组的引用
     };
   },
   mounted() {
-    this.setRefs()
-    let categoriesContent = this.$store.state.categoriesIndex
+    this.setRefs();
+    let categoriesContent = this.$store.state.categoriesIndex;
     // console.log(categoriesContent)
     categoriesContent.forEach((content, idx) => {
-      let elm = this.categoryItems[idx][content]
-      elm.style.backgroundColor = "#f56c6c"
-      elm.style.color = "white"
+      let elm = this.categoryItems[idx][content];
+      elm.style.backgroundColor = "#f56c6c";
+      elm.style.color = "white";
     });
   },
   methods: {
@@ -70,12 +103,36 @@ export default {
       let categoriesContent = this.$store.state.categoriesIndex;
       // console.log(categoriesContent)
       // 设置选中的 li 元素的样式
-      this.categoryItems[titleIndex][categoriesContent[titleIndex]].style.backgroundColor = "";
-      this.categoryItems[titleIndex][categoriesContent[titleIndex]].style.color = "";
+      this.categoryItems[titleIndex][
+        categoriesContent[titleIndex]
+      ].style.backgroundColor = "";
+      this.categoryItems[titleIndex][
+        categoriesContent[titleIndex]
+      ].style.color = "";
       this.categoryItems[titleIndex][index].style.backgroundColor = "#f56c6c";
       this.categoryItems[titleIndex][index].style.color = "white";
+
+      var Option = {
+        category: "null",
+        property: "null",
+        status: "null",
+        wordCount: "null",
+        sort: "null",
+      };
+      console.log(Option);
+
+      if (titleIndex == 3) {
+        if (index > 0) Option["wordCount"] = index;
+      }
+      console.log(titleIndex + ":" + index);
+
+      // this.$router.push({ name: "bookOrder", params: Option });
+      this.$router.push({ path:`/allbook/${Option.category}/${Option.property}/${Option.status}/${Option.wordCount}/${Option.sort}` });
       // 更新 $store 中的 categoriesIndex 值
-      this.$store.commit("changeCategoriesIndex", { "title": titleIndex, "index": index });
+      this.$store.commit("changeCategoriesIndex", {
+        title: titleIndex,
+        index: index,
+      });
     },
   },
 };

@@ -1,11 +1,16 @@
 <template>
   <div>
     <div class="block-col-2">
-      <el-dropdown @command="handleCommand" style="line-height: 150%;" trigger="click">
+      <el-dropdown
+        @command="handleCommand"
+        style="line-height: 150%"
+        trigger="click"
+      >
         <span class="demonstration">
           {{ cod
           }}<el-icon class="el-icon--right">
-            <arrow-down /><i class="arrow-down"></i></el-icon>
+            <arrow-down /><i class="arrow-down"></i
+          ></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="rank-dropdown-menu">
@@ -21,7 +26,7 @@
         </template>
       </el-dropdown>
     </div>
-    <book-gallery ref="child"></book-gallery>
+    <book-gallery ref="child" :Option="Option"></book-gallery>
   </div>
 </template>
 
@@ -29,6 +34,21 @@
 // import { handleError } from 'vue';
 import BookGallery from "../book/BookGallery.vue";
 export default {
+  props: {
+    Option: {
+      type: Object,
+      default: function () {
+        return {
+          category: "",
+          vip: "",
+          range: "",
+          order: "",
+          status: "",
+          page: "",
+        };
+      },
+    },
+  },
   components: { BookGallery },
   name: "NovelList",
   data() {

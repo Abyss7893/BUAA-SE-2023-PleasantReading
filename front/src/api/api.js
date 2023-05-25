@@ -200,6 +200,26 @@ function addColection(bookid) {
       console.log(error);
     });
 }
+function deleteColection(bookid) {
+  var axios = require('axios');
+  var token = localStorage.getItem("token")
+  var config = {
+    method: 'delete',
+    url: `http://154.8.183.51/book/favor/${bookid}`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios(config)
+    .then(function () {
+      return true;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 export {
   getBookDetiles,
@@ -211,5 +231,6 @@ export {
   getMyBook,
   deletBookmark, addColection,
   submitBookComment,
-  addBookToFavor
+  addBookToFavor,
+  deleteColection
 }

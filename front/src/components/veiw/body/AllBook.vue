@@ -11,7 +11,7 @@
           <CategoryComponent />
         </div>
         <div class="recommend-component-wrapper">
-          <RecommendComponent />
+          <RecommendComponent :Option="Option" />
         </div>
       </div>
     </div>
@@ -28,6 +28,28 @@ import { ElAffix } from "element-plus";
 import CategoryComponent from "./CategoryComponent.vue";
 import RecommendComponent from "./RecommendComponent.vue";
 export default {
+  props: {
+    category: {
+      type: String,
+      default: "",
+    },
+    property: {
+      type: String,
+      default: "",
+    },
+    status: {
+      type: String,
+      default: "",
+    },
+    wordCount: {
+      type: String,
+      default: "",
+    },
+    sort: {
+      type: String,
+      default: "",
+    },
+  },
   name: "HomeBody",
   components: {
     CategoryComponent,
@@ -38,7 +60,25 @@ export default {
 
     ElAffix,
   },
+  computed: {
+    Option() {
+      return {
+        category: this.category,
+        vip: this.property == "VIP"?"true":"false",
+        status: this.status,
+        range: this.wordCount,
+        order: this.sort,
+      };
+    },
+  },
   created() {
+    console.log({
+      category: this.category,
+      vip: this.property == "VIP",
+      status: this.status,
+      range: this.wordCount,
+      order: this.sort,
+    });
     // this.naviLoccation = document
     //   .querySelector(`li[navi-id="${id}"]`)
     //   .getBoundingClientRect();
