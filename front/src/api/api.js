@@ -45,12 +45,8 @@ function getBookCharpter(bookid, chapter) {
     }
   };
   return axios(config)
-    .then(function (response) {
-      // console.log(response.data);
-      return response.data;
-    })
     .catch(function (error) {
-      throw error;
+      return error;
     });
 }
 function getBookList(options) {
@@ -162,10 +158,20 @@ function addBookmark(bookid, chapter) {
 function deletBookmark(bookid, chapter) {
   var token = localStorage.getItem("token")
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  // console.log(axios.defaults.headers.common['Authorization'])
   return axios({
     method: 'delete',
     url: 'http://154.8.183.51/book/mark/' + bookid + '/' + chapter,
+  }).catch(function (data) {
+    return data;
+  });
+}
+
+function addBookToFavor(bookid) {
+  var token = localStorage.getItem("token")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios({
+    method: 'put',
+    url: 'http://154.8.183.51/book/favor/' + bookid
   }).catch(function (data) {
     return data;
   });
@@ -181,4 +187,5 @@ export {
   getMyBook,
   deletBookmark,
   submitBookComment,
+  addBookToFavor
 }

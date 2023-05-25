@@ -106,8 +106,8 @@
 .reader-menu dd {
   border: 1px solid rgba(0, 0, 0, .1);
   background: url("~assets/imgs/readerbcg/default/basic.png") repeat fixed;
-  animation-duration: 1s;
-  animation-name: bounceIn;
+  animation-duration: .5s;
+  animation-name: fadeIn;
 }
 
 
@@ -142,6 +142,8 @@
 }
 
 .reader-menu .panel-box {
+  animation-duration: .5s;
+  animation-name: fadeIn;
   left: 69px;
   position: absolute;
   top: 0;
@@ -269,6 +271,8 @@
 }
 
 .reader-menu dd.act {
+  animation-name: fadeIn;
+  animation-duration: .5s;
   border-right: none;
   box-shadow: -10px 5px 25px -4px rgba(0, 0, 0, .2);
   width: 69px;
@@ -431,7 +435,10 @@
   font-family: STKaiti, Kaiti;
   margin: 2px 0 0 6px;
   width: 480px;
-  height: 40px;
+  /* height: 40px; */
+  max-height: 40px;
+  word-wrap: break-word;
+  transition: max-height 0.5s ease;
   overflow: hidden;
 }
 
@@ -482,12 +489,16 @@
   font-family: STKaiti, Kaiti;
   outline: none;
   width: 100%;
-  height: auto;
+  height: 45px;
   resize: none;
+  white-space: pre-wrap;
   box-sizing: border-box;
+  transition: height 0.3s ease;
 }
 
-
+.reader-menu .comments .comments-box .comment-input-box textarea:focus {
+  height: 105px;
+}
 
 .reader-menu .comments .comments-box .comment-input-box input[type="button"] {
   float: right;

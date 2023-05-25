@@ -15,9 +15,7 @@
               <div class="comment-time">{{ comment.timestamp }}</div>
               <div class="comment-content" :ref="commentId" v-html="replaceLineBreaks(comment.text)"></div>
             </div>
-            <i :style="{
-              display: comment.text.length > 60 ? 'block' : 'none'
-            }" @click="extendContent(commentId)">
+            <i v-show="isExtendDisplay(comment.text)" @click="extendContent(commentId)">
               <div :ref="'i' + commentId"><svg class="icon" width="16" height="16" viewBox="0 0 1024 1024"
                   xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -29,8 +27,9 @@
         </ul>
         <ul class="no-comments" v-if="this.comments.length == 0">还没有人留下评论，快来留下你的见解吧！</ul>
         <div class="comment-input-box">
-          <form action="POST"><textarea @focusin="textEXRows" @focusout="textINRows" ref="mycomment" wrap="soft" rows="1"
-              placeholder="发送一条友善的评论~"></textarea><input type="button" value="发送" @click="submitComment">
+          <form action="POST">
+            <textarea ref="mycomment" wrap="soft" rows="1" placeholder="发送一条友善的评论~"></textarea><input type="button"
+              value="发送" @click="submitComment">
           </form>
         </div>
       </div>
@@ -85,21 +84,38 @@ export default {
       this.$parent.changeComments()
     },
     replaceLineBreaks(text) {
-      return text // .replace(/\n/g, '<br>')
+      return text.replace(/\n/g, '<br>')
     },
-    textEXRows() {
-      this.$refs.mycomment.rows = 5
-    },
-    textINRows() {
-      this.$refs.mycomment.rows = 1
+    isExtendDisplay(text) {
+      let line = 0
+      let cnt = 0
+      const pattern = /^[ -~]$/;
+      for (let i = 0; i < text.length; i++) {
+        const char = text.charAt(i)
+        // 判断是否是换行符，并增加行数
+        if (char === '\n') {
+          line++
+          cnt = 0
+        } else {
+          if (!pattern.test(char))
+            cnt++
+          else
+            cnt += 0.5
+          if (cnt == 30) {
+            cnt = 0
+            line++
+          }
+        }
+      }
+      if (cnt > 0)
+        line++
+      return line > 2
     },
     load() {
-      console.log(this.commentsNum)
       if (this.commentsNum % 5 != 0)
         return
       this.commentsNum += 5
-      this.$nextTick(this.getComments())
-      this.commentsNum = this.comments.length
+      this.getComments()
     },
     // 获取评论，一次五条
     getComments() {
@@ -108,17 +124,22 @@ export default {
         for (let index = 0; index < len; index++) {
           this.comments.push(data.comments[index])
         }
+        this.commentsNum = this.comments.length
       });
     },
     submitComment() {
-      if (this.$refs.mycomment.value.length == 0)
+      if (this.$refs.mycomment.value.length === 0)
         return
-      submitBookComment(this.$route.params.bookid, this.$route.params.bookid, this.$refs.mycomment.value).then((data) => {
+      else if (this.$refs.mycomment.value.length > 500) {
+        alert("评论不可以超过500字哦，请精简一下吧~")
+        return
+      }
+      submitBookComment(this.$route.params.bookid, this.$route.params.chapter, this.$refs.mycomment.value).then((data) => {
         const code = data.request.status
         switch (code) {
           case 200:
             this.$refs.mycomment.value = ''
-            // location.reload();
+            location.reload();
             break;
           case 401:
             alert("用户未登录！或登录失效！请重新登录")
@@ -137,6 +158,6 @@ export default {
 </script>
 <style>
 .reader-menu .comments .comments-box li .comment-content.extendHeight {
-  height: auto;
+  max-height: 100px;
 }
 </style>
