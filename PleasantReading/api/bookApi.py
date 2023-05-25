@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.db.models import Q, F, FloatField, Case, When, Value, CharField, OuterRef, Subquery, Count
+from django.db.models import Q, F, FloatField, Case, When, Value, CharField, OuterRef, Subquery, Count, Max
 from rest_framework import serializers
 from django.db.models.functions import Concat
 import json
@@ -25,6 +25,8 @@ def getPages(pages, num):
 
 def notAnonymous(request):
     if 'Authorization' not in request.headers:
+        return False
+    if len(request.headers.get('Authorization')) == 0:
         return False
     if len(request.headers.get('Authorization').split(' ')) > 1:
         accessToken = request.headers.get('Authorization').split(' ')[1]
@@ -53,7 +55,7 @@ def isVIP(request):
 
 
 def getBookInfo(request, bookid):
-    res = BookBasicInfo.objects.filter(bookID=bookid, onShelf=True)
+    res = BookBasicInfo.objects.filter(bookID=bookid)
     if res.count() == 0:
         return JsonResponse({"message": "failed"}, status=400)
     else:
@@ -364,3 +366,24 @@ def getLastVisit(request):
     return JsonResponse({'bookid': ret.bookID,
                          'name': BookBasicInfo.objects.get(bookID=ret.bookID).name,
                          'chapter': ret.chapter})
+
+def getRecentHistory(request):
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=201)
+    userid = getUsername(request)
+
+    latest_history = History.objects.filter(bookID=OuterRef('bookID')).order_by('-timestamp')
+    result = History.objects.filter(id=Subquery(latest_history.values('id')[:1]))
+    print(result.values('bookID', 'chapter'))
+
+    latest_chapters = result[:8]
+    subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name', 'img')[:1]
+    latest_chapters = latest_chapters.annotate(
+        name=Subquery(subquery.values('name')), img=Subquery(subquery.values('img'))
+    )
+    subquery = BookContext.objects.filter(bookID=OuterRef('bookID'), chapter=OuterRef('chapter')).values('title')[:1]
+    latest_chapters = latest_chapters.annotate(
+        title=Subquery(subquery.values('title'))
+    )
+    latest_chapters = latest_chapters.values('name', 'img', 'bookID', 'chapter', 'title')
+    return JsonResponse({'list': list(latest_chapters)})
