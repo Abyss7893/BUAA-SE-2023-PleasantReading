@@ -11,6 +11,7 @@ import os
 from api.admin import getUserFromToken, validateAccessToken
 from api.models import *
 from api.userApi import login
+from api.bookApi import bookFilter
 
 SERVER_URL= "http://154.8.183.51"
 
@@ -23,6 +24,11 @@ def checkManager(request):
     cnt = Manager.objects.filter(userID=ID)
     return cnt.count() != 0
 
+
+def getAllBooks(request):
+    if not checkManager(request):
+        return JsonResponse({'message': 'fail', 'error': 'not the login manager'}, status=400)
+    bookFilter(request, perm=False)
 
 def managerRegister(request):
     data = json.loads(request.body)
@@ -123,34 +129,6 @@ def getCover(request, bookid):
     except:
         return JsonResponse({'message': 'fail', 'error': "bookid error"}, status=400)
 
-# def updateBookStatus(request):
-#     accessToken = request.headers.get('Authorization').split(' ')[1]
-#     decodedToken = validateAccessToken(accessToken)
-#     if decodedToken is None:
-#         return JsonResponse({'message': 'fail', 'error': 'not the login manager'}, status=400)
-#
-#     data = json.loads(request.body)
-#     ID = data.get('bookid')
-#     status = data.get('status')
-#     onShelf = data.get('onshelf')
-#     isVIP = data.get('isVIP')
-#     category = data.get('category')
-#     profile = data.get('brief')
-#     obj = BookBasicInfo.objects.get(bookID=ID)
-#     if obj is None:
-#         return JsonResponse({'message': 'fail', 'error': 'bookID error'}, status=400)
-#     if status is not None:
-#         obj.status = status
-#     if onShelf is not None:
-#         obj.onShelf = onShelf
-#     if isVIP is not None:
-#         obj.isVIP = isVIP
-#     if category is not None:
-#         obj.category = category
-#     if profile is not None:
-#         obj.profile = profile
-#     obj.save()
-#     return JsonResponse({'message': 'success'})
 
 def uploadChapter(request):
     if not checkManager(request):
@@ -180,26 +158,5 @@ def uploadChapter(request):
         BookContext.objects.create(bookID=bookID, chapter=chapter, text=context, title=title)
         return JsonResponse({"message": "upload success"})
 
-# def reloadChapter(request):
-#     data = json.loads(request.body)
-#     bookID = data.get('bookid')
-#     chapter = data.get('chapter')
-#     context = data.get('context')
-#     title = data.get('title')
-#     if BookBasicInfo.objects.filter(bookID=bookID).count() == 0:
-#         return JsonResponse({'message': 'fail', 'error': 'bookID error'}, status=400)
-#     if BookContext.objects.filter(bookID=bookID, chapter=chapter).count() == 0:
-#         return JsonResponse({'message': 'fail', 'error': 'this chapter has not existed'}, status=400)
-#     obj = BookContext.objects.get(bookID=bookID,chapter=chapter)
-#     if title is not None:
-#         obj.title = title
-#     if context is not None:
-#         preLen = len(obj.text)
-#         nowLen = len(context)
-#         obj.text = context
-#         book = BookBasicInfo.objects.get(bookID=bookID)
-#         book.wordsCnt = book.wordsCnt + nowLen - preLen
-#         book.save()
-#     obj.save()
-#     return JsonResponse({"message": "success"})
+
 

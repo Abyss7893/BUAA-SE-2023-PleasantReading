@@ -123,10 +123,13 @@ def updateBookmark(request, bookid, chapter):
     else:
         return JsonResponse({'message': 'invalid request'}, status=400)
 
-def bookFilter(request, perm=False):
+def bookFilter(request, perm=True):
     if request.method != 'GET':
         return JsonResponse({'message': 'invalid request'}, status=400)
-    books=BookBasicInfo.objects.filter(onShelf=True)
+    if perm:
+        books = BookBasicInfo.objects.filter(onShelf=True)
+    else:
+        books = BookBasicInfo.objects.all()
     if request.GET.get('category'):
         books = books.filter(category__icontains=request.GET.get('category'))
     if request.GET.get('vip'):
