@@ -44,6 +44,7 @@
             >
               {{ item.id }}
             </p>
+
             <p
               v-if="showInfo && config5[index].id === 'center'"
               style="
@@ -60,6 +61,7 @@
             >
               第114514章节
             </p>
+            <span>{{ item.dindex }}</span>
           </div>
         </div>
       </transition>
@@ -74,6 +76,7 @@
   </div>
 </template>
     <script>
+// import { da } from 'element-plus/es/locale';
 // import { fa } from "element-plus/es/locale";
 // import BookCard from "../mybooks/BookCard.vue";
 export default {
@@ -87,80 +90,94 @@ export default {
       centerInfo: "", // 当前中间信息
       startX: "",
       endX: "",
+
       imgs: [
         {
           id: "莱因哈特1",
           index: 0,
+          dindex: 0,
           cover: require("../../../../assets/imgs/bookcv.png"),
           // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888260036&di=875bc88905bf4b6923784df1589edb0b&imgtype=0&src=http%3A%2F%2Fi-1.itobike.com%2F2017%2F5%2F26%2Ff6038942-393f-441e-9380-a2f1607c3385.jpg",
         },
         {
           id: "安娜2",
           index: 1,
+          dindex: 1,
           cover: require("../../../../assets/imgs/bookcv.png"),
           // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888297322&di=9d5d97f952329ccf2277b2033b129d5d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201803%2F28%2F20180328101238_VHiji.jpeg",
         },
         {
           id: "卢西奥3",
           index: 2,
+          dindex: 2,
           cover: require("../../../../assets/imgs/bookcv.png"),
           // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573483062&di=9d6983ba28c123896b27148e313ada65&imgtype=jpg&er=1&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201608%2F15%2F20160815133037_4YAfh.jpeg",
         },
         {
           id: "DVA4",
           index: 3,
+          dindex: 3,
           cover: require("../../../../assets/imgs/bookcv.png"),
           // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888405708&di=3381891cd042db432083ed2446ddf446&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201805%2F06%2F20180506201144_JPTd3.thumb.700_0.jpeg",
         },
         {
           id: "莫伊拉5",
           index: 4,
+          dindex: 4,
           cover: require("../../../../assets/imgs/bookcv.png"),
           // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888441984&di=47544529365104e11276d639838741c3&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201801%2F06%2F20180106221938_58EGv.thumb.224_0.jpeg",
         },
         {
           id: "裂空6",
           index: 5,
+          dindex: 5,
           cover: require("../../../../assets/imgs/bookcv.png"),
           // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888482891&di=5416c6abf187547cd329377dc1092fff&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201610%2F20%2F20161020175323_auiK8.thumb.700_0.jpeg",
         },
         {
           id: "麦克雷7",
           index: 6,
+          dindex: 6,
           cover: require("../../../../assets/imgs/bookcv.png"),
           // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888500984&di=f415feaef2c02b497e9d3801743b8e49&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201711%2F26%2F20171126191812_4x8RV.thumb.700_0.jpeg",
         },
         {
           id: "士兵76  8",
           index: 7,
+          dindex: 7,
           cover: require("../../../../assets/imgs/bookcv.png"),
           // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573056788040&di=dbf1954ad8ba1bee16afd9f47d763512&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201704%2F24%2F20170424202013_hveir.jpeg",
         },
-        {
-          id: "狂鼠9",
-          index: 8,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=ea29fa95c13d70cf4cfaa80dc8e7a03d/42166d224f4a20a4d334946b98529822720ed070.jpg",
-        },
-        {
-          id: "死神 10",
-          index: 9,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "http://www.agri35.com/UploadFiles/img_2_4163694432_214245738_26.jpg",
-        },
-        {
-          id: "禅雅塔 11",
-          index: 10,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "http://pic2.zhimg.com/v2-1c9b73f260ea2652dcdedfc782fde90d_b.jpg",
-        },
-        {
-          id: "黑百合 12",
-          index: 11,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "http://b-ssl.duitang.com/uploads/item/201710/14/20171014134122_KmPQy.jpeg",
-        },
+        // {
+        //   id: "狂鼠9",
+        //   index: 8,
+        //   dindex: 8,
+        //   cover: require("../../../../assets/imgs/bookcv.png"),
+        //   // "http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=ea29fa95c13d70cf4cfaa80dc8e7a03d/42166d224f4a20a4d334946b98529822720ed070.jpg",
+        // },
+        // {
+        //   id: "死神 10",
+        //   index: 9,
+        //   dindex: 9,
+        //   cover: require("../../../../assets/imgs/bookcv.png"),
+        //   // "http://www.agri35.com/UploadFiles/img_2_4163694432_214245738_26.jpg",
+        // },
+        // {
+        //   id: "禅雅塔 11",
+        //   index: 10,
+        //   dindex: 10,
+        //   cover: require("../../../../assets/imgs/bookcv.png"),
+        //   // "http://pic2.zhimg.com/v2-1c9b73f260ea2652dcdedfc782fde90d_b.jpg",
+        // },
+        // {
+        //   id: "黑百合 12",
+        //   index: 11,
+        //   dindex: 11,
+        //   cover: require("../../../../assets/imgs/bookcv.png"),
+        //   // "http://b-ssl.duitang.com/uploads/item/201710/14/20171014134122_KmPQy.jpeg",
+        // },
       ],
+      data: [],
       previous: 0,
       config5: [
         {
@@ -249,6 +266,8 @@ export default {
           transition: ".4s",
         },
       ],
+
+      mode: 0,
     };
   },
   methods: {
@@ -259,16 +278,17 @@ export default {
           if (cfg.id === "center") cfg.left = "50%";
           else if (cfg.id === "-A") {
             cfg.left = "-160%";
-            cfg.opacity = 1;
+            cfg.opacity = this.mode == 7 ? 1 : 0;
           } else if (cfg.id === "A") cfg.left = "-100%";
           else if (cfg.id === "B") cfg.left = "-40%";
           else if (cfg.id === "D") cfg.left = "94%";
           else if (cfg.id === "E") cfg.left = "152%";
           else if (cfg.id === "E+") {
             cfg.left = "210%";
-            cfg.opacity = 1;
+            cfg.opacity = this.mode == 7 ? 1 : 0;
           }
         }
+        this.$emit("showLastRead");
       }
       // var ccfg;
       // for (let cfg of this.config5) {
@@ -298,6 +318,7 @@ export default {
             cfg.opacity = 0;
           }
         }
+        this.$emit("showLastRead");
       }
     },
     // 获取数据
@@ -306,6 +327,7 @@ export default {
         this.loading = false;
       });
     },
+
     // 滑动上一个
     prev() {
       // this.imgs.unshift(this.imgs.pop());
@@ -401,6 +423,21 @@ export default {
     // 点击
     chooseItem(item) {
       let cycles = item.index;
+      if (cycles == 0 || cycles == 6) return;
+      if (this.mode == 3) {
+        console.log("this :" + cycles);
+        if (cycles == 1 || cycles == 5) return;
+      }
+      if (this.mode == 1) {
+        if (cycles == 1 || cycles == 5 || cycles == 2 || cycles == 4) return;
+      }
+      // console.log(item);
+      // let halfindex=0;
+      // if(this.mode == 7) halfindex = 3;
+      // else if(this.mode == 5) halfindex = 2;
+      // else if(this.mode == 3) halfindex = 1;
+
+      // if (item.opacity == 0) return;
       if (item.index < 3) {
         for (let i = 0; i < 3 - cycles; i++) {
           console.log(item.index);
@@ -441,11 +478,77 @@ export default {
         }
       }
     },
+    deepCopy(x) {
+      return {
+        id: x.id,
+        cover: x.cover,
+        dindex: x.dindex,
+        index: x.index,
+      };
+    },
+    setData() {
+      if (this.imgs.length >= 7) this.mode = 7;
+      else if (this.imgs.length >= 5) this.mode = 5;
+      else if (this.imgs.length >= 3) this.mode = 3;
+      else this.mode = this.imgs.length > 0 ? 1 : 0;
+
+      if (this.mode == 7) {
+        this.data.push(...this.imgs);
+        // for (let i = 0; i < 3; i++) this.next();
+      }
+      if (this.mode == 5) {
+        for (let i = 0; i < 2; i++) {
+          for (let q of this.imgs) this.data.push(this.deepCopy(q));
+        }
+        // for (let i = 0; i < 3; i++) this.next();
+      }
+      if (this.mode == 3) {
+        this.config5[1].opacity = 0;
+        this.config5[5].opacity = 0;
+        for (let i = 0; i < 3; i++) {
+          for (let q of this.imgs) this.data.push(this.deepCopy(q));
+        }
+        // for (let i = 0; i < 3; i++) this.next();
+      }
+      // if (this.mode == 2) {
+      //   for (let i = 0; i < 4; i++) {
+      //     for (let q of this.imgs) this.data.push(this.deepCopy(q));
+      //   }
+      // }
+      if (this.mode == 1) {
+        this.config5[1].opacity = 0;
+        this.config5[5].opacity = 0;
+        this.config5[2].opacity = 0;
+        this.config5[4].opacity = 0;
+        for (let i = 0; i < 7; i++) {
+          for (let q of this.imgs) this.data.push(this.deepCopy(q));
+        }
+      }
+      this.imgs = [];
+      for (let i = 0; i < this.data.length; i++) {
+        this.data[i].index = i;
+        this.data[i].dindex = i;
+
+        this.imgs.push(this.data[i]);
+      }
+      for (let i = 0; i < 3; i++) this.prev();
+      // console.log(this.imgs);
+
+      // if (this.mode == 1) {
+      // }
+    },
   },
   created() {
+    this.setData();
+    console.log(this.imgs);
     this.getData();
+
     this.centerCard(); // 获取中间卡片信息
     this.addCardStyle(); // 加入样式位置的index
+
+    // for (let _i = 0; _i < 3; _i++) {
+    //   this.prev();
+    // }
   },
 };
 </script>
