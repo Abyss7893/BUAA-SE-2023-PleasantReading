@@ -51,15 +51,15 @@ const router = createRouter({
       name: 'reader',
       component: Reader,
     },
-    {
-      path: '/allbook/:category/:property/:status/:wordCount/:sort',
-      name: 'bookOrder',
-      component: AllBook,
-      props: true,
-      meta: {
-        // 可选的meta数据
-      }
-    },
+    // {
+    //   path: '/allbook/:category/:property/:status/:wordCount/:sort',
+    //   name: 'bookOrder',
+    //   component: AllBook,
+    //   props: true,
+    //   meta: {
+    //     // 可选的meta数据
+    //   }
+    // },
     {
       path: '/mybook',
       component: MyBookBody,
@@ -76,7 +76,7 @@ const router = createRouter({
       name: 'allbook',
     },
     {
-      path: '/child',
+      path: '/allbook',
       name: 'Child',
       component: AllBook,
       props: true,

@@ -1,5 +1,6 @@
 <template>
   <head-and-foot>
+    <check-login></check-login>
     <!-- <el-space direction="vertical" alignment="start" :size="30"> -->
     <div class="box-center">
       <el-divider />
@@ -47,10 +48,11 @@
 import { getMyBook } from "@/api/api";
 import HeadAndFoot from "../../HeadAndFoot.vue";
 import BookCard from "./BookCard.vue";
+import CheckLogin from "../../../check/checkLogin.vue";
 // import { nextTick } from "vue";
 
 export default {
-  components: { BookCard, HeadAndFoot },
+  components: { BookCard, HeadAndFoot, CheckLogin },
   data() {
     return {
       mybooks: [],
@@ -69,7 +71,7 @@ export default {
 
     this.$nextTick(() => {
       getMyBook().then((data) => {
-        console.log(data);
+        // // console.log(data);
         for (let book of data.books) {
           this.mybooks.push({
             name: book.name,
@@ -78,7 +80,7 @@ export default {
           });
         }
         this.rownum = Math.ceil(this.mybooks.length / this.colsize);
-        console.log(this.mybooks);
+        // // console.log(this.mybooks);
       });
     });
   },

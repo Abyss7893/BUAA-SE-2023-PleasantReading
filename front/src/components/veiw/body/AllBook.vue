@@ -54,7 +54,7 @@ export default {
       }
       if (key === "wordCount")this.Option['range'] = this.$route.query[key];
       this.Option[key] = this.$route.query[key];
-      console.log(key, this.Option[key]);
+      // console.log(key, this.Option[key]);
     }
     // console.log({
     //   category: this.category,

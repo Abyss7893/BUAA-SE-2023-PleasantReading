@@ -89,10 +89,10 @@ export default {
     // this.generateTestData();
     var defaultOptions = this.Option;
     for (let key in defaultOptions) {
-      console.log(key, defaultOptions[key]);
+      // console.log(key, defaultOptions[key]);
       if (defaultOptions[key] === "null") defaultOptions[key] = "";
     }
-    console.log(defaultOptions);
+    // console.log(defaultOptions);
     this.flashData(defaultOptions);
   },
 
@@ -156,6 +156,8 @@ export default {
       getBookList(defaultOptions).then((res1) => {
         booklist = res1.books;
         let i = 0;
+        if (booklist.length < 10)
+          this.books = this.books.slice(0, booklist.length);
         for (let bookid of booklist) {
           getBookDetiles(bookid).then((res) => {
             var data = res;
@@ -165,7 +167,7 @@ export default {
               title: data.title,
               author: data.author,
               cnt: data.cnt,
-              fav :data.favorcnt,
+              fav: data.favorcnt,
               size: this.formatNumber(data.cnt),
               category: data.category,
               rating: parseFloat(data.score).toFixed(1),
@@ -176,9 +178,6 @@ export default {
             };
             i++;
           });
-          if(i<10){
-            this.books=this.books.slice(0,i);
-          }
         }
       });
     },
@@ -224,7 +223,7 @@ export default {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
       const tmpbook = this.books.slice(startIndex, endIndex);
-      // console.log(tmpbook);
+      // // console.log(tmpbook);
       const rows = [];
       let row = [];
       for (let i = 0; i < tmpbook.length; i++) {
