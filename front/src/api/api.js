@@ -19,8 +19,8 @@ function getBookDetiles(bookid) {
       // console.log(JSON.stringify(response.data));
       return response.data;
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch(function () {
+      alert("书籍信息不存在！")
     });
 
 }
@@ -177,6 +177,17 @@ function addBookToFavor(bookid) {
   });
 }
 
+function getSearchBookIds(keywords, page) {
+  var token = localStorage.getItem("token")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios({
+    method: 'get',
+    url: `http://154.8.183.51/book/search/?keyword=${keywords}&page=${page}`,
+  }).catch(function (data) {
+    return data;
+  });
+}
+
 export {
   getBookDetiles,
   getBookContent,
@@ -187,5 +198,6 @@ export {
   getMyBook,
   deletBookmark,
   submitBookComment,
-  addBookToFavor
+  addBookToFavor,
+  getSearchBookIds
 }

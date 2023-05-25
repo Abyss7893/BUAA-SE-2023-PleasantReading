@@ -1,9 +1,9 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                                              <LoginComponent /> -->
+                                                      <LoginComponent /> -->
   <div id="app">
-    <RouterView></RouterView>
+    <RouterView :key="$route.fullPath"></RouterView>
   </div>
 </template>
 
@@ -49,6 +49,11 @@ export default {
   /* user-select: none; */
   /* 标准语法，其他浏览器需要 */
 
+}
+
+a,
+button {
+  transition: color .3s, background-color .3s;
 }
 
 .float {

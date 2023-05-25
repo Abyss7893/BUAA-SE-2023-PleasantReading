@@ -28,6 +28,7 @@
 </template>
 <script>
 import "css/head/headnav.css";
+import { random } from "lodash";
 
 export default {
   name: "Head_Nav",
@@ -37,12 +38,17 @@ export default {
       naviLoccation: null,
       slider: null,
       screenWidth: null,
+      sliderLoc: -100,
     };
   },
   watch: {
     screenWidth: {
       handler: function () {
         let id = this.swithPathToId(this.$route.path)
+        if (id == 0) {
+          this.dealTheNoneSlider()
+          return
+        }
         this.naviLoccation = document
           .querySelector(`li[navi-id="${id}"]`)
           .getBoundingClientRect();
@@ -59,10 +65,8 @@ export default {
     };
     this.slider = document.querySelector(".slider");
     let id = this.swithPathToId(this.$route.path)
-
     if (id == 0) {
-      this.slider.style.display = 'none'
-      this.naviLoccation = null
+      this.dealTheNoneSlider()
       return
     }
     this.naviLoccation = document
@@ -73,8 +77,15 @@ export default {
     this.slider.style.left = this.naviLoccation.left + "px";
   },
   methods: {
+    dealTheNoneSlider() {
+      if (random(2) > 1)
+        this.slider.style.left = '-100px'
+      else
+        this.slider.style.left = 'calc(100% + 100px)'
+      this.sliderLoc = this.slider.style.left
+      this.naviLoccation = null
+    },
     swithPathToId(path) {
-      console.log(path)
       switch (path) {
         case '/home':
         case '/':
@@ -92,7 +103,6 @@ export default {
       }
     },
     slideHere(event) {
-      this.slider.style.display = 'block'
       const rect = event.target.getBoundingClientRect();
       this.slider.style.width = rect.width + "px";
       this.slider.style.left = rect.left + "px";
@@ -104,7 +114,7 @@ export default {
         this.slider.style.left = this.naviLoccation.left + "px";
         this.slider.style.height = this.naviLoccation.height + "px";
       } else {
-        this.slider.style.display = 'none'
+        this.slider.style.left = this.sliderLoc
       }
     },
     storeNavi(event) {
