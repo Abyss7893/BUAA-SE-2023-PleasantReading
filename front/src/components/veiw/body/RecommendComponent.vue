@@ -22,6 +22,8 @@
             <el-dropdown-item command="3">按字数降序</el-dropdown-item>
             <!-- 按照字数升序 -->
             <el-dropdown-item command="4">按字数升序</el-dropdown-item>
+            <el-dropdown-item command="5">按收藏降序</el-dropdown-item>
+            <el-dropdown-item command="6">按收藏升序</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -109,12 +111,20 @@ export default {
         this.cod = "按评分升序";
       }
       if (command === "3") {
-        books.sort((a, b) => b.size - a.size);
+        books.sort((a, b) => b.cnt - a.cnt);
         this.cod = "按字数降序";
       }
       if (command === "4") {
-        books.sort((a, b) => a.size - b.size);
+        books.sort((a, b) => a.cnt - b.cnt);
         this.cod = "按字数升序";
+      }
+      if (command === "5") {
+        books.sort((a, b) => b.fav - a.fav);
+        this.cod = "按收藏降序";
+      }
+      if (command === "6") {
+        books.sort((a, b) => a.fav - b.fav);
+        this.cod = "按收藏升序";
       }
     },
     // f() {

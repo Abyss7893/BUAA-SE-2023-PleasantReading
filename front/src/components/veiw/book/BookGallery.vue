@@ -164,6 +164,8 @@ export default {
               cover: data.cover,
               title: data.title,
               author: data.author,
+              cnt: data.cnt,
+              fav :data.favorcnt,
               size: this.formatNumber(data.cnt),
               category: data.category,
               rating: parseFloat(data.score).toFixed(1),
@@ -174,6 +176,9 @@ export default {
             };
             i++;
           });
+          if(i<10){
+            this.books=this.books.slice(0,i);
+          }
         }
       });
     },
