@@ -57,9 +57,10 @@ urlpatterns = [
     path('manager/newbook', managerApi.newBook),
     path('manager/setcover', managerApi.setBookCover),
     path('manager/getcover/<int:bookid>', managerApi.getCover),
-    path('manager/bookupdate', managerApi.updateBookStatus),
+    # path('manager/bookupdate', managerApi.updateBookStatus),
     path('manager/uploadchapter', managerApi.uploadChapter),
-    path('manager/reloadchapter', managerApi.reloadChapter),
+    # path('manager/xxx',)
+    # path('manager/reloadchapter', managerApi.reloadChapter),
 
     path('submit/', userApi.my_view),
     path('gallery/', userApi.image_gallery),
