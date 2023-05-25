@@ -3,7 +3,28 @@
     <div class="head">
       <button class="button-big">添加书籍</button>
     </div>
+    <ElDialog v-model="showInfo" :destroy-on-close="true">
+      <ElDescriptions border :column="1">
+        <ElDescriptionsItem label="图书名称"><span>{{ selectRow.title }}</span></ElDescriptionsItem>
+        <ElDescriptionsItem label="VIP"><ElSwitch style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" v-model="selectRow.isVip" active-text="true" inactive-text="false" /></ElDescriptionsItem>
+        <ElDescriptionsItem  label="图书状态"><ElSwitch style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" v-model="selectRow.status" active-text="完结" inactive-text="连载" /></ElDescriptionsItem>
+        <ElDescriptionsItem label="图书简介"><ElInput type="textarea" rows="10" v-model="selectRow.brief"></ElInput></ElDescriptionsItem>
+        <ElDescriptionsItem label="图书分类"><ElInput v-model="selectRow.category"></ElInput></ElDescriptionsItem>
+        <ElDescriptionsItem label="是否上架"><ElSwitch style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949" v-model="selectRow.onshelf" active-text="true" inactive-text="false" /></ElDescriptionsItem>
+      </ElDescriptions>
+      <ElButton style="margin-left: 550px; margin-top: 50px;" @click="InfoSubmit">确认提交</ElButton>
+    </ElDialog>
+    <ElDialog v-model="showBook" :destroy-on-close="true">
+      <ElDescriptions border :column="1">
+        <ElDescriptionsItem label="图书id"><span>{{ selectRow.id }}</span></ElDescriptionsItem>
+        <ElDescriptionsItem label="图书章节">占位符</ElDescriptionsItem>
+        <ElDescriptionsItem label="图书内容">占位符</ElDescriptionsItem>
+        <ElDescriptionsItem label="图书标题">占位符</ElDescriptionsItem>
+      </ElDescriptions>
+      <ElButton style="margin-left: 550px; margin-top: 50px;" @click="BookSubmit">确认提交</ElButton>
+    </ElDialog>
     <div class="table">
+      
       <ElTable :data="tableData" :default-sort="{ prop: 'id', order: 'increasing' }" style="width: 1150px;">
         <ElTableColumn
           fixed
@@ -49,22 +70,16 @@
         ></ElTableColumn>
         <ElTableColumn prop="vip" label="VIP书目" width="100px" sortable></ElTableColumn>
         <ElTableColumn label="Operations">
-          <div class="button">
-            <div class="button1">
-              <el-button>设置封面</el-button>
+          <template v-slot="scope">
+            <div class="button">
+              <div class="button1">
+                <el-button @click="setInfo(scope.row)">设置信息</el-button>
+              </div>
+              <div class="button2">
+                <el-button size="small" @click="updateInfo(scope.row)">更新内容</el-button>
+              </div>
             </div>
-            <div class="button2">
-              <el-button size="small">修改信息</el-button>
-            </div>
-          </div>
-          <div class="button">
-            <div class="button3">
-              <el-button>更新图书</el-button>
-            </div>
-            <div class="button4">
-              <el-button size="small">更新章节</el-button>
-            </div>
-          </div>
+          </template>
         </ElTableColumn>
       </ElTable>
     </div>
@@ -72,35 +87,73 @@
 </template>
 
 <script>
-import { ElTable, ElTableColumn, ElButton } from "element-plus";
+import { ElTable, ElTableColumn, ElButton, ElDialog, ElDescriptions, ElDescriptionsItem, ElInput, ElSwitch } from "element-plus";
 import { getBookDetiles, getBookList } from "@/api/api";
-import { reactive} from "vue";
+import { reactive,ref} from "vue";
+import '../../node_modules/element-plus/theme-chalk/index.css'
+import axios from "axios";
 export default {
   setup() {
     let tableData = reactive([]);
+    let showInfo=ref(false)
+    let showBook = ref(false)
+    let selectRow=reactive({})
     function getdata() {
-      getBookList().then((books) => {
+      var Options={
+        page: '1'
+      }
+      getBookList(Options).then((books) => {
         
         let sbooks= books.books;
-        console.log(sbooks)
         sbooks.sort((a, b) => (a - b))
         // console.log(books);
         for (let bookid of sbooks) {
           getBookDetiles(bookid).then((book) => {
-            console.log(book);
             tableData.push(book);
           });
           
         }
-        console.log(tableData);
       });
     }
     getdata();
+    function addBook(){
+
+    }
+    function setInfo(row){
+      showInfo.value=true;
+      Object.assign(selectRow, row);
+    }
+    function updateInfo(row) {
+      showBook.value=true;
+      Object.assign(selectRow, row);
+    }
+    function InfoSubmit(){
+      showInfo.value=false
+      // TODO：向服务器发送修改图书信息请求
+      axios.post('http://154.8.183.51/manager/newbook',selectRow)
+      .then(()=>{
+        alert("修改成功")
+      })
+      .catch(()=>{
+        alert("修改失败")
+      })
+    }
+    function BookSubmit() {
+      // TODO：向服务器发送修改图书信息请求
+    }
     return {
       tableData,
+      showBook,
+      showInfo,
+      selectRow,
+      addBook,
+      setInfo,
+      updateInfo,
+      InfoSubmit,
+      BookSubmit,
     };
   },
-  components: { ElTable, ElTableColumn, ElButton },
+  components: { ElTable, ElTableColumn, ElButton, ElDialog, ElDescriptions, ElDescriptionsItem, ElInput, ElSwitch },
 };
 </script>
 
@@ -146,15 +199,10 @@ export default {
 }
 .button2 button {
   margin-right: 10px;
+  margin-top: 4px;
   color: rgb(200, 6, 6);
 }
-.button3 button {
-  color: rgb(70, 75, 72);
-}
-.button4 button {
-  margin-right: 10px;
-  color: rgb(120, 90, 189);
-}
+
 .button-big {
   background: linear-gradient(to right, #2ecc71, #3498db);
   border: 5px dotted #2ecc71;

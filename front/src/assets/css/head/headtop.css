@@ -22,7 +22,7 @@
   align-items: center;
 }
 
-.head-top form {
+.head-top .search {
   margin-left: 20px;
 }
 
@@ -41,7 +41,7 @@
   background-color: #d5190fde;
 }
 
-.head-top .search button[type="submit"] {
+.head-top .search button {
   padding: 12px 10px 10px 10px;
   width: 50px;
   background-color: #f56c6c;
