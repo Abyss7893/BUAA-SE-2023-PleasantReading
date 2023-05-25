@@ -18,8 +18,10 @@ BK2PG = 10
 CM2PG = 5
 NT2PG = 5
 
+
 def getPages(pages, num):
     return max((pages + num - 1) // num, 1)
+
 
 def notAnonymous(request):
     if 'Authorization' not in request.headers:
@@ -34,8 +36,10 @@ def notAnonymous(request):
     else:
         return False
 
+
 def getUsername(request):
     return getUserFromToken(request.headers.get('Authorization').split(' ')[1]).username
+
 
 def isVIP(request):
     dt = UserInfo.objects.get(userID=getUsername(request)).VIPDate
@@ -46,6 +50,7 @@ def isVIP(request):
             return True
     else:
         return False
+
 
 def getBookInfo(request, bookid):
     res = BookBasicInfo.objects.filter(bookID=bookid, onShelf=True)
@@ -68,7 +73,7 @@ def getBookInfo(request, bookid):
             'cover': SERVER_URL + book.img.url,
             'favorcnt': book.collections,
             'vip': book.isVIP,
-            'fav': True if favcnt>0 else False,
+            'fav': True if favcnt > 0 else False,
         }
         return JsonResponse(data)
 
@@ -97,18 +102,22 @@ def getBookContent(request, bookid, chapter):
         if book.isVIP:
             if notAnonymous(request):
                 if isVIP(request):
-                    return JsonResponse({"content": content.first().text.split('\n'), "chaptertitle": content.first().title, "marked": is_marked})
+                    return JsonResponse(
+                        {"content": content.first().text.split('\n'), "chaptertitle": content.first().title,
+                         "marked": is_marked})
                 else:
                     return JsonResponse({"message": "vip only"}, status=403)
             else:
                 return JsonResponse({"message": "login please"}, status=401)
         else:
-            return JsonResponse({"content": content.first().text.split('\n'), "chaptertitle": content.first().title, "marked": is_marked})
+            return JsonResponse({"content": content.first().text.split('\n'), "chaptertitle": content.first().title,
+                                 "marked": is_marked})
+
 
 def updateBookmark(request, bookid, chapter):
     if not notAnonymous(request):
         return JsonResponse({'message': 'login please'}, status=401)
-    userid=getUsername(request)
+    userid = getUsername(request)
     mark = Bookmark.objects.filter(bookID=bookid, userID=userid, chapter=chapter)
     if request.method == 'POST':
         if mark.count() > 0:
@@ -170,26 +179,30 @@ def bookFilter(request, perm=True):
             books = books.order_by('-wordsCnt')
         elif method == 'weekpop' or method == 'monthpop' or method == 'yearpop':
             if method == 'weekpop':
-                days=7
+                days = 7
             elif method == 'monthpop':
-                days=30
+                days = 30
             else:
-                days=365
+                days = 365
             stamp = date.today() - timedelta(days=days)
             history_within_month = History.objects.filter(timestamp__gte=stamp, bookID=OuterRef('bookID'))
-            books = books.annotate(num_reads=Subquery(history_within_month.values('bookID').annotate(count=Count('bookID')).values('count'))).order_by('-num_reads')
+            books = books.annotate(num_reads=Subquery(
+                history_within_month.values('bookID').annotate(count=Count('bookID')).values('count'))).order_by(
+                '-num_reads')
     if request.GET.get('page'):
         page = eval(request.GET.get('page'))
-        books = books[(page-1)*BK2PG:page*BK2PG]
+        books = books[(page - 1) * BK2PG:page * BK2PG]
     books = list(books.values_list('bookID', flat=True))
     return JsonResponse({'books': books, 'pages': getPages(num, BK2PG)})
+
 
 def bookSearch(request):
     if request.method != 'GET':
         return JsonResponse({'message': 'invalid request'}, status=400)
     books = BookBasicInfo.objects.filter(onShelf=True)
     if request.GET.get('keyword'):
-        books = books.filter(Q(name__icontains=request.GET.get('keyword')) | Q(author__icontains=request.GET.get('keyword')))
+        books = books.filter(
+            Q(name__icontains=request.GET.get('keyword')) | Q(author__icontains=request.GET.get('keyword')))
         num = books.count()
         if request.GET.get('page'):
             page = eval(request.GET.get('page'))
@@ -199,16 +212,18 @@ def bookSearch(request):
     else:
         return JsonResponse({'message': 'blank content'}, status=400)
 
+
 def getBookNotes(request, bookid, chapter, page):
     if request.method != 'GET':
         return JsonResponse({'message': 'invalid request'}, status=400)
     if not notAnonymous(request):
         return JsonResponse({'notes': [], 'pages': 1})
-    userid=getUsername(request)
+    userid = getUsername(request)
     comments = Comments.objects.filter(bookID=bookid, userID=userid, chapter=chapter, visible=False)
     num = comments.count()
-    comments = comments[(page-1) * NT2PG:page*NT2PG]
+    comments = comments[(page - 1) * NT2PG:page * NT2PG]
     return JsonResponse({'notes': list(comments.values_list('text', flat=True)), 'pages': getPages(num, NT2PG)})
+
 
 def getAllNotes(request):
     if request.method != 'GET':
@@ -224,6 +239,7 @@ def getAllNotes(request):
     notes = notes.values('bookID', 'name', 'chapter', 'text')
     return JsonResponse({'notes': list(notes)})
 
+
 def getComments(request, bookid, chapter, page):
     if request.method != 'GET':
         return JsonResponse({'message': 'invalid request'}, status=400)
@@ -232,24 +248,28 @@ def getComments(request, bookid, chapter, page):
     subquery = UserInfo.objects.filter(userID=OuterRef('userID')).values('nickname', 'img')[:1]
     comments = comments.annotate(
         nickname=Subquery(subquery.values('nickname')),
-        img=Concat(Value(SERVER_URL+'/media/'), Subquery(subquery.values('img')), output_field=CharField())
+        img=Concat(Value(SERVER_URL + '/media/'), Subquery(subquery.values('img')), output_field=CharField())
     )
     comments = comments.values('userID', 'nickname', 'img', 'text', 'timestamp')
     comments = comments[(page - 1) * CM2PG:page * CM2PG]
     return JsonResponse({'comments': list(comments), 'pages': getPages(num, CM2PG)})
 
+
 class FavorBookSerializer(serializers.ModelSerializer):
     bookid = serializers.CharField(source='bookID')
     name = serializers.CharField()
     cover = serializers.ImageField(source='img')
+
     def to_representation(self, instance):
         ret = super().to_representation(instance)
         avatar_url = SERVER_URL + ret['cover']
         ret['cover'] = avatar_url
         return ret
+
     class Meta:
         model = BookBasicInfo
         fields = ['bookid', 'name', 'cover']
+
 
 def getFavor(request):
     if request.method != 'GET':
@@ -263,6 +283,7 @@ def getFavor(request):
     serializer = FavorBookSerializer(books, many=True)
     return JsonResponse({'books': serializer.data})
 
+
 def updateFavor(request, bookid):
     if not notAnonymous(request):
         return JsonResponse({'message': 'login please'}, status=401)
@@ -274,6 +295,7 @@ def updateFavor(request, bookid):
         favs.delete()
     return JsonResponse({'message': 'success'})
 
+
 def submitNotes(request, bookid, chapter):
     if request.method != 'POST':
         return JsonResponse({'message': 'error'}, status=400)
@@ -281,8 +303,10 @@ def submitNotes(request, bookid, chapter):
         return JsonResponse({'message': 'login please'}, status=401)
     data = json.loads(request.body)
     userid = getUsername(request)
-    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=False, timestamp=date.today())
+    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=False,
+                            timestamp=date.today())
     return JsonResponse({'message': 'success'})
+
 
 def submitComments(request, bookid, chapter):
     if request.method != 'POST':
@@ -291,8 +315,10 @@ def submitComments(request, bookid, chapter):
         return JsonResponse({'message': 'login please'}, status=401)
     data = json.loads(request.body)
     userid = getUsername(request)
-    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=True, timestamp=date.today())
+    Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=True,
+                            timestamp=date.today())
     return JsonResponse({'message': 'success'})
+
 
 def getScore(request, bookid):
     if not notAnonymous(request):
@@ -304,6 +330,7 @@ def getScore(request, bookid):
     else:
         return JsonResponse({'message': 'success', 'score': ret.first().score})
 
+
 def putScore(request, bookid, score):
     if not notAnonymous(request):
         return JsonResponse({'message': 'login please'}, status=401)
@@ -314,6 +341,7 @@ def putScore(request, bookid, score):
     Score.objects.create(userID=userid, bookID=bookid, score=eval(score))
     return JsonResponse({'message': 'success'})
 
+
 def getMarks(request):
     if not notAnonymous(request):
         return JsonResponse({'message': 'login please'}, status=401)
@@ -323,6 +351,7 @@ def getMarks(request):
     marks = marks.annotate(name=Subquery(subquery.values('name')))
     marks = marks.values('bookID', 'name', 'chapter')
     return JsonResponse({'marks': list(marks)})
+
 
 def getLastVisit(request):
     if not notAnonymous(request):

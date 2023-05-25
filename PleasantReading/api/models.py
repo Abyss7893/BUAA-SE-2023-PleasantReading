@@ -144,3 +144,9 @@ class History(models.Model):
     bookID = models.IntegerField(null=False)
     chapter = models.IntegerField(null=False)
     timestamp = models.DateField(null=False)
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=128, primary_key=True)
+    img = models.ImageField(upload_to='AuthorImg', verbose_name=u"作者头像", default='AuthorImg/default.jpg')
+    profile = models.TextField(default="这个人很懒，什么都没有留下~")

@@ -28,7 +28,7 @@ def checkManager(request):
 def getAllBooks(request):
     if not checkManager(request):
         return JsonResponse({'message': 'fail', 'error': 'not the login manager'}, status=400)
-    bookFilter(request, perm=False)
+    return bookFilter(request, perm=False)
 
 def managerRegister(request):
     data = json.loads(request.body)
@@ -159,4 +159,38 @@ def uploadChapter(request):
         return JsonResponse({"message": "upload success"})
 
 
+def updateAuthor(request):
+    if not checkManager(request):
+        return JsonResponse({'message': 'fail', 'error': 'not the login manager'}, status=400)
 
+    try:
+        name = request.POST.get('name')
+        image = request.FILES.get('img', None)
+        profile = request.POST.get('brief', None)
+    except:
+        return JsonResponse({"message": "accept data error"}, status=400)
+
+    obj = Author.objects.filter(name=name)
+    flag = True
+    if obj.count() == 0:
+        Author.objects.create(
+            name=name,
+            profile="这个人很懒，什么都没有留下~"
+        )
+        flag = False
+    obj = Author.objects.get(name=name)
+    if image is not None:
+        var = obj.img.name
+        if var != "AuthorImg/default.jpg" and os.path.exists(SERVER_URL + var):
+            os.remove(SERVER_URL + var)
+        image.name = get_random_string(length=8) + ".jpg"
+        obj.img = image
+    if profile:
+        obj.profile = profile
+    obj.save()
+    print("pram = ", profile)
+    print("profile = ", obj.profile)
+    if flag:
+        return JsonResponse({"message": "reload success"})
+    else:
+        return JsonResponse({"message": "upload success"})
