@@ -112,22 +112,37 @@ export default {
       this.categoryItems[titleIndex][index].style.backgroundColor = "#f56c6c";
       this.categoryItems[titleIndex][index].style.color = "white";
 
-      var Option = {
-        category: "null",
-        property: "null",
-        status: "null",
-        wordCount: "null",
-        sort: "null",
-      };
-      console.log(Option);
+      var Option=this.$route.query;
+      // if (!("category" in this.$route.query))
+      //   Option = {
+      //     category: "null",
+      //     property: "null",
+      //     status: "null",
+      //     wordCount: "null",
+      //     sort: "null",
+      //   };
+      // else Option = this.$route.query;
+      if (titleIndex == 1) {
+        if (index === 2) Option["property"] = "完结";
+        if (index === 1) Option["property"] = "连载";
+        if (index === 0) Option["property"] = "null";
+      }
+      if (titleIndex == 2) {
+        if (index === 2) Option["property"] = "VIP";
+        if (index === 1) Option["property"] = "FREE";
+        if (index === 0) Option["property"] = "null";
+      }
 
       if (titleIndex == 3) {
         if (index > 0) Option["wordCount"] = index;
+        else Option["wordCount"] = "null";
       }
-      console.log(titleIndex + ":" + index);
-
-      // this.$router.push({ name: "bookOrder", params: Option });
-      this.$router.push({ path:`/allbook/${Option.category}/${Option.property}/${Option.status}/${Option.wordCount}/${Option.sort}` });
+      // Option["data"] = new Date().getTime();
+      console.log(Option);
+      this.$router.push({ name: "Child", query: Option });
+      // this.$router.push({
+      //   path: `/allbook/${Option.category}/${Option.property}/${Option.status}/${Option.wordCount}/${Option.sort}`,
+      // });
       // 更新 $store 中的 categoriesIndex 值
       this.$store.commit("changeCategoriesIndex", {
         title: titleIndex,
