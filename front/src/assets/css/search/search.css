@@ -155,15 +155,16 @@
 }
 
 .result-list .book-info-right a.book-details {
-  background: #bf2c24;
-  border-color: #bf2c24;
+  background: #ed4259;
+  border-color: #ed4259;
+
   color: #fff;
   margin-right: 24px;
 }
 
 .result-list .book-info-right a.book-details:hover {
-  background: #ed4259;
-  border-color: #ed4259;
+  background: #bf2c24;
+  border-color: #bf2c24;
 }
 
 .result-list .book-info-right a.add-favor {
@@ -175,4 +176,94 @@
   background: #f0f5ff;
   border-color: #2972cc;
   color: #2972cc;
+}
+
+.search-foot {
+  min-height: 25px;
+  padding: 40px 0;
+  border-top: 1px solid #e6e6e6;
+}
+
+.page-control {
+  float: right;
+}
+
+.page-control .arrow,
+.page-control .jump {
+  float: left;
+}
+
+.page-control .arrow div {
+  float: left;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.page-control .arrow a {
+  border: 1px solid #fff;
+  float: left;
+  font: 14px/22px Arial;
+  height: 22px;
+  padding: 0 4px;
+  transition: color .3s, border .3s;
+}
+
+.page-control .arrow a i {
+  margin-top: 4px;
+}
+
+.page-control .arrow .page-num {
+  background: #ed4259;
+  border: 1px solid #ed4259;
+}
+
+.page-control .arrow .page-num a {
+  background: #ed4259;
+  border: 1px solid #ed4259;
+  color: #fff;
+  padding: 0 7px;
+}
+
+.page-control .arrow a:hover {
+  border: 1px solid #ed4259;
+}
+
+.page-control .arrow a i svg path {
+  transition: fill .3s;
+}
+
+.page-control .arrow a:hover i svg path {
+  fill: #ed4259;
+}
+
+.page-control .jump input {
+  outline: none;
+  border: 1px solid #f2f2f2;
+  display: inline-block;
+  font: 12px/22px Arial;
+  height: 22px;
+  margin-right: 10px;
+  text-align: center;
+  vertical-align: middle;
+  width: 40px;
+}
+
+.page-control .jump input:focus {
+  border: 1px solid #bbdaff;
+}
+
+.page-control .jump .go {
+  border: 1px solid #f2f2f2;
+  display: inline-block;
+  font: 12px/22px PingFangSC-Regular, HelveticaNeue-Light, Helvetica Neue Light, Microsoft YaHei, "sans-serif";
+  height: 22px;
+  text-align: center;
+  transition: color .3s, border .3s;
+  vertical-align: middle;
+  width: 34px;
+}
+
+.page-control .jump .go:hover {
+  border: 1px solid #ed4259;
+  color: #ed4259;
 }
