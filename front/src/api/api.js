@@ -178,6 +178,28 @@ function addBookToFavor(bookid) {
     return data;
   });
 }
+function addColection(bookid) {
+  var axios = require('axios');
+  var token = localStorage.getItem("token")
+  var config = {
+    method: 'put',
+    url: 'http://154.8.183.51/book/favor/' + bookid,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  };
+  // console.log(config);
+
+  return axios(config)
+    .then(function () {
+      // console.log(JSON.stringify(response.data));
+      return true;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 export {
   getBookDetiles,
