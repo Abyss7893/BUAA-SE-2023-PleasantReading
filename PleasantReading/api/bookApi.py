@@ -11,7 +11,7 @@ import json
 from datetime import date, datetime, timedelta
 
 from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
-from api.models import UserInfo, BookBasicInfo, Collections, BookContext, Bookmark, Comments, Score, History
+from api.models import UserInfo, BookBasicInfo, Collections, BookContext, Bookmark, Comments, Score, History, Author
 
 SERVER_URL = "http://154.8.183.51"
 BK2PG = 10
@@ -358,3 +358,10 @@ def getRecentHistory(request):
     )
     latest_chapters = latest_chapters.values('name', 'img', 'bookID', 'chapter', 'title')
     return JsonResponse({'list': list(latest_chapters)})
+
+def getAuthor(request, name):
+    res = Author.objects.filter(name=name)
+    works = BookBasicInfo.objects.filter(author=name, onShelf=True).values('bookID', 'name', 'profile', 'img')
+    if res.count() == 0:
+        return JsonResponse({'profile': '暂无有关详细信息', 'img': 'AuthorImg/default.jpg', 'works': list(works)})
+    return {'profile': res.first().profile, 'img': res.first().img, 'works': list(works)}
