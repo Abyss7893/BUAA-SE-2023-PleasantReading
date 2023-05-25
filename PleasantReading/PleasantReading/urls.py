@@ -61,6 +61,7 @@ urlpatterns = [
     path('manager/getcover/<int:bookid>', managerApi.getCover),
     path('manager/uploadchapter', managerApi.uploadChapter),
     path('manager/filter', managerApi.getAllBooks),
+    path('manager/uploadauthor', managerApi.updateAuthor),
 
     path('submit/', userApi.my_view),
     path('gallery/', userApi.image_gallery),
