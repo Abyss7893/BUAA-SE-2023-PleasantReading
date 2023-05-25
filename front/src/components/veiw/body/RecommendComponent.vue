@@ -1,11 +1,16 @@
 <template>
   <div>
     <div class="block-col-2">
-      <el-dropdown @command="handleCommand" style="line-height: 150%;" trigger="click">
+      <el-dropdown
+        @command="handleCommand"
+        style="line-height: 150%"
+        trigger="click"
+      >
         <span class="demonstration">
           {{ cod
           }}<el-icon class="el-icon--right">
-            <arrow-down /><i class="arrow-down"></i></el-icon>
+            <arrow-down /><i class="arrow-down"></i
+          ></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="rank-dropdown-menu">
@@ -17,11 +22,13 @@
             <el-dropdown-item command="3">按字数降序</el-dropdown-item>
             <!-- 按照字数升序 -->
             <el-dropdown-item command="4">按字数升序</el-dropdown-item>
+            <el-dropdown-item command="5">按收藏降序</el-dropdown-item>
+            <el-dropdown-item command="6">按收藏升序</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
     </div>
-    <book-gallery ref="child"></book-gallery>
+    <book-gallery ref="child" :Option="Option"></book-gallery>
   </div>
 </template>
 
@@ -29,6 +36,21 @@
 // import { handleError } from 'vue';
 import BookGallery from "../book/BookGallery.vue";
 export default {
+  props: {
+    Option: {
+      type: Object,
+      default: function () {
+        return {
+          category: "",
+          vip: "",
+          range: "",
+          order: "",
+          status: "",
+          page: "",
+        };
+      },
+    },
+  },
   components: { BookGallery },
   name: "NovelList",
   data() {
@@ -89,12 +111,20 @@ export default {
         this.cod = "按评分升序";
       }
       if (command === "3") {
-        books.sort((a, b) => b.size - a.size);
+        books.sort((a, b) => b.cnt - a.cnt);
         this.cod = "按字数降序";
       }
       if (command === "4") {
-        books.sort((a, b) => a.size - b.size);
+        books.sort((a, b) => a.cnt - b.cnt);
         this.cod = "按字数升序";
+      }
+      if (command === "5") {
+        books.sort((a, b) => b.fav - a.fav);
+        this.cod = "按收藏降序";
+      }
+      if (command === "6") {
+        books.sort((a, b) => a.fav - b.fav);
+        this.cod = "按收藏升序";
       }
     },
     // f() {

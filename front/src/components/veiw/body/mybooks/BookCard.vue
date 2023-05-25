@@ -2,7 +2,14 @@
   <el-card :body-style="{ padding: '0px' }" shadow="hover" @click="gotoRead">
     <img :src="cover" class="image" />
     <div class="title">
-      <span>{{ name }}</span>
+      <el-tooltip
+        class="box-item"
+        effect="dark"
+        :content="name"
+        placement="bottom"
+      >
+        <span>{{ name }}</span>
+      </el-tooltip>
     </div>
   </el-card>
 </template>

@@ -143,7 +143,12 @@
 </template>
 
   <script>
-import { getBookDetiles, getBookContent, addColection } from "@/api/api";
+import {
+  getBookDetiles,
+  getBookContent,
+  addColection,
+  deleteColection,
+} from "@/api/api";
 import HeadAndFoot from "../HeadAndFoot.vue";
 // import getBookContent from
 export default {
@@ -195,13 +200,26 @@ export default {
   },
   methods: {
     collect() {
+      if (!this.$store.state.isLogin) {
+        this.$router.push({ path: "/login" });
+        return;
+      }
       var bookid = this.bookId;
-      addColection(bookid).then((bool) => {
-        console.log(bool);
-        if (bool) {
-          this.isColected = true;
-        }
-      });
+      if (!this.isColected)
+        addColection(bookid).then((bool) => {
+          console.log(bool);
+          if (bool) {
+            this.isColected = true;
+          }
+        });
+      else {
+        deleteColection(bookid).then((bool) => {
+          console.log(bool);
+          if (bool) {
+            this.isColected = false;
+          }
+        });
+      }
     },
     generateChater() {
       // for (let i = 1; i <= 400; i++) {
@@ -248,9 +266,9 @@ export default {
     this.bookId = this.$route.params.id;
     getBookDetiles(this.bookId).then((data) => {
       // console.log(data);
-      this.isColected= data.fav,
+      this.isColected = data.fav;
+      // console.log(data);
       this.detailData = {
-
         cover: data.cover,
         title: data.title,
         author: data.author,

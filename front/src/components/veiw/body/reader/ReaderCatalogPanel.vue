@@ -52,8 +52,8 @@ export default {
       getBookContent(this.$route.params.bookid).then((data) => {
         this.chapters = data.outline;
         this.$nextTick(() => {
-          this.scrollToThisChapter()
           this.chapterVisiableCount = parseInt(this.thisChapter / 20) * 20 + 60;
+          // this.scrollToThisChapter()
         });
       });
     },

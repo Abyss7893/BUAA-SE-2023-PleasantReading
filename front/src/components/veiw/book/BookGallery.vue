@@ -63,54 +63,36 @@ import { getBookDetiles, getBookList } from "@/api/api";
 import BookMiniCard from "./BookMiniCard.vue";
 export default {
   components: { BookMiniCard },
+  props: {
+    Option: {
+      type: Object,
+      default: function () {
+        return {
+          category: "",
+          vip: false,
+          range: "",
+          order: "",
+          status: "",
+          page: "",
+        };
+      },
+    },
+  },
   data() {
     return {
-      books: [
-        // {
-        //   id: 1,
-        //   title: "Book顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶 1",
-        //   cover: require("assets/imgs/bookcv.png"),
-        //   author: "Autdddddddddd顶顶顶顶顶顶顶顶顶顶ddddddddd",
-        //   category: "Categd顶顶",
-        //   summary:
-        //     "Swwdddddddddddddddddddddddddd ddddddddd  ddddddddddd ddd  ddddddd d",
-        //   rating: 4.5,
-        //   size: 1100000,
-        //   sizeString: "",
-        //   status: "连载",
-        //   vip: "VIP",
-        //   simpleSizes: this.getSimpleSize(1100000),
-        // },
-        // {
-        //   id: 2,
-        //   title: "Book 2",
-        //   cover: require("assets/imgs/bookcv.png"),
-        //   author: "Authow",
-        //   category: "Catego",
-        //   vip: "VIP",
-        //   summary:
-        //     "这里是属于斗气的世界，没有花俏艳丽的魔法，有的，仅仅是繁衍到巅峰的斗气！斗者，斗师，大斗师，斗灵，斗王，斗皇，斗宗，斗尊，斗圣，斗帝。",
-        //   rating: 5,
-        //   size: 1100000,
-        //   status: "连载",
-        //   simpleSizes: this.getSimpleSize(1100000),
-        // },
-        // Add more books as needed
-      ],
+      books: [],
       currentPage: 1, // 当前页数
       pageSize: 10,
     };
   },
   created() {
     // this.generateTestData();
-    var defaultOptions = {
-      category: "",
-      vip: "",
-      range: "",
-      order: "",
-      status: "",
-      page: "",
-    };
+    var defaultOptions = this.Option;
+    for (let key in defaultOptions) {
+      // console.log(key, defaultOptions[key]);
+      if (defaultOptions[key] === "null") defaultOptions[key] = "";
+    }
+    // console.log(defaultOptions);
     this.flashData(defaultOptions);
   },
 
@@ -174,6 +156,8 @@ export default {
       getBookList(defaultOptions).then((res1) => {
         booklist = res1.books;
         let i = 0;
+        if (booklist.length < 10)
+          this.books = this.books.slice(0, booklist.length);
         for (let bookid of booklist) {
           getBookDetiles(bookid).then((res) => {
             var data = res;
@@ -182,6 +166,8 @@ export default {
               cover: data.cover,
               title: data.title,
               author: data.author,
+              cnt: data.cnt,
+              fav: data.favorcnt,
               size: this.formatNumber(data.cnt),
               category: data.category,
               rating: parseFloat(data.score).toFixed(1),
@@ -237,7 +223,7 @@ export default {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
       const tmpbook = this.books.slice(startIndex, endIndex);
-      // console.log(tmpbook);
+      // // console.log(tmpbook);
       const rows = [];
       let row = [];
       for (let i = 0; i < tmpbook.length; i++) {

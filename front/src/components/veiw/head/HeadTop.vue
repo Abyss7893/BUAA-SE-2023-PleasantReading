@@ -6,23 +6,18 @@
       <a class="logoa" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt="" /></a>
     </div>
     <div class="dropdown">
-      <form action="" method="get">
-        <div class="search">
-          <input type="text" name="" id="" placeholder="想看什么我这里都有哟~" @focusin="drop" @focusout="hide" />
-          <button type="submit">
-            <el-icon>
-              <Search />
-            </el-icon>
-          </button>
-        </div>
-      </form>
+      <div class="search">
+        <input ref="keywords" type="text" name="" id="" placeholder="想看什么我这里都有哟~" @focusin="drop" @focusout="hide" />
+        <button @click="searchBooks()">
+          <el-icon>
+            <Search />
+          </el-icon>
+        </button>
+      </div>
       <div class="dropdown-content" ref="hidden">
         <div class="first-want">大家都想看</div>
-        <div class="want">重生之我在北航卖西瓜</div>
-        <div class="want">青春北航男童不会梦到清华女学长</div>
-        <div class="want">你还爱我吗</div>
-        <div class="want">占位符1</div>
-        <div class="want">占位符2</div>
+        <div class="want" v-for="(searchHot, idx) in searchHots" :key="idx" @click="searchBooks(searchHot)">{{ searchHot
+        }}</div>
       </div>
     </div>
     <div class="login-register">
@@ -38,7 +33,7 @@
             <template #dropdown>
               <el-dropdown-menu class="personal-dropdown-menu">
 
-                <a href="/user">
+                <a href="/user/info">
                   <el-dropdown-item icon="house">个人中心</el-dropdown-item>
                 </a>
 
@@ -46,7 +41,7 @@
                   <el-dropdown-item icon="memo"
                     >我的书架</el-dropdown-item
                   ></router-link
-                                                        > -->
+                                                                                                            > -->
 
                 <router-link :to="{ name: 'mybook' }">
                   <el-dropdown-item icon="memo">我的书架</el-dropdown-item>
@@ -80,6 +75,11 @@ export default {
     ElDropdownItem,
     ElDropdownMenu,
   },
+  data() {
+    return {
+      searchHots: ["青春北航男童不会梦到清华女学长", "重生之我在北航卖西瓜", "飘飘何所似", "红楼梦", "杨过"],
+    }
+  },
   computed: {
     avatar() {
       return this.$store.state.userAvatar;
@@ -100,6 +100,11 @@ export default {
     signOut() {
       this.$store.commit("signOut")
       this.$router.push('/');
+    },
+    searchBooks(keywords) {
+      if (!keywords)
+        keywords = this.$refs.keywords.value
+      this.$router.push({ path: '/search', query: { "keywords": keywords, page: 1 } })
     },
   },
 };

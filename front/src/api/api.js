@@ -1,3 +1,4 @@
+
 import axios from 'axios'
 // import VueAxios from 'vue-axios'
 var back = "http://154.8.183.51/";
@@ -21,8 +22,8 @@ function getBookDetiles(bookid) {
       // console.log(JSON.stringify(response.data));
       return response.data;
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch(function () {
+      alert("书籍信息不存在！")
     });
 
 }
@@ -201,6 +202,36 @@ function addColection(bookid) {
     });
 }
 
+function getSearchBookIds(keywords, page) {
+  var token = localStorage.getItem("token")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios({
+    method: 'get',
+    url: `http://154.8.183.51/book/search/?keyword=${keywords}&page=${page}`,
+  }).catch(function (data) {
+    return data;
+  });
+}
+function deleteColection(bookid) {
+  var axios = require('axios');
+  var token = localStorage.getItem("token")
+  var config = {
+    method: 'delete',
+    url: `http://154.8.183.51/book/favor/${bookid}`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      'Content-Type': 'application/json'
+    }
+  }
+  return axios(config)
+    .then(function () {
+      return true;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 export {
   getBookDetiles,
   getBookContent,
@@ -211,5 +242,9 @@ export {
   getMyBook,
   deletBookmark, addColection,
   submitBookComment,
-  addBookToFavor
+  addBookToFavor,
+  getSearchBookIds,
+  deleteColection
 }
+// 使用示例
+

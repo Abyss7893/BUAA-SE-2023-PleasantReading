@@ -135,7 +135,7 @@ export default {
     const avatar = computed(() => {
       return store.state.userAvatar
     })
-    router.push({ name: 'info' });
+    // router.push({ name: 'info' });
 
     function signOut() {
       store.commit('signOut');

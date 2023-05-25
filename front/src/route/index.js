@@ -1,19 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginComponent from '../components/page/login/LoginComponent'
-import RegisterComponent from '../components/page/login/RegisterComponent'
-import BookDetail from '../components/veiw/book/BookDetail'
-import PersonalCenter from '../components/page/PersonalCenter'
-import InfoComponent from '../components/page/Personal/InfoComponent'
-import Reader from 'components/page/Reader'
-import MyBookBody from '../components/veiw/body/mybooks/MyBookBody'
-import RankBody from '../components/veiw/rank/RankBody'
-import MyComment from '../components/page/Personal/MyComment'
-// import FantasyComponent from '../components/veiw/content/category/FantasyComponent'
-// import HistoryComponent from '../components/veiw/content/category/HistoryComponent'
-// import MartialComponent from '../components/veiw/content/category/MartialComponent'
-// import CityComponent from '../components/veiw/content/category/CityComponent'
 import Home from 'components/page/Home'
-import AllBook from '../components/veiw/body/AllBook'//import HelloWorld from '../components/page/HelloWolrd'
+const LoginComponent = () => import('../components/page/login/LoginComponent')
+const RegisterComponent = () => import('../components/page/login/RegisterComponent')
+const BookDetail = () => import('../components/veiw/book/BookDetail')
+const PersonalCenter = () => import('../components/page/PersonalCenter')
+const InfoComponent = () => import('../components/page/Personal/InfoComponent')
+const Reader = () => import('components/page/Reader')
+const MyBookBody = () => import('../components/veiw/body/mybooks/MyBookBody')
+const RankBody = () => import('../components/veiw/rank/RankBody')
+const MyComment = () => import('../components/page/Personal/MyComment')
+// const Home = () => import('components/page/Home')
+const AllBook = () => import('../components/veiw/body/AllBook')
+const Search = () => import('../components/page/Search')
 import 'css/home.css'
 const router = createRouter({
   history: createWebHistory(),
@@ -53,6 +51,15 @@ const router = createRouter({
       name: 'reader',
       component: Reader,
     },
+    // {
+    //   path: '/allbook/:category/:property/:status/:wordCount/:sort',
+    //   name: 'bookOrder',
+    //   component: AllBook,
+    //   props: true,
+    //   meta: {
+    //     // 可选的meta数据
+    //   }
+    // },
     {
       path: '/mybook',
       component: MyBookBody,
@@ -67,8 +74,23 @@ const router = createRouter({
       path: '/allbook',
       component: AllBook,
       name: 'allbook',
-    }
+    },
+    {
+      path: '/allbook',
+      name: 'Child',
+      component: AllBook,
+      props: true,
+    },
+    {
+      path: '/search',
+      component: Search,
+      name: 'search',
+    },
 
-  ]
+  ],
+  scrollBehavior() {
+    // 始终滚动到顶部
+    return { top: 0 }
+  },
 })
 export default router
