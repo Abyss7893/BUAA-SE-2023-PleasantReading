@@ -3,55 +3,24 @@
   <div class="head-nav">
     <ul>
       <div class="slider"></div>
-      <li
-        navi-id="1"
-        @mouseover="slideHere"
-        ref="firstli"
-        @mouseout="slideAway"
-        @click="storeNavi"
-      >
+      <li navi-id="1" @mouseover="slideHere" ref="firstli" @mouseout="slideAway" @click="storeNavi">
         <a href="#">首页</a>
       </li>
-      <li
-        navi-id="2"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-      >
+      <li navi-id="2" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
         <a href="#">全部作品</a>
       </li>
-      <li
-        navi-id="3"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-      >
+      <li navi-id="3" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
         <a href="#">作品排行</a>
       </li>
-      <li
-        navi-id="4"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-      >
+      <li navi-id="4" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
         <a href="#">完本作品</a>
       </li>
       <!-- <router-link :to="{ name: 'mybook' }"> -->
-      <li
-        navi-id="5"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-      >
+      <li navi-id="5" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
         <a href="#">我的书架</a>
       </li>
       <!-- </router-link> -->
-      <li
-        navi-id="6"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-      >
+      <li navi-id="6" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
         <a href="#">我的笔记</a>
       </li>
     </ul>
@@ -73,7 +42,7 @@ export default {
   watch: {
     screenWidth: {
       handler: function () {
-        let id = this.$store.state.navigationLoc;
+        let id = this.swithPathToId(this.$route.path)
         this.naviLoccation = document
           .querySelector(`li[navi-id="${id}"]`)
           .getBoundingClientRect();
@@ -89,7 +58,13 @@ export default {
       })();
     };
     this.slider = document.querySelector(".slider");
-    let id = this.$store.state.navigationLoc;
+    let id = this.swithPathToId(this.$route.path)
+
+    if (id == 0) {
+      this.slider.style.display = 'none'
+      this.naviLoccation = null
+      return
+    }
     this.naviLoccation = document
       .querySelector(`li[navi-id="${id}"] a`)
       .getBoundingClientRect();
@@ -98,23 +73,45 @@ export default {
     this.slider.style.left = this.naviLoccation.left + "px";
   },
   methods: {
+    swithPathToId(path) {
+      console.log(path)
+      switch (path) {
+        case '/home':
+        case '/':
+          return 1
+        case '/allbook':
+          return 2
+        case '/rank':
+          return 3
+        case '/mybook':
+          return 5
+        case '/mynote':
+          return 6
+        default:
+          return 0
+      }
+    },
     slideHere(event) {
+      this.slider.style.display = 'block'
       const rect = event.target.getBoundingClientRect();
       this.slider.style.width = rect.width + "px";
       this.slider.style.left = rect.left + "px";
       this.slider.style.height = rect.height + "px";
     },
     slideAway() {
-      this.slider.style.width = this.naviLoccation.width + "px";
-      this.slider.style.left = this.naviLoccation.left + "px";
-      this.slider.style.height = this.naviLoccation.height + "px";
+      if (this.naviLoccation != null) {
+        this.slider.style.width = this.naviLoccation.width + "px";
+        this.slider.style.left = this.naviLoccation.left + "px";
+        this.slider.style.height = this.naviLoccation.height + "px";
+      } else {
+        this.slider.style.display = 'none'
+      }
     },
     storeNavi(event) {
       const id = event.target.parentNode.getAttribute("navi-id");
       this.naviLoccation = document
         .querySelector(`li[navi-id="${id}"]`)
         .getBoundingClientRect();
-      this.$store.commit("changeNaviLoc", id);
       if (id === "1") {
         this.$router.push({ name: "home" });
       }
@@ -124,12 +121,9 @@ export default {
       if (id === "3") {
         this.$router.push({ name: "rank" });
       }
-
       if (id === "5") {
         this.$router.push({ name: "mybook" });
       }
-      // console.log(id);
-      // this.$store.commit("changeNaviLoc", id);
     },
   },
 };
