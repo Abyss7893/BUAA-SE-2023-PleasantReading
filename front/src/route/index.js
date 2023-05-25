@@ -76,6 +76,12 @@ const router = createRouter({
       name: 'allbook',
     },
     {
+      path: '/child',
+      name: 'Child',
+      component: AllBook,
+      props: true,
+    },
+    {
       path: '/search',
       component: Search,
       name: 'search',
