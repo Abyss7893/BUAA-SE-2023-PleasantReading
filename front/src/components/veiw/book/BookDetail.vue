@@ -62,13 +62,25 @@
                   </div>
                 </div>
               </div>
-              <div class="count-item flex-view pointer" @click="collect()">
+              <div
+                v-if="!isColected"
+                class="count-item flex-view pointer"
+                @click="collect()"
+              >
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">收藏</span>
                   </div>
-                  <div class="count-num-box">
-                    <span class="num-text">{{ detailData.collect_count }}</span>
+                </div>
+              </div>
+              <div
+                v-if="isColected"
+                class="count-item flex-view pointer"
+                @click="collect()"
+              >
+                <div class="count-box flex-view">
+                  <div class="count-text-box">
+                    <span class="count-title">已收藏</span>
                   </div>
                 </div>
               </div>
@@ -76,9 +88,6 @@
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">评论</span>
-                  </div>
-                  <div class="count-num-box">
-                    <span class="num-text">{{ detailData.collect_count }}</span>
                   </div>
                 </div>
               </div>
@@ -134,13 +143,14 @@
 </template>
 
   <script>
-import { getBookDetiles, getBookContent } from "@/api/api";
+import { getBookDetiles, getBookContent, addColection } from "@/api/api";
 import HeadAndFoot from "../HeadAndFoot.vue";
 // import getBookContent from
 export default {
   components: { HeadAndFoot },
   data() {
     return {
+      isColected: false,
       Order: true,
       bookId: "",
       detailData: {
@@ -184,6 +194,15 @@ export default {
     },
   },
   methods: {
+    collect() {
+      var bookid = this.bookId;
+      addColection(bookid).then((bool) => {
+        console.log(bool);
+        if (bool) {
+          this.isColected = true;
+        }
+      });
+    },
     generateChater() {
       // for (let i = 1; i <= 400; i++) {
       //   i;
@@ -214,22 +233,24 @@ export default {
         return number.toString();
       }
     },
-    gotoRead(){
+    gotoRead() {
       this.$router.push({
-              path: "/reader/"+this.bookId+'/1',
-            });
+        path: "/reader/" + this.bookId + "/1",
+      });
     },
-    gotoReadChapter(chapterId){
+    gotoReadChapter(chapterId) {
       this.$router.push({
-              path: "/reader/"+this.bookId+'/'+chapterId,
-            });
-    }
+        path: "/reader/" + this.bookId + "/" + chapterId,
+      });
+    },
   },
   created() {
     this.bookId = this.$route.params.id;
     getBookDetiles(this.bookId).then((data) => {
-      console.log(data);
+      // console.log(data);
+      this.isColected= data.fav,
       this.detailData = {
+
         cover: data.cover,
         title: data.title,
         author: data.author,
@@ -367,7 +388,7 @@ export default {
 
     img {
       width: 158px;
-      height:  211px;
+      height: 211px;
       display: block;
       margin: 0 auto;
       border: 1px solid #eee;

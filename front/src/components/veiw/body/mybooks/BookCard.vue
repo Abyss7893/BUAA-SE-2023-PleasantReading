@@ -1,5 +1,5 @@
 <template>
-  <el-card :body-style="{ padding: '0px' }" shadow="hover">
+  <el-card :body-style="{ padding: '0px' }" shadow="hover" @click="gotoRead">
     <img :src="cover" class="image" />
     <div class="title">
       <span>{{ name }}</span>
@@ -13,6 +13,15 @@ export default {
   props: {
     cover: String,
     name: String,
+    bookid: String,
+  },
+  methods: {
+    gotoRead() {
+      console.log("gotoRead" + this.bookid);
+      this.$router.push({
+        path: "/reader/" + this.bookid + "/1",
+      });
+    },
   },
 };
 </script>
@@ -29,6 +38,8 @@ export default {
   width: 100%;
   display: block;
   border-radius: 15px 15px 0 0;
+  min-height: 170px;
+  max-height: 170px;
   /* max-height: 207px; */
   overflow: hidden;
 
