@@ -116,6 +116,7 @@ class Comments(models.Model):
     bookID = models.IntegerField(null=False)
     chapter = models.IntegerField(null=False)
     text = models.TextField(null=False)
+    timestamp = models.DateField(default='2023-05-24', null=False)
     visible = models.BooleanField(default=True)
 
     class Meta:
@@ -143,3 +144,8 @@ class History(models.Model):
     bookID = models.IntegerField(null=False)
     chapter = models.IntegerField(null=False)
     timestamp = models.DateField(null=False)
+
+class Author(models.Model):
+    name = models.CharField(max_length=128, primary_key=True)
+    img = models.ImageField(upload_to='AuthorImg', verbose_name=u"作者头像", default='AuthorImg/default.jpg')
+    profile = models.TextField(default="这个人很懒，什么都没有留下~")

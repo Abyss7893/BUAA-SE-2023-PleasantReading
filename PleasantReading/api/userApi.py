@@ -7,13 +7,16 @@ from rest_framework_simplejwt.tokens import RefreshToken
 import json
 import os
 import platform
+import datetime
 from django.shortcuts import render
 from django.template import loader
 from django.core.mail import EmailMessage
+from django.utils.crypto import get_random_string
+
 
 from PleasantReading.settings import EMAIL_HOST_USER
 from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
-from api.models import UserInfo
+from api.models import *
 
 TOKEN = True
 
@@ -147,6 +150,9 @@ def login(request):
     data = json.loads(request.body)
     username = data.get('id')
     password = data.get('pwd')
+    obj = Manager.objects.filter(userID=username)
+    if obj.count() != 0:
+        return JsonResponse({'message': 'fail', 'error': 'do not use manager!!'}, status=400)
     user = authenticate(request, username=username, password=password)
     if user is not None:
         refresh = RefreshToken.for_user(user)
@@ -194,7 +200,7 @@ def setAvatar(request):
     var = obj.img.name
     if var != "UserImg/user_img.jpg" and os.path.exists(SERVER_URL + var):
         os.remove(SERVER_URL + var)
-    image.name = ID + ".jpg"
+    image.name = get_random_string(length=8) + ".jpg"
     obj.img = image
     obj.save()
     obj = UserInfo.objects.get(userID=ID)
