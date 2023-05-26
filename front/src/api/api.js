@@ -223,6 +223,31 @@ function submitRating(bookid, rate) {
     })
     .catch(function (error) {
       console.log(error);
+
+    });
+}
+function getMyRating(bookid) {
+  var axios = require('axios');
+  var token = localStorage.getItem("token");
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  var config = {
+    method: 'get',
+    url: 'http://154.8.183.51/book/score/' + bookid,
+
+    headers: {
+      // 'Authorization': 'Bearer {{ACCESS_TOKEN}}',
+
+      'Content-Type': 'application/json'
+    }
+  };
+
+  return axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      return response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
     });
 }
 function getSearchBookIds(keywords, page) {
@@ -267,7 +292,7 @@ export {
   submitBookComment,
   addBookToFavor,
   getSearchBookIds,
-  deleteColection, submitRating,
+  deleteColection, submitRating, getMyRating
 }
 // 使用示例
 

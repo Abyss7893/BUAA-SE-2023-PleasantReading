@@ -188,6 +188,7 @@ import {
   getBookContent,
   addColection,
   deleteColection,
+  getMyRating
 } from "@/api/api";
 import HeadAndFoot from "../HeadAndFoot.vue";
 // import getBookContent from
@@ -285,6 +286,12 @@ export default {
     comment() {
       this.isContent = !this.isContent;
     },
+    initRating() {
+      getMyRating(this.bookId).then((rating) => {
+        if(rating.message=== "success")
+        this.valueRate=parseFloat(rating.score);
+      });
+    },
     formatNumber(number) {
       if (number >= 100000) {
         const formattedNumber = (number / 10000).toFixed(1);
@@ -309,6 +316,7 @@ export default {
   },
   created() {
     this.bookId = this.$route.params.id;
+    this.initRating();
     getBookDetiles(this.bookId).then((data) => {
       // console.log(data);
       this.isColected = data.fav;
