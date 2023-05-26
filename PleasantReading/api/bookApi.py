@@ -336,11 +336,22 @@ def getScore(request, bookid):
 def putScore(request, bookid, score):
     if not notAnonymous(request):
         return JsonResponse({'message': 'login please'}, status=401)
+    if BookBasicInfo.objects.filter(bookID=bookid).count() == 0:
+        return JsonResponse({'message': 'bookid error'}, status=400)
+    score = eval(score)
     userid = getUsername(request)
     ret = Score.objects.filter(userID=userid, bookID=bookid)
     if ret.count() > 0:
-        return JsonResponse({'message': 'score exist'}, status=400)
-    Score.objects.create(userID=userid, bookID=bookid, score=eval(score))
+        book = BookBasicInfo.objects.get(bookID=bookid)
+        book.totScore += score - ret.first().score
+        book.save()
+        print(ret.first().score)
+        record = ret.first()
+        record.score = score
+        record.save()
+        print(ret.first().score, score)
+    else:
+        Score.objects.create(userID=userid, bookID=bookid, score=eval(score))
     return JsonResponse({'message': 'success'})
 
 
