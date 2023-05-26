@@ -84,12 +84,49 @@
                   </div>
                 </div>
               </div>
-              <div class="count-item flex-view pointer" @click="comment()">
+              <!-- <div class="count-item flex-view pointer" @click="comment()">
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">评论</span>
                   </div>
                 </div>
+              </div> -->
+              <div
+                class="count-item flex-view pointer"
+                @click="showRate = !showRate"
+              >
+                <div class="count-box flex-view">
+                  <div class="count-text-box">
+                    <span class="count-title">评分</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                v-if="showRate"
+                class="translators flex-view"
+                style="flex-direction: column"
+              >
+                <!-- <span class="rate-text">评分：</span> -->
+                <!-- <span class="name rate-text">{{ detailData.rating }}</span> -->
+                <div class="rate-loyar">
+                  <el-rate
+                    v-model="valueRate"
+                    allow-half
+                    style="--el-rate-fill-color: #ff7d7dc9"
+                    :texts="['shit', '厕纸', '一般', '好好好', '神中神']"
+                    show-text
+                  ></el-rate>
+                </div>
+                <div>
+                  <el-button
+                    type="danger"
+                    plain
+                    size="small"
+                    @click="submitRate"
+                    >提交</el-button
+                  >
+                </div>
+                <!-- <span class="name">{{ detailData.size }}</span> -->
               </div>
             </div>
           </div>
@@ -142,7 +179,10 @@
   </head-and-foot>
 </template>
 
+
   <script>
+import { ref } from "vue";
+import { submitRating } from "@/api/api";
 import {
   getBookDetiles,
   getBookContent,
@@ -155,7 +195,9 @@ export default {
   components: { HeadAndFoot },
   data() {
     return {
+      valueRate: ref(),
       isColected: false,
+      showRate: false,
       Order: true,
       bookId: "",
       detailData: {
@@ -220,6 +262,9 @@ export default {
           }
         });
       }
+    },
+    submitRate() {
+      submitRating(this.bookId, this.valueRate);
     },
     generateChater() {
       // for (let i = 1; i <= 400; i++) {

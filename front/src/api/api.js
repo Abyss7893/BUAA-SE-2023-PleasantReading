@@ -202,6 +202,29 @@ function addColection(bookid) {
     });
 }
 
+
+function submitRating(bookid, rate) {
+  var token = localStorage.getItem("token")
+  var axios = require('axios');
+
+  var config = {
+    method: 'post',
+    url: `http://154.8.183.51/book/score/${bookid}/${rate}`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      'Content-Type': 'application/json'
+    }
+  };
+
+  return axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 function getSearchBookIds(keywords, page) {
   var token = localStorage.getItem("token")
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -244,7 +267,7 @@ export {
   submitBookComment,
   addBookToFavor,
   getSearchBookIds,
-  deleteColection
+  deleteColection, submitRating,
 }
 // 使用示例
 
