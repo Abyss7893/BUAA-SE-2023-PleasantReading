@@ -26,7 +26,7 @@ export default {
     gotoRead() {
       console.log("gotoRead" + this.bookid);
       this.$router.push({
-        path: "/reader/" + this.bookid + "/1",
+        path: "/book/" + this.bookid ,
       });
     },
   },

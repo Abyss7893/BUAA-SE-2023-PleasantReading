@@ -106,8 +106,14 @@ export default {
 
   /* background-color: #3627076b; */
   padding: 10px;
-  border-radius: 4px;
+  border-radius: 20px;
   text-align: left;
+  transition: 0.2s;
+  /* background-color: rgba(2, 1, 4, 0); */
+}
+.book-item:hover {
+  border: solid rgba(255, 0, 0, 0.21) 1px;
+  background-color: rgba(216, 138, 145, 0.068);
 }
 
 .book-info {
@@ -146,12 +152,14 @@ export default {
   transition-duration: 0.5s;
   transition-timing-function: ease;
   transition-delay: 0s;
-  border-radius: 4%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 7%;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
+
   /* z-index: 10; */
 }
 .book-img-box img:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .book-mid-info {
