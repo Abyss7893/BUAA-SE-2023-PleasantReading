@@ -113,6 +113,36 @@ def newBook(request):
         return JsonResponse({'message': 'update status success'})
 
 
+def newBook2(request):
+    if not checkManager(request):
+        return JsonResponse({'message': 'fail', 'error': 'not the login manager'}, status=400)
+
+    data = json.loads(request.body)
+    name = data.get('title')
+    author = data.get('author')
+    status = data.get('status')
+    category = data.get('category')
+    profile = data.get('brief')
+    isVIP = data.get('vip')
+    onShelf = data.get('onshelf')
+    if name is None:
+        return JsonResponse({"message": "fail", "error": "name is None"}, status=400)
+    if category is None:
+        return JsonResponse({"message": "fail", "error": "category is None"}, status=400)
+    if profile is None:
+        return JsonResponse({"message": "fail", "error": "brief is None"}, status=400)
+    BookBasicInfo.objects.create(
+        name=name,
+        author=author if author is not None else '匿名',
+        status=status if status is not None else "连载",
+        category=category,
+        profile=profile,
+        isVIP=isVIP if isVIP is not None else False,
+        onShelf=onShelf if onShelf is not None else True,
+        collections=0
+    )
+    return JsonResponse({'message': 'create success'})
+
 def setBookCover(request):
     if not checkManager(request):
         return JsonResponse({'message': 'fail', 'error': 'not the login manager'}, status=400)
