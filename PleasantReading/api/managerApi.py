@@ -16,6 +16,8 @@ from api.bookApi import bookFilter
 SERVER_URL= "http://154.8.183.51"
 
 def checkManager(request):
+    if 'Authorization' not in request.headers:
+        return False
     accessToken = request.headers.get('Authorization').split(' ')[1]
     decodedToken = validateAccessToken(accessToken)
     if decodedToken is None:

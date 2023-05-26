@@ -150,6 +150,9 @@ def login(request):
     data = json.loads(request.body)
     username = data.get('id')
     password = data.get('pwd')
+    obj = Manager.objects.filter(userID=username)
+    if obj.count() != 0:
+        return JsonResponse({'message': 'fail', 'error': 'do not use manager!!'}, status=400)
     user = authenticate(request, username=username, password=password)
     if user is not None:
         refresh = RefreshToken.for_user(user)
