@@ -2,7 +2,28 @@ import axios from 'axios'
 // import VueAxios from 'vue-axios'
 var back = "http://154.8.183.51/";
 
+function submitRating(bookid, rate) {
+  var token = localStorage.getItem("token")
+  var axios = require('axios');
 
+  var config = {
+    method: 'post',
+    url: `http://154.8.183.51/book/score/${bookid}/${rate}`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      'Content-Type': 'application/json'
+    }
+  };
+
+  return axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
 
 function getBookDetiles(bookid) {
   var axios = require('axios');
@@ -86,11 +107,11 @@ function getBookList(options) {
   return axios(config)
     .then(function (response) {
       // console.log(response.data);
-      console.log("请求books成功",response.data)
+      console.log("请求books成功", response.data)
       return response.data;
     })
     .catch(function (error) {
-      console.log("fail",error)
+      console.log("fail", error)
       throw error;
     });
 }
@@ -164,5 +185,5 @@ function deletBookmark(bookid, chapter) {
 
 
 export {
-  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments, addBookmark, getMyBook, deletBookmark
+  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments, addBookmark, getMyBook, deletBookmark, submitRating
 }

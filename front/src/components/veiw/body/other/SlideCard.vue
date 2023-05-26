@@ -171,34 +171,34 @@ export default {
           cover: require("../../../../assets/imgs/bookcv.png"),
           // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573056788040&di=dbf1954ad8ba1bee16afd9f47d763512&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201704%2F24%2F20170424202013_hveir.jpeg",
         },
-        // {
-        //   id: "狂鼠9",
-        //   index: 8,
-        //   dindex: 8,
-        //   cover: require("../../../../assets/imgs/bookcv.png"),
-        //   // "http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=ea29fa95c13d70cf4cfaa80dc8e7a03d/42166d224f4a20a4d334946b98529822720ed070.jpg",
-        // },
-        // {
-        //   id: "死神 10",
-        //   index: 9,
-        //   dindex: 9,
-        //   cover: require("../../../../assets/imgs/bookcv.png"),
-        //   // "http://www.agri35.com/UploadFiles/img_2_4163694432_214245738_26.jpg",
-        // },
-        // {
-        //   id: "禅雅塔 11",
-        //   index: 10,
-        //   dindex: 10,
-        //   cover: require("../../../../assets/imgs/bookcv.png"),
-        //   // "http://pic2.zhimg.com/v2-1c9b73f260ea2652dcdedfc782fde90d_b.jpg",
-        // },
-        // {
-        //   id: "黑百合 12",
-        //   index: 11,
-        //   dindex: 11,
-        //   cover: require("../../../../assets/imgs/bookcv.png"),
-        //   // "http://b-ssl.duitang.com/uploads/item/201710/14/20171014134122_KmPQy.jpeg",
-        // },
+        {
+          id: "狂鼠9",
+          index: 8,
+          dindex: 8,
+          cover: require("../../../../assets/imgs/bookcv.png"),
+          // "http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=ea29fa95c13d70cf4cfaa80dc8e7a03d/42166d224f4a20a4d334946b98529822720ed070.jpg",
+        },
+        {
+          id: "死神 10",
+          index: 9,
+          dindex: 9,
+          cover: require("../../../../assets/imgs/bookcv.png"),
+          // "http://www.agri35.com/UploadFiles/img_2_4163694432_214245738_26.jpg",
+        },
+        {
+          id: "禅雅塔 11",
+          index: 10,
+          dindex: 10,
+          cover: require("../../../../assets/imgs/bookcv.png"),
+          // "http://pic2.zhimg.com/v2-1c9b73f260ea2652dcdedfc782fde90d_b.jpg",
+        },
+        {
+          id: "黑百合 12",
+          index: 11,
+          dindex: 11,
+          cover: require("../../../../assets/imgs/bookcv.png"),
+          // "http://b-ssl.duitang.com/uploads/item/201710/14/20171014134122_KmPQy.jpeg",
+        },
       ],
       data: [],
       previous: 0,
@@ -451,21 +451,22 @@ export default {
     // 点击
     chooseItem(item) {
       let cycles = item.index;
+      console.log("this :" + cycles);
       if (cycles == 0 || cycles == 6) return;
       if (this.mode == 3) {
-        console.log("this :" + cycles);
         if (cycles == 1 || cycles == 5) return;
       }
       if (this.mode == 1) {
         if (cycles == 1 || cycles == 5 || cycles == 2 || cycles == 4) return;
       }
-      // console.log(item);
+      console.log(item);
       // let halfindex=0;
       // if(this.mode == 7) halfindex = 3;
       // else if(this.mode == 5) halfindex = 2;
       // else if(this.mode == 3) halfindex = 1;
 
-      // if (item.opacity == 0) return;
+      if (item.opacity == 0) return;
+
       if (item.index < 3) {
         for (let i = 0; i < 3 - cycles; i++) {
           console.log(item.index);
@@ -559,6 +560,7 @@ export default {
 
         this.imgs.push(this.data[i]);
       }
+      this.imgs = this.imgs.slice(0, 7);
       for (let i = 0; i < 3; i++) this.prev();
       // console.log(this.imgs);
 
