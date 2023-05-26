@@ -50,7 +50,19 @@ def managerLogin(request):
     ID = data.get('id')
     if Manager.objects.filter(userID=ID).count() == 0:
         return JsonResponse({'message': 'fail', 'error': 'not manager'}, status=400)
-    login(request)
+    password = data.get('pwd')
+    user = authenticate(request, username=ID, password=password)
+    if user is not None:
+        refresh = RefreshToken.for_user(user)
+        accessToken = refresh.access_token
+        responseData = {
+            'refresh': str(refresh),
+            'access': str(accessToken),
+            'message': 'success'
+        }
+        return JsonResponse(responseData, status=200)
+    else:
+        return JsonResponse({'message': 'fail'}, status=400)
 
 def newBook(request):
     if not checkManager(request):
@@ -62,7 +74,7 @@ def newBook(request):
     status = data.get('status')
     category = data.get('category')
     profile = data.get('brief')
-    isVIP = data.get('isVIP')
+    isVIP = data.get('vip')
     onShelf = data.get('onshelf')
     if name is None:
         return JsonResponse({"message": "fail", "error": "name is None"}, status=400)

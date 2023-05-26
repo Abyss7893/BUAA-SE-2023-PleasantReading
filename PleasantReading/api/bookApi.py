@@ -76,6 +76,7 @@ def getBookInfo(request, bookid):
             'favorcnt': book.collections,
             'vip': book.isVIP,
             'fav': True if favcnt > 0 else False,
+            'onShelf': 'true' if book.onShelf else 'false'
         }
         return JsonResponse(data)
 

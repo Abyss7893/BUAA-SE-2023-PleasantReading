@@ -16,7 +16,7 @@ from django.utils.crypto import get_random_string
 
 from PleasantReading.settings import EMAIL_HOST_USER
 from api.admin import validateAccessToken, sendVerificationEmail, getUserFromToken
-from api.models import UserInfo
+from api.models import *
 
 TOKEN = True
 
