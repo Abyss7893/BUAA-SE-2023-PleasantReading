@@ -200,6 +200,10 @@ export default {
   },
   methods: {
     collect() {
+      if (!this.$store.state.isLogin) {
+        this.$router.push({ path: "/login" });
+        return;
+      }
       var bookid = this.bookId;
       if (!this.isColected)
         addColection(bookid).then((bool) => {
@@ -212,7 +216,7 @@ export default {
         deleteColection(bookid).then((bool) => {
           console.log(bool);
           if (bool) {
-            this.isColected = true;
+            this.isColected = false;
           }
         });
       }
@@ -259,22 +263,22 @@ export default {
     },
   },
   created() {
-    
     this.bookId = this.$route.params.id;
     getBookDetiles(this.bookId).then((data) => {
       // console.log(data);
-      (this.isColected = data.fav),
-        (this.detailData = {
-          cover: data.cover,
-          title: data.title,
-          author: data.author,
-          size: this.formatNumber(data.cnt),
-          category: data.category,
-          rating: parseFloat(data.score).toFixed(1),
-          intro: data.brief,
-          vip: data.vip ? "VIP" : "免费",
-          status: data.status,
-        });
+      this.isColected = data.fav;
+      // console.log(data);
+      this.detailData = {
+        cover: data.cover,
+        title: data.title,
+        author: data.author,
+        size: this.formatNumber(data.cnt),
+        category: data.category,
+        rating: parseFloat(data.score).toFixed(1),
+        intro: data.brief,
+        vip: data.vip ? "VIP" : "免费",
+        status: data.status,
+      };
       if (data.cnt > 1000000) this.detailData.simpleSizes = "长篇";
       else if (data.cnt > 200000) this.detailData.simpleSizes = "中篇";
       else this.detailData.simpleSizes = "短篇";

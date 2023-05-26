@@ -74,7 +74,10 @@
 .book-item {
   width: 150px;
   text-align: center;
+  border-radius: 20px;
+
 }
+
 
 .book-item img {
   width: 100%;

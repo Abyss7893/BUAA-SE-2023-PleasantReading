@@ -11,18 +11,17 @@
     >
       <img src="../../../assets/logo-yixinyuedu.png" class="start-image" />
       <div style="height: 15%">
-        <div class="content">
-          <h1 class="quote">
-            {{ "你好，" + username }}
-            <p class="startquote">{{ typewriter }}</p>
-          </h1>
+        <div class="hello-user">
+          <div class="content">
+            <h1 class="quote">
+              {{ "你好，" + username }}
+              <p class="startquote">{{ typewriter }}</p>
+            </h1>
+          </div>
         </div>
       </div>
-      <div v-if="this.$store.state.isLogin" style="max-height: 300px">
-        <h1 class="quote" style="text-align: center" v-if="showLastRead">
-          最近阅读
-        </h1>
-        <slide-card > </slide-card>
+      <div v-if="this.$store.state.isLogin " style="max-height: 300px">
+        <slide-card> </slide-card>
       </div>
       <button
         v-if="this.$store.state.isLogin"
@@ -191,7 +190,18 @@ export default {
   /* backdrop-filter: blur(2px); */
   text-align: center;
 }
+.hello-user{
 
+  min-height: 148px;
+  min-width: 720px;
+  transition: all 0.5s;
+  border-radius: 10px;
+}
+.hello-user:hover{
+  border: solid rgba(212, 184, 6, 0.164) 1px;
+  backdrop-filter: blur(3px) invert(10%);
+  
+}
 .quote {
   font-size: 24px;
   color: #fff;

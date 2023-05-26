@@ -117,7 +117,12 @@ export default{
             },
           }
         )
-        .then(() => {
+        .then((response) => {
+          const token = response.data.access;
+          // 将令牌存储在本地存储中
+          localStorage.setItem("token", token);
+          // 更新默认请求头中的令牌
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
           alert("登陆成功")
           router.push('/manage')
         })

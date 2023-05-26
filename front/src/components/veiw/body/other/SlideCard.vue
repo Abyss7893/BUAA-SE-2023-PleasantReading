@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1 class="quote" style="text-align: center">最近阅读</h1>
     <div>
       <transition name="fade">
         <div
@@ -27,40 +28,61 @@
             }"
             class="card-control"
           >
-            <img :src="item.cover" class="card-img" />
-            <p
-              v-if="showInfo && config5[index].id === 'center'"
-              style="
-                /* position: absolute; */
-                /* color: rgba(126, 84, 84, 0.582); */
-                color: rgb(202, 197, 197) !important;
-                /* left: 10%; */
-                text-align: center;
-                margin: 3px;
-                /* bottom: 50px; */
-                z-index: 3 !important;
-              "
-              class="content-effect"
-            >
-              {{ item.id }}
-            </p>
-
-            <p
-              v-if="showInfo && config5[index].id === 'center'"
-              style="
-                /* position: absolute; */
-                bottom: 30px;
-                /* margin-left: 10px; */
-                left: 10%;
-                color: rgb(216, 212, 203);
-                text-align: center;
-                font-family: kaiti;
-                margin: 3px;
-                z-index: 3 !important;
-              "
-            >
-              第114514章节
-            </p>
+            <img
+              :src="item.cover"
+              class="card-img"
+              style="z-index: 4 !important"
+            />
+            <!-- <div class="wordblock"
+            style="z-index: 9999;"> -->
+            <el-collapse-transition>
+              <a href="#">
+                <p
+                  v-if="config5[index].id === 'center'"
+                  style="
+                    /* position: absolute; */
+                    /* color: rgba(126, 84, 84, 0.582); */
+                    color: rgba(202, 197, 197, 0);
+                    /* left: 10%; */
+                    text-align: center;
+                    margin: 3px;
+                    bottom: 50px;
+                    transition: ease-in-out 0.2s;
+                    z-index: 3 !important;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                  "
+                  class="content-effect"
+                >
+                  {{ item.id }}
+                </p>
+              </a>
+            </el-collapse-transition>
+            <el-collapse-transition>
+              <a href="#">
+                <p
+                  v-if="config5[index].id === 'center'"
+                  style="
+                    /* position: absolute; */
+                    bottom: 30px;
+                    /* margin-left: 10px; */
+                    left: 10%;
+                    color: rgba(216, 212, 203, 0);
+                    text-align: center;
+                    font-family: kaiti;
+                    margin: 3px;
+                    transition: 0.2s;
+                    z-index: 3 !important;
+                  "
+                  class="content-effect"
+                >
+                  第114514章节
+                </p>
+              </a>
+            </el-collapse-transition>
+            <!-- </div> -->
             <span>{{ item.dindex }}</span>
           </div>
         </div>
@@ -84,6 +106,7 @@ export default {
   //   name: "zt",
   data() {
     return {
+      showLastRead: true,
       showInfo: false,
       loading: true,
       currentIndex: 3, //当前中间imgs数组中index
@@ -273,7 +296,8 @@ export default {
   methods: {
     touchcenter(bool) {
       if (bool) {
-        this.showInfo = true;
+        this.showLastRead = false;
+
         for (let cfg of this.config5) {
           if (cfg.id === "center") cfg.left = "50%";
           else if (cfg.id === "-A") {
@@ -288,8 +312,10 @@ export default {
             cfg.opacity = this.mode == 7 ? 1 : 0;
           }
         }
+
         this.$emit("showLastRead");
       }
+
       // var ccfg;
       // for (let cfg of this.config5) {
       //   if (cfg.id === "center") ccfg = cfg;
@@ -303,6 +329,7 @@ export default {
     },
     leavecenter(bool) {
       if (bool) {
+        this.showLastRead = true;
         this.showInfo = false;
         for (let cfg of this.config5) {
           if (cfg.id === "center") cfg.left = "50%";
@@ -318,6 +345,7 @@ export default {
             cfg.opacity = 0;
           }
         }
+
         this.$emit("showLastRead");
       }
     },
@@ -556,6 +584,7 @@ export default {
     <style lang="less" scoped>
 .card-control {
   .card-img {
+    // display:inline-block;
     width: 150px;
     height: 208px;
     max-width: 150px;
@@ -608,7 +637,7 @@ export default {
 
   .content-effect {
     // transition: all 0.5s;
-    color: black;
+    color: rgb(202, 197, 197) !important;
   }
 }
 .card-item {
@@ -649,6 +678,14 @@ export default {
   div {
     opacity: 0;
   }
+}
+.quote {
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 20px;
+  max-height: 100px;
+  text-shadow: 1px 1px #0000004d;
+  // transition: 0.5s;
 }
 </style>
     
