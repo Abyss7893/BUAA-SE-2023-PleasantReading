@@ -407,4 +407,4 @@ def getAuthor(request, name):
     works = BookBasicInfo.objects.filter(author=name, onShelf=True).values('bookID', 'name', 'profile', 'img')
     if res.count() == 0:
         return JsonResponse({'profile': '暂无有关详细信息', 'img': 'AuthorImg/default.jpg', 'works': list(works)})
-    return {'profile': res.first().profile, 'img': res.first().img, 'works': list(works)}
+    return JsonResponse({'profile': res.first().profile, 'img': res.first().img, 'works': list(works)})
