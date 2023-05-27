@@ -210,7 +210,7 @@ def updateAuthor(request):
     try:
         name = request.POST.get('name')
         image = request.FILES.get('img', None)
-        profile = request.POST.get('brief', None)
+        profile = request.POST.get('profile', None)
     except:
         return JsonResponse({"message": "accept data error"}, status=400)
 
