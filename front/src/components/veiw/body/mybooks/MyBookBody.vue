@@ -5,23 +5,39 @@
     <div class="box-center">
       <el-divider />
       <div v-if="mybooks.length === 0">
-        <el-empty description="暂无书籍" :image="require('assets/imgs/book_null.png')" image-size="300px" />
+        <el-empty
+          description="暂无书籍"
+          :image="require('assets/imgs/book_null.png')"
+          image-size="300px"
+        />
       </div>
       <div v-else>
         <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
-          <el-col v-for="o in colsize" :key="(ro - 1) * colsize + o - 1" :span="24 / colsize">
-            <book-card :cover="mybooks[(ro - 1) * colsize + o - 1].cover" :name="mybooks[(ro - 1) * colsize + o - 1].name"
-              :bookid="mybooks[(ro - 1) * colsize + o - 1].bookid"></book-card>
+          <el-col
+            v-for="o in colsize"
+            :key="(ro - 1) * colsize + o - 1"
+            :span="24 / colsize"
+          >
+            <book-card
+              :cover="mybooks[(ro - 1) * colsize + o - 1].cover"
+              :name="mybooks[(ro - 1) * colsize + o - 1].name"
+              :bookid="mybooks[(ro - 1) * colsize + o - 1].bookid"
+            ></book-card>
           </el-col>
           <el-divider />
         </el-row>
         <div v-if="mybooks.length - (rownum - 1) * colsize > 0">
           <el-row gutter="60">
-            <el-col v-for="o in mybooks.length - (rownum - 1) * colsize" :key="(rownum - 1) * colsize + o - 1"
-              :span="24 / colsize">
-              <book-card :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
+            <el-col
+              v-for="o in mybooks.length - (rownum - 1) * colsize"
+              :key="(rownum - 1) * colsize + o - 1"
+              :span="24 / colsize"
+            >
+              <book-card
+                :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
                 :name="mybooks[(rownum - 1) * colsize + o - 1].name"
-                :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid" />
+                :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid"
+              />
             </el-col>
             <el-divider />
           </el-row>
@@ -60,14 +76,19 @@ export default {
     this.$nextTick(() => {
       getMyBook().then((data) => {
         // // console.log(data);
-        for (let book of data.books) {
-          this.mybooks.push({
-            name: book.name,
-            cover: book.cover,
-            bookid: book.bookid,
-          });
+        try {
+          if ("books" in data)
+            for (let book of data.books) {
+              this.mybooks.push({
+                name: book.name,
+                cover: book.cover,
+                bookid: book.bookid,
+              });
+            }
+          this.rownum = Math.ceil(this.mybooks.length / this.colsize);
+        } catch (e) {
+          console.log(e);
         }
-        this.rownum = Math.ceil(this.mybooks.length / this.colsize);
         // // console.log(this.mybooks);
       });
     });
