@@ -113,11 +113,8 @@ function getBookList(options) {
       'Content-Type': 'application/json'
     }
   };
-  console.log(config)
   return axios(config)
     .then(function (response) {
-      // console.log(response.data);
-      console.log("请求books成功", response.data)
       return response.data;
     })
     .catch(function (error) {
