@@ -1,7 +1,11 @@
 <template>
   <div class="book-gallery">
     <!-- <div class="book-row" v-for="(row, rowIndex) in bookRows" :key="rowIndex"> -->
-    <div class="book-row" v-for="(row, rowIndex) in displayedBooks" :key="rowIndex">
+    <div
+      class="book-row"
+      v-for="(row, rowIndex) in displayedBooks"
+      :key="rowIndex"
+    >
       <!-- <el-col v-for="book in displayedBooks" :key="book.id" :span="12"> -->
       <el-row :gutter="40">
         <el-col v-for="book in row" :key="book.id" :span="12">
@@ -12,17 +16,38 @@
       <el-divider />
     </div>
     <div class="pagination">
-      <el-button type="danger" plain @click="firstPage" :disabled="currentPage === 1">首页</el-button>
-      <el-button type="danger" plain @click="previousPage" :disabled="currentPage === 1">
+      <el-button
+        type="danger"
+        plain
+        @click="firstPage"
+        :disabled="currentPage === 1"
+        >首页</el-button
+      >
+      <el-button
+        type="danger"
+        plain
+        @click="previousPage"
+        :disabled="currentPage === 1"
+      >
         上一页
       </el-button>
       <!-- <div > -->
       <span class="nuber"> 第{{ this.currentPage }}页 </span>
       <!-- </div>/ -->
-      <el-button type="danger" plain @click="nextPage" :disabled="currentPage * pageSize >= books.length">
+      <el-button
+        type="danger"
+        plain
+        @click="nextPage"
+        :disabled="currentPage * pageSize >= books.length"
+      >
         下一页
       </el-button>
-      <el-button type="danger" plain @click="lastPage" :disabled="currentPage * pageSize >= books.length">
+      <el-button
+        type="danger"
+        plain
+        @click="lastPage"
+        :disabled="currentPage * pageSize >= books.length"
+      >
         尾页
       </el-button>
     </div>
@@ -133,6 +158,7 @@ export default {
         let i = 0;
         if (booklist.length < 10)
           this.books = this.books.slice(0, booklist.length);
+        let j = 0;
         for (let bookid of booklist) {
           getBookDetiles(bookid).then((res) => {
             var data = res;
@@ -153,7 +179,36 @@ export default {
             };
             i++;
           });
+          j++;
+          if (j === 30) break;
         }
+        const self=this;
+
+        setTimeout(function () {
+          while (j < booklist.length) {
+            let bookid = booklist[j];
+            getBookDetiles(bookid).then((res) => {
+              var data = res;
+              self.books[i] = {
+                id: data.id,
+                cover: data.cover,
+                title: data.title,
+                author: data.author,
+                cnt: data.cnt,
+                fav: data.favorcnt,
+                size: self.formatNumber(data.cnt),
+                category: data.category,
+                rating: parseFloat(data.score).toFixed(1),
+                summary: data.brief,
+                vip: data.vip ? "VIP" : "免费",
+                status: data.status,
+                simpleSizes: self.getSimpleSize(data.cnt),
+              };
+              i++;
+            });
+            j++;
+          }
+        }, 1000);
       });
     },
     previousPage() {
