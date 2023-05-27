@@ -57,8 +57,8 @@
           <ElAvatar :src="selectRow.img" :size="100"></ElAvatar>
           <ElButton style="margin-left: 50px;" @click="selectAvatar">上传头像</ElButton>
         </ElDescriptionsItem>
-        <ElDescriptionsItem label="姓名"><ElInput v-model="formData.name"></ElInput></ElDescriptionsItem>
-        <ElDescriptionsItem label="简介"><ElInput type="textarea" rows="3" v-model="formData.profile"></ElInput></ElDescriptionsItem>
+        <ElDescriptionsItem label="姓名">{{selectRow.author}}</ElDescriptionsItem>
+        <ElDescriptionsItem label="简介"><ElInput type="textarea" rows="3" v-model="selectRow.profile"></ElInput></ElDescriptionsItem>
       </ElDescriptions>
       <ElButton style="margin-left: 550px; margin-top: 50px;" @click="AuthorSubmit">确认提交</ElButton>
     </ElDialog>
@@ -166,11 +166,7 @@ export default {
       status:'连载',
       vip:false
     })
-    const formData=reactive({
-      img:'',
-      profile:'',
-      name:''
-    })
+    const formData=new FormData()
     const Options = reactive({ page: pageNum.value.toString() }); // Options 需要使用 reactive 定义
     const handleFocus = () => {
       finder.value.classList.add("active");
@@ -307,7 +303,7 @@ export default {
     function updateAuthor(row){
       showAuthor.value=true
       Object.assign(selectRow, row);
-      formData.name=selectRow.author
+
       console.log(selectRow.author)
       axios.post(`http://154.8.183.51/book/author/${selectRow.author}`,
       {
@@ -316,7 +312,7 @@ export default {
         }
       })
       .then((response)=>{
-        formData.profile=response.data.profile
+        selectRow.profile=response.data.profile
         selectRow.img=response.data.img
       })
       console.log(formData)
@@ -328,17 +324,20 @@ export default {
       input.click();
       input.addEventListener('change', () => {
         const imageFile = input.files[0];
-        formData.img=imageFile
+        formData.append('img',imageFile)
         selectRow.img= URL.createObjectURL(imageFile)
       });
     }
     function AuthorSubmit(){
       showAuthor.value=false
+      formData.append('name',selectRow.author)
+      formData.append('profile',selectRow.profile)
       console.log(formData)
       axios.post('http://154.8.183.51/manager/uploadauthor',formData)
       .then(()=>{
         alert("更新作者信息成功")
       })
+      .catch(console.error())
     }
     function BookSubmit() {
       // TODO：向服务器发送修改图书信息请求
