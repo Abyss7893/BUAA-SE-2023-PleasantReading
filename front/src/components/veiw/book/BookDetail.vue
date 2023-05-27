@@ -188,9 +188,10 @@ import {
   getBookContent,
   addColection,
   deleteColection,
-  getMyRating
+  getMyRating,
 } from "@/api/api";
 import HeadAndFoot from "../HeadAndFoot.vue";
+import { ElMessage } from "element-plus";
 // import getBookContent from
 export default {
   components: { HeadAndFoot },
@@ -265,7 +266,17 @@ export default {
       }
     },
     submitRate() {
-      submitRating(this.bookId, this.valueRate);
+      submitRating(this.bookId, this.valueRate).then((date) => {
+        if (date) {
+          this.alertMessage();
+        }
+      });
+    },
+    alertMessage() {
+      ElMessage({
+        message: `评分成功！分数:${this.valueRate}`,
+        type: "success",
+      });
     },
     generateChater() {
       // for (let i = 1; i <= 400; i++) {
@@ -287,9 +298,10 @@ export default {
       this.isContent = !this.isContent;
     },
     initRating() {
-      getMyRating(this.bookId).then((rating) => {
-        if(rating.message=== "success")
-        this.valueRate=parseFloat(rating.score);
+      getMyRating(this.bookId).then((response) => {
+        if (response.status == 200)
+          if (response.data.message === "success")
+            this.valueRate = parseFloat(response.data.score);
       });
     },
     formatNumber(number) {

@@ -1,39 +1,41 @@
 <template>
   <div>
-    <div
-      class="start-component"
-      :class="{ 'start-component-hidden': !showComponent }"
-      :style="{
-        backgroundImage: `url(${backgroundImage})`,
-        marginTop: showComponent ? '' : 'calc(-106vh )',
-      }"
-      ref="startComponentRef"
-    >
-      <img src="../../../assets/logo-yixinyuedu.png" class="start-image" />
-      <div style="height: 15%">
-        <div class="hello-user">
-          <div class="content">
-            <h1 class="quote">
-              {{ "你好，" + username }}
-              <p class="startquote">{{ typewriter }}</p>
-            </h1>
+    <!-- <transition name="fade"> -->
+      <div
+        class="start-component"
+        :class="{ 'start-component-hidden': !showComponent }"
+        :style="{
+          backgroundImage: `url(${backgroundImage})`,
+          marginTop: showComponent ? '' : 'calc(-106vh )',
+        }"
+        ref="startComponentRef"
+      >
+        <img src="../../../assets/logo-yixinyuedu.png" class="start-image" />
+        <div style="height: 15%">
+          <div class="hello-user">
+            <div class="content">
+              <h1 class="quote">
+                {{ "你好，" + username }}
+                <p class="startquote">{{ typewriter }}</p>
+              </h1>
+            </div>
           </div>
         </div>
+        <div v-if="this.$store.state.isLogin" style="max-height: 300px">
+          <slide-card> </slide-card>
+        </div>
+        <button
+          v-if="this.$store.state.isLogin"
+          class="start-button"
+          @click="hideComponent"
+        >
+          探索更多 >
+        </button>
+        <button v-else class="start-button" @click="hideComponent">
+          开始探索 >
+        </button>
       </div>
-      <div v-if="this.$store.state.isLogin " style="max-height: 300px">
-        <slide-card> </slide-card>
-      </div>
-      <button
-        v-if="this.$store.state.isLogin"
-        class="start-button"
-        @click="hideComponent"
-      >
-        探索更多 >
-      </button>
-      <button v-else class="start-button" @click="hideComponent">
-        开始探索 >
-      </button>
-    </div>
+    <!-- </transition> -->
   </div>
 </template>
 
@@ -45,6 +47,7 @@ export default {
   components: { SlideCard },
   data() {
     return {
+      imgs: [],
       showLastRead: true,
       backgroundImage: require("../../../assets/imgs/PontdArcole_ZH-CN5348049357_1920x1080.jpg"),
       showComponent: true,
@@ -103,6 +106,38 @@ export default {
         this.typing();
       }
     },
+    startBackgroundRotation(index) {
+      // console.log(this.imgs[index]);
+      this.backgroundImage = this.backgroundImage = this.imgs[index];
+      setInterval(() => {
+        index = (index + 1) % this.imgs.length;
+        this.backgroundImage = this.imgs[index];
+        // console.log(this.imgs[index]);
+        console.log(this.imgs);
+      }, 10000);
+    },
+    preloadImages(imagePaths, callback) {
+      let loadedCounter = 0;
+      const imageCount = imagePaths.length;
+
+      // 定义加载完成的回调函数
+      function imageLoaded() {
+        loadedCounter++;
+        if (loadedCounter === imageCount) {
+          // 所有图片加载完成后调用回调函数
+          console.log("Loading", loadedCounter);
+          callback();
+        }
+      }
+
+      // 创建 Image 对象并设置加载完成的回调函数
+      imagePaths.forEach((imagePath) => {
+        const img = new Image();
+        img.onload = imageLoaded;
+        img.onerror = imageLoaded;
+        img.src = imagePath;
+      });
+    },
   },
   computed: {
     username() {
@@ -114,17 +149,48 @@ export default {
         : "读者";
     },
   },
+  mounted() {
+    // this.imgs = require
+    //   .context("../../../assets/imgs/homepage/", false, /.jpg$/)
+    //   .keys();
+    // let index = Math.floor(Math.random() * this.imgs.length);
+    // for (let i = 0; i < this.imgs.length; i++) {
+    //   this.imgs[i] = require("../../../assets/imgs/homepage/" +
+    //     this.imgs[i].substring(2));
+    // }
+    // for (let i = index; i < this.imgs.length; i++) {
+    //   const cimg = new Image();
+    //   cimg.src = this.imgs[i];
+    // }
+    // for (let i = 0; i < index; i++) {
+    //   const cimg = new Image();
+    //   cimg.src = this.imgs[i];
+    // }
+    // this.preloadImages(this.imgs, () => {
+    //   this.startBackgroundRotation(0);
+    // });
+    // this.imgs.forEach((imagePath) => {
+    //   const img = new Image();
+    //   img.src = imagePath;
+    // });
+    // this.startBackgroundRotation(index);
+  },
   created() {
     this.switch = Math.floor(Math.random() * this.strs.length);
     this.v = 1600 / this.strs[this.switch].length;
-    let imgs = require
+    this.imgs = require
       .context("../../../assets/imgs/homepage/", false, /.jpg$/)
       .keys();
-    let img = imgs[Math.floor(Math.random() * imgs.length)];
+    let index = Math.floor(Math.random() * this.imgs.length);
+    for (let i = 0; i < this.imgs.length; i++) {
+      this.imgs[i] = require("../../../assets/imgs/homepage/" +
+        this.imgs[i].substring(2));
+    }
+    this.backgroundImage = this.backgroundImage = this.imgs[index];
+    // let img = imgs[Math.floor(Math.random() * imgs.length)];
     // let path = ;
     // console.log(path);
-    this.backgroundImage = require("../../../assets/imgs/homepage/" +
-      img.substring(2));
+
     this.typing();
   },
 };
@@ -180,6 +246,7 @@ export default {
   justify-content: center;
   z-index: 9999;
   transition: all 0.5s;
+  /* transition: background-image 2s; */
 }
 .start-component-hidden {
   margin-top: -100px;
@@ -190,17 +257,15 @@ export default {
   /* backdrop-filter: blur(2px); */
   text-align: center;
 }
-.hello-user{
-
+.hello-user {
   min-height: 148px;
   min-width: 720px;
   transition: all 0.5s;
   border-radius: 10px;
 }
-.hello-user:hover{
+.hello-user:hover {
   border: solid rgba(212, 184, 6, 0.164) 1px;
   backdrop-filter: blur(3px) invert(10%);
-  
 }
 .quote {
   font-size: 24px;
