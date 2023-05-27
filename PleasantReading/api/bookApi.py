@@ -224,6 +224,7 @@ def getBookNotes(request, bookid, chapter, page):
     userid = getUsername(request)
     comments = Comments.objects.filter(bookID=bookid, userID=userid, chapter=chapter, visible=False)
     num = comments.count()
+    comments = comments.reverse()
     comments = comments[(page - 1) * NT2PG:page * NT2PG]
     return JsonResponse({'notes': list(comments.values_list('text', flat=True)), 'pages': getPages(num, NT2PG)})
 
@@ -239,6 +240,7 @@ def getAllNotes(request):
     notes = notes.annotate(
         name=Subquery(subquery.values('name'))
     )
+    notes = notes.reverse()
     notes = notes.values('bookID', 'name', 'chapter', 'text')
     return JsonResponse({'notes': list(notes)})
 
@@ -254,6 +256,7 @@ def getComments(request, bookid, chapter, page):
         img=Concat(Value(SERVER_URL + '/media/'), Subquery(subquery.values('img')), output_field=CharField())
     )
     comments = comments.values('userID', 'nickname', 'img', 'text', 'timestamp')
+    comments = comments.reverse()
     comments = comments[(page - 1) * CM2PG:page * CM2PG]
     return JsonResponse({'comments': list(comments), 'pages': getPages(num, CM2PG)})
 
@@ -307,9 +310,8 @@ def submitNotes(request, bookid, chapter):
     data = json.loads(request.body)
     userid = getUsername(request)
     Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=False,
-                            timestamp=date.today())
+                            timestamp=datetime.now())
     return JsonResponse({'message': 'success'})
-
 
 def submitComments(request, bookid, chapter):
     if request.method != 'POST':
@@ -319,7 +321,7 @@ def submitComments(request, bookid, chapter):
     data = json.loads(request.body)
     userid = getUsername(request)
     Comments.objects.create(userID=userid, bookID=bookid, chapter=chapter, text=data.get('text'), visible=True,
-                            timestamp=date.today())
+                            timestamp=datetime.now())
     return JsonResponse({'message': 'success'})
 
 
@@ -352,7 +354,7 @@ def putScore(request, bookid, score):
         record.save()
         print(ret.first().score, score)
     else:
-        Score.objects.create(userID=userid, bookID=bookid, score=eval(score))
+        Score.objects.create(userID=userid, bookID=bookid, score=score)
     return JsonResponse({'message': 'success'})
 
 
