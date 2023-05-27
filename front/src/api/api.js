@@ -283,6 +283,17 @@ function deleteColection(bookid) {
       console.log(error);
     });
 }
+
+function getAuthor(author) {
+  console.log(author)
+  return axios({
+    method: 'get',
+    url: 'http://154.8.183.51/book/author/' + author,
+  }).catch(function (data) {
+    return data;
+  });
+}
+
 export {
   getBookDetiles,
   getBookContent,
@@ -295,7 +306,8 @@ export {
   submitBookComment,
   addBookToFavor,
   getSearchBookIds,
-  deleteColection, submitRating, getMyRating
+  deleteColection, submitRating, getMyRating,
+  getAuthor,
 }
 // 使用示例
 

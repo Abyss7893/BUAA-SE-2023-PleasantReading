@@ -88,7 +88,7 @@ const router = createRouter({
       name: 'search',
     },
     {
-      path: '/author',
+      path: '/author/:author',
       component: Author,
       name: 'author',
     },

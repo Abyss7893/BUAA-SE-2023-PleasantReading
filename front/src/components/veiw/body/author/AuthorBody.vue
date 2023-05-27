@@ -2,14 +2,14 @@
   <div class="author-header">
     <div class="author-info">
       <div class="header-bcg"></div>
-      <div class="author-avatar"><img src="http://154.8.183.51/media/UserImg/user_img.jpg" alt="">
+      <div class="author-avatar"><img :src="this.author.img" alt="">
       </div>
       <div class="author-msg">
-        <h1>花椒猫猫</h1>
-        <div class="author-msg-brief">这是一只喜欢吃花椒的猫猫，大家可以摸摸她</div>
+        <h1>{{ this.$route.params.author }}</h1>
+        <div class="author-msg-brief">{{ this.author.profile }}</div>
         <div class="author-msg-data">
-          <span style="margin-right: 12px">作品总数<strong class="msg-strong">10</strong></span>
-          <span style="margin-right: 12px">累计写作<strong class="msg-strong">3124.46</strong>万字</span>
+          <span style="margin-right: 12px">作品总数<strong class="msg-strong">{{ this.author.works.length }}</strong></span>
+          <span style="margin-right: 12px">累计写作<strong class="msg-strong">{{ workCounttoWAN }}</strong>万字</span>
         </div>
       </div>
     </div>
@@ -25,88 +25,53 @@
 
 <script>
 import BookInfoCompnent from '../search/BookInfoCompnent.vue';
+import { getAuthor, getBookDetiles } from '@/api/api'
 export default {
   components: { BookInfoCompnent, },
-  props: {},
   data() {
     return {
-      books: [{
-        "id": 17,
-        "title": "杀路寒",
-        "author": "长桴",
-        "category": "武侠-传统武侠",
-        "status": "连载",
-        "brief": "一阕《西江月》，半部《反掌录》。\n一条逃杀路，两个飘零人。\n（书友群：194388020）",
-        "score": 0,
-        "cnt": 810742,
-        "cover": "http://154.8.183.51/media/BookImg/lDs8crqg.jpg",
-        "favorcnt": 0,
-        "vip": false,
-        "fav": false,
-        "onShelf": "true"
-      }, {
-        "id": 17,
-        "title": "杀路寒",
-        "author": "长桴",
-        "category": "武侠-传统武侠",
-        "status": "连载",
-        "brief": "一阕《西江月》，半部《反掌录》。\n一条逃杀路，两个飘零人。\n（书友群：194388020）",
-        "score": 0,
-        "cnt": 810742,
-        "cover": "http://154.8.183.51/media/BookImg/lDs8crqg.jpg",
-        "favorcnt": 0,
-        "vip": false,
-        "fav": false,
-        "onShelf": "true"
-      }, {
-        "id": 17,
-        "title": "杀路寒",
-        "author": "长桴",
-        "category": "武侠-传统武侠",
-        "status": "连载",
-        "brief": "一阕《西江月》，半部《反掌录》。\n一条逃杀路，两个飘零人。\n（书友群：194388020）",
-        "score": 0,
-        "cnt": 810742,
-        "cover": "http://154.8.183.51/media/BookImg/lDs8crqg.jpg",
-        "favorcnt": 0,
-        "vip": false,
-        "fav": false,
-        "onShelf": "true"
-      }, {
-        "id": 17,
-        "title": "杀路寒",
-        "author": "长桴",
-        "category": "武侠-传统武侠",
-        "status": "连载",
-        "brief": "一阕《西江月》，半部《反掌录》。\n一条逃杀路，两个飘零人。\n（书友群：194388020）",
-        "score": 0,
-        "cnt": 810742,
-        "cover": "http://154.8.183.51/media/BookImg/lDs8crqg.jpg",
-        "favorcnt": 0,
-        "vip": false,
-        "fav": false,
-        "onShelf": "true"
-      }, {
-        "id": 17,
-        "title": "杀路寒",
-        "author": "长桴",
-        "category": "武侠-传统武侠",
-        "status": "连载",
-        "brief": "一阕《西江月》，半部《反掌录》。\n一条逃杀路，两个飘零人。\n（书友群：194388020）",
-        "score": 0,
-        "cnt": 810742,
-        "cover": "http://154.8.183.51/media/BookImg/lDs8crqg.jpg",
-        "favorcnt": 0,
-        "vip": false,
-        "fav": false,
-        "onShelf": "true"
-      },],
+      author: {
+        "profile": "这是一只喜欢吃花椒的猫猫，大家可以摸摸她",
+        "img": "http://154.8.183.51/media/UserImg/user_img.jpg",
+        "works": [
+          {
+            "bookID": 2,
+            "name": "综武：龙之初，性本善",
+            "profile": "苍龙大陆；\n十八岁的林魏一朝觉醒前世记忆，原本计划着继承父亲家业，苟且度日。\n没曾想，这里竟是一个综武世界。\n人在江湖飘，哪能不挨刀，为了更好活着，林魏努力变强。\n白天是名传天下的大善人，晚上就成了要人小命的毒阎罗！\n大明，大宋，大秦……那里有好处，那里就有他的身影。\n……\n多年以后，林魏遍览身边，人间已无对手！\n…………",
+            "img": "BookImg/ELOymcKb.jpg"
+          }
+        ]
+      },
+      workCount: 0,
+      books: [],
     };
   },
-  watch: {},
-  computed: {},
-  methods: {},
-  created() { },
+  computed: {
+    workCounttoWAN() {
+      return (this.workCount / 10000).toFixed(2);
+    }
+  },
+  methods: {
+    getAuthorInfo() {
+      getAuthor(this.$route.params.author).then((data) => {
+        console.log(data)
+        if (data.status && data.status == 200) {
+          this.author = data.data
+          for (let index = 0; index < this.author.works.length; index++) {
+            getBookDetiles(this.author.works[index].bookID).then((data) => {
+              this.books.push(data)
+              this.workCount += data.cnt
+            })
+          }
+        } else {
+          alert('该作者不存在！')
+        }
+      })
+    }
+  },
+  created() {
+    this.getAuthorInfo()
+  },
   mounted() { }
 };
 </script>

@@ -10,16 +10,16 @@
 
     <div class="book-mid-info">
       <router-link :to="'/book/' + book.id">
-        <h3 class="title">{{ book.title }}</h3></router-link
-      >
+        <h3 class="title">{{ book.title }}</h3>
+      </router-link>
 
       <div class="author">
-        <p class="name">{{ book.author }}著</p>
+        <a class="name" :href="'/author/' + book.author">{{ book.author }}著</a>
       </div>
       <el-space size="10%">
         <el-tag class="mx-4" effect="plain" type="danger">
-          <p class="category">{{ book.category }}</p></el-tag
-        >
+          <p class="category">{{ book.category }}</p>
+        </el-tag>
         <el-tag class="mx-4" effect="plain" type="danger">{{
           book.status
         }}</el-tag>
@@ -50,11 +50,7 @@
         <div class="leftside">
           <div class="book-rating-text">评分:{{ book.rating }}</div>
 
-          <el-rate
-            v-model="rating"
-            style="--el-rate-fill-color: #ff7d7dc9"
-            :disabled="true"
-          ></el-rate>
+          <el-rate v-model="rating" style="--el-rate-fill-color: #ff7d7dc9" :disabled="true"></el-rate>
 
           <p class="size">字数:{{ book.size }}</p>
         </div>
@@ -111,6 +107,7 @@ export default {
   transition: 0.2s;
   /* background-color: rgba(2, 1, 4, 0); */
 }
+
 .book-item:hover {
   border: solid rgba(255, 0, 0, 0.21) 1px;
   background-color: rgba(216, 138, 145, 0.068);
@@ -127,9 +124,11 @@ export default {
   margin-top: auto;
   font-weight: bold;
 }
+
 .book-rating {
   display: flex;
 }
+
 .book-img-box {
   display: block;
   margin-top: 15px;
@@ -141,6 +140,7 @@ export default {
   /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
   z-index: 3;
 }
+
 .book-img-box img {
   width: 100%;
   height: 100%;
@@ -157,6 +157,7 @@ export default {
 
   /* z-index: 10; */
 }
+
 .book-img-box img:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -174,6 +175,7 @@ export default {
 
   /* text-overflow: ellipsis; */
 }
+
 .intro {
   color: #743e13a6;
   font-size: 14px;
@@ -189,7 +191,8 @@ export default {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* 这里是超出几行省略 */
+  -webkit-line-clamp: 2;
+  /* 这里是超出几行省略 */
   overflow: hidden;
 
   /* overflow: hidden; */
@@ -217,6 +220,7 @@ export default {
   /* white-space: normal; */
   /* background: #030958; */
 }
+
 .author {
   height: 22px;
   margin-bottom: 6px;
@@ -225,18 +229,25 @@ export default {
   /* border-top:solid #c6b7b758; */
   /* overflow: hidden; */
 }
+
 .name {
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
 }
+
+.name:hover {
+  color: #f56c6c;
+}
+
 .category {
   max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
 }
+
 .size {
   font-size: small;
   color: #666;

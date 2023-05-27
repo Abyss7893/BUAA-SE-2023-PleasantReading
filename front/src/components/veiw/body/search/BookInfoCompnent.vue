@@ -3,7 +3,7 @@
     <div class="book-info-cover"><a :href="'/book' + '/' + book.id"><img :src="book.cover" alt=""></a></div>
     <div class="book-info-main">
       <h3><a :href="'/book' + '/' + book.id">{{ book.title }}</a></h3>
-      <p class="info"><a :href="'/book' + '/' + book.id">{{ book.author }}</a><em>|</em><span>{{
+      <p class="info"><a :href="'/author' + '/' + book.author">{{ book.author }}</a><em>|</em><span>{{
         book.category
       }}</span><em>|</em><span>{{
   book.status }}</span></p>

@@ -9,10 +9,10 @@
                 <img :src="detailData.cover" />
               </div>
               <div class="book-info-box">
-                <h1 class="book-name flex-view">
+                <h1 class="book-name flex-view">a
                   {{ detailData.title }}
                   <span>
-                    <span class="author-name">{{ detailData.author }}著</span>
+                    <a :href="'/author/' + detailData.author" class="author-name">{{ detailData.author }}著</a>
                   </span>
                 </h1>
                 <!-- <el-divider></el-divider> -->
@@ -326,6 +326,10 @@ export default {
   padding-left: 30px;
   font-size: 12px;
   font-family: kaiti;
+}
+
+.author-name:hover {
+  color: #f56c6c;
 }
 
 .box-center {
