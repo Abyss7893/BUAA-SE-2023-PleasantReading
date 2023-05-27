@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
+from decimal import Decimal
 
 
 # Create your models here.
@@ -74,7 +75,7 @@ class Score(models.Model):
     ):
         super(Score, self).save()
         obj = BookBasicInfo.objects.get(bookID=self.bookID)
-        obj.totScore = obj.totScore + self.score
+        obj.totScore = obj.totScore + Decimal(str(self.score))
         obj.rateNumber = obj.rateNumber + 1
         obj.save()
 
