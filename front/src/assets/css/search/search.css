@@ -27,7 +27,7 @@
   padding-top: 25px;
 }
 
-.result-list .book-info-cover {
+.book-info-cover {
   height: 160px;
   margin-right: 16px;
   position: relative;
@@ -35,72 +35,68 @@
   z-index: 3;
 }
 
-.result-list .book-info-cover a img {
+.book-info-cover a img {
   height: 160px;
   -webkit-transition: -webkit-transform .4s ease-out;
   transition: transform .4s ease-out;
   width: 120px;
 }
 
-.result-list .book-info-cover a img:hover {
+.book-info-cover a img:hover {
   -webkit-transform: scale(1.1);
   -moz-transform: scale(1.1);
   -o-transform: scale(1.1);
   transform: scale(1.1);
 }
 
-.result-list .book-info-main {
+.book-info-main {
   margin-top: 5px;
   width: 600px;
 }
 
-.result-list .book-info-main h3 {
+.book-info-main h3 {
   font: 18px/24px PingFangSC-Regular, HelveticaNeue-Light, Helvetica Neue Light, Microsoft YaHei, "sans-serif";
   height: 24px;
   margin-bottom: 8px;
   overflow: hidden;
 }
 
-.result-list a {
-  transition: color .3s, background-color .3s;
-}
-
-.result-list .book-info-main a:hover,
-.result-list .book-info-main p.info a:hover {
+.book-info-main a:hover,
+.book-info-main p.info a:hover {
   color: #ed4259;
 }
 
-.result-list .book-info-main p {
+.book-info-main p {
   font-family: PingFangSC-Regular, -apple-system, Simsun;
   font-size: 12px;
 }
 
-.result-list .book-info-main p.info {
+.book-info-main p.info {
   height: 16px;
   margin-bottom: 6px;
   overflow: hidden;
 }
 
-.result-list .book-info-main p.info a {
+.book-info-main p.info a {
   color: #a6a6a6;
   float: left;
   line-height: 16px;
 }
 
-.result-list .book-info-main p.info em {
+.book-info-main p.info em {
   color: #e6e6e6;
   float: left;
   font-family: Arial;
   margin: 1px 8px 0;
 }
 
-.result-list .book-info-main p.info span {
+.book-info-main p.info span {
   color: #a6a6a6;
   float: left;
   line-height: 16px;
 }
 
-.result-list .book-info-main p.brief {
+.book-info-main p.brief {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -114,7 +110,7 @@
 }
 
 
-.result-list .book-info-right {
+.book-info-right {
   float: right;
   height: 160px;
   margin-top: 5px;
@@ -122,13 +118,13 @@
   width: 224px;
 }
 
-.result-list .book-info-right p span {
+.book-info-right p span {
   color: #262626;
   font: 12px/18px PingFangSC-Regular, -apple-system, Simsun;
   margin-right: 3px;
 }
 
-.result-list .book-info-right p {
+.book-info-right p {
   text-align: right;
   color: #666;
   font: 12px/16px PingFangSC-Regular, -apple-system, Simsun;
@@ -136,14 +132,14 @@
 
 }
 
-.result-list .book-info-right p.button {
+.book-info-right p.button {
   position: absolute;
   bottom: 4px;
   left: 0;
 }
 
 
-.result-list .book-info-right a {
+.book-info-right a {
   border-style: solid;
   border-width: 1px;
   display: inline-block;
@@ -154,7 +150,7 @@
   width: 98px;
 }
 
-.result-list .book-info-right a.book-details {
+.book-info-right a.book-details {
   background: #ed4259;
   border-color: #ed4259;
 
@@ -162,17 +158,17 @@
   margin-right: 24px;
 }
 
-.result-list .book-info-right a.book-details:hover {
+.book-info-right a.book-details:hover {
   background: #bf2c24;
   border-color: #bf2c24;
 }
 
-.result-list .book-info-right a.add-favor {
+.book-info-right a.add-favor {
   border-color: #3f5a93;
   color: #3f5a93;
 }
 
-.result-list .book-info-right a.add-favor:hover {
+.book-info-right a.add-favor:hover {
   background: #f0f5ff;
   border-color: #2972cc;
   color: #2972cc;

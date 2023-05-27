@@ -53,6 +53,16 @@ function getBookContent(bookid) {
     return data;
   });
 }
+function getSearchBookIds(keywords, page) {
+  var token = localStorage.getItem("token")
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  return axios({
+    method: 'get',
+    url: `http://154.8.183.51/book/search/?keyword=${keywords}&page=${page}`,
+  }).catch(function (data) {
+    return data;
+  });
+}
 function getBookCharpter(bookid, chapter) {
   var token = localStorage.getItem("token")
   var axios = require('axios');
@@ -185,5 +195,5 @@ function deletBookmark(bookid, chapter) {
 
 
 export {
-  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments, addBookmark, getMyBook, deletBookmark, submitRating
+  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments,getSearchBookIds, addBookmark, getMyBook, deletBookmark, submitRating
 }

@@ -12,6 +12,7 @@ const MyComment = () => import('../components/page/Personal/MyComment')
 // const Home = () => import('components/page/Home')
 const AllBook = () => import('../components/veiw/body/AllBook')
 const Search = () => import('../components/page/Search')
+const Author = () => import('components/page/Author')
 import 'css/home.css'
 const router = createRouter({
   history: createWebHistory(),
@@ -86,7 +87,11 @@ const router = createRouter({
       component: Search,
       name: 'search',
     },
-
+    {
+      path: '/author/:author',
+      component: Author,
+      name: 'author',
+    },
   ],
   scrollBehavior() {
     // 始终滚动到顶部

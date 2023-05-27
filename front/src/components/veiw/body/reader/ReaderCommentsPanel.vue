@@ -12,7 +12,7 @@
             <div class="comment-avatar"><img :src="comment.img" alt=""></div>
             <div class="comment-text">
               <div class="comment-name">{{ comment.nickname }}</div>
-              <div class="comment-time">{{ comment.timestamp }}</div>
+              <div class="comment-time">{{ parseTime(comment.timestamp) }}</div>
               <div class="comment-content" :ref="commentId" v-html="replaceLineBreaks(comment.text)"></div>
             </div>
             <i v-show="isExtendDisplay(comment.text)" @click="extendContent(commentId)">
@@ -110,6 +110,15 @@ export default {
       if (cnt > 0)
         line++
       return line > 2
+    },
+    parseTime(time) {
+      var date = new Date(time);
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      var hour = date.getHours();
+      var minute = date.getMinutes();
+      return year + "年" + month + "月" + day + "日" + hour + "时" + minute + "分"
     },
     load() {
       if (this.commentsNum % 5 != 0)

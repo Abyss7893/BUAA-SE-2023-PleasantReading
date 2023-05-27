@@ -300,6 +300,17 @@ function getRecent() {
       return response;
     });
 }
+
+function getAuthor(author) {
+  console.log(author)
+  return axios({
+    method: 'get',
+    url: 'http://154.8.183.51/book/author/' + author,
+  }).catch(function (data) {
+    return data;
+  });
+}
+
 export {
   getBookDetiles,
   getBookContent,
@@ -313,6 +324,8 @@ export {
   addBookToFavor,
   getSearchBookIds,
   deleteColection, submitRating, getMyRating,getRecent
+  ,
+  getAuthor,
 }
 // 使用示例
 
