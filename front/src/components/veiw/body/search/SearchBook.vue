@@ -49,7 +49,6 @@ export default {
     }
   },
   methods: {
-
     getSearchBooks(keywords, page) {
       getSearchBookIds(keywords, page).then((data) => {
         if (data.status && data.status == 200) {
