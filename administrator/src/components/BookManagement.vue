@@ -133,7 +133,7 @@
       </ElTable>
     </div>
     <div class="pagination-block">
-      <ElPagination v-model:current-page="pageNum" background layout="prev, pager, next,jumper" :total="1000"/>
+      <ElPagination v-model:current-page="pageNum" background layout="prev, pager, next,jumper" :total="maxPages*10"/>
     </div>
   </div>
 </template>
@@ -150,6 +150,7 @@ export default {
     const finder = ref(null);
     const form = ref(null);
     const searchContent = ref('')
+    const maxPages=ref(0)
     let tableData = reactive([]);
     let showAdd=ref(false)
     let showInfo=ref(false)
@@ -200,8 +201,10 @@ export default {
       form.value.addEventListener("submit", handleSubmit);
     })
     function getdata() {
+      var token = localStorage.getItem("token")
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       getBookList(Options).then((books) => {
-        
+        maxPages.value=books.pages
         let sbooks= books.books;
         sbooks.sort((a, b) => (a - b))
         for (let bookid of sbooks) {
@@ -218,7 +221,7 @@ export default {
         if (data.status && data.status == 200) {
           let bookids= data.data.books
           let pages= data.data.pages
-          
+          maxPages.value=pages
           if (Options.page > pages) {
             alert("非法页面访问！")
             return
@@ -362,6 +365,7 @@ export default {
       showAuthor,
       searchContent,
       formData,
+      maxPages,
       addBook,
       setInfo,
       updateInfo,
@@ -458,7 +462,6 @@ export default {
   color: white;
   width: 200px;
   height: 50px;
-  padding: 20px 40px;
   transition: all 0.3s ease;
 }
 

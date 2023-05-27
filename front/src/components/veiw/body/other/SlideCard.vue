@@ -1,111 +1,147 @@
 <template>
   <div>
-    <h1 class="quote" style="text-align: center">最近阅读</h1>
-    <div>
-      <transition name="fade">
-        <div
-          @touchend="end"
-          @touchstart="start"
-          @touchmove="move"
-          class="swiper"
-        >
+    <div v-show="isshow">
+      <h1 class="quote" style="text-align: center">最近阅读</h1>
+      <div>
+        <transition name="fade">
           <div
-            @click="chooseItem(item, index)"
-            v-for="(item, index) in imgs"
-            :style="config5[index]"
-            :key="item.cover"
-            @mouseover="touchcenter(config5[index].id === 'center')"
-            @mouseout="leavecenter(config5[index].id === 'center')"
-            style="
-              /* background-color: red; */
-              width: 150px;
-              height: 208px;
-              border-radius: 20px;
-            "
-            :class="{
-              'hover-effect': config5[index].id === 'center',
-              'other-hover-effect': config5[index].id !== 'center',
-            }"
-            class="card-control"
+            @touchend="end"
+            @touchstart="start"
+            @touchmove="move"
+            class="swiper"
           >
-            <img
-              :src="item.cover"
-              class="card-img"
-              style="z-index: 4 !important"
-            />
-            <!-- <div class="wordblock"
+            <div
+              @click="chooseItem(item, index)"
+              v-for="(item, index) in imgs"
+              :style="config5[index]"
+              :key="item.cover"
+              @mouseover="touchcenter(config5[index].id === 'center')"
+              @mouseout="leavecenter(config5[index].id === 'center')"
+              style="
+                /* background-color: red; */
+                width: 150px;
+                height: 208px;
+                border-radius: 20px;
+              "
+              :class="{
+                'hover-effect': config5[index].id === 'center',
+                'other-hover-effect': config5[index].id !== 'center',
+              }"
+              class="card-control"
+            >
+              <img
+                :src="item.cover"
+                class="card-img"
+                style="z-index: 4 !important"
+              />
+              <!-- <div class="wordblock"
             style="z-index: 9999;"> -->
-            <el-collapse-transition>
-              <a href="#">
-                <p
-                  v-if="config5[index].id === 'center'"
-                  style="
-                    /* position: absolute; */
-                    /* color: rgba(126, 84, 84, 0.582); */
-                    color: rgba(202, 197, 197, 0);
-                    /* left: 10%; */
-                    text-align: center;
-                    margin: 3px;
-                    bottom: 50px;
-                    transition: ease-in-out 0.2s;
-                    z-index: 3 !important;
-                    -webkit-user-select: none;
-                    -moz-user-select: none;
-                    -ms-user-select: none;
-                    user-select: none;
-                  "
-                  class="content-effect"
+              <el-collapse-transition>
+                <el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  :content="item.id"
+                  placement="right"
                 >
-                  {{ item.id }}
-                </p>
-              </a>
-            </el-collapse-transition>
-            <el-collapse-transition>
-              <a href="#">
-                <p
-                  v-if="config5[index].id === 'center'"
-                  style="
-                    /* position: absolute; */
-                    bottom: 30px;
-                    /* margin-left: 10px; */
-                    left: 10%;
-                    color: rgba(216, 212, 203, 0);
-                    text-align: center;
-                    font-family: kaiti;
-                    margin: 3px;
-                    transition: 0.2s;
-                    z-index: 3 !important;
-                  "
-                  class="content-effect"
+                  <!-- <el-button>right</el-button> -->
+
+                  <router-link :to="{path:'/book/'+item.bookId}">
+                    <p
+                      v-if="config5[index].id === 'center'"
+                      style="
+                        /* position: absolute; */
+                        /* color: rgba(126, 84, 84, 0.582); */
+                        color: rgba(202, 197, 197, 0);
+                        /* left: 10%; */
+                        text-align: center;
+                        margin: 3px;
+                        bottom: 50px;
+                        transition: ease-in-out 0.2s;
+                        z-index: 3 !important;
+                        -webkit-user-select: none;
+                        -moz-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
+                        white-space: normal;
+                        word-break: break-all;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        /* 这里是超出几行省略 */
+                        overflow: hidden;
+                      "
+                      class="content-effect"
+                    >
+                      {{ item.id }}
+                    </p>
+                  </router-link>
+                </el-tooltip>
+              </el-collapse-transition>
+              <el-collapse-transition>
+                <el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  :content="item.chapter"
+                  placement="right"
                 >
-                  第114514章节
-                </p>
-              </a>
-            </el-collapse-transition>
-            <!-- </div> -->
-            <span>{{ item.dindex }}</span>
+                  <router-link :to="{path:'/reader/'+item.bookId+'/'+item.chapterid}">
+                    <p
+                      v-if="config5[index].id === 'center'"
+                      style="
+                        /* position: absolute; */
+                        bottom: 30px;
+                        /* margin-left: 10px; */
+                        left: 10%;
+                        color: rgba(216, 212, 203, 0);
+                        text-align: center;
+                        font-family: kaiti;
+                        margin: 3px;
+                        transition: 0.2s;
+                        z-index: 3 !important;
+                        white-space: normal;
+                        word-break: break-all;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 3;
+                        /* 这里是超出几行省略 */
+                        overflow: hidden;
+                      "
+                      class="content-effect"
+                    >
+                      {{ item.chapter }}
+                    </p>
+                  </router-link>
+                </el-tooltip>
+              </el-collapse-transition>
+              <!-- </div> -->
+              <!-- <span>{{ item.dindex }}</span> -->
+            </div>
           </div>
-        </div>
-      </transition>
-    </div>
-    <!-- <div style="display: flex; align-items: center">
+        </transition>
+      </div>
+      <!-- <div style="display: flex; align-items: center">
       <h1 @click="prev">上一个</h1>
       |
       <h1>当前：{{ centerInfo.id }}</h1>
       |
       <h1 @click="next">下一个</h1>
     </div> -->
+    </div>
   </div>
 </template>
     <script>
 // import { da } from 'element-plus/es/locale';
 // import { fa } from "element-plus/es/locale";
 // import BookCard from "../mybooks/BookCard.vue";
+import { getRecent } from "@/api/api";
 export default {
   // components: { BookCard },
   //   name: "zt",
   data() {
     return {
+      isshow: false,
       showLastRead: true,
       showInfo: false,
       loading: true,
@@ -114,92 +150,93 @@ export default {
       startX: "",
       endX: "",
 
-      imgs: [
-        {
-          id: "莱因哈特1",
-          index: 0,
-          dindex: 0,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888260036&di=875bc88905bf4b6923784df1589edb0b&imgtype=0&src=http%3A%2F%2Fi-1.itobike.com%2F2017%2F5%2F26%2Ff6038942-393f-441e-9380-a2f1607c3385.jpg",
-        },
-        {
-          id: "安娜2",
-          index: 1,
-          dindex: 1,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888297322&di=9d5d97f952329ccf2277b2033b129d5d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201803%2F28%2F20180328101238_VHiji.jpeg",
-        },
-        {
-          id: "卢西奥3",
-          index: 2,
-          dindex: 2,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573483062&di=9d6983ba28c123896b27148e313ada65&imgtype=jpg&er=1&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201608%2F15%2F20160815133037_4YAfh.jpeg",
-        },
-        {
-          id: "DVA4",
-          index: 3,
-          dindex: 3,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888405708&di=3381891cd042db432083ed2446ddf446&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201805%2F06%2F20180506201144_JPTd3.thumb.700_0.jpeg",
-        },
-        {
-          id: "莫伊拉5",
-          index: 4,
-          dindex: 4,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888441984&di=47544529365104e11276d639838741c3&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201801%2F06%2F20180106221938_58EGv.thumb.224_0.jpeg",
-        },
-        {
-          id: "裂空6",
-          index: 5,
-          dindex: 5,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888482891&di=5416c6abf187547cd329377dc1092fff&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201610%2F20%2F20161020175323_auiK8.thumb.700_0.jpeg",
-        },
-        {
-          id: "麦克雷7",
-          index: 6,
-          dindex: 6,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888500984&di=f415feaef2c02b497e9d3801743b8e49&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201711%2F26%2F20171126191812_4x8RV.thumb.700_0.jpeg",
-        },
-        {
-          id: "士兵76  8",
-          index: 7,
-          dindex: 7,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573056788040&di=dbf1954ad8ba1bee16afd9f47d763512&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201704%2F24%2F20170424202013_hveir.jpeg",
-        },
-        {
-          id: "狂鼠9",
-          index: 8,
-          dindex: 8,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=ea29fa95c13d70cf4cfaa80dc8e7a03d/42166d224f4a20a4d334946b98529822720ed070.jpg",
-        },
-        {
-          id: "死神 10",
-          index: 9,
-          dindex: 9,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "http://www.agri35.com/UploadFiles/img_2_4163694432_214245738_26.jpg",
-        },
-        {
-          id: "禅雅塔 11",
-          index: 10,
-          dindex: 10,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "http://pic2.zhimg.com/v2-1c9b73f260ea2652dcdedfc782fde90d_b.jpg",
-        },
-        {
-          id: "黑百合 12",
-          index: 11,
-          dindex: 11,
-          cover: require("../../../../assets/imgs/bookcv.png"),
-          // "http://b-ssl.duitang.com/uploads/item/201710/14/20171014134122_KmPQy.jpeg",
-        },
-      ],
+      // imgs: [
+      //   {
+      //     id: "莱因哈特1",
+      //     index: 0,
+      //     dindex: 0,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888260036&di=875bc88905bf4b6923784df1589edb0b&imgtype=0&src=http%3A%2F%2Fi-1.itobike.com%2F2017%2F5%2F26%2Ff6038942-393f-441e-9380-a2f1607c3385.jpg",
+      //   },
+      //   {
+      //     id: "安娜2",
+      //     index: 1,
+      //     dindex: 1,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888297322&di=9d5d97f952329ccf2277b2033b129d5d&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201803%2F28%2F20180328101238_VHiji.jpeg",
+      //   },
+      //   {
+      //     id: "卢西奥3",
+      //     index: 2,
+      //     dindex: 2,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573483062&di=9d6983ba28c123896b27148e313ada65&imgtype=jpg&er=1&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201608%2F15%2F20160815133037_4YAfh.jpeg",
+      //   },
+      //   {
+      //     id: "DVA4",
+      //     index: 3,
+      //     dindex: 3,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888405708&di=3381891cd042db432083ed2446ddf446&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201805%2F06%2F20180506201144_JPTd3.thumb.700_0.jpeg",
+      //   },
+      //   {
+      //     id: "莫伊拉5",
+      //     index: 4,
+      //     dindex: 4,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888441984&di=47544529365104e11276d639838741c3&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201801%2F06%2F20180106221938_58EGv.thumb.224_0.jpeg",
+      //   },
+      //   {
+      //     id: "裂空6",
+      //     index: 5,
+      //     dindex: 5,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888482891&di=5416c6abf187547cd329377dc1092fff&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201610%2F20%2F20161020175323_auiK8.thumb.700_0.jpeg",
+      //   },
+      //   {
+      //     id: "麦克雷7",
+      //     index: 6,
+      //     dindex: 6,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572888500984&di=f415feaef2c02b497e9d3801743b8e49&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201711%2F26%2F20171126191812_4x8RV.thumb.700_0.jpeg",
+      //   },
+      //   {
+      //     id: "士兵76  8",
+      //     index: 7,
+      //     dindex: 7,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1573056788040&di=dbf1954ad8ba1bee16afd9f47d763512&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201704%2F24%2F20170424202013_hveir.jpeg",
+      //   },
+      //   {
+      //     id: "狂鼠9",
+      //     index: 8,
+      //     dindex: 8,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "http://ztd00.photos.bdimg.com/ztd/w=700;q=50/sign=ea29fa95c13d70cf4cfaa80dc8e7a03d/42166d224f4a20a4d334946b98529822720ed070.jpg",
+      //   },
+      //   {
+      //     id: "死神 10",
+      //     index: 9,
+      //     dindex: 9,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "http://www.agri35.com/UploadFiles/img_2_4163694432_214245738_26.jpg",
+      //   },
+      //   {
+      //     id: "禅雅塔 11",
+      //     index: 10,
+      //     dindex: 10,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "http://pic2.zhimg.com/v2-1c9b73f260ea2652dcdedfc782fde90d_b.jpg",
+      //   },
+      //   {
+      //     id: "黑百合 12",
+      //     index: 11,
+      //     dindex: 11,
+      //     cover: require("../../../../assets/imgs/bookcv.png"),
+      //     // "http://b-ssl.duitang.com/uploads/item/201710/14/20171014134122_KmPQy.jpeg",
+      //   },
+      // ],
+      imgs: [],
       data: [],
       previous: 0,
       config5: [
@@ -510,65 +547,98 @@ export default {
     deepCopy(x) {
       return {
         id: x.id,
+        bookId: x.bookId,
         cover: x.cover,
-        dindex: x.dindex,
+        // dindex: book.dindex,
         index: x.index,
+        chapterid: x.chapterid,
+        chapter: x.chapter,
       };
     },
     setData() {
-      if (this.imgs.length >= 7) this.mode = 7;
-      else if (this.imgs.length >= 5) this.mode = 5;
-      else if (this.imgs.length >= 3) this.mode = 3;
-      else this.mode = this.imgs.length > 0 ? 1 : 0;
+      // getRecent().then()
+      getRecent().then((response) => {
+        if (response.status == 200) {
+          var data = response.data.list;
+          // data =data.slice(0,3);
+          console.log("data", data);
+          let i = 0;
+          // if (data.length > 0) {
 
-      if (this.mode == 7) {
-        this.data.push(...this.imgs);
-        // for (let i = 0; i < 3; i++) this.next();
-      }
-      if (this.mode == 5) {
-        for (let i = 0; i < 2; i++) {
-          for (let q of this.imgs) this.data.push(this.deepCopy(q));
-        }
-        // for (let i = 0; i < 3; i++) this.next();
-      }
-      if (this.mode == 3) {
-        this.config5[1].opacity = 0;
-        this.config5[5].opacity = 0;
-        for (let i = 0; i < 3; i++) {
-          for (let q of this.imgs) this.data.push(this.deepCopy(q));
-        }
-        // for (let i = 0; i < 3; i++) this.next();
-      }
-      // if (this.mode == 2) {
-      //   for (let i = 0; i < 4; i++) {
-      //     for (let q of this.imgs) this.data.push(this.deepCopy(q));
-      //   }
-      // }
-      if (this.mode == 1) {
-        this.config5[1].opacity = 0;
-        this.config5[5].opacity = 0;
-        this.config5[2].opacity = 0;
-        this.config5[4].opacity = 0;
-        for (let i = 0; i < 7; i++) {
-          for (let q of this.imgs) this.data.push(this.deepCopy(q));
-        }
-      }
-      this.imgs = [];
-      for (let i = 0; i < this.data.length; i++) {
-        this.data[i].index = i;
-        this.data[i].dindex = i;
+          console.log("book", i);
+          for (let book of data) {
+            this.isshow = true;
+            this.imgs.push({
+              id: book.name,
+              bookId: book.bookID,
+              cover: "http://154.8.183.51/media/" + book.img,
+              // dindex: book.dindex,
+              index: i,
+              chapterid: book.chapter,
+              chapter: book.title,
+            });
+            i++;
+          }
+          // }
+          console.log("imgs", this.imgs);
+          if (this.imgs.length >= 7) this.mode = 7;
+          else if (this.imgs.length >= 5) this.mode = 5;
+          else if (this.imgs.length >= 3) this.mode = 3;
+          else this.mode = this.imgs.length > 0 ? 1 : 0;
 
-        this.imgs.push(this.data[i]);
-      }
-      this.imgs = this.imgs.slice(0, 7);
-      for (let i = 0; i < 3; i++) this.prev();
+          if (this.mode == 7) {
+            this.data.push(...this.imgs);
+            // for (let i = 0; i < 3; i++) this.next();
+          }
+          if (this.mode == 5) {
+            for (let i = 0; i < 2; i++) {
+              for (let q of this.imgs) this.data.push(this.deepCopy(q));
+            }
+            // for (let i = 0; i < 3; i++) this.next();
+          }
+          if (this.mode == 3) {
+            this.config5[1].opacity = 0;
+            this.config5[5].opacity = 0;
+            for (let i = 0; i < 3; i++) {
+              for (let q of this.imgs) this.data.push(this.deepCopy(q));
+            }
+            // for (let i = 0; i < 3; i++) this.next();
+          }
+          // if (this.mode == 2) {
+          //   for (let i = 0; i < 4; i++) {
+          //     for (let q of this.imgs) this.data.push(this.deepCopy(q));
+          //   }
+          // }
+          if (this.mode == 1) {
+            this.config5[1].opacity = 0;
+            this.config5[5].opacity = 0;
+            this.config5[2].opacity = 0;
+            this.config5[4].opacity = 0;
+            for (let i = 0; i < 7; i++) {
+              for (let q of this.imgs) this.data.push(this.deepCopy(q));
+            }
+          }
+          this.imgs = [];
+          for (let i = 0; i < this.data.length; i++) {
+            this.data[i].index = i;
+            this.data[i].dindex = i;
+
+            this.imgs.push(this.data[i]);
+          }
+          this.imgs = this.imgs.slice(0, 7);
+          for (let i = 0; i < 3; i++) this.prev();
+        }
+      });
+
       // console.log(this.imgs);
 
       // if (this.mode == 1) {
       // }
     },
+    initThis() {},
   },
   created() {
+    
     this.setData();
     console.log(this.imgs);
     this.getData();

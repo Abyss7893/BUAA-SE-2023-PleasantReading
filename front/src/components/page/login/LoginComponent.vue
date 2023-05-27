@@ -119,7 +119,7 @@ export default {
             // 登录成功后的操作，例如跳转到其他页面
             const userId = response.data.userId;
             store.commit("setUser", userId);
-            const isTo = confirm("登录成功!是否跳转到登录界面");
+            const isTo = confirm("登录成功!是否跳转到首页");
             // 登录成功后要获取用户信息储存到vuex中
             axios
               .get(`http://154.8.183.51/user/getinfo/${userLoginForm.username}`)

@@ -205,15 +205,15 @@ function addColection(bookid) {
 
 
 function submitRating(bookid, rate) {
-  var token = localStorage.getItem("token")
+  // var token = localStorage.getItem("token")
   var axios = require('axios');
 
   var config = {
     method: 'post',
     url: `http://154.8.183.51/book/score/${bookid}/${rate}`,
     headers: {
-      'Authorization': `Bearer ${token}`,
-      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      // 'Authorization':`Bearer ${token}`, 
+      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)', 
       'Content-Type': 'application/json'
     }
   };
@@ -221,11 +221,10 @@ function submitRating(bookid, rate) {
   return axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
-      return true
+      return true;
     })
     .catch(function (error) {
       console.log(error);
-
     });
 }
 function getMyRating(bookid) {
@@ -282,6 +281,24 @@ function deleteColection(bookid) {
       console.log(error);
     });
 }
+function getRecent() {
+  var axios = require('axios');
+  var token = localStorage.getItem("token")
+  var config = {
+    method: 'get',
+    url: 'http://154.8.183.51/book/recent',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      'Content-Type': 'application/json'
+    }
+  };
+
+  return axios(config)
+    .catch(function (response) {
+      return response;
+    });
+}
 
 function getAuthor(author) {
   return axios({
@@ -323,7 +340,8 @@ export {
   submitBookComment,
   addBookToFavor,
   getSearchBookIds,
-  deleteColection, submitRating, getMyRating,
+  deleteColection, submitRating, getMyRating,getRecent
+  ,
   getAuthor,
   getNotes, submitNote
 }

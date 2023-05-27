@@ -48,7 +48,7 @@
       <!-- <div class="book-rating"> -->
       <div class="otherintro" style="display: flex">
         <div class="leftside">
-          <div class="book-rating-text">评分:{{ book.rating }}</div>
+          <div class="book-rating-text">评分:{{ rating }}</div>
 
           <el-rate v-model="rating" style="--el-rate-fill-color: #ff7d7dc9" :disabled="true"></el-rate>
 
