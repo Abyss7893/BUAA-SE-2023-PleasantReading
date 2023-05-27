@@ -9,7 +9,7 @@
                 <img :src="detailData.cover" />
               </div>
               <div class="book-info-box">
-                <h1 class="book-name flex-view">a
+                <h1 class="book-name flex-view">
                   {{ detailData.title }}
                   <span>
                     <a :href="'/author/' + detailData.author" class="author-name">{{ detailData.author }}著</a>

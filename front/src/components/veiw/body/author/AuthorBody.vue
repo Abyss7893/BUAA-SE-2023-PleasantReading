@@ -14,12 +14,15 @@
       </div>
     </div>
   </div>
-  <div class="author-content">
+  <div class="author-content" v-if="this.books.length != 0">
     <h2>全部作品</h2>
     <li v-for="(book, idx) in this.books" :key="idx">
       <BookInfoCompnent :book="book" />
     </li>
     <div class="line"></div>
+  </div>
+  <div class="author-content-null" v-if="this.books.length == 0">
+    <el-empty description="该作者暂无作品哦~" :image="require('assets/imgs/book_null.png')" image-size="300px" />
   </div>
 </template>
 
@@ -54,7 +57,6 @@ export default {
   methods: {
     getAuthorInfo() {
       getAuthor(this.$route.params.author).then((data) => {
-        console.log(data)
         if (data.status && data.status == 200) {
           this.author = data.data
           for (let index = 0; index < this.author.works.length; index++) {
@@ -156,6 +158,7 @@ export default {
 .author-content {
   margin: auto;
   width: 1000px;
+  min-height: 400px;
 }
 
 .author-content li {
@@ -177,5 +180,11 @@ export default {
   width: 100%;
   border-top: 1px solid #e6e6e6;
   margin-bottom: 16px;
+}
+
+.author-content-null {
+  min-height: 350px;
+  width: 1000px;
+  margin: auto;
 }
 </style>
