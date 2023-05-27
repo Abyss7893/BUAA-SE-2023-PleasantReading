@@ -1,7 +1,8 @@
 <template>
   <HeadTop />
   <div class="contain">
-
+    <div class="mask" v-if="showMyCard"></div>
+    <MyCard class="mycard" v-if="showMyCard" @close="showMyCard=false"></MyCard>
     <ElDialog v-model="test" :destroy-on-close="true">
       <CropComponent @close="test = false" />
     </ElDialog>
@@ -124,6 +125,7 @@ export default {
     const showPayDialog = ref(false);
     const isfollow = ref(true);
     const showChangePwd = ref(false)
+    const showMyCard=ref(false)
     const followData = ref({
       fanId: "",
       followId: "",
@@ -175,6 +177,7 @@ export default {
       showPayDialog,
       showChangePwd,
       test,
+      showMyCard,
       signOut,
       openPayDia,
       setAvatar,
@@ -192,9 +195,20 @@ export default {
   background-position: center;
   position: relative;
   width: 100%;
-  height: 90vh;
+  height: 76vh;
 }
-
+.mycard{
+  z-index: 1000;
+}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(254, 253, 253, 0.5);
+}
 .userAvatar {
   margin-top: 10px;
   margin-left: 20px;

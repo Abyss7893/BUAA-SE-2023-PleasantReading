@@ -16,6 +16,7 @@ import Cropper from 'cropperjs'
 import '../../../../node_modules/cropperjs/dist/cropper.min.css'
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { ElMessageBox } from 'element-plus';
 export default {
     name: 'HelloWorld',
     data() {
@@ -72,6 +73,10 @@ export default {
                 }
             }).then(response => {
                 this.$store.commit('setAvatarUrl', response.data.avatarUrl);  
+                ElMessageBox.alert('头像上传成功', '提示', {
+                    confirmButtonText: '确定',
+                    type: 'success',
+                });
             }).catch(error => {
                 console.error(error)
             })
