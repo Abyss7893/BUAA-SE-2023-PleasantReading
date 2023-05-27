@@ -187,7 +187,6 @@ export default {
       this.setPageWidth(this.pageWidth)
     },
     saveInfo() {
-      console.log([this.theme, this.fontStyle, this.fontSize, this.pageWidth])
       this.$store.commit("setReaderSettings", [this.theme, this.fontStyle, this.fontSize, this.pageWidth])
     },
     readInfo() {
@@ -205,7 +204,6 @@ export default {
     saveSettings() {
       this.saveInfo()
       this.setInfo()
-      console.log(this.$store.state.readerSettings)
       this.$parent.changeVisiable("settings")
     },
     cancelSettings() {

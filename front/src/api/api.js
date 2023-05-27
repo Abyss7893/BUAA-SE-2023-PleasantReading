@@ -38,7 +38,6 @@ function getBookContent(bookid) {
 function getBookCharpter(bookid, chapter) {
   var token = localStorage.getItem("token")
   var axios = require('axios');
-
   var config = {
     method: 'get',
     url: 'http://154.8.183.51/book/content/' + bookid + '/' + chapter,
@@ -285,10 +284,28 @@ function deleteColection(bookid) {
 }
 
 function getAuthor(author) {
-  console.log(author)
   return axios({
     method: 'get',
     url: 'http://154.8.183.51/book/author/' + author,
+  }).catch(function (data) {
+    return data;
+  });
+}
+
+function getNotes(bookid, chapter, page) {
+  return axios({
+    method: 'get',
+    url: `http://154.8.183.51/book/notes/${bookid}/${chapter}/${page}`,
+  }).catch(function (data) {
+    return data;
+  });
+}
+
+function submitNote(bookid, chapter, note) {
+  return axios({
+    method: 'post',
+    url: `http://154.8.183.51/book/notes/${bookid}/${chapter}`,
+    data: { "text": note },
   }).catch(function (data) {
     return data;
   });
@@ -308,6 +325,7 @@ export {
   getSearchBookIds,
   deleteColection, submitRating, getMyRating,
   getAuthor,
+  getNotes, submitNote
 }
 // 使用示例
 

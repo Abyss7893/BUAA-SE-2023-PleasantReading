@@ -25,7 +25,8 @@
             </i>
           </li>
         </ul>
-        <ul class="no-comments" v-if="this.comments.length == 0">还没有人留下评论，快来留下你的见解吧！</ul>
+        <div class="no-comments" v-if="this.comments.length == 0"><el-empty description="还没有人留下评论，快来留下你的足迹吧！"
+            :image="require('assets/imgs/comment_null.png')" image-size="250px" /></div>
         <div class="comment-input-box">
           <form action="POST">
             <textarea ref="mycomment" wrap="soft" rows="1" placeholder="发送一条友善的评论~"></textarea><input type="button"

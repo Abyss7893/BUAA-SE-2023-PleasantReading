@@ -482,13 +482,13 @@
   line-height: 0;
 }
 
-.reader-menu .comments .comments-box .comment-input-box {
+.comment-input-box {
   border-top: 1px solid #e5e5e5;
   margin-top: 12px;
   padding-top: 12px;
 }
 
-.reader-menu .comments .comments-box .comment-input-box textarea {
+.comment-input-box textarea {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -503,11 +503,11 @@
   transition: height 0.3s ease;
 }
 
-.reader-menu .comments .comments-box .comment-input-box textarea:focus {
+.comment-input-box textarea:focus {
   height: 105px;
 }
 
-.reader-menu .comments .comments-box .comment-input-box input[type="button"] {
+.comment-input-box input[type="button"] {
   float: right;
   margin-top: 12px;
   padding: 10px;
@@ -522,6 +522,6 @@
   outline: none;
 }
 
-.reader-menu .comments .comments-box .comment-input-box input[type="button"]:hover {
+.comment-input-box input[type="button"]:hover {
   background-color: #d5190fde;
 }

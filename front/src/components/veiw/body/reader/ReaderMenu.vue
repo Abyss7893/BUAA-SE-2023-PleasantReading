@@ -10,7 +10,7 @@
             <path
               d="M695.1 455.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM695.1 578.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM695.1 701.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM379.1 281.1c-17.9 0-32.4-14.5-32.4-32.4V115.4c0-17.9 14.5-32.4 32.4-32.4s32.4 14.5 32.4 32.4v133.2c0 17.9-14.5 32.5-32.4 32.5zM657.1 281.1c-17.9 0-32.4-14.5-32.4-32.4V115.4c0-17.9 14.5-32.4 32.4-32.4s32.4 14.5 32.4 32.4v133.2c0 17.9-14.5 32.5-32.4 32.5z"
               fill="#262626" p-id="41512"></path>
-          </svg><span>目录</span></a></dd>
+          </svg><span>图书目录</span></a></dd>
       <dd><a @click="addToFavor"><svg t="1684569110214" class="icon" viewBox="0 0 1024 1024" version="1.1"
             xmlns="http://www.w3.org/2000/svg" p-id="32295">
             <path
@@ -43,7 +43,15 @@
             <path
               d="M300.083008 464.834794c0 27.928073 22.735817 50.64854 50.66389 50.64854 27.927049 0 50.662867-22.720468 50.662867-50.64854 0-27.928073-22.735817-50.66389-50.662867-50.66389C322.817802 414.171927 300.083008 436.907745 300.083008 464.834794"
               fill="#262626" p-id="2413"></path>
-          </svg><span>评论</span></a></dd>
+          </svg><span>章节评论</span></a></dd>
+      <dd :class="isNoteAct">
+        <a @click="changeNote"><svg t="1685182667046" class="icon" viewBox="0 0 1024 1024" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" p-id="6116" width="16" height="16">
+            <path
+              d="M208.896 788.48l152.576-48.128c8.192-3.072 16.384-7.168 22.528-14.336l403.456-433.152c50.176-53.248 47.104-136.192-6.144-186.368-53.248-49.152-136.192-46.08-186.368 7.168L191.488 545.792c-6.144 7.168-10.24 15.36-12.288 23.552L142.336 727.04c-9.216 38.912 27.648 73.728 66.56 61.44z m423.936-640c29.696-31.744 80.896-33.792 112.64-4.096 31.744 29.696 33.792 80.896 4.096 112.64l-29.696 31.744-112.64-112.64 25.6-27.648zM229.376 581.632l343.04-367.616 112.64 112.64-338.944 363.52-152.576 48.128 35.84-156.672zM857.088 877.568H124.928c-14.336 0-25.6 11.264-25.6 25.6s11.264 25.6 25.6 25.6h732.16c14.336 0 25.6-11.264 25.6-25.6s-11.264-25.6-25.6-25.6z"
+              fill="#262626" p-id="6117"></path>
+          </svg><span>章节笔记</span></a>
+      </dd>
       <dd :class="isSettingAct"><a @click="changeSettings"><svg t="1684569420958" class="icon" viewBox="0 0 1036 1024"
             version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="37778" width="16" height="16">
             <path
@@ -59,6 +67,7 @@
     <!-- 设置面板浮层 -->
     <ReaderSettingsPanel ref="child1" :style="{ display: settingsDisplay }" />
     <ReaderCommentsPanel ref="child3" :style="{ display: commentsDisplay }" />
+    <ReaderNotePannel ref="child4" :style="{ display: noteDisplay }" />
   </div>
 </template>
 <script>
@@ -66,6 +75,7 @@ import 'css/reader/reader.css'
 import ReaderSettingsPanel from './ReaderSettingsPanel.vue';
 import ReaderCatalogPanel from './ReaderCatalogPanel.vue';
 import ReaderCommentsPanel from './ReaderCommentsPanel.vue';
+import ReaderNotePannel from './ReaderNotePannel.vue';
 import { addBookToFavor } from "@/api/api";
 export default {
   name: "ReaderMenu",
@@ -73,6 +83,7 @@ export default {
     ReaderSettingsPanel,
     ReaderCatalogPanel,
     ReaderCommentsPanel,
+    ReaderNotePannel,
   },
   data() {
     return {
@@ -81,6 +92,7 @@ export default {
       settingsExist: false,
       catalogExist: false,
       commentsExist: false,
+      noteExist: false,
     }
   },
   mounted() {
@@ -110,6 +122,11 @@ export default {
         return "act"
       return null
     },
+    isNoteAct() {
+      if (this.noteExist)
+        return "act"
+      return null
+    },
     settingsDisplay() {
       if (this.settingsExist)
         return "block"
@@ -124,6 +141,12 @@ export default {
     },
     commentsDisplay() {
       if (this.commentsExist)
+        return "block"
+      else
+        return "none"
+    },
+    noteDisplay() {
+      if (this.noteExist)
         return "block"
       else
         return "none"
@@ -146,6 +169,7 @@ export default {
       this.settingsExist = false
       this.catalogExist = false
       this.commentsExist = false
+      this.noteExist = false
     },
     changeVisiable(pannelName) {
       switch (pannelName) {
@@ -157,6 +181,9 @@ export default {
           break
         case "comments":
           this.commentsExist = !this.commentsExist
+          break
+        case "note":
+          this.noteExist = !this.noteExist
           break
         default:
           break;
@@ -185,6 +212,14 @@ export default {
       if (!this.commentsExist) {
         this.panelInit()
         this.changeVisiable("comments")
+      } else {
+        this.panelInit()
+      }
+    },
+    changeNote() {
+      if (!this.noteExist) {
+        this.panelInit()
+        this.changeVisiable("note")
       } else {
         this.panelInit()
       }
