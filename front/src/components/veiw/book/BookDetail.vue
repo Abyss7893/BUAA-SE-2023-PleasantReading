@@ -9,7 +9,7 @@
                 <img :src="detailData.cover" />
               </div>
               <div class="book-info-box">
-                <h1 class="book-name flex-view">a
+                <h1 class="book-name flex-view">
                   {{ detailData.title }}
                   <span>
                     <a :href="'/author/' + detailData.author" class="author-name">{{ detailData.author }}著</a>
@@ -32,7 +32,11 @@
                 <div class="translators flex-view" style="">
                   <span class="rate-text">评分：</span>
                   <span class="name rate-text">{{ detailData.rating }}</span>
-                  <el-rate v-model="detailData.rating" style="--el-rate-fill-color: #ff7d7dc9" :disabled="true"></el-rate>
+                  <el-rate
+                    v-model="detailData.rating"
+                    style="--el-rate-fill-color: #ff7d7dc9"
+                    :disabled="true"
+                  ></el-rate>
                   <!-- <span class="name">{{ detailData.size }}</span> -->
                 </div>
 
@@ -58,14 +62,22 @@
                   </div>
                 </div>
               </div>
-              <div v-if="!isColected" class="count-item flex-view pointer" @click="collect()">
+              <div
+                v-if="!isColected"
+                class="count-item flex-view pointer"
+                @click="collect()"
+              >
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">收藏</span>
                   </div>
                 </div>
               </div>
-              <div v-if="isColected" class="count-item flex-view pointer" @click="collect()">
+              <div
+                v-if="isColected"
+                class="count-item flex-view pointer"
+                @click="collect()"
+              >
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">已收藏</span>
@@ -79,22 +91,40 @@
                   </div>
                 </div>
               </div> -->
-              <div class="count-item flex-view pointer" @click="showRate = !showRate">
+              <div
+                class="count-item flex-view pointer"
+                @click="showRate = !showRate"
+              >
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">评分</span>
                   </div>
                 </div>
               </div>
-              <div v-if="showRate" class="translators flex-view" style="flex-direction: column">
+              <div
+                v-if="showRate"
+                class="translators flex-view"
+                style="flex-direction: column"
+              >
                 <!-- <span class="rate-text">评分：</span> -->
                 <!-- <span class="name rate-text">{{ detailData.rating }}</span> -->
                 <div class="rate-loyar">
-                  <el-rate v-model="valueRate" allow-half style="--el-rate-fill-color: #ff7d7dc9"
-                    :texts="['shit', '厕纸', '一般', '好好好', '神中神']" show-text></el-rate>
+                  <el-rate
+                    v-model="valueRate"
+                    allow-half
+                    style="--el-rate-fill-color: #ff7d7dc9"
+                    :texts="['shit', '厕纸', '一般', '好好好', '神中神']"
+                    show-text
+                  ></el-rate>
                 </div>
                 <div>
-                  <el-button type="danger" plain size="small" @click="submitRate">提交</el-button>
+                  <el-button
+                    type="danger"
+                    plain
+                    size="small"
+                    @click="submitRate"
+                    >提交</el-button
+                  >
                 </div>
                 <!-- <span class="name">{{ detailData.size }}</span> -->
               </div>
@@ -106,18 +136,35 @@
         <div v-show="isContent">
           <el-divider>
             目录
-            <el-icon v-show="Order" @click="changeOrder" style="--color: #315c9e">
+            <el-icon
+              v-show="Order"
+              @click="changeOrder"
+              style="--color: #315c9e"
+            >
               <SortDown />
             </el-icon>
-            <el-icon v-show="!Order" @click="changeOrder" style="--color: #315c9e">
+            <el-icon
+              v-show="!Order"
+              @click="changeOrder"
+              style="--color: #315c9e"
+            >
               <SortUp />
             </el-icon>
           </el-divider>
 
           <div class="novel-directory">
-            <div v-for="(row, index) in rows" :key="index" class="directory-row">
+            <div
+              v-for="(row, index) in rows"
+              :key="index"
+              class="directory-row"
+            >
               <!-- <a href="#"> -->
-              <div v-for="chapter in row" :key="chapter.id" class="chapter-title" @click="gotoReadChapter(chapter.id)">
+              <div
+                v-for="chapter in row"
+                :key="chapter.id"
+                class="chapter-title"
+                @click="gotoReadChapter(chapter.id)"
+              >
                 {{ chapter.title }}
               </div>
               <!-- </a> -->
@@ -254,10 +301,16 @@ export default {
     },
     initRating() {
       getMyRating(this.bookId).then((response) => {
-        if (response.status == 200)
+        if (response.status == 200) {
           if (response.data.message === "success")
             this.valueRate = parseFloat(response.data.score);
-      });
+        }   else {console.log("没有提交过评分")}
+     
+      }
+      
+      
+      
+      );
     },
     formatNumber(number) {
       if (number >= 100000) {

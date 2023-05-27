@@ -1,29 +1,36 @@
 <template>
   <div class="main-search-conten">
-    <div class="search-filter"></div>
-    <div class="tool-bar"></div>
-    <div class="result-list">
-      <ul>
-        <li v-for="(book, bookidx) in books" :key="bookidx">
-          <BookInfoCompnent :book="book" />
-        </li>
-      </ul>
+    <div v-if="bookids.length == 0">
+      <div class="search-result-null" v-if="this.books.length == 0">
+        <el-empty description="查询结果为空哦~" :image="require('assets/imgs/book_null.png')" image-size="300px" />
+      </div>
     </div>
-    <div class="search-foot">
-      <div class="page-control">
+    <div v-if="bookids.length != 0">
+      <div class="search-filter"></div>
+      <div class="tool-bar"></div>
+      <div class="result-list">
+        <ul>
+          <li v-for="(book, bookidx) in books" :key="bookidx">
+            <BookInfoCompnent :book="book" />
+          </li>
+        </ul>
+      </div>
+      <div class="search-foot">
+        <div class="page-control">
 
-        <div class="arrow">
-          <div class="left"><a @click="jumpToPage(this.$route.query.page - 1)"><el-icon>
-                <Back />
-              </el-icon></a></div>
-          <div class="page-num"><a v-text="this.$route.query.page + '/' + this.pages"></a></div>
-          <div class="right"><a @click="jumpToPage(this.$route.query.page - (-1))"><el-icon>
-                <Right />
-              </el-icon></a></div>
-        </div>
-        <div class="jump">
-          <input ref="pageInput" type="text" :value="this.$route.query.page" class="page-input">
-          <a class="go" @click="jumpToPage(this.$refs.pageInput.value)">跳转</a>
+          <div class="arrow">
+            <div class="left"><a @click="jumpToPage(this.$route.query.page - 1)"><el-icon>
+                  <Back />
+                </el-icon></a></div>
+            <div class="page-num"><a v-text="this.$route.query.page + '/' + this.pages"></a></div>
+            <div class="right"><a @click="jumpToPage(this.$route.query.page - (-1))"><el-icon>
+                  <Right />
+                </el-icon></a></div>
+          </div>
+          <div class="jump">
+            <input ref="pageInput" type="text" :value="this.$route.query.page" class="page-input">
+            <a class="go" @click="jumpToPage(this.$refs.pageInput.value)">跳转</a>
+          </div>
         </div>
       </div>
     </div>
@@ -89,5 +96,9 @@ export default {
 <style>
 em {
   font-style: normal
+}
+
+.search-result-null {
+  margin-top: 24px;
 }
 </style>

@@ -9,7 +9,18 @@
       <div class="first-top">
         <img :src="booklist[0].cover" class="image" />
         <div class="first">
-          <h2 class="book-name">{{ booklist[0].name }} </h2>
+          <el-tooltip
+            class="box-item"
+            effect="dark"
+            :content="booklist[0].name"
+            placement="top"
+          >
+            <!-- <span>{{ booklist[0].name }}</span> -->
+
+            <router-link :to="{ path: 'book/' + booklist[0].id }">
+              <h2 class="book-name">{{ booklist[0].name }}</h2></router-link
+            >
+          </el-tooltip>
           <p class="author">{{ booklist[0].author }}著</p>
           <el-space size="10%">
             <el-tag class="mx-4" effect="plain" type="danger">{{
@@ -32,12 +43,17 @@
 
     <div class="other-books">
       <!-- </template> -->
+
       <div
         v-for="(book, index) in booklist.slice(1)"
         :key="book"
         class="text item"
       >
-        No.{{ index + 2 }}:{{ book.name }}
+        <router-link :to="{ path: 'book/' + booklist[0].id }">
+          <div class="book-item-list">
+            <span> No.{{ index + 2 }}:{{ book.name }}</span>
+          </div>
+        </router-link>
       </div>
     </div>
   </el-card>
@@ -65,6 +81,19 @@ export default {
 
     
 <style scoped>
+.book-item-list{
+  width: 90%;
+  padding-left:4px ;
+  margin-right:-3px ;
+
+  
+}
+.book-item-list:hover{
+  /* background-color:red; */
+  border-bottom:solid rgba(255, 0, 0, 0.263) 1px ;
+  border-left:solid rgba(255, 0, 0, 0.263) 1px ;
+
+}
 .other-books {
   margin-top: -20px;
   padding-top: 10px;
@@ -94,10 +123,11 @@ export default {
   padding: 0px;
 }
 .book-name {
+  font-size: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 100%;
+  max-width: 220px;
   padding-bottom: 2%;
 }
 .first-top {

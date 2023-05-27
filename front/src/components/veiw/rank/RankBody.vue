@@ -2,25 +2,25 @@
 <template>
   <head-and-foot>
     <div class="box-center">
-      <div class="novel-body">
+      <!-- <div class="novel-body">
         <div class="category-component-wrapper">
           <CategoryComponent />
         </div>
-        <div class="recommend-component-wrapper">
-          <RankComponent />
-        </div>
-      </div>
+        <div class="recommend-component-wrapper"> -->
+      <RankComponent />
+      <!-- </div> -->
+      <!-- </div> -->
     </div>
   </head-and-foot>
 </template>
   <script>
-import CategoryComponent from "../body/CategoryComponent.vue";
+// import CategoryComponent from "../body/CategoryComponent.vue";
 import RankComponent from "./RankComponent.vue";
 import HeadAndFoot from "../HeadAndFoot.vue";
 export default {
   name: "HomeBody",
   components: {
-    CategoryComponent,
+    // CategoryComponent,
     RankComponent,
     HeadAndFoot,
   },

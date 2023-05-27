@@ -5,7 +5,11 @@
     <div class="box-center">
       <el-divider />
       <div v-if="mybooks.length === 0">
-        <el-empty description="暂无书籍" />
+        <el-empty
+          description="暂无书籍"
+          :image="require('assets/imgs/book_null.png')"
+          image-size="300px"
+        />
       </div>
       <div v-else>
         <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
@@ -44,7 +48,7 @@
   </head-and-foot>
 </template>
     
-  <script>
+<script>
 import { getMyBook } from "@/api/api";
 import HeadAndFoot from "../../HeadAndFoot.vue";
 import BookCard from "./BookCard.vue";
@@ -72,14 +76,19 @@ export default {
     this.$nextTick(() => {
       getMyBook().then((data) => {
         // // console.log(data);
-        for (let book of data.books) {
-          this.mybooks.push({
-            name: book.name,
-            cover: book.cover,
-            bookid: book.bookid,
-          });
+        try {
+          if ("books" in data)
+            for (let book of data.books) {
+              this.mybooks.push({
+                name: book.name,
+                cover: book.cover,
+                bookid: book.bookid,
+              });
+            }
+          this.rownum = Math.ceil(this.mybooks.length / this.colsize);
+        } catch (e) {
+          console.log(e);
         }
-        this.rownum = Math.ceil(this.mybooks.length / this.colsize);
         // // console.log(this.mybooks);
       });
     });
@@ -87,7 +96,7 @@ export default {
 };
 </script>
     
-  <style lang="scss">
+<style lang="scss">
 // 引入 css
 @import url(../../../../assets/css/mybooks/mybook.css);
 </style>
