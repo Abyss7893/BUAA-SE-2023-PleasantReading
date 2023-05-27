@@ -198,6 +198,7 @@ export default {
             break;
           case 401:
             alert("用户未登录！或登录失效！请重新登录")
+            this.$store.commit('refresh')
             break;
           default:
             break;

@@ -23,7 +23,7 @@ function getBookDetiles(bookid) {
       return response.data;
     })
     .catch(function () {
-      alert("书籍信息不存在！")
+      // alert("书籍信息不存在！")
     });
 
 }
@@ -62,7 +62,9 @@ function getBookList(options) {
     status: '',
     page: ''
   };
-
+  if ('sub' in options) {
+    options['category'] = options['sub']
+  }
   // 合并默认参数和传入的参数
   var mergedOptions = { ...defaultOptions, ...options };
 
@@ -244,8 +246,8 @@ function getMyRating(bookid) {
 
   return axios(config)
     // .then(function (response) {
-    //   console.log(JSON.stringify(response.data));
-    //   return response.data;
+    //   // console.log(JSON.stringify(response.data));
+    //   return response;
     // })
     .catch(function (response) {
       return response;

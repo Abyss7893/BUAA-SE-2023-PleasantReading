@@ -1,11 +1,7 @@
 <template>
   <div class="book-gallery">
     <!-- <div class="book-row" v-for="(row, rowIndex) in bookRows" :key="rowIndex"> -->
-    <div
-      class="book-row"
-      v-for="(row, rowIndex) in displayedBooks"
-      :key="rowIndex"
-    >
+    <div class="book-row" v-for="(row, rowIndex) in displayedBooks" :key="rowIndex">
       <!-- <el-col v-for="book in displayedBooks" :key="book.id" :span="12"> -->
       <el-row :gutter="40">
         <el-col v-for="book in row" :key="book.id" :span="12">
@@ -16,38 +12,17 @@
       <el-divider />
     </div>
     <div class="pagination">
-      <el-button
-        type="danger"
-        plain
-        @click="firstPage"
-        :disabled="currentPage === 1"
-        >首页</el-button
-      >
-      <el-button
-        type="danger"
-        plain
-        @click="previousPage"
-        :disabled="currentPage === 1"
-      >
+      <el-button type="danger" plain @click="firstPage" :disabled="currentPage === 1">首页</el-button>
+      <el-button type="danger" plain @click="previousPage" :disabled="currentPage === 1">
         上一页
       </el-button>
       <!-- <div > -->
       <span class="nuber"> 第{{ this.currentPage }}页 </span>
       <!-- </div>/ -->
-      <el-button
-        type="danger"
-        plain
-        @click="nextPage"
-        :disabled="currentPage * pageSize >= books.length"
-      >
+      <el-button type="danger" plain @click="nextPage" :disabled="currentPage * pageSize >= books.length">
         下一页
       </el-button>
-      <el-button
-        type="danger"
-        plain
-        @click="lastPage"
-        :disabled="currentPage * pageSize >= books.length"
-      >
+      <el-button type="danger" plain @click="lastPage" :disabled="currentPage * pageSize >= books.length">
         尾页
       </el-button>
     </div>
@@ -57,7 +32,7 @@
   
   
   
-  <script>
+<script>
 // import axios from 'axios';
 import { getBookDetiles, getBookList } from "@/api/api";
 import BookMiniCard from "./BookMiniCard.vue";
@@ -251,6 +226,7 @@ export default {
   vertical-align: middle;
   /* position: relative; */
 }
+
 .book-gallery {
   /* display: flex; */
   border-left: 2px solid #dfe1e3;
@@ -265,8 +241,10 @@ export default {
   /* display: flex; */
   justify-content: space-between;
   margin-bottom: 20px;
-  flex-wrap: wrap; /* 添加该行 */
+  flex-wrap: wrap;
+  /* 添加该行 */
 }
+
 .book-item {
   width: 100%;
   height: 100%;
@@ -296,6 +274,7 @@ export default {
   margin-top: auto;
   font-weight: bold;
 }
+
 .book-rating {
   display: flex;
 }
@@ -314,6 +293,7 @@ export default {
   min-width: 102px; */
   z-index: 3;
 }
+
 .book-img-box img {
   width: 100%;
   height: 100%;
@@ -328,6 +308,7 @@ export default {
   transition-delay: 0s;
   /* z-index: 10; */
 }
+
 .book-img-box img:hover {
   transform: scale(1.1);
 }
@@ -344,6 +325,7 @@ export default {
 
   /* text-overflow: ellipsis; */
 }
+
 .intro {
   color: #743e13a6;
   font-size: 14px;
@@ -358,7 +340,8 @@ export default {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* 这里是超出几行省略 */
+  -webkit-line-clamp: 2;
+  /* 这里是超出几行省略 */
   overflow: hidden;
 
   /* overflow: hidden; */
@@ -371,10 +354,12 @@ export default {
   max-height: 210px;
   min-height: 210px;
 }
+
 .el-col {
   max-height: 210px;
   min-height: 210px;
 }
+
 .title {
   color: #231e1e;
   max-width: 200px;
@@ -386,6 +371,7 @@ export default {
   /* white-space: normal; */
   /* background: #030958; */
 }
+
 .author {
   height: 22px;
   margin-bottom: 6px;
@@ -394,32 +380,38 @@ export default {
   /* border-top:solid #c6b7b758; */
   /* overflow: hidden; */
 }
+
 .name {
   max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
 }
+
 .category {
   max-width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
 }
+
 .size {
   font-size: small;
   color: #666;
 }
+
 .pagination {
   /* 对其方式：右对齐 */
   float: right;
   height: 40px;
 }
+
 .nuber {
   min-width: 60px;
   max-width: 60px;
   width: 60px;
 }
+
 /* .book-rate {
   --el-rate-void-color: red;
 } */
