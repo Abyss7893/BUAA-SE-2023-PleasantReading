@@ -127,9 +127,11 @@ export default {
 
           if (!data.status && data.response.status == 401) {
             alert("该书籍仅供vip阅读！而您甚至未登录！")
+            window.location.href = '/book/' + this.$route.params.bookid
             return
           } else if (!data.status && data.response.status == 403) {
             alert("该书籍仅供vip阅读！")
+            window.location.href = '/book/' + this.$route.params.bookid
             return
           } else {
             let data2 = data.data

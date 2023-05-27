@@ -356,6 +356,12 @@
   padding-top: 10px;
   transition: color .3s, background-color .3s;
   font-size: 15px;
+
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 
 .reader-menu .catalog ul li a:hover {
@@ -421,6 +427,7 @@
   /* float: left; */
   font: 10px/20px PingFangSC-Regular, -apple-system, Simsun;
   margin: 14px 0 0 10px;
+  font-weight: 600;
 }
 
 .reader-menu .comments .comments-box li .comment-time {
