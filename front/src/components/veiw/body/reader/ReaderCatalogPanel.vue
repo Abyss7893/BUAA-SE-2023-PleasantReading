@@ -6,12 +6,11 @@
       </el-icon></a>
     <div class="panel catalog">
       <h4 class="lang">目录</h4>
-      <ul ref="clist" v-infinite-scroll="load">
-        <li v-for="(chapter, chapterId) in chapters.slice(0, this.chapterVisiableCount)" :key="chapterId"
-          :class="this.thisChapter == chapterId ? 'act' : ''" :ref="chapterId"><a
-            :href="'/reader/' + this.$route.params.bookid + '/' + (chapterId + 1)">{{
-              chapter
-            }}</a></li>
+      <ul ref="clist">
+        <li v-for="(chapter, chapterId) in chapters" :key="chapterId" :class="this.thisChapter == chapterId ? 'act' : ''"
+          :ref="chapterId"><a :href="'/reader/' + this.$route.params.bookid + '/' + (chapterId + 1)">{{
+            chapter
+          }}</a></li>
       </ul>
     </div>
   </div>
@@ -43,11 +42,11 @@ export default {
     scrollToThisChapter() {
       this.$refs.clist.scrollTop = this.$refs[this.thisChapter][0].offsetTop
     },
-    load() {
-      this.chapterVisiableCount += 20;
-      if (this.chapters.length - this.chapterVisiableCount < 20)
-        this.chapterVisiableCount = this.chapters.length
-    },
+    // load() {
+    //   this.chapterVisiableCount += 20;
+    //   if (this.chapters.length - this.chapterVisiableCount < 20)
+    //     this.chapterVisiableCount = this.chapters.length
+    // },
     initCatalog() {
       getBookContent(this.$route.params.bookid).then((data) => {
         this.chapters = data.outline;

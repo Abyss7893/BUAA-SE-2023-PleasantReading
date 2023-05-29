@@ -1,24 +1,26 @@
 <!-- 网页的主页的中间内容部分 -->
 <template>
-  <div style="display: flex; flex-direction: column" >
+  <div style="display: flex; flex-direction: column">
     <start-component @hide="hideStartComponent" />
-    <ElAffix>
-      <WebHead style="margin: 0,position:fixed;" />
-    </ElAffix>
-    <div>
-      <div class="box-center">
-        <div class="novel-body">
-          <div class="category-component-wrapper">
-            <CategoryComponent />
-          </div>
-          <div class="recommend-component-wrapper">
-            <RecommendComponent />
+    <div v-show="showHeadAndFoot">
+      <ElAffix>
+        <WebHead style="margin: 0,position:fixed;" />
+      </ElAffix>
+      <div>
+        <div class="box-center">
+          <div class="novel-body">
+            <div class="category-component-wrapper">
+              <CategoryComponent />
+            </div>
+            <div class="recommend-component-wrapper">
+              <RecommendComponent />
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <FootComponents />
+      <FootComponents />
+    </div>
   </div>
 </template>
 <script>
@@ -62,7 +64,7 @@ export default {
     hideStartComponent() {
       setTimeout(() => {
         this.showHeadAndFoot = true;
-      }, 500);
+      }, 50);
     },
   },
 };
