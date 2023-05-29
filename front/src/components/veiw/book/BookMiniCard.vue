@@ -48,9 +48,13 @@
       <!-- <div class="book-rating"> -->
       <div class="otherintro" style="display: flex">
         <div class="leftside">
-          <div class="book-rating-text">评分:{{ rating }}</div>
+          <div class="book-rating-text">评分:{{ book.rating }}</div>
 
-          <el-rate v-model="rating" style="--el-rate-fill-color: #ff7d7dc9" :disabled="true"></el-rate>
+          <el-rate
+            v-model="rating"
+            style="--el-rate-fill-color: #ff7d7dc9"
+            :disabled="true"
+          ></el-rate>
 
           <p class="size">字数:{{ book.size }}</p>
         </div>
@@ -69,8 +73,13 @@ export default {
   props: {
     book: Object,
   },
-  data() {
-    return { rating: this.book.rating };
+  // data() {
+  //   return { rating: this.book.rating };
+  // },
+  computed: {
+    rating() {
+      return this.book.rating;
+    },
   },
 };
 </script>

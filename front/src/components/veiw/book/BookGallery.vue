@@ -162,6 +162,7 @@ export default {
         for (let bookid of booklist) {
           getBookDetiles(bookid).then((res) => {
             var data = res;
+
             this.books[i] = {
               id: data.id,
               cover: data.cover,
@@ -177,18 +178,24 @@ export default {
               status: data.status,
               simpleSizes: this.getSimpleSize(data.cnt),
             };
+            if (i === 1) {
+              console.log(data);
+              console.log(this.books[i]);
+            }
             i++;
           });
           j++;
           if (j === 30) break;
         }
-        const self=this;
+        const self = this;
 
         setTimeout(function () {
           while (j < booklist.length) {
             let bookid = booklist[j];
+
             getBookDetiles(bookid).then((res) => {
               var data = res;
+
               self.books[i] = {
                 id: data.id,
                 cover: data.cover,
