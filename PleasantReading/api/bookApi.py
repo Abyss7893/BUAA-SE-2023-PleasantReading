@@ -233,7 +233,7 @@ def getAllNotes(request):
     if request.method != 'GET':
         return JsonResponse({'message': 'invalid request'}, status=400)
     if not notAnonymous(request):
-        return JsonResponse({'notes': [], 'pages': 1})
+        return JsonResponse({'notes': []})
     userid = getUsername(request)
     notes = Comments.objects.filter(userID=userid, visible=False)
     subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name')[:1]
@@ -241,8 +241,23 @@ def getAllNotes(request):
         name=Subquery(subquery.values('name'))
     )
     notes = notes.reverse()
-    notes = notes.values('bookID', 'name', 'chapter', 'text')
+    notes = notes.values('bookID', 'name', 'chapter', 'text', 'timestamp')
     return JsonResponse({'notes': list(notes)})
+
+def getAllComments(request):
+    if request.method != 'GET':
+        return JsonResponse({'message': 'invalid request'}, status=400)
+    if not notAnonymous(request):
+        return JsonResponse({'comments': []})
+    userid = getUsername(request)
+    notes = Comments.objects.filter(userID=userid, visible=True)
+    subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name')[:1]
+    notes = notes.annotate(
+        name=Subquery(subquery.values('name'))
+    )
+    notes = notes.reverse()
+    notes = notes.values('bookID', 'name', 'chapter', 'text', 'timestamp')
+    return JsonResponse({'comments': list(notes)})
 
 
 def getComments(request, bookid, chapter, page):
