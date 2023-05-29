@@ -20,12 +20,6 @@
       </div>
       <div class="PersonTop_text">
         <div class="user_text">
-
-          <div class="imageVIP" v-if="VIP">
-            <ElAvatar src="https://pic.ntimg.cn/file/20190602/29233777_112131974087_2.jpg" :size="45" fit="contain">
-            </ElAvatar>
-
-          </div>
           <div class="user_qianming">
             <span> {{ design }}</span>
           </div>
@@ -87,14 +81,15 @@
           </el-menu>
         </el-card>
       </div>
+      
       <div class="person_body_right">
         <router-view></router-view>
       </div>
     </div>
-
+    
 
   </div>
-  <WebFoot />
+  <WebFoot/>
 </template>
 
 <script>
@@ -145,7 +140,6 @@ export default {
     }
     function openPayDia() {
       showPayDialog.value = true;
-      console.log("什么情况", showPayDialog.value);
     }
     function setAvatar() {
       const input = document.createElement('input');
@@ -191,11 +185,14 @@ export default {
 .contain {
   background-image: url('../../assets/personalbg.png');
   background-size: cover;
-
+  display: flex;
   background-position: center;
+  background-attachment: fixed; /* 添加属性 */
   position: relative;
+  flex-direction: column;
   width: 100%;
-  height: 76vh;
+  height: 800px;
+  min-height: 70vh;
 }
 .mycard{
   z-index: 1000;
@@ -209,6 +206,15 @@ export default {
   height: 100%;
   background-color: rgba(254, 253, 253, 0.5);
 }
+.person_bottom{
+  width: 100%;
+  height: 50px;
+  min-height: 50px;
+  justify-content: space-between;
+  font-size: 14px;
+  position: fixed; /* 修改属性 */
+  bottom: 121px; /* 添加属性 */
+}
 .userAvatar {
   margin-top: 10px;
   margin-left: 20px;
@@ -217,6 +223,7 @@ export default {
 .PersonTop {
   width: 1000px;
   height: 200px;
+  min-height: 200px;
   padding-top: 20px;
   background-color: white;
   background-image: url(../../assets/personTopbg.png);
@@ -278,18 +285,21 @@ export default {
 
 /*下面部分样式*/
 .person_body {
+  flex-grow: 1;
   width: 1000px;
   margin-top: 230px;
   display: flex;
   position: absolute;
   left: 50%;
+  
   transform: translateX(-50%);
   border-radius: 5px;
 }
 
 .person_body_left {
   width: 27%;
-  height: 600px;
+  height: 380px;
+
   border-radius: 5px;
   margin-right: 3%;
   text-align: center;
@@ -324,6 +334,7 @@ export default {
 
 .box-card {
   height: 380px;
+  min-height: 380px;
   margin-top: 40px;
   margin-right: 30px;
 }
