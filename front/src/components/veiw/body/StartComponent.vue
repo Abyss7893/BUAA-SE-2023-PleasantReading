@@ -39,7 +39,7 @@ export default {
     return {
       imgs: [],
       showLastRead: true,
-      backgroundImage: require("../../../assets/imgs/PontdArcole_ZH-CN5348049357_1920x1080.jpg"),
+      backgroundImage: null,
       showComponent: true,
       i: 0,
       typewriter: "",
@@ -142,15 +142,49 @@ export default {
   created() {
     this.switch = Math.floor(Math.random() * this.strs.length);
     this.v = 1600 / this.strs[this.switch].length;
-    this.imgs = require
-      .context("../../../assets/imgs/homepage/", false, /.jpg$/)
-      .keys();
+    this.imgs = [
+      "https://i.imgloc.com/2023/05/29/VtxwjH.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxlVF.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtx0oZ.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxkR8.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxWU5.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxnLy.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxUg3.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxDCv.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtx4QU.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtxy6p.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxfbL.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxVVk.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxZSx.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtgu3a.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgqUw.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgQKz.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg1Xq.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgaCb.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgP1d.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgM6V.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgLbN.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgKio.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg9SA.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtgv3c.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgsDJ.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgSKt.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg5XX.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtgh0P.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgG1C.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgFzE.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg6OQ.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgziH.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgE5F.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg73Z.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgxD8.jpeg",
+    ];
     let index = Math.floor(Math.random() * this.imgs.length);
-    for (let i = 0; i < this.imgs.length; i++) {
-      this.imgs[i] = require("../../../assets/imgs/homepage/" +
-        this.imgs[i].substring(2));
-    }
-    this.backgroundImage = this.backgroundImage = this.imgs[index];
+    // for (let i = 0; i < this.imgs.length; i++) {
+    //   this.imgs[i] = require("../../../assets/imgs/homepage/" +
+    //     this.imgs[i].substring(2));
+    // }
+    this.backgroundImage = this.imgs[index];
     // let img = imgs[Math.floor(Math.random() * imgs.length)];
     // let path = ;
     // console.log(path);
@@ -254,20 +288,20 @@ export default {
   min-height: 20px;
   padding: 12px 24px;
   margin-top: 5%;
-  background-color: #0000002b;
-  color: #000;
+  background-color: #00000073;
+  color: #d7d5d5;
   font-size: 18px;
   border: none;
   border-radius: 24px;
   cursor: pointer;
-  backdrop-filter: blur(3px) invert(5%);
+  /* backdrop-filter: blur(3px) invert(5%); */
   /* bottom: 200px; */
   transition: all 0.5s;
 }
 
 .start-button:hover {
   /* position: fixed; */
-  backdrop-filter: blur(10px) invert(15%);
+  backdrop-filter: blur(5px) invert(5%);
   scale: 1.1;
 }
 
