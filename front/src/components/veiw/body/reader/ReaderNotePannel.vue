@@ -121,6 +121,9 @@ export default {
         }
       })
     },
+    closeNote() {
+      this.$parent.changeVisiable("note");
+    },
   },
   created() {
     getNotes(this.$route.params.bookid, this.$route.params.chapter, 1).then((data) => {
