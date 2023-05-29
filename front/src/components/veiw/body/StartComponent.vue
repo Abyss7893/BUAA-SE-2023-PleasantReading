@@ -1,40 +1,40 @@
 <template>
   <div>
     <!-- <transition name="fade"> -->
-      <div
-        class="start-component"
-        :class="{ 'start-component-hidden': !showComponent }"
-        :style="{
-          backgroundImage: `url(${backgroundImage})`,
-          marginTop: showComponent ? '' : 'calc(-106vh )',
-        }"
-        ref="startComponentRef"
-      >
-        <img src="../../../assets/logo-yixinyuedu.png" class="start-image" />
-        <div style="height: 15%">
-          <div class="hello-user">
-            <div class="content">
-              <h1 class="quote">
-                {{ "你好，" + username }}
-                <p class="startquote">{{ typewriter }}</p>
-              </h1>
-            </div>
+    <div
+      class="start-component"
+      :class="{ 'start-component-hidden': !showComponent }"
+      :style="{
+        backgroundImage: `url(${backgroundImage})`,
+        marginTop: showComponent ? '' : 'calc(-106vh )',
+      }"
+      ref="startComponentRef"
+    >
+      <img src="../../../assets/logo-yixinyuedu.png" class="start-image" />
+      <div style="height: 15%">
+        <div class="hello-user">
+          <div class="content">
+            <h1 class="quote">
+              {{ "你好，" + username }}
+              <p class="startquote">{{ typewriter }}</p>
+            </h1>
           </div>
         </div>
-        <div v-if="this.$store.state.isLogin" style="max-height: 300px">
-          <slide-card> </slide-card>
-        </div>
-        <button
-          v-if="this.$store.state.isLogin"
-          class="start-button"
-          @click="hideComponent"
-        >
-          探索更多 >
-        </button>
-        <button v-else class="start-button" @click="hideComponent">
-          开始探索 >
-        </button>
       </div>
+      <div v-if="this.$store.state.isLogin" style="max-height: 300px">
+        <slide-card> </slide-card>
+      </div>
+      <button
+        v-if="this.$store.state.isLogin"
+        class="start-button"
+        @click="hideComponent"
+      >
+        探索更多 >
+      </button>
+      <button v-else class="start-button" @click="hideComponent">
+        开始探索 >
+      </button>
+    </div>
     <!-- </transition> -->
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {
     return {
       imgs: [],
       showLastRead: true,
-      backgroundImage: require("../../../assets/imgs/PontdArcole_ZH-CN5348049357_1920x1080.jpg"),
+      backgroundImage: null,
       showComponent: true,
       i: 0,
       typewriter: "",
@@ -178,15 +178,49 @@ export default {
   created() {
     this.switch = Math.floor(Math.random() * this.strs.length);
     this.v = 1600 / this.strs[this.switch].length;
-    this.imgs = require
-      .context("../../../assets/imgs/homepage/", false, /.jpg$/)
-      .keys();
+    this.imgs = [
+      "https://i.imgloc.com/2023/05/29/VtxwjH.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxlVF.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtx0oZ.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxkR8.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxWU5.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxnLy.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxUg3.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxDCv.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtx4QU.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtxy6p.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxfbL.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxVVk.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtxZSx.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtgu3a.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgqUw.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgQKz.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg1Xq.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgaCb.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgP1d.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgM6V.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgLbN.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgKio.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg9SA.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtgv3c.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgsDJ.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgSKt.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg5XX.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtgh0P.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgG1C.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgFzE.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg6OQ.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgziH.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgE5F.jpeg",
+      "https://i.imgloc.com/2023/05/29/Vtg73Z.jpeg",
+      "https://i.imgloc.com/2023/05/29/VtgxD8.jpeg",
+    ];
     let index = Math.floor(Math.random() * this.imgs.length);
-    for (let i = 0; i < this.imgs.length; i++) {
-      this.imgs[i] = require("../../../assets/imgs/homepage/" +
-        this.imgs[i].substring(2));
-    }
-    this.backgroundImage = this.backgroundImage = this.imgs[index];
+    // for (let i = 0; i < this.imgs.length; i++) {
+    //   this.imgs[i] = require("../../../assets/imgs/homepage/" +
+    //     this.imgs[i].substring(2));
+    // }
+    this.backgroundImage = this.imgs[index];
     // let img = imgs[Math.floor(Math.random() * imgs.length)];
     // let path = ;
     // console.log(path);
