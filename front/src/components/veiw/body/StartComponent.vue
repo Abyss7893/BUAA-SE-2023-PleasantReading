@@ -321,7 +321,7 @@ export default {
   border: none;
   border-radius: 24px;
   cursor: pointer;
-  /* backdrop-filter: blur(3px) invert(5%); */
+  backdrop-filter: blur(3px) invert(5%);
   /* bottom: 200px; */
   transition: all 0.5s;
 }
