@@ -315,19 +315,19 @@ export default {
   min-height: 20px;
   padding: 12px 24px;
   margin-top: 5%;
-  background-color: #0000002b;
-  color: #000;
+  background-color: #00000073;
+  color: #d7d5d5;
   font-size: 18px;
   border: none;
   border-radius: 24px;
   cursor: pointer;
-  backdrop-filter: blur(3px) invert(5%);
+  /* backdrop-filter: blur(3px) invert(5%); */
   /* bottom: 200px; */
   transition: all 0.5s;
 }
 .start-button:hover {
   /* position: fixed; */
-  backdrop-filter: blur(10px) invert(15%);
+  backdrop-filter: blur(5px) invert(5%);
   scale: 1.1;
 }
 .slide-up {
