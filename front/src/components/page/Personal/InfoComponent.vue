@@ -1,20 +1,20 @@
 <template>
     <div class="profile">
         <el-card shadow="hover">
-            <ElDescriptions class="margin-top" title="简介" :column="1" border>
+            <ElDescriptions class="mycontext" title="简介" :column="1" border>
                 <template #extra>
                     <el-button v-if="!editing" type="primary"  size="large" @click="handleEdit">修改个人信息</el-button>
                     <el-button v-else type="primary"  size="large" @click="handleEdit">提交修改</el-button>
                 </template>
                 <div>
-                    <ElDescriptionsItem>
+                    <ElDescriptionsItem min-width="100px">
                         <template #label>
                             <el-icon :style="iconStyle">
                                 <user />
                             </el-icon>
                             昵称
                         </template>
-                        <ElInput v-if="editing" v-model="info.nickname" style="border: none;"></ElInput>
+                        <ElInput v-if="editing" v-model="tempInfo.nickname" style="border: none;"></ElInput>
                         <span v-else>{{ info.nickname }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
@@ -26,12 +26,12 @@
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
                             <template #label>
-                                <el-icon v-if="info.gen
+                                <el-icon v-if="info.gender
                                     === '男'"><Male /></el-icon>
                                 <el-icon v-else><Female /></el-icon>
                                 性别
                              </template>
-                            <ElInput v-if="editing" v-model="info.gender"></ElInput>
+                            <ElInput v-if="editing" v-model="tempInfo.gender"></ElInput>
                             <span v-else>{{ info.gender }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
@@ -53,16 +53,16 @@
                             <el-icon><Timer /></el-icon>
                             生日
                         </template>
-                        <el-date-picker v-if="editing" v-model="info.birthday" type="date" placeholder="请选择生日" :picker-options="pickerOptions"></el-date-picker>
+                        <el-date-picker v-if="editing" v-model="tempInfo.birthday" type="date" placeholder="请选择生日" :picker-options="pickerOptions"></el-date-picker>
                         <span v-else>{{ info.birthday }}</span>
-                    </ElDescriptionsItem>
-                    <ElDescriptionsItem style="font-size: 16px;">
+                    </ElDescriptionsItem>          
+                    <ElDescriptionsItem class="motto" style="font-size: 16px;">
                         <template #label>
                             <el-icon><ChatDotSquare /></el-icon>
                             个人简介
                         </template>
-                        <ElInput v-if="editing" v-model="info.motto"></ElInput>
-                        <span v-else>{{ info.motto }}</span>
+                        <ElInput type="textarea" rows="3" v-if="editing" v-model="tempInfo.motto"></ElInput>
+                        <span v-else class="clamp">{{ info.motto }}</span>
                     </ElDescriptionsItem>
                 </div>
                 
@@ -88,7 +88,7 @@ export default defineComponent({
     ElIcon,
     ElInput,
     ElDatePicker,
-    
+
 },
     setup() {
         const store=useStore()
@@ -96,6 +96,13 @@ export default defineComponent({
             info:null,
         });
         state.info = store.state.userInfo;
+        const tempInfo=reactive({
+            nickname:state.info.nickname,
+            gender:state.info.gender,
+            birthday:state.info.birthday,
+            motto:state.info.motto
+        })
+        
         let editing=ref(false);
 
         // 计算属性：根据生日计算年龄
@@ -108,6 +115,7 @@ export default defineComponent({
             const birthDate = new Date(birthday);
             const currentDate = new Date();
             state.info.birthday= birthDate.toLocaleDateString('zh-CN').replace(/\//g, '-');
+
             let age = currentDate.getFullYear() - birthDate.getFullYear();
             const monthDiff = currentDate.getMonth() - birthDate.getMonth();
             if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())) {
@@ -121,29 +129,44 @@ export default defineComponent({
                 // 编辑状态下不执行保存操作
                 return;
             }
-            store.commit('updateUserInfo',state.info)
+            
             // TODO: 接下来需要做的是把修改的值传回数据库中
+            const birthDate = new Date(tempInfo.birthday);
+            tempInfo.birthday = birthDate.toLocaleDateString('zh-CN').replace(/\//g, '-');
+            console.log(tempInfo)
             axios({
                 method: 'post',
                 url: 'http://154.8.183.51/user/changeinfo',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                data: JSON.stringify(store.state.userInfo)
+                data: JSON.stringify(tempInfo)
             })
                 .then(() => {
+                    state.info.nickname=tempInfo.nickname
+                    state.info.motto = tempInfo.motto
+                    state.info.birthday = tempInfo.birthday
+                    state.info.gender = tempInfo.gender
+                    store.commit('updateUserInfo', state.info)
+                 
                     ElMessageBox.alert('修改成功', '提示', {
                         confirmButtonText: '确定',
                         type: 'success',
                     });
                 })
                 .catch(() => {
+                    
+                    tempInfo.nickname= state.info.nickname
+                    tempInfo.gender= state.info.gender
+                    tempInfo.birthday= state.info.birthday
+                    tempInfo.motto= state.info.motto
                     alert("修改失败");
 
                 });
 
         };
         return {
+            tempInfo,
             ...state, editing,age,
             handleEdit
         };
@@ -151,6 +174,14 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.clamp{
+    overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* 最多显示两行内容 */
+  
+  -webkit-box-orient: vertical;
+   overflow-y: auto; /* 自动添加滚动条 */
+}
 
 .el-input {
   border: none;

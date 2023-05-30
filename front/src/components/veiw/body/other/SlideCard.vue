@@ -585,6 +585,7 @@ export default {
           else if (this.imgs.length >= 5) this.mode = 5;
           else if (this.imgs.length >= 3) this.mode = 3;
           else this.mode = this.imgs.length > 0 ? 1 : 0;
+          //todo : 多出来的书按照推荐图书填充即可
 
           if (this.mode == 7) {
             this.data.push(...this.imgs);

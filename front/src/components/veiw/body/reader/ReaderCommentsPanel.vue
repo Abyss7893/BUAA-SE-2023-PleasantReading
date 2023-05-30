@@ -1,5 +1,7 @@
 <template>
   <div class="panel-box">
+    <div class="mask" v-if="showMyCard"></div>
+    <MyCard class="mycard" v-if="showMyCard" @close="showMyCard = false" :userID="currentId"></MyCard>
     <a class="close-panel-button" @click="closeComments"><el-icon class="close-panel-button-icon" size="26"
         color="#a6a6a6">
         <Close />
@@ -9,7 +11,7 @@
       <div class="comments-box">
         <ul v-infinite-scroll="load" v-if="this.comments.length > 0">
           <li v-for="(comment, commentId) in this.comments.slice(0, this.commentsNum)" :key="commentId">
-            <div class="comment-avatar"><img :src="comment.img" alt=""></div>
+            <div class="comment-avatar"><img :src="comment.img" alt="" @click="showPersonInfo(comment.userID)"></div>
             <div class="comment-text">
               <div class="comment-name">{{ comment.nickname }}</div>
               <div class="comment-time">{{ parseTime(comment.timestamp) }}</div>
@@ -42,8 +44,11 @@ import { getBookComments, submitBookComment } from "@/api/api";
 import { encodeForHTML } from "@/XSS/encode"
 export default {
   name: "ReaderCommentsPanel",
+  components: { MyCard },
   data() {
     return {
+      currentId: null,
+      showMyCard: false,
       commentsNum: 5,
       comments: []
     }
@@ -81,6 +86,10 @@ export default {
         svg.appendChild(path);
         this.$refs['i' + commentId][0].appendChild(svg);
       }
+    },
+    showPersonInfo(userid) {
+      this.showMyCard = true;
+      this.currentId = userid;
     },
     closeComments() {
       this.$parent.changeComments()
@@ -176,5 +185,19 @@ export default {
 <style>
 .reader-menu .comments .comments-box li .comment-content.extendHeight {
   max-height: 100px;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(254, 253, 253, 0.5);
+}
+
+.mycard {
+  z-index: 1000;
 }
 </style>

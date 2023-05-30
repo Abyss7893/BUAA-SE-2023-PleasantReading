@@ -7,10 +7,10 @@
             <div class="front">
                 <el-icon  :size="25" @click="close" style="margin-left: 390px;top: -10px;"><CloseBold /></el-icon>
                 <h2>个人信息</h2>
-                <h4>nickname</h4>
-                <h4>email</h4>
-                <h4>gender</h4>
-                <h4>birthday</h4>
+                <h4>{{user?.nickname}}</h4>
+                <h4>{{user?.email}}</h4>
+                <h4>{{user?.gender||"ta还没有填写性别哦"}}</h4>
+                <h4>{{user?.birthday|| "ta还没有填写生日哦" }}</h4>
 
                 <div class="links"><a href="#"><span class="fab fa-html5"></span></a><a href="#"><span
                             class="fab fa-css3"></span></a><a href="#"><span class="fab fa-js"></span></a><a href="#"><span
@@ -23,7 +23,7 @@
             <div class="back">
                 <el-icon :size="25" @click="close" style="margin-left: 410px;"><CloseBold /></el-icon>
                 <h2>个人简介</h2>
-                <h4>这个人很懒,什么也没留下</h4>
+                <h4>{{user?.motto||"这个人很懒,什么也没留下"}}</h4>
                 <div class="links"><a href="#"><span class="fab fa-github"></span></a><a href="#"><span
                             class="fab fa-twitter"></span></a><a href="#"><span class="fab fa-instagram"></span></a><a
                         href="#"><span class="fab fa-behance"></span></a><a href="#"><span
@@ -38,26 +38,44 @@
 
 <script>
 import { ElIcon } from 'element-plus';
-
-
+import {ref, onBeforeMount} from 'vue'
+import axios from 'axios';
 export default {
     name: "MyCard",
     components: { ElIcon },
     emits:['close'],
-    setup(_,{emit}){
+    props: {
+        userID: {
+            type: String,
+            default: null
+        }
+    },
+    
+    setup(props,{emit}){
+        const user = ref(null)
         function close(){
-
             emit('close')
         }
+         onBeforeMount(() => {
+            console.log(props.userID)
+            axios.get(`http://154.8.183.51/user/getinfo/${props.userID}`)
+            .then(res=>{
+                user.value=res.data
+                console.log(res.data)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        })
         return{
-
+            user,
             close,
         }
     }
 }
 </script>
 
-<style  scoped>
+<style scoped>
 .body {
     margin: 0;
     display: flex;
@@ -137,13 +155,13 @@ export default {
 .card .front {
     z-index: 1;
     align-items: center;
-    background-image: linear-gradient(135deg, #88daf7, #0172b0);
-    box-shadow: 0 6px 16px #01517d, inset 0 0 15px #88daf7;
+    background-image: linear-gradient(135deg, #FFB6C1, #FFFFFF);
+    box-shadow: 0 6px 16px #EE82EE, inset 0 0 15px #FFB6C1;
 }
 
 .card .back {
     align-items: center;
-    background-image: linear-gradient(135deg, #88daf7, #0172b0);
+    background-image: linear-gradient(135deg, #FFB6C1, #FFFFFF);
     transform: rotateY(180deg);
 }
 
@@ -169,7 +187,7 @@ export default {
 }
 
 #check:checked+label~.card .back {
-    box-shadow: 0 6px 16px #01517d, inset 0 0 15px #88daf7;
+    box-shadow: 0 6px 16px #EE82EE, inset 0 0 15px #FFB6C1;
     transform: rotateY(0deg);
 }
 </style>
