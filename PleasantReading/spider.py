@@ -25,7 +25,6 @@ def getHTMLText(url):
         s = requests.session()
         s.keep_alive = False
         r = requests.get(url, timeout = 10, headers = {'user-agent': 'Mozilla/5.0', 'Connection': 'close'})
-        # r.raise_for_status()
         r.encoding = r.apparent_encoding
         return r.text
     except:
