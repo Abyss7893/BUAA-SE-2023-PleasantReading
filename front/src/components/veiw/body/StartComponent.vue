@@ -19,12 +19,8 @@
       <div v-if="this.$store.state.isLogin" style="max-height: 300px">
         <slide-card> </slide-card>
       </div>
-      <button v-if="this.$store.state.isLogin" class="start-button" @click="hideComponent">
-        探索更多 >
-      </button>
-      <button v-else class="start-button" @click="hideComponent">
-        开始探索 >
-      </button>
+      <button class="start-button" @click="hideComponent">{{ this.$store.state.isLogin ? "探索更多" : "开始探索" }} ></button>
+
     </div>
     <!-- </transition> -->
   </div>
@@ -283,8 +279,6 @@ export default {
 }
 
 .start-button {
-  /* position: fixed; */
-  /* position: fixed; */
   min-height: 20px;
   padding: 12px 24px;
   margin-top: 5%;
@@ -294,9 +288,8 @@ export default {
   border: none;
   border-radius: 24px;
   cursor: pointer;
-  /* backdrop-filter: blur(3px) invert(5%); */
-  /* bottom: 200px; */
   transition: all 0.5s;
+  z-index: 10;
 }
 
 .start-button:hover {

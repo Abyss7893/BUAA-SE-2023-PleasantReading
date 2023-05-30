@@ -81,6 +81,7 @@
 <script>
 
 import { getNotes, submitNote } from "@/api/api";
+import { encodeForHTML } from "@/XSS/encode"
 export default {
   name: "ReaderNotePanel",
   components: {},
@@ -96,8 +97,11 @@ export default {
     handleCurrentChange(val) {
       getNotes(this.$route.params.bookid, this.$route.params.chapter, val).then((data) => {
         if (data.status && data.status == 200) {
-          this.notes = data.data.notes
-          this.pages = data.data.pages
+          this.notes = []
+          data.data.notes.forEach(note => {
+            this.notes.push(encodeForHTML(note))
+          });
+          this.pages = parseInt(data.data.pages)
         }
         else
           console.log(data.response)
@@ -112,7 +116,7 @@ export default {
       }
       submitNote(this.$route.params.bookid, this.$route.params.chapter, this.$refs.mynote.value).then((data) => {
         if (data.status && data.status == 200) {
-          alert("提交笔记成功!WA")
+          alert("提交笔记成功!WAW")
           location.reload();
         } else if (data.response && data.response.status == 401) {
           alert("未登录不可以提交笔记哟!QAQ~")

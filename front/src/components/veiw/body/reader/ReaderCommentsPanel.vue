@@ -39,6 +39,7 @@
 </template>
 <script>
 import { getBookComments, submitBookComment } from "@/api/api";
+import { encodeForHTML } from "@/XSS/encode"
 export default {
   name: "ReaderCommentsPanel",
   data() {
@@ -132,6 +133,11 @@ export default {
       getBookComments(this.$route.params.bookid, this.$route.params.chapter, this.commentsNum / 5).then((data) => {
         let len = data.comments.length
         for (let index = 0; index < len; index++) {
+          for (let key in data.comments[index]) {
+            if (key != "img")
+              data.comments[index][key] = encodeForHTML(data.comments[index][key])
+          }
+          console.log(data.comments[index])
           this.comments.push(data.comments[index])
         }
         this.commentsNum = this.comments.length
@@ -149,7 +155,7 @@ export default {
         switch (code) {
           case 200:
             this.$refs.mycomment.value = ''
-            location.reload();
+            this.getComments()
             break;
           case 401:
             alert("用户未登录！或登录失效！请重新登录")
