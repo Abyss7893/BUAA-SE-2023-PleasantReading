@@ -224,7 +224,6 @@ def getBookNotes(request, bookid, chapter, page):
     userid = getUsername(request)
     comments = Comments.objects.filter(bookID=bookid, userID=userid, chapter=chapter, visible=False)
     num = comments.count()
-    comments = comments.reverse()
     comments = comments[(page - 1) * NT2PG:page * NT2PG]
     return JsonResponse({'notes': list(comments.values_list('text', flat=True)), 'pages': getPages(num, NT2PG)})
 
@@ -240,7 +239,6 @@ def getAllNotes(request):
     notes = notes.annotate(
         name=Subquery(subquery.values('name'))
     )
-    notes = notes.reverse()
     notes = notes.values('bookID', 'name', 'chapter', 'text', 'timestamp')
     return JsonResponse({'notes': list(notes)})
 
@@ -255,7 +253,6 @@ def getAllComments(request):
     notes = notes.annotate(
         name=Subquery(subquery.values('name'))
     )
-    notes = notes.reverse()
     notes = notes.values('bookID', 'name', 'chapter', 'text', 'timestamp')
     return JsonResponse({'comments': list(notes)})
 
@@ -271,7 +268,7 @@ def getComments(request, bookid, chapter, page):
         img=Concat(Value(SERVER_URL + '/media/'), Subquery(subquery.values('img')), output_field=CharField())
     )
     comments = comments.values('userID', 'nickname', 'img', 'text', 'timestamp')
-    comments = comments.reverse()
+    comments = comments[::-1]
     comments = comments[(page - 1) * CM2PG:page * CM2PG]
     return JsonResponse({'comments': list(comments), 'pages': getPages(num, CM2PG)})
 
@@ -424,3 +421,12 @@ def getAuthor(request, name):
         return JsonResponse({'profile': '暂无有关详细信息', 'img': SERVER_URL + '/media/AuthorImg/default.jpg', 'works': list(works)})
     URL = res.first().img.url
     return JsonResponse({'profile': res.first().profile, 'img': SERVER_URL + URL, 'works': list(works)})
+
+def getBriefInfo(request):
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    userid = getUsername(request)
+    nnotes = Comments.objects.filter(userID=userid, visible=False).count()
+    ncomments = Comments.objects.filter(userID=userid, visible=True).count()
+    nmarks = Bookmark.objects.filter(userID=userid).count()
+    return JsonResponse({'notes': nnotes, 'comments': ncomments, 'marks': nmarks})
