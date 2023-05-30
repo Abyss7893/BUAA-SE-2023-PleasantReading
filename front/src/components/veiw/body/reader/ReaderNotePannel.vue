@@ -117,7 +117,8 @@ export default {
       submitNote(this.$route.params.bookid, this.$route.params.chapter, this.$refs.mynote.value).then((data) => {
         if (data.status && data.status == 200) {
           alert("提交笔记成功!WAW")
-          location.reload();
+          this.notes.push(this.$refs.mynote.value)
+          this.$refs.mynote.value = ''
         } else if (data.response && data.response.status == 401) {
           alert("未登录不可以提交笔记哟!QAQ~")
         } else {

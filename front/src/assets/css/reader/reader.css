@@ -394,7 +394,7 @@
   height: 30px;
 }
 
-.reader-menu .comments .comments-box li {
+.reader-menu .comments .comments-box ul li.comment-list {
   margin-top: 16px;
   padding: 0 0 16px 10px;
   border-radius: 10px;

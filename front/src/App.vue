@@ -1,7 +1,7 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                                                        <LoginComponent /> -->
+                                                          <LoginComponent /> -->
   <div id="app">
     <RouterView :key="$route.fullPath"></RouterView>
   </div>
@@ -42,7 +42,7 @@ export default {
   margin: 0;
   padding: 0;
   text-decoration: none;
-
+  outline: none;
   /* -moz-user-select: none; */
   /* 火狐国产版需要 */
   /* -webkit-user-select: none; */
