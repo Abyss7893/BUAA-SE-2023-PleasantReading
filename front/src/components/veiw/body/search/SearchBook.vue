@@ -66,7 +66,7 @@ export default {
             return
           }
           if (this.bookids.length == 0) {
-            alert("该查询结果为空！")
+            // alert("该查询结果为空！")
             return
           }
           for (let index = 0; index < this.bookids.length; index++) {

@@ -1,7 +1,7 @@
 <template>
   <div class="panel-box">
     <div class="mask" v-if="showMyCard"></div>
-      <MyCard class="mycard" v-if="showMyCard" @close="showMyCard = false" :userID="currentId"></MyCard>
+    <MyCard class="mycard" v-if="showMyCard" @close="showMyCard = false" :userID="currentId"></MyCard>
     <a class="close-panel-button" @click="closeComments"><el-icon class="close-panel-button-icon" size="26"
         color="#a6a6a6">
         <Close />
@@ -9,8 +9,9 @@
     <div class="panel comments">
       <h4 class="lang">评论</h4>
       <div class="comments-box">
-        <ul v-infinite-scroll="load" v-if="this.comments.length > 0">
-          <li v-for="(comment, commentId) in this.comments.slice(0, this.commentsNum)" :key="commentId">
+        <ul v-if="this.comments.length > 0">
+          <li class="comment-list" v-for="(comment, commentId) in this.comments.slice(0, this.commentsNum)"
+            :key="commentId">
             <div class="comment-avatar"><img :src="comment.img" alt="" @click="showPersonInfo(comment.userID)"></div>
             <div class="comment-text">
               <div class="comment-name">{{ comment.nickname }}</div>
@@ -27,13 +28,13 @@
             </i>
           </li>
         </ul>
+        <el-pagination small hide-on-single-page layout="prev, pager, next" :total="this.pages * 5" :page-size="5"
+          @current-change="handleCurrentChange" class="page-control"></el-pagination>
         <div class="no-comments" v-if="this.comments.length == 0"><el-empty description="还没有人留下评论，快来留下你的足迹吧！"
             :image="require('assets/imgs/comment_null.png')" image-size="250px" /></div>
         <div class="comment-input-box">
-          <form action="POST">
-            <textarea ref="mycomment" wrap="soft" rows="1" placeholder="发送一条友善的评论~"></textarea><input type="button"
-              value="发送" @click="submitComment">
-          </form>
+          <textarea ref="mycomment" wrap="soft" rows="1" placeholder="发送一条友善的评论~"></textarea><input type="button"
+            value="发送" @click="submitComment">
         </div>
       </div>
     </div>
@@ -41,15 +42,17 @@
 </template>
 <script>
 import { getBookComments, submitBookComment } from "@/api/api";
+import { encodeForHTML } from "@/XSS/encode"
 import MyCard from "@/components/page/Personal/MyCard.vue";
 export default {
   name: "ReaderCommentsPanel",
-  components:{MyCard},
+  components: { MyCard },
   data() {
     return {
-      currentId:null,
-      showMyCard:false,
-      commentsNum: 5,
+      currentId: null,
+      showMyCard: false,
+      pages: 1,
+      thisPage: 1,
       comments: []
     }
   },
@@ -87,9 +90,9 @@ export default {
         this.$refs['i' + commentId][0].appendChild(svg);
       }
     },
-    showPersonInfo(userid){
-      this.showMyCard =true;
-      this.currentId=userid;
+    showPersonInfo(userid) {
+      this.showMyCard = true;
+      this.currentId = userid;
     },
     closeComments() {
       this.$parent.changeComments()
@@ -131,21 +134,33 @@ export default {
       var minute = date.getMinutes();
       return year + "年" + month + "月" + day + "日" + hour + "时" + minute + "分"
     },
-    load() {
-      if (this.commentsNum % 5 != 0)
-        return
-      this.commentsNum += 5
-      this.getComments()
-    },
     // 获取评论，一次五条
     getComments() {
-      getBookComments(this.$route.params.bookid, this.$route.params.chapter, this.commentsNum / 5).then((data) => {
+      getBookComments(this.$route.params.bookid, this.$route.params.chapter, 1).then((data) => {
         let len = data.comments.length
         for (let index = 0; index < len; index++) {
+          for (let key in data.comments[index]) {
+            if (key != "img")
+              data.comments[index][key] = encodeForHTML(data.comments[index][key])
+          }
           this.comments.push(data.comments[index])
         }
-        this.commentsNum = this.comments.length
+        this.pages = parseInt(data.pages)
       });
+    },
+    handleCurrentChange(val) {
+      getBookComments(this.$route.params.bookid, this.$route.params.chapter, val).then((data) => {
+        this.comments = []
+        let len = data.comments.length
+        for (let index = 0; index < len; index++) {
+          for (let key in data.comments[index]) {
+            if (key != "img")
+              data.comments[index][key] = encodeForHTML(data.comments[index][key])
+          }
+          this.comments.push(data.comments[index])
+        }
+        this.pages = parseInt(data.pages)
+      })
     },
     submitComment() {
       if (this.$refs.mycomment.value.length === 0)
@@ -159,7 +174,7 @@ export default {
         switch (code) {
           case 200:
             this.$refs.mycomment.value = ''
-            location.reload();
+            this.handleCurrentChange(1)
             break;
           case 401:
             alert("用户未登录！或登录失效！请重新登录")
@@ -181,6 +196,7 @@ export default {
 .reader-menu .comments .comments-box li .comment-content.extendHeight {
   max-height: 100px;
 }
+
 .mask {
   position: fixed;
   top: 0;
@@ -190,7 +206,17 @@ export default {
   height: 100%;
   background-color: rgba(254, 253, 253, 0.5);
 }
-.mycard{
+
+.mycard {
   z-index: 1000;
+}
+
+.page-control {
+  height: 24px;
+  margin: 16px 0 10px;
+  float: right;
+  --el-pagination-hover-color: #f03636;
+  --el-pagination-bg-color: rgba(249, 240, 223, 0.543);
+  --el-pagination-button-disabled-bg-color: rgba(250, 245, 235, 0.8);
 }
 </style>
