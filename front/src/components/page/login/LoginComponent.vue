@@ -183,6 +183,8 @@ export default {
   background-size: 100% 100%;
   background-color: #a7a8bd;
   width: 100vw;
+  min-width: 1300px;
+  min-height: 800px;
   height: 100vh;
   #contain {
     height: 400px;

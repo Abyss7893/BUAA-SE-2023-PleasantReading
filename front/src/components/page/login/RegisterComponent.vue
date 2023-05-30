@@ -63,6 +63,14 @@ export default {
                 alert('两次输入的密码不一致')
                 return
             }
+            if(userRegisterForm.username==''){
+                alert('账号不能为空')
+                return
+            }
+            if (userRegisterForm.password == '') {
+                alert('密码不能为空')
+                return
+            }
             try {
                 const res = await axios.post('http://154.8.183.51/user/register', userRegisterForm,
                 {
