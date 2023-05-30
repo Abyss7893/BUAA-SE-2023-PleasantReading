@@ -78,7 +78,7 @@
               @click="this.$router.push({ path: '/login' })">立即登录</el-button>
             <div class="register"><span>首次使用?<router-link to="/register">点我注册</router-link></span></div>
             <template #reference>
-              <ElAvatar class="login-avatar"><router-link to="/login">登录</router-link></ElAvatar>
+              <ElAvatar class="login-avatar" size="large"><router-link to="/login">登录</router-link></ElAvatar>
             </template>
           </el-popover>
         </div>
@@ -88,61 +88,10 @@
           <!-- <ElDropdown trigger="click"> -->
           <div class="proshake">
             <router-link to="/user/info">
-              <ElAvatar class="edavatar" :src="avatar"></ElAvatar>
+              <ElAvatar class="edavatar" :src="avatar" size="large"></ElAvatar>
             </router-link>
           </div>
-          <div class="pop-wrap">
-            <div class="pop">
-              <router-link to="/user/info">
-                <div class="username">{{ this.$store.state.userInfo.username }}</div>
-              </router-link>
-              <div v-if="this.$store.state.isVIP" class="vipicon">123</div>
-              <div class="fav">
-                <div class="shelf">
-                  <div class="num">123</div>
-                  <div>收藏</div>
-                </div>
-                <div class="note">
-                  <div class="num">123</div>
-                  <div>笔记</div>
-                </div>
-                <div class="mark">
-                  <div class="num">123</div>
-                  <div>书签</div>
-                </div>
-              </div>
-              <div class="vip-entry-containter">
-                <div class="vip-entry-desc">
-                  <p class="vip-entry-desc-title" style="color: rgb(255, 102, 153);">我的VIP</p>
-                  <p class="vip-entry-desc-subtitle" style="color: rgb(97, 102, 109);">热门书籍看不停</p>
-                </div>
-                <div class="vip-entry-btn" data-v-ae740c54=""
-                  style="color: rgb(255, 102, 153); background: rgb(255, 255, 255);">会员中心</div>
-              </div>
-              <router-link to="/user/info">
-                <li class="usercenter">
-                  <div><el-icon>
-                      <UserFilled />
-                    </el-icon>个人中心</div><el-icon>
-                    <ArrowRight />
-                  </el-icon>
-                </li>
-              </router-link>
-              <li class="service">
-                <div><el-icon>
-                    <Star />
-                  </el-icon>推荐服务</div><el-icon>
-                  <ArrowRight />
-                </el-icon>
-              </li>
-              <el-divider direction="horizontal" />
-              <li class="logout" @click="signOut()">
-                <div><el-icon>
-                    <SwitchButton />
-                  </el-icon>退出登录</div>
-              </li>
-            </div>
-          </div>
+          <popUserInfo />
         </div>
       </template>
     </div>
@@ -158,13 +107,12 @@ import {
   // ElDropdownMenu,
   // ElDropdownItem,
 } from "element-plus";
+import popUserInfo from "./popUserInfo.vue"
 export default {
   name: "Head_Top",
   components: {
     ElAvatar,
-    // ElDropdown,
-    // ElDropdownItem,
-    // ElDropdownMenu,
+    popUserInfo,
   },
   data() {
     return {
@@ -200,10 +148,6 @@ export default {
       this.$refs.hidden.style.maxHeight = '0';
       this.$refs.hidden.style.paddingBottom = '0'
     },
-    signOut() {
-      this.$store.commit("signOut")
-      // this.$router.push('/');
-    },
     searchBooks(keywords) {
       if (typeof (keywords) != "string")
         keywords = this.$refs.keywords.value
@@ -225,7 +169,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .personal-dropdown-menu {
   --el-dropdown-menuItem-hover-fill: #f56c6c;
   --el-dropdown-menuItem-hover-color: white;
@@ -399,134 +343,12 @@ export default {
 
 .avatar:hover .edavatar {
   transform-origin: right top;
-  transform: translateZ(0) scale(2.5);
+  transform: translateZ(0) scale(2);
   z-index: 200;
   box-shadow: 0 1px 20px rgba(0, 0, 0, .2);
 }
 
 .avatar {
   position: relative;
-}
-
-.pop-wrap {
-  visibility: visible;
-  transition: visibility .2s ease-in, opacity .2s ease-in;
-  opacity: 0;
-}
-
-.pop {
-  padding: 24px;
-  position: absolute;
-  background-color: #fff;
-  width: 300px;
-  top: 70px;
-  left: -16px;
-  border-radius: 10px;
-  transform: translate(-50%, 0);
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
-  z-index: 150;
-}
-
-.avatar:hover .pop-wrap {
-  visibility: visible;
-  opacity: 1;
-}
-
-.username {
-  font-family: PingFang SC, HarmonyOS_Regular, Helvetica Neue, Microsoft YaHei, sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  color: rgb(251, 114, 153);
-  margin-top: 12px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.vip-entry-containter {
-  background-image: url("~assets/imgs/vipcenter.png");
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px 12px;
-  border-radius: 6px;
-  background-size: cover;
-  transition: background-color .2s;
-}
-
-.vip-entry-btn {
-  padding: 6px 0;
-  margin-left: 8px;
-  width: 68px;
-  line-height: 17px;
-  font-size: 14px;
-  text-align: center;
-  border-radius: 6px;
-}
-
-.pop li {
-  transition: all .3s ease-in-out;
-  display: flex;
-  justify-content: space-between;
-  border-radius: 6px;
-  padding: 12px;
-  margin: 4px 0 4px 0;
-  font-size: 18px;
-  text-align: center;
-  position: relative;
-}
-
-.pop li .el-icon {
-  position: relative;
-  top: 3px;
-}
-
-.pop li div .el-icon {
-  margin-right: 8px;
-}
-
-.pop .el-divider {
-  margin: 8px 0 8px;
-}
-
-.pop li:hover {
-  background-color: #f8b2b27d;
-}
-
-.fav {
-  padding-top: 16px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.fav div.shelf,
-.fav div.note,
-.fav div.mark {
-  transition: color .2s;
-  margin: 16px;
-  color: #9499A0;
-}
-
-.fav div.num {
-  transition: color .2s;
-  color: #000;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.fav .shelf:hover,
-.fav .note:hover,
-.fav .mark:hover {
-  color: #f8b2b27d;
-  cursor: pointer;
-}
-
-.fav .shelf:hover .num,
-.fav .note:hover .num,
-.fav .mark:hover .num {
-  color: #f8b2b27d;
-  cursor: pointer;
 }
 </style>
