@@ -10,17 +10,19 @@
     <div class="dropdown">
       <div class="search">
         <div class="shell">
-          <input type="text" placeholder="Search" ref="keywords" @focusin="drop" @focusout="hide" @input="clearChange">
-          <svg @mousedown="clearwords" v-show="clearShow" class="clear" width="16" height="16" viewBox="0 0 16 16"
+          <input type="text" placeholder="Search" v-model="keywords" @focusin="drop" @focusout="hide">
+          <svg @mousedown="clearwords" v-show="keywords !== ''" class="clear" width="16" height="16" viewBox="0 0 16 16"
             fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
               d="M8 14.75C11.7279 14.75 14.75 11.7279 14.75 8C14.75 4.27208 11.7279 1.25 8 1.25C4.27208 1.25 1.25 4.27208 1.25 8C1.25 11.7279 4.27208 14.75 8 14.75ZM9.64999 5.64303C9.84525 5.44777 10.1618 5.44777 10.3571 5.64303C10.5524 5.83829 10.5524 6.15487 10.3571 6.35014L8.70718 8.00005L10.3571 9.64997C10.5524 9.84523 10.5524 10.1618 10.3571 10.3571C10.1618 10.5523 9.84525 10.5523 9.64999 10.3571L8.00007 8.70716L6.35016 10.3571C6.15489 10.5523 5.83831 10.5523 5.64305 10.3571C5.44779 10.1618 5.44779 9.84523 5.64305 9.64997L7.29296 8.00005L5.64305 6.35014C5.44779 6.15487 5.44779 5.83829 5.64305 5.64303C5.83831 5.44777 6.15489 5.44777 6.35016 5.64303L8.00007 7.29294L9.64999 5.64303Z"
               fill="#ff7575"></path>
           </svg>
-          <a @click="searchBooks">
-            <i class="fa fa-hand-o-right"></i>
-            <i class="fa fa-search"></i>
-          </a>
+          <div class="proshake">
+            <a @click="searchBooks">
+              <i class="fa fa-hand-o-right"></i>
+              <i class="fa fa-search"></i>
+            </a>
+          </div>
         </div>
       </div>
       <div class="dropdown-content" ref="hidden">
@@ -118,6 +120,7 @@ export default {
     return {
       searchHots: ["青春北航男童不会梦到清华女学长", "重生之我在北航卖西瓜", "飘飘何所似", "红楼梦", "杨过"],
       clearExit: false,
+      keywords: "",
     }
   },
   computed: {
@@ -132,39 +135,26 @@ export default {
     },
   },
   mounted() {
-    this.$refs.keywords.value = this.$route.query.keywords ? this.$route.query.keywords : ""
-    if (this.$refs.keywords.value !== '')
-      this.clearExit = true
+    this.keywords = this.$route.query.keywords ? this.$route.query.keywords : ""
   },
   methods: {
     drop() {
-      if (this.$refs.keywords.value != "")
-        this.clearExit = true
       this.$refs.hidden.style.maxHeight = '500px';
       this.$refs.hidden.style.paddingBottom = '10px'
     },
     hide() {
-      this.clearExit = false
       this.$refs.hidden.style.maxHeight = '0';
       this.$refs.hidden.style.paddingBottom = '0'
     },
     searchBooks(keywords) {
       if (typeof (keywords) != "string")
-        keywords = this.$refs.keywords.value
+        keywords = this.keywords
       if (keywords === '')
         return
       this.$router.push({ path: '/search', query: { "keywords": keywords, page: 1 } })
     },
-    clearChange() {
-      if (this.$refs.keywords.value === "")
-        this.clearExit = false
-      else
-        this.clearExit = true
-    },
     clearwords() {
-      console.log(this.$refs.keywords.value)
-      this.$refs.keywords.value = ""
-      this.clearExit = false
+      this.keywords = ""
     },
   },
 };
@@ -222,6 +212,8 @@ export default {
   transition: .3s;
 }
 
+
+
 .shell a .fa-search {
   transform: translateX(-20px);
   opacity: 1;
@@ -232,12 +224,12 @@ export default {
   opacity: 0;
 }
 
-.shell a:hover .fa-search {
+.shell .proshake:hover a .fa-search {
   transform: translateX(0);
   opacity: 0;
 }
 
-.shell a:hover .fa-hand-o-right {
+.shell .proshake:hover a .fa-hand-o-right {
   transform: translateX(22px);
   opacity: 1;
 }
@@ -257,7 +249,7 @@ export default {
   animation: box 1s infinite ease;
 }
 
-.shell a:hover::before {
+.shell .proshake:hover a::before {
   top: -22px;
   opacity: 1;
 }
@@ -330,15 +322,12 @@ export default {
   margin-right: 8px;
 }
 
-.proshake {
-  position: relative;
-}
 
 .edavatar {
   position: relative;
   top: 0;
   right: 0;
-  transition: all .4s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 
 .avatar:hover .edavatar {

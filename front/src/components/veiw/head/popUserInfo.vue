@@ -10,11 +10,12 @@
           <path
             d="M512 256a85.333333 85.333333 0 1 0 0-170.666667 85.333333 85.333333 0 0 0 0 170.666667z m0-42.666667a42.666667 42.666667 0 1 1 0-85.333333 42.666667 42.666667 0 0 1 0 85.333333z m-202.218667 317.397334a21.333333 21.333333 0 0 0 26.069334-4.458667L512 330.56l176.149333 195.712a21.333333 21.333333 0 0 0 26.069334 4.458667l196.522666-107.2L835.136 896H188.949333l-14.122666-91.968H738.346667a21.333333 21.333333 0 1 0 0-42.666667H149.973333a21.333333 21.333333 0 0 0-21.077333 24.576l20.693333 134.634667A21.333333 21.333333 0 0 0 170.666667 938.666667h682.666666a21.333333 21.333333 0 0 0 21.056-17.962667l85.333334-533.333333a21.333333 21.333333 0 0 0-31.274667-22.101334l-219.861333 119.936-180.736-200.810666a21.333333 21.333333 0 0 0-31.701334 0l-180.736 200.810666L95.573333 365.269333a21.333333 21.333333 0 0 0-31.274666 22.208l46.165333 278.677334A21.333333 21.333333 0 0 0 152.533333 659.2L113.536 423.68l196.266667 107.050667z"
             fill="#ed4259" p-id="2405"></path>
-        </svg>会员到期时间:<div class="vip-date">{{ this.$store.state.userInfo.VIPDate }}<div class="vip-goon">续费</div>
+        </svg>会员到期时间:<div class="vip-date">{{ this.$store.state.userInfo.VIPDate }}<div class="vip-goon" @click="openPay">
+            续费</div>
         </div>
       </div>
       <div class="vip-null" v-else>
-        您还不是会员哦~<div class="vip-on">开通</div>
+        您还不是会员哦~<div class="vip-on" @click="openPay">开通</div>
       </div>
       <div class="fav">
         <div class="shelf">
@@ -62,19 +63,21 @@
       </li>
     </div>
   </div>
+  <el-dialog v-model="pay" title="充值VIP" :destroy-on-close="true" width="900px">
+    <PayComponent />
+  </el-dialog>
 </template>
 
 <script>
+import PayComponent from '@/components/page/Personal/PayComponent.vue';
 export default {
   name: "popUserInfo",
-  components: {},
-  props: {},
+  components: { PayComponent, },
   data() {
     return {
+      pay: false,
     };
   },
-  watch: {},
-  computed: {},
   methods: {
     jumpToVip() {
       this.$router.push("/allbook?vip=true")
@@ -85,15 +88,16 @@ export default {
       if (this.$route.path === '/user/info' || this.$route.path === '/user/comment' || this.$route.path === '/user')
         this.$router.push('/');
     },
+    openPay() {
+      this.pay = true
+    }
   },
-  created() { },
-  mounted() { }
 };
 </script>
 <style lang="scss" scoped>
 .pop-wrap {
   visibility: visible;
-  transition: visibility .2s ease-in, opacity .2s ease-in;
+  transition: visibility .3s ease-in, opacity .3s ease-in;
   opacity: 0;
 }
 
@@ -272,6 +276,7 @@ export default {
   position: static;
 }
 
+.vip-goon:hover,
 .vip-on:hover {
   background-color: #f8b2b27d;
 }
