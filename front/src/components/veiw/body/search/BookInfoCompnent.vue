@@ -22,6 +22,7 @@
 
 <script>
 import { addBookToFavor } from '@/api/api'
+import { ElMessage } from 'element-plus';
 import 'css/search/search.css'
 export default {
   name: 'BookInfo',
@@ -44,10 +45,20 @@ export default {
         const code = data.request.status
         switch (code) {
           case 200:
-            alert("收藏成功！")
+            ElMessage({
+              message: '收藏成功',
+              grouping: true,
+              type: 'success',
+            })
+            
             break;
           case 401:
-            alert("用户未登录！或登录失效！请重新登录")
+            ElMessage({
+              message: '用户未登录！或登录失效！请重新登录',
+              grouping: true,
+              type: 'warning',
+            })
+            
             this.$store.commit('refresh')
             break;
           default:

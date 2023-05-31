@@ -35,7 +35,7 @@
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
-import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus';
+import { ElForm, ElFormItem, ElInput, ElButton ,ElMessage} from 'element-plus';
 import '../../../../node_modules/element-plus/theme-chalk/index.css';
 //import axios from 'axios';
 
@@ -98,16 +98,30 @@ export default {
       axios.post('http://154.8.183.51/user/sendemail', data)
         .then(response => {
           console.log(response.data);
-          alert("邮箱验证码已发送,请查收")
+
+          ElMessage({
+            message: '邮箱验证码已发送,请查收',
+            grouping: true,
+            type: 'success',
+          })
+         
           emit('submit')
           // 处理响应数据
         })
         .catch(error => {
           if(error.response.data.error=='not match'){
-            alert("用户名与邮箱不匹配")
+            ElMessage({
+              message: '用户名与邮箱不匹配',
+              grouping: true,
+              type: 'error',
+            })
           }
           else{
-            alert("已超时,请重新处理")
+            ElMessage({
+              message: '已超时,请重新处理',
+              grouping: true,
+              type: 'warning',
+            })
           }
           // 处理错误
         })

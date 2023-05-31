@@ -1,7 +1,7 @@
 <!-- 网页头部顶侧，包含logo、登录&&注册、搜索栏等 -->
 <template>
   <ElDialog v-model="showLogin" style="background-color: transparent; width: 800px;" >
-    <newLogin class="mycard"  ></newLogin>
+    <newLogin class="mycard" @submit="showLogin=false"></newLogin>
   </ElDialog>
   
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
@@ -148,7 +148,12 @@ export default {
   mounted() {
     this.keywords = this.$route.query.keywords ? this.$route.query.keywords : ""
   },
+  
   methods: {
+    onCloseDialog(value) {
+      // 接收到子组件传递过来的布尔值，赋值给 showLogin 属性
+      this.showLogin = value;
+    },
     drop() {
       this.$refs.hidden.style.maxHeight = '500px';
       this.$refs.hidden.style.paddingBottom = '10px'

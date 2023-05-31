@@ -44,6 +44,7 @@
 import { getBookComments, submitBookComment } from "@/api/api";
 import { encodeForHTML } from "@/XSS/encode"
 import MyCard from "@/components/page/Personal/MyCard.vue";
+import { ElMessage } from "element-plus";
 export default {
   name: "ReaderCommentsPanel",
   components: { MyCard },
@@ -168,7 +169,12 @@ export default {
       if (this.mycomment.length === 0)
         return
       else if (this.mycomment.length > 500) {
-        alert("评论不可以超过500字哦，请精简一下吧~")
+        ElMessage({
+          message: '评论不可以超过500字哦，请精简一下吧~',
+          grouping: true,
+          type: 'info',
+        })
+
         return
       }
       submitBookComment(this.$route.params.bookid, this.$route.params.chapter, this.mycomment).then((data) => {
@@ -179,7 +185,12 @@ export default {
             this.handleCurrentChange(1)
             break;
           case 401:
-            alert("用户未登录！或登录失效！请重新登录")
+            ElMessage({
+              message: '用户未登录！或登录失效！请重新登录',
+              grouping: true,
+              type: 'waring',
+            })
+            
             this.$store.commit('refresh')
             break;
           default:

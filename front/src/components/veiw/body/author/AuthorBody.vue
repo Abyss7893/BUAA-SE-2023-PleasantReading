@@ -29,6 +29,7 @@
 <script>
 import BookInfoCompnent from '../search/BookInfoCompnent.vue';
 import { getAuthor, getBookDetiles } from '@/api/api'
+import { ElMessage } from 'element-plus';
 export default {
   components: { BookInfoCompnent, },
   data() {
@@ -66,7 +67,11 @@ export default {
             })
           }
         } else {
-          alert('该作者不存在！')
+          ElMessage({
+            message: '该作者不存在',
+            grouping: true,
+            type: 'error',
+          })
         }
       })
     }

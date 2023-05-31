@@ -50,6 +50,7 @@
 import 'css/reader/reader.css'
 import { getBookDetiles, getBookCharpter, addBookmark, deletBookmark } from "@/api/api";
 import { nextTick } from 'vue';
+import { ElMessage } from 'element-plus';
 import popOver from './popOver.vue';
 export default {
   name: "ReaderComponent",
@@ -79,15 +80,27 @@ export default {
           const code = data.request.status
           switch (code) {
             case 200:
-              alert("添加书签成功！")
+              ElMessage({
+                message: '添加书签成功！',
+                grouping: true,
+                type: 'success',
+              })
               this.chapterInfo.marked = true
               break
             case 401:
-              alert("用户未登录！或登录失效！请重新登录")
+              ElMessage({
+                message: '用户未登录！或登录失效！请重新登录',
+                grouping: true,
+                type: 'warning',
+              })
               this.$store.commit('refresh')
               break;
             case 400:
-              alert("书签已添加！")
+              ElMessage({
+                message: '书签已添加！',
+                grouping: true,
+                type: 'info',
+              })
               break
             default:
               break;
@@ -98,15 +111,27 @@ export default {
           const code = data.request.status
           switch (code) {
             case 200:
-              alert("删除书签成功！")
+             ElMessage({
+                message: '删除书签成功！',
+                grouping: true,
+                type: 'success',
+              })
               this.chapterInfo.marked = false
               break
             case 401:
-              alert("用户未登录！或登录失效！请重新登录")
+              ElMessage({
+                message: '用户未登录！或登录失效！请重新登录',
+                grouping: true,
+                type: 'warning',
+              })
               this.$store.commit('refresh')
               break;
             case 400:
-              alert("该处没有书签！")
+              ElMessage({
+                message: '该处没有书签',
+                grouping: true,
+                type: 'info',
+              })
               break
             default:
               break;
@@ -126,11 +151,19 @@ export default {
         getBookCharpter(this.$route.params.bookid, this.$route.params.chapter).then((data) => {
 
           if (!data.status && data.response.status == 401) {
-            alert("该书籍仅供vip阅读！而您甚至未登录！")
+            ElMessage({
+              message: '该书籍仅供vip阅读！而您甚至未登录！',
+              grouping: true,
+              type: 'info',
+            })
             window.location.href = '/book/' + this.$route.params.bookid
             return
           } else if (!data.status && data.response.status == 403) {
-            alert("该书籍仅供vip阅读！")
+            ElMessage({
+              message: '该书籍仅供vip阅读！',
+              grouping: true,
+              type: 'info',
+            })
             window.location.href = '/book/' + this.$route.params.bookid
             return
           } else {
@@ -148,14 +181,22 @@ export default {
     },
     previousChapter() {
       if (this.bookInfo.chapterId == 1) {
-        alert("本章为第一章，没有前一章节内容咯~")
+         ElMessage({
+          message: '本章为第一章，没有前一章节内容咯~',
+          grouping: true,
+          type: 'info',
+        })
       } else {
         window.location.href = '/reader/' + this.$route.params.bookid + '/' + (this.$route.params.chapter - 1)
       }
     },
     nextChapter() {
       if (this.$parent.$refs.child1.$refs.child2.chapters.length == this.bookInfo.chapterId) {
-        alert("本章为最后一章，没有后一章节内容咯~")
+        ElMessage({
+          message: '本章为最后一章，没有后一章节内容咯~',
+          grouping: true,
+          type: 'info',
+        })
       } else
         window.location.href = '/reader/' + this.$route.params.bookid + '/' + (parseInt(this.$route.params.chapter) + 1)
     },

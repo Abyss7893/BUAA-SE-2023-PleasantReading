@@ -27,7 +27,7 @@
 
 <script>
 import axios from 'axios';
-import { ElButton, ElForm, ElFormItem, ElInput } from 'element-plus';
+import { ElButton, ElForm, ElFormItem, ElInput,ElMessage } from 'element-plus';
 import {reactive} from 'vue'
 export default {
     name:'ChangePwd',
@@ -61,7 +61,11 @@ export default {
         }
         const submitForm = () => {
             if(form.newPwd!=form.confirmPwd){
-                alert("两次输入密码不一致")
+                 ElMessage({
+                    message: '两次输入密码不一致',
+                    grouping: true,
+                    type: 'error',
+                })
                 return;
             }
             // 创建一个对象来保存表单数据
@@ -73,11 +77,19 @@ export default {
             // 使用 Axios 发送 POST 请求
             axios.post('http://154.8.183.51/user/changepwd', data)
                 .then(() => {
-                    alert("修改密码成功")
+                     ElMessage({
+                        message: '修改密码成功',
+                        grouping: true,
+                        type: 'success',
+                    })
                     emit('close')
                 })
                 .catch(() => {
-                    alert("修改密码失败")
+                    ElMessage({
+                        message: '修改密码失败',
+                        grouping: true,
+                        type: 'error',
+                    })
                 });
         };
 

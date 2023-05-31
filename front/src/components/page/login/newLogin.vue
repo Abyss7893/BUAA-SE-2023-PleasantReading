@@ -56,12 +56,13 @@
 import { ref, onMounted, reactive } from 'vue';
 import axios from 'axios'
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+
+import {ElMessage} from 'element-plus'
 export default {
     name: 'newLoginComponent',
-    setup() {
+    emits: ['submit'],
+    setup(_,{emit}) {
         const store = useStore();
-        const router = useRouter();
         const switchCtn = ref(null)
         const switchC1 = ref(null)
         const switchC2 = ref(null)
@@ -124,7 +125,7 @@ export default {
                         }
                     )
                     .then((response) => {
-                        console.log("第一步")
+                  
                         const token = response.data.access;
                         // 将令牌存储在本地存储中
                         localStorage.setItem("token", token);
@@ -133,14 +134,20 @@ export default {
                         // 登录成功后的操作，例如跳转到其他页面
                         const userId = response.data.userId;
                         store.commit("setUser", userId);
-                        const isTo = confirm("登录成功!是否跳转到首页");
+                       
+                        ElMessage({
+                            message: '登陆成功',
+                            grouping: true,
+                            type: 'success',
+                        })
+                        emit('submit')
                         // 登录成功后要获取用户信息储存到vuex中
                         axios
                             .get(`http://154.8.183.51/user/getinfo/${userLoginForm.username}`)
                             .then((response) => {
                                 // 从响应数据中获取用户信息，并保存到 vuex 的 userInfo 中
                                 store.commit("updateUserInfo", response.data);
-                                console.log("第二步")
+                            
                             })
                             .catch(() => {
                                 // 处理错误情况
@@ -153,19 +160,25 @@ export default {
                             .then((response) => {
                                 const url = response.data.url;
                                 store.commit("setAvatarUrl", url);
-                                console.log("第三步")
+                                
                             })
                             .catch(() => {
-                                alert("账号或密码错误");
+                                ElMessage({
+                                    message: '账号或密码错误',
+                                    grouping: true,
+                                    type: 'error',
+                                })
                             });
-                        if (isTo) {
-                            router.push("/");
-                        }
+                        
                     })
                     .catch(() => {
                         // 处理登录错误
                         userLoginForm.password = userLoginForm.username = "";
-                        alert("账号或密码错误");
+                        ElMessage({
+                            message: '账号或密码错误',
+                            grouping: true,
+                            type: 'error',
+                        })
                     });
             } catch (_) {
                 // 处理错误
@@ -173,21 +186,42 @@ export default {
             }
         }
         async function register() {
+            
             const emailReg = /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
             if (!emailReg.test(userRegisterForm.email)) {
-                alert('请输入正确的邮箱地址');
+                ElMessage({
+                    message: '请输入正确的邮箱地址',
+                    grouping: true,
+                    type: 'error',
+                })
+                
                 return;
             }
             if (userRegisterForm.password !== userRegisterForm.confirmPassword) {
-                alert('两次输入的密码不一致')
+                ElMessage({
+                    message: '两次输入的密码不一致',
+                    grouping: true,
+                    type: 'error',
+                })
+           
                 return
             }
             if (userRegisterForm.username == '') {
-                alert('账号不能为空')
+                ElMessage({
+                    message: '账号不能为空',
+                    grouping: true,
+                    type: 'error',
+                })
+               
                 return
             }
             if (userRegisterForm.password == '') {
-                alert('密码不能为空')
+                ElMessage({
+                    message: '密码不能为空',
+                    grouping: true,
+                    type: 'error',
+                })
+           
                 return
             }
             try {
@@ -200,20 +234,31 @@ export default {
                 if (res.status === 200) {
                     console.log(res.data.message)
                     if (res.data.message === 'success') {
-                        const isTo = confirm('注册成功!是否跳转到登录界面');
-                        if (isTo) {
-                            router.push('/login');
-                        }
+                        //注册成功
+                        ElMessage({
+                            message: '注册成功',
+                            grouping: true,
+                            type: 'success',
+                        })
+                        switchBtn.value[0].click();
                     }
 
                     else
-                        alert("账号已存在")
+                        ElMessage({
+                            message: '账号已存在',
+                            grouping: true,
+                            type: 'error',
+                        })
                 } else {
                     throw new Error('请求失败')
                 }
 
             } catch (error) {
-                alert("注册失败")
+                 ElMessage({
+                    message: '注册失败',
+                    grouping: true,
+                    type: 'error',
+                })
             }
             userRegisterForm.email = "";
             userRegisterForm.username = "";

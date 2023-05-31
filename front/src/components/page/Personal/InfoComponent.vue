@@ -74,7 +74,7 @@
 <script>
 // import PersonalDialog from './PersonalDialog';
 import { defineComponent ,ref,computed} from 'vue';
-import { ElButton ,ElCard,ElDescriptions, ElDescriptionsItem,ElIcon,ElInput,ElDatePicker,ElMessageBox} from 'element-plus';
+import { ElButton ,ElCard,ElDescriptions, ElDescriptionsItem,ElIcon,ElInput,ElDatePicker,ElMessage} from 'element-plus';
 import { reactive } from 'vue';
 import { useStore} from 'vuex';
 import axios from 'axios';
@@ -149,10 +149,11 @@ export default defineComponent({
                     state.info.gender = tempInfo.gender
                     store.commit('updateUserInfo', state.info)
                  
-                    ElMessageBox.alert('修改成功', '提示', {
-                        confirmButtonText: '确定',
+                    ElMessage({
+                        message: '修改成功',
+                        grouping: true,
                         type: 'success',
-                    });
+                    })
                 })
                 .catch(() => {
                     
@@ -160,7 +161,11 @@ export default defineComponent({
                     tempInfo.gender= state.info.gender
                     tempInfo.birthday= state.info.birthday
                     tempInfo.motto= state.info.motto
-                    alert("修改失败");
+                    ElMessage({
+                        message: '修改失败',
+                        grouping: true,
+                        type: 'error',
+                    })
 
                 });
 
