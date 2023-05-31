@@ -3,11 +3,7 @@
     <div id="contain">
       <!-- 左边的卡片 -->
       <div id="left_card">
-        <img
-          src="../../../assets/logo-yixinyuedu.png"
-          alt="Logo"
-          class="logo-img"
-        />
+        <img src="../../../assets/logo-yixinyuedu.png" alt="Logo" class="logo-img" />
         <h1>欢迎来到怡心阅读</h1>
         <span>Welcome to yixin reading</span>
       </div>
@@ -16,23 +12,11 @@
         <el-card class="el-card">
           <h2>欢迎登录</h2>
           <form class="login" action="">
-            <input
-              v-shake
-              type="text"
-              v-model="userLoginForm.username"
-              placeholder="请输入账号"
-            />
-            <input
-              v-shake
-              type="password"
-              v-model="userLoginForm.password"
-              placeholder="请输入密码"
-            />
+            <input v-shake type="text" v-model="userLoginForm.username" placeholder="请输入账号" />
+            <input v-shake type="password" v-model="userLoginForm.password" placeholder="请输入密码" />
           </form>
           <!-- <span class="forgetPwd" >忘记密码</span> -->
-          <el-button class="forgetPwd" @click="showForget = true"
-            >忘记密码</el-button
-          >
+          <el-button class="forgetPwd" @click="showForget = true">忘记密码</el-button>
 
           <div class="message">
             <span v-html="error"></span>
@@ -46,23 +30,16 @@
         </el-card>
       </div>
     </div>
-    <el-dialog
-      title="重置密码"
-      v-model="showForget"
-      :before-close="handleClose"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      :append-to-body="false"
-      style="
-        min-width: 500px;
-        border-radius: 25px;
-        border: 1px solid black;
+    <el-dialog title="重置密码" v-model="showForget" :before-close="handleClose" :close-on-click-modal="false"
+      :close-on-press-escape="false" :append-to-body="false" style="
+          min-width: 500px;
+          border-radius: 25px;
+          border: 1px solid black;
 
-        backdrop-filter: blur(5px);
-        box-shadow: -5px -5px 10px rgb(39, 65, 65), 5px 5px 20px aqua;
-        animation: animate 5s linear infinite;
-      "
-    >
+          backdrop-filter: blur(5px);
+          box-shadow: -5px -5px 10px rgb(39, 65, 65), 5px 5px 20px aqua;
+          animation: animate 5s linear infinite;
+        ">
       <forget-dialog @submit="showForgetDialog" />
     </el-dialog>
   </div>
@@ -114,6 +91,7 @@ export default {
             const token = response.data.access;
             // 将令牌存储在本地存储中
             localStorage.setItem("token", token);
+            localStorage.setItem('tokenStartTime', new Date().getTime());
             // 更新默认请求头中的令牌
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             // 登录成功后的操作，例如跳转到其他页面
@@ -186,6 +164,7 @@ export default {
   min-width: 1300px;
   min-height: 800px;
   height: 100vh;
+
   #contain {
     height: 400px;
     position: absolute;

@@ -28,12 +28,12 @@
             </i>
           </li>
         </ul>
-        <el-pagination small hide-on-single-page layout="prev, pager, next" :total="this.pages * 5" :page-size="5"
-          @current-change="handleCurrentChange" class="page-control"></el-pagination>
+        <el-pagination small hide-on-single-page layout="prev, pager, next" :total="pages * 5" :page-size="5"
+          @current-change="handleCurrentChange" :current-page="thisPage" class="page-control"></el-pagination>
         <div class="no-comments" v-if="this.comments.length == 0"><el-empty description="还没有人留下评论，快来留下你的足迹吧！"
             :image="require('assets/imgs/comment_null.png')" image-size="250px" /></div>
         <div class="comment-input-box">
-          <textarea ref="mycomment" wrap="soft" rows="1" placeholder="发送一条友善的评论~"></textarea><input type="button"
+          <textarea v-model="mycomment" wrap="soft" rows="1" placeholder="发送一条友善的评论~"></textarea><input type="button"
             value="发送" @click="submitComment">
         </div>
       </div>
@@ -53,6 +53,7 @@ export default {
       showMyCard: false,
       pages: 1,
       thisPage: 1,
+      mycomment: "",
       comments: []
     }
   },
@@ -149,6 +150,7 @@ export default {
       });
     },
     handleCurrentChange(val) {
+      this.thisPage = val
       getBookComments(this.$route.params.bookid, this.$route.params.chapter, val).then((data) => {
         this.comments = []
         let len = data.comments.length
@@ -163,17 +165,17 @@ export default {
       })
     },
     submitComment() {
-      if (this.$refs.mycomment.value.length === 0)
+      if (this.mycomment.length === 0)
         return
-      else if (this.$refs.mycomment.value.length > 500) {
+      else if (this.mycomment.length > 500) {
         alert("评论不可以超过500字哦，请精简一下吧~")
         return
       }
-      submitBookComment(this.$route.params.bookid, this.$route.params.chapter, this.$refs.mycomment.value).then((data) => {
+      submitBookComment(this.$route.params.bookid, this.$route.params.chapter, this.mycomment).then((data) => {
         const code = data.request.status
         switch (code) {
           case 200:
-            this.$refs.mycomment.value = ''
+            this.mycomment = ''
             this.handleCurrentChange(1)
             break;
           case 401:
