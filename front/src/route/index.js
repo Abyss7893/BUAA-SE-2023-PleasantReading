@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from 'components/page/Home'
-const LoginComponent = () => import('../components/page/login/LoginComponent')
+const newLoginComponent = () => import('../components/page/login/newLogin')
 const RegisterComponent = () => import('../components/page/login/RegisterComponent')
 const BookDetail = () => import('../components/veiw/book/BookDetail')
 const PersonalCenter = () => import('../components/page/PersonalCenter')
@@ -22,7 +22,7 @@ const router = createRouter({
       name: 'home',
       component: Home,
     },
-    { path: '/login', component: LoginComponent },
+    { path: '/login', component: newLoginComponent },
     // { path:'/test',name:'test',component:HelloWorld},
     { path: '/register', component: RegisterComponent },
     {
