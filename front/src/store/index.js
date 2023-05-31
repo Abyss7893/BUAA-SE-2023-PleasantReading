@@ -69,7 +69,7 @@ const store = createStore({
   mutations: {
     refresh(state) {
       state.isLogin = false
-      state.isVIP = false
+      localStorage.clear()
     },
     changeLoginState(state) {
       if (this.state.isLogin) {
@@ -88,9 +88,8 @@ const store = createStore({
       state.isVIP = true
     },
     signOut(state) {
-      localStorage.removeItem('token')
+      localStorage.clear()
       state.isLogin = false;
-      state.isVIP = false
     },
     setUser(state, userId) {
       state.userId = userId;

@@ -12,7 +12,7 @@
           </li>
         </ul>
         <el-pagination small hide-on-single-page layout="prev, pager, next" :total="this.pages * 5" :page-size="5"
-          @current-change="handleCurrentChange" class="page-control"></el-pagination>
+          @current-change="handleCurrentChange" :current-page="thisPage" class="page-control"></el-pagination>
       </div>
       <div class="null-note" v-if="this.notes.length == 0">
         <!-- <el-empty description="本章节你还没有做笔记哟~快来试试吧"></el-empty> -->
@@ -71,7 +71,7 @@
         <div>本章节你还没有做笔记哟~快来试试吧</div>
       </div>
       <div class="comment-input-box">
-        <textarea ref="mynote" wrap="soft" rows="1" placeholder="做做笔记让本书充实你的灵魂吧~"></textarea><input type="button"
+        <textarea v-model="mynote" wrap="soft" rows="1" placeholder="做做笔记让本书充实你的灵魂吧~"></textarea><input type="button"
           value="发送" @click="submitMyNote">
       </div>
     </div>
@@ -90,11 +90,13 @@ export default {
       notes: ["这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。",],
       thisPage: 1,
       pages: 1,
+      mynote: "",
     };
   },
   computed: {},
   methods: {
     handleCurrentChange(val) {
+      this.thisPage = val
       getNotes(this.$route.params.bookid, this.$route.params.chapter, val).then((data) => {
         if (data.status && data.status == 200) {
           this.notes = []
@@ -108,17 +110,17 @@ export default {
       })
     },
     submitMyNote() {
-      if (this.$refs.mynote.value.length === 0)
+      if (this.mynote.length === 0)
         return
-      else if (this.$refs.mynote.value.length > 300) {
+      else if (this.mynote.length > 300) {
         alert("笔记不可以超过300字哦，请精简一下吧~")
         return
       }
-      submitNote(this.$route.params.bookid, this.$route.params.chapter, this.$refs.mynote.value).then((data) => {
+      submitNote(this.$route.params.bookid, this.$route.params.chapter, this.mynote).then((data) => {
         if (data.status && data.status == 200) {
-          alert("提交笔记成功!WAW")
-          this.notes.push(this.$refs.mynote.value)
-          this.$refs.mynote.value = ''
+          // alert("提交笔记成功!WAW")
+          this.handleCurrentChange(1)
+          this.mynote = ''
         } else if (data.response && data.response.status == 401) {
           alert("未登录不可以提交笔记哟!QAQ~")
         } else {
@@ -152,7 +154,7 @@ export default {
 }
 
 .note ul {
-  height: 50vh;
+  height: 38vh;
   overflow: auto;
 }
 

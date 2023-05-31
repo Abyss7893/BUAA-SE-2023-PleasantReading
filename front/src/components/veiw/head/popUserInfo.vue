@@ -96,9 +96,16 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pop-wrap {
-  visibility: visible;
-  transition: visibility .3s ease-in, opacity .3s ease-in;
+  animation-name: fadeInDown;
+  animation-duration: .3s;
+  position: absolute;
+  top: 75px;
+  left: -8px;
+  visibility: hidden;
+  transition: visibility .3s ease-out, opacity .3s ease-out;
   opacity: 0;
+  z-index: 150;
+
 }
 
 .pop {
@@ -106,13 +113,10 @@ export default {
   position: absolute;
   background-color: #fff;
   width: 300px;
-  top: 75px;
-  left: -8px;
   border-radius: 10px;
   transform: translate(-50%, 0);
   border-radius: 10px;
   box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
-  z-index: 150;
 }
 
 .avatar:hover .pop-wrap {
@@ -155,6 +159,7 @@ export default {
 }
 
 .pop li {
+  cursor: pointer;
   transition: all .3s ease-in-out;
   display: flex;
   justify-content: space-between;

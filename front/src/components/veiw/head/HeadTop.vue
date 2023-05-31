@@ -86,14 +86,16 @@
         </div>
       </template>
       <template v-else>
-        <div class="avatar">
+        <div class="avatar" @mouseleave="popleave" @mouseenter="popover">
           <!-- <ElDropdown trigger="click"> -->
           <div class="proshake">
             <router-link to="/user/info">
               <ElAvatar class="edavatar" :src="avatar" size="large"></ElAvatar>
             </router-link>
           </div>
-          <popUserInfo />
+          <div :style="{ display: popShow }">
+            <popUserInfo />
+          </div>
         </div>
       </template>
     </div>
@@ -121,6 +123,7 @@ export default {
       searchHots: ["青春北航男童不会梦到清华女学长", "重生之我在北航卖西瓜", "飘飘何所似", "红楼梦", "杨过"],
       clearExit: false,
       keywords: "",
+      popShow: "none",
     }
   },
   computed: {
@@ -155,6 +158,14 @@ export default {
     },
     clearwords() {
       this.keywords = ""
+    },
+    popover() {
+      this.popShow = "block"
+    },
+    popleave() {
+      setTimeout(() => {
+        this.popShow = "none"
+      }, 200)
     },
   },
 };
@@ -327,7 +338,7 @@ export default {
   position: relative;
   top: 0;
   right: 0;
-  transition: all .2s ease-in-out;
+  transition: all .3s ease-in-out;
 }
 
 .avatar:hover .edavatar {
