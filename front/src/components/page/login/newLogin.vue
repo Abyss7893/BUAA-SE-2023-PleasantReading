@@ -1,6 +1,7 @@
 <template>
     <body>
         <div class="main">
+            
             <div class="container a-container" id="a-container">
                  <form class="form" id="b-form" method="" action="">
                         <h2 class="form_title title">登录账号</h2>
@@ -80,6 +81,8 @@ export default {
             confirmPassword: ""
         })
 
+
+        
         const changeForm = () => {
             switchCtn.value.classList.add("is-gx");
             setTimeout(function () {
@@ -98,7 +101,6 @@ export default {
         }
 
         const mainF = () => {
-            
             switchBtn.value = document.querySelectorAll(".switch-btn");
             switchCircle.value = document.querySelectorAll(".switch__circle");
 
@@ -219,6 +221,7 @@ export default {
             userRegisterForm.confirmPassword = "";
         }
         onMounted(() => {
+           
             switchCtn.value = document.querySelector("#switch-cnt")
             switchC1.value = document.querySelector("#switch-c1")
             switchC2.value = document.querySelector("#switch-c2")
@@ -256,8 +259,8 @@ export default {
 
 /* Generic */
 body {
-    width: 100%;
-    height: 100vh;
+    width: 50%;
+    height: 50vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -273,6 +276,7 @@ body {
     width: 1000px;
     min-width: 1000px;
     min-height: 600px;
+    margin-right: 400px;
     height: 600px;
     padding: 25px;
     background-color: #ecf0f3;

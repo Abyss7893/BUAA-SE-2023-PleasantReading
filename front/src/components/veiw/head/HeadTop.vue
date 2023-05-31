@@ -1,5 +1,9 @@
 <!-- 网页头部顶侧，包含logo、登录&&注册、搜索栏等 -->
 <template>
+  <ElDialog v-model="showLogin" style="background-color: transparent; width: 800px;" >
+    <newLogin class="mycard"  ></newLogin>
+  </ElDialog>
+  
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
   <div class="head-top">
@@ -80,7 +84,7 @@
               @click="this.$router.push({ path: '/login' })">立即登录</el-button>
             <div class="register"><span>首次使用?<router-link to="/register">点我注册</router-link></span></div>
             <template #reference>
-              <ElAvatar class="login-avatar" size="large"><router-link to="/login">登录</router-link></ElAvatar>
+              <ElAvatar class="login-avatar" size="large" ><span @click="showLogin=true">登录</span></ElAvatar>
             </template>
           </el-popover>
         </div>
@@ -103,8 +107,9 @@
 
 <script>
 import "css/head/headtop.css";
+import newLogin from "@/components/page/login/newLogin.vue";
 import {
-  ElAvatar,
+  ElAvatar, ElDialog,
   // ElDropdown,
   // ElDropdownMenu,
   // ElDropdownItem,
@@ -115,12 +120,15 @@ export default {
   components: {
     ElAvatar,
     popUserInfo,
-  },
+    newLogin,
+    ElDialog
+},
   data() {
     return {
       searchHots: ["青春北航男童不会梦到清华女学长", "重生之我在北航卖西瓜", "飘飘何所似", "红楼梦", "杨过"],
       clearExit: false,
       keywords: "",
+      showLogin:false
     }
   },
   computed: {
@@ -164,7 +172,20 @@ export default {
   --el-dropdown-menuItem-hover-fill: #f56c6c;
   --el-dropdown-menuItem-hover-color: white;
 }
-
+.mycard {
+  z-index: 1000;
+  background-color: transparent;
+  
+}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(254, 253, 253, 0.5);
+}
 .shell {
   position: relative;
   width: 500px;
