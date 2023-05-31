@@ -430,3 +430,9 @@ def getBriefInfo(request):
     ncomments = Comments.objects.filter(userID=userid, visible=True).count()
     nmarks = Bookmark.objects.filter(userID=userid).count()
     return JsonResponse({'notes': nnotes, 'comments': ncomments, 'marks': nmarks})
+
+def getBriefInfo1(request, userid):
+    nnotes = Comments.objects.filter(userID=userid, visible=False).count()
+    ncomments = Comments.objects.filter(userID=userid, visible=True).count()
+    nmarks = Bookmark.objects.filter(userID=userid).count()
+    return JsonResponse({'notes': nnotes, 'comments': ncomments, 'marks': nmarks})

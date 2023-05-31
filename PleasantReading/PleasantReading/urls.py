@@ -55,6 +55,7 @@ urlpatterns = [
     path('book/recent/', bookApi.getRecentHistory),
     path('book/author/<str:name>', bookApi.getAuthor),
     path('book/briefinfo/', bookApi.getBriefInfo),
+    path('book/briefinfo/<str:userid>/', bookApi.getBriefInfo1),
 
     path('manager/register', managerApi.managerRegister),
     path('manager/login', managerApi.managerLogin),
