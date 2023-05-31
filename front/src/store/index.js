@@ -106,6 +106,7 @@ const store = createStore({
       state.readerSettings = settings
     },
     updateUserInfo(state, userInfo) {
+      console.log(userInfo)
       state.userInfo = userInfo
       state.isLogin = true
     },

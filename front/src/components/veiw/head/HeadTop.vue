@@ -10,17 +10,19 @@
     <div class="dropdown">
       <div class="search">
         <div class="shell">
-          <input type="text" placeholder="Search" ref="keywords" @focusin="drop" @focusout="hide" @input="clearChange">
-          <svg @mousedown="clearwords" v-show="clearShow" class="clear" width="16" height="16" viewBox="0 0 16 16"
+          <input type="text" placeholder="Search" v-model="keywords" @focusin="drop" @focusout="hide">
+          <svg @mousedown="clearwords" v-show="keywords !== ''" class="clear" width="16" height="16" viewBox="0 0 16 16"
             fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
               d="M8 14.75C11.7279 14.75 14.75 11.7279 14.75 8C14.75 4.27208 11.7279 1.25 8 1.25C4.27208 1.25 1.25 4.27208 1.25 8C1.25 11.7279 4.27208 14.75 8 14.75ZM9.64999 5.64303C9.84525 5.44777 10.1618 5.44777 10.3571 5.64303C10.5524 5.83829 10.5524 6.15487 10.3571 6.35014L8.70718 8.00005L10.3571 9.64997C10.5524 9.84523 10.5524 10.1618 10.3571 10.3571C10.1618 10.5523 9.84525 10.5523 9.64999 10.3571L8.00007 8.70716L6.35016 10.3571C6.15489 10.5523 5.83831 10.5523 5.64305 10.3571C5.44779 10.1618 5.44779 9.84523 5.64305 9.64997L7.29296 8.00005L5.64305 6.35014C5.44779 6.15487 5.44779 5.83829 5.64305 5.64303C5.83831 5.44777 6.15489 5.44777 6.35016 5.64303L8.00007 7.29294L9.64999 5.64303Z"
               fill="#ff7575"></path>
           </svg>
-          <a @click="searchBooks">
-            <i class="fa fa-hand-o-right"></i>
-            <i class="fa fa-search"></i>
-          </a>
+          <div class="proshake">
+            <a @click="searchBooks">
+              <i class="fa fa-hand-o-right"></i>
+              <i class="fa fa-search"></i>
+            </a>
+          </div>
         </div>
       </div>
       <div class="dropdown-content" ref="hidden">
@@ -78,7 +80,7 @@
               @click="this.$router.push({ path: '/login' })">立即登录</el-button>
             <div class="register"><span>首次使用?<router-link to="/register">点我注册</router-link></span></div>
             <template #reference>
-              <ElAvatar class="login-avatar"><router-link to="/login">登录</router-link></ElAvatar>
+              <ElAvatar class="login-avatar" size="large"><router-link to="/login">登录</router-link></ElAvatar>
             </template>
           </el-popover>
         </div>
@@ -88,61 +90,10 @@
           <!-- <ElDropdown trigger="click"> -->
           <div class="proshake">
             <router-link to="/user/info">
-              <ElAvatar class="edavatar" :src="avatar"></ElAvatar>
+              <ElAvatar class="edavatar" :src="avatar" size="large"></ElAvatar>
             </router-link>
           </div>
-          <div class="pop-wrap">
-            <div class="pop">
-              <router-link to="/user/info">
-                <div class="username">{{ this.$store.state.userInfo.username }}</div>
-              </router-link>
-              <div v-if="this.$store.state.isVIP" class="vipicon">123</div>
-              <div class="fav">
-                <div class="shelf">
-                  <div class="num">123</div>
-                  <div>收藏</div>
-                </div>
-                <div class="note">
-                  <div class="num">123</div>
-                  <div>笔记</div>
-                </div>
-                <div class="mark">
-                  <div class="num">123</div>
-                  <div>书签</div>
-                </div>
-              </div>
-              <div class="vip-entry-containter">
-                <div class="vip-entry-desc">
-                  <p class="vip-entry-desc-title" style="color: rgb(255, 102, 153);">我的VIP</p>
-                  <p class="vip-entry-desc-subtitle" style="color: rgb(97, 102, 109);">热门书籍看不停</p>
-                </div>
-                <div class="vip-entry-btn" data-v-ae740c54=""
-                  style="color: rgb(255, 102, 153); background: rgb(255, 255, 255);">会员中心</div>
-              </div>
-              <router-link to="/user/info">
-                <li class="usercenter">
-                  <div><el-icon>
-                      <UserFilled />
-                    </el-icon>个人中心</div><el-icon>
-                    <ArrowRight />
-                  </el-icon>
-                </li>
-              </router-link>
-              <li class="service">
-                <div><el-icon>
-                    <Star />
-                  </el-icon>推荐服务</div><el-icon>
-                  <ArrowRight />
-                </el-icon>
-              </li>
-              <el-divider direction="horizontal" />
-              <li class="logout" @click="signOut()">
-                <div><el-icon>
-                    <SwitchButton />
-                  </el-icon>退出登录</div>
-              </li>
-            </div>
-          </div>
+          <popUserInfo />
         </div>
       </template>
     </div>
@@ -158,18 +109,18 @@ import {
   // ElDropdownMenu,
   // ElDropdownItem,
 } from "element-plus";
+import popUserInfo from "./popUserInfo.vue"
 export default {
   name: "Head_Top",
   components: {
     ElAvatar,
-    // ElDropdown,
-    // ElDropdownItem,
-    // ElDropdownMenu,
+    popUserInfo,
   },
   data() {
     return {
       searchHots: ["青春北航男童不会梦到清华女学长", "重生之我在北航卖西瓜", "飘飘何所似", "红楼梦", "杨过"],
       clearExit: false,
+      keywords: "",
     }
   },
   computed: {
@@ -184,48 +135,31 @@ export default {
     },
   },
   mounted() {
-    this.$refs.keywords.value = this.$route.query.keywords ? this.$route.query.keywords : ""
-    if (this.$refs.keywords.value !== '')
-      this.clearExit = true
+    this.keywords = this.$route.query.keywords ? this.$route.query.keywords : ""
   },
   methods: {
     drop() {
-      if (this.$refs.keywords.value != "")
-        this.clearExit = true
       this.$refs.hidden.style.maxHeight = '500px';
       this.$refs.hidden.style.paddingBottom = '10px'
     },
     hide() {
-      this.clearExit = false
       this.$refs.hidden.style.maxHeight = '0';
       this.$refs.hidden.style.paddingBottom = '0'
     },
-    signOut() {
-      this.$store.commit("signOut")
-      // this.$router.push('/');
-    },
     searchBooks(keywords) {
       if (typeof (keywords) != "string")
-        keywords = this.$refs.keywords.value
+        keywords = this.keywords
       if (keywords === '')
         return
       this.$router.push({ path: '/search', query: { "keywords": keywords, page: 1 } })
     },
-    clearChange() {
-      if (this.$refs.keywords.value === "")
-        this.clearExit = false
-      else
-        this.clearExit = true
-    },
     clearwords() {
-      console.log(this.$refs.keywords.value)
-      this.$refs.keywords.value = ""
-      this.clearExit = false
+      this.keywords = ""
     },
   },
 };
 </script>
-<style>
+<style scoped>
 .personal-dropdown-menu {
   --el-dropdown-menuItem-hover-fill: #f56c6c;
   --el-dropdown-menuItem-hover-color: white;
@@ -278,6 +212,8 @@ export default {
   transition: .3s;
 }
 
+
+
 .shell a .fa-search {
   transform: translateX(-20px);
   opacity: 1;
@@ -288,12 +224,12 @@ export default {
   opacity: 0;
 }
 
-.shell a:hover .fa-search {
+.shell .proshake:hover a .fa-search {
   transform: translateX(0);
   opacity: 0;
 }
 
-.shell a:hover .fa-hand-o-right {
+.shell .proshake:hover a .fa-hand-o-right {
   transform: translateX(22px);
   opacity: 1;
 }
@@ -313,7 +249,7 @@ export default {
   animation: box 1s infinite ease;
 }
 
-.shell a:hover::before {
+.shell .proshake:hover a::before {
   top: -22px;
   opacity: 1;
 }
@@ -386,147 +322,22 @@ export default {
   margin-right: 8px;
 }
 
-.proshake {
-  position: relative;
-}
 
 .edavatar {
   position: relative;
   top: 0;
   right: 0;
-  transition: all .4s ease-in-out;
+  transition: all .2s ease-in-out;
 }
 
 .avatar:hover .edavatar {
   transform-origin: right top;
-  transform: translateZ(0) scale(2.5);
+  transform: translateZ(0) scale(2);
   z-index: 200;
   box-shadow: 0 1px 20px rgba(0, 0, 0, .2);
 }
 
 .avatar {
   position: relative;
-}
-
-.pop-wrap {
-  visibility: visible;
-  transition: visibility .2s ease-in, opacity .2s ease-in;
-  opacity: 0;
-}
-
-.pop {
-  padding: 24px;
-  position: absolute;
-  background-color: #fff;
-  width: 300px;
-  top: 70px;
-  left: -16px;
-  border-radius: 10px;
-  transform: translate(-50%, 0);
-  border-radius: 10px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
-  z-index: 150;
-}
-
-.avatar:hover .pop-wrap {
-  visibility: visible;
-  opacity: 1;
-}
-
-.username {
-  font-family: PingFang SC, HarmonyOS_Regular, Helvetica Neue, Microsoft YaHei, sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  color: rgb(251, 114, 153);
-  margin-top: 12px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.vip-entry-containter {
-  background-image: url("~assets/imgs/vipcenter.png");
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 9px 12px;
-  border-radius: 6px;
-  background-size: cover;
-  transition: background-color .2s;
-}
-
-.vip-entry-btn {
-  padding: 6px 0;
-  margin-left: 8px;
-  width: 68px;
-  line-height: 17px;
-  font-size: 14px;
-  text-align: center;
-  border-radius: 6px;
-}
-
-.pop li {
-  transition: all .3s ease-in-out;
-  display: flex;
-  justify-content: space-between;
-  border-radius: 6px;
-  padding: 12px;
-  margin: 4px 0 4px 0;
-  font-size: 18px;
-  text-align: center;
-  position: relative;
-}
-
-.pop li .el-icon {
-  position: relative;
-  top: 3px;
-}
-
-.pop li div .el-icon {
-  margin-right: 8px;
-}
-
-.pop .el-divider {
-  margin: 8px 0 8px;
-}
-
-.pop li:hover {
-  background-color: #f8b2b27d;
-}
-
-.fav {
-  padding-top: 16px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.fav div.shelf,
-.fav div.note,
-.fav div.mark {
-  transition: color .2s;
-  margin: 16px;
-  color: #9499A0;
-}
-
-.fav div.num {
-  transition: color .2s;
-  color: #000;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.fav .shelf:hover,
-.fav .note:hover,
-.fav .mark:hover {
-  color: #f8b2b27d;
-  cursor: pointer;
-}
-
-.fav .shelf:hover .num,
-.fav .note:hover .num,
-.fav .mark:hover .num {
-  color: #f8b2b27d;
-  cursor: pointer;
 }
 </style>
