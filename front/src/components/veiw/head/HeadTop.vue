@@ -82,23 +82,23 @@
                     p-id="1481" fill="#ed4259"></path>
                 </svg>热门书籍看不停</li>
             </div>
-            <el-button class="login-button" type="primary" color="#f33f3f" @click="showLogina">立即登录</el-button>
+            <el-button class="login-button" type="primary" color="#f33f3f" @click="showLoginblock">立即登录</el-button>
             <div class="register"><span>首次使用?<a @click="showRegister">点我注册</a></span></div>
             <template #reference>
-              <ElAvatar class="login-avatar" size="large"><span @click="showLogina">登录</span></ElAvatar>
+              <ElAvatar class="login-avatar" size="large"><span @click="showLoginblock">登录</span></ElAvatar>
             </template>
           </el-popover>
         </div>
       </template>
       <template v-else>
-        <div class="avatar" @mouseleave="popleave" @mouseenter="popover">
+        <div class="avatar" @mouseleave="popleave">
           <!-- <ElDropdown trigger="click"> -->
-          <div class="edavatar" ref="edavatar">
+          <div class="edavatar" ref="edavatar" @mouseenter="popover">
             <router-link to="/user/info">
               <ElAvatar :src="avatar" size="large"></ElAvatar>
             </router-link>
           </div>
-          <div :style="{ opacity: popShow }" class="popuserinfo">
+          <div :style="{ opacity: popShow }" class="popuserinfo" ref="popuserinfo">
             <popUserInfo />
           </div>
         </div>
@@ -132,9 +132,9 @@ export default {
       clearExit: false,
       keywords: "",
       showLogin: false,
-      popShow: "none",
+      popShow: 0,
       throttling1: false,
-      throttling2: false,
+
     }
   },
   computed: {
@@ -174,10 +174,13 @@ export default {
     },
     clearwords() {
       this.keywords = ""
+    }, showLogina() {
+      this
     },
     popover() {
       if (!this.throttling2) {
         this.throttling2 = true
+        this.$refs.popuserinfo.classList.remove("hidden")
         this.popShow = "1"
         this.$refs.edavatar.classList.add("large")
         // this.$refs.edavatar.classList.add("large")
@@ -185,26 +188,28 @@ export default {
     },
     popleave() {
       this.$refs.edavatar.classList.remove("large")
+      this.$refs.popuserinfo.classList.add("hidden")
       this.popShow = "0"
       setTimeout(() => {
         this.throttling2 = false
       }, 400);
-    }
+    },
+    showLoginblock() {
+      this.showLogin = true
+      setTimeout(() => {
+        if (this.$refs.login.showStatus())
+          this.$refs.login.changeForm()
+      }, 200)
+    },
+    showRegister() {
+      this.showLogin = true
+      setTimeout(() => {
+        if (!this.$refs.login.showStatus())
+          this.$refs.login.changeForm()
+      }, 200)
+    },
   },
-  showLogina() {
-    this.showLogin = true
-    setTimeout(() => {
-      if (this.$refs.login.showStatus())
-        this.$refs.login.changeForm()
-    }, 200)
-  },
-  showRegister() {
-    this.showLogin = true
-    setTimeout(() => {
-      if (!this.$refs.login.showStatus())
-        this.$refs.login.changeForm()
-    }, 200)
-  },
+
 }
 </script>
 <style >
@@ -212,6 +217,10 @@ export default {
   z-index: 1000;
   background-color: transparent;
 
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .mask {

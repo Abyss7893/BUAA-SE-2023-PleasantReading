@@ -395,7 +395,7 @@ body {
   height: 600px;
   padding: 25px;
   background-color: #ecf0f3;
-  box-shadow: 10px 10px 10px #d1d9e6, -10px -10px 10px #f9f9f9;
+  /* box-shadow: 10px #d1d9e6, -10px -10px 10px #f9f9f9; */
   border-radius: 12px;
   overflow: hidden;
 }
