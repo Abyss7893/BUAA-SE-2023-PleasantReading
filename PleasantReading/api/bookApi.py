@@ -375,9 +375,11 @@ def getMarks(request):
         return JsonResponse({'message': 'login please'}, status=401)
     userid = getUsername(request)
     marks = Bookmark.objects.filter(userID=userid)
-    subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name')[:1]
-    marks = marks.annotate(name=Subquery(subquery.values('name')))
-    marks = marks.values('bookID', 'name', 'chapter')
+    subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name', 'img')[:1]
+    marks = marks.annotate(name=Subquery(subquery.values('name')), img=Subquery(subquery.values('img')))
+    subquery = BookContext.objects.filter(bookID=OuterRef('bookID'), chapter=OuterRef('chapter')).values('title')[:1]
+    marks = marks.annotate(title=Subquery(subquery.values('title')))
+    marks = marks.values('bookID', 'name', 'chapter', 'title', 'img')
     return JsonResponse({'marks': list(marks)})
 
 
