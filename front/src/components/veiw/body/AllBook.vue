@@ -1,9 +1,9 @@
 <!-- 网页的主页的中间内容部分 -->
 <template>
   <div>
-    <ElAffix>
+    <!-- <ElAffix> -->
       <WebHead />
-    </ElAffix>
+    <!-- </ElAffix> -->
 
     <div class="box-center">
        <newLogin class="mycard" v-if="this.$store.state.showLogin" @close="showLogin = false" ></newLogin>
@@ -25,7 +25,7 @@
   import newLogin from "@/components/page/login/newLogin.vue";
 import WebHead from "../head/WebHead.vue";
 import FootComponents from "../foot/WebFoot.vue";
-import { ElAffix } from "element-plus";
+// import { ElAffix } from "element-plus";
 // import StartComponent from "./StartComponent.vue";
 import CategoryComponent from "./CategoryComponent.vue";
 import RecommendComponent from "./RecommendComponent.vue";
@@ -43,7 +43,7 @@ export default {
     WebHead,
     FootComponents,
     newLogin,
-    ElAffix,
+    // ElAffix,
   },
   computed: {},
   created() {
