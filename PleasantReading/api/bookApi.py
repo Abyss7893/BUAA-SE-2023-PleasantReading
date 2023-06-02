@@ -125,7 +125,7 @@ def updateBookmark(request, bookid, chapter):
     if request.method == 'POST':
         if mark.count() > 0:
             return JsonResponse({'message': 'bookmark exists'}, status=400)
-        Bookmark.objects.create(bookID=bookid, userID=userid, chapter=chapter)
+        Bookmark.objects.create(bookID=bookid, userID=userid, chapter=chapter, timestamp=datetime.now())
         return JsonResponse({'message': 'success'})
     elif request.method == 'DELETE':
         if mark.count() == 0:
@@ -225,7 +225,7 @@ def getBookNotes(request, bookid, chapter, page):
     comments = Comments.objects.filter(bookID=bookid, userID=userid, chapter=chapter, visible=False)
     num = comments.count()
     comments = comments[(page - 1) * NT2PG:page * NT2PG]
-    return JsonResponse({'notes': list(comments.values_list('text', flat=True)), 'pages': getPages(num, NT2PG)})
+    return JsonResponse({'notes': list(comments.values('text', 'timestamp')), 'pages': getPages(num, NT2PG)})
 
 
 def getAllNotes(request):
@@ -379,7 +379,7 @@ def getMarks(request):
     marks = marks.annotate(name=Subquery(subquery.values('name')), img=Subquery(subquery.values('img')))
     subquery = BookContext.objects.filter(bookID=OuterRef('bookID'), chapter=OuterRef('chapter')).values('title')[:1]
     marks = marks.annotate(title=Subquery(subquery.values('title')))
-    marks = marks.values('bookID', 'name', 'chapter', 'title', 'img')
+    marks = marks.values('bookID', 'name', 'chapter', 'title', 'img', 'timestamp')
     return JsonResponse({'marks': list(marks)})
 
 

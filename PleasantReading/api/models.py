@@ -129,6 +129,7 @@ class Bookmark(models.Model):
     userID = models.CharField(max_length=128, null=False)
     bookID = models.IntegerField(null=False)
     chapter = models.IntegerField(null=False)
+    timestamp = models.DateTimeField(default='2023-05-27 00:00:00', null=False)
 
     class Meta:
         indexes = [models.Index(fields=['userID', 'bookID'])]
