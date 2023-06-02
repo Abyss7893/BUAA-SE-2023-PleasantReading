@@ -12,6 +12,7 @@ const RankBody = () => import('../components/veiw/rank/RankBody')
 const MyComment = () => import('../components/page/Personal/MyComment')
 // const Home = () => import('components/page/Home')
 const AllBook = () => import('../components/veiw/body/AllBook')
+const MyMarkBody = () => import('../components/veiw/body/mymark/MyMarkBody')
 const Search = () => import('../components/page/Search')
 const Author = () => import('components/page/Author')
 import 'css/home.css'
@@ -30,6 +31,11 @@ const router = createRouter({
       path: '/book/:id',
       name: 'book-detail',
       component: BookDetail
+    },
+    {
+      path: '/mark',
+      name: 'mark',
+      component: MyMarkBody
     },
     {
       path: '/user',

@@ -3,24 +3,55 @@
   <div class="head-nav">
     <ul>
       <div class="slider"></div>
-      <li navi-id="1" @mouseover="slideHere" ref="firstli" @mouseout="slideAway" @click="storeNavi">
+      <li
+        navi-id="1"
+        @mouseover="slideHere"
+        ref="firstli"
+        @mouseout="slideAway"
+        @click="storeNavi"
+      >
         <a href="#">首页</a>
       </li>
-      <li navi-id="2" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
+      <li
+        navi-id="2"
+        @mouseover="slideHere"
+        @mouseout="slideAway"
+        @click="storeNavi"
+      >
         <a href="#">全部作品</a>
       </li>
-      <li navi-id="3" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
+      <li
+        navi-id="3"
+        @mouseover="slideHere"
+        @mouseout="slideAway"
+        @click="storeNavi"
+      >
         <a href="#">作品排行</a>
       </li>
-      <li navi-id="4" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
-        <a href="#">完本作品</a>
+      <li
+        navi-id="4"
+        @mouseover="slideHere"
+        @mouseout="slideAway"
+        @click="storeNavi"
+      >
+        <a href="#">我的书签</a>
       </li>
       <!-- <router-link :to="{ name: 'mybook' }"> -->
-      <li navi-id="5" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
+      <li
+        navi-id="5"
+        @mouseover="slideHere"
+        @mouseout="slideAway"
+        @click="storeNavi"
+      >
         <a href="#">我的书架</a>
       </li>
       <!-- </router-link> -->
-      <li navi-id="6" @mouseover="slideHere" @mouseout="slideAway" @click="storeNavi">
+      <li
+        navi-id="6"
+        @mouseover="slideHere"
+        @mouseout="slideAway"
+        @click="storeNavi"
+      >
         <a href="#">我的笔记</a>
       </li>
     </ul>
@@ -42,10 +73,10 @@ export default {
   watch: {
     screenWidth: {
       handler: function () {
-        let id = this.swithPathToId(this.$route.path)
+        let id = this.swithPathToId(this.$route.path);
         if (id == 0) {
-          this.dealTheNoneSlider()
-          return
+          this.dealTheNoneSlider();
+          return;
         }
         this.naviLoccation = document
           .querySelector(`li[navi-id="${id}"]`)
@@ -62,10 +93,10 @@ export default {
       })();
     };
     this.slider = document.querySelector(".slider");
-    let id = this.swithPathToId(this.$route.path)
+    let id = this.swithPathToId(this.$route.path);
     if (id == 0) {
-      this.dealTheNoneSlider()
-      return
+      this.dealTheNoneSlider();
+      return;
     }
     this.naviLoccation = document
       .querySelector(`li[navi-id="${id}"] a`)
@@ -76,30 +107,32 @@ export default {
   },
   methods: {
     dealTheNoneSlider() {
-      this.slider.style.visibility = "hidden"
-      this.slider.style.opacity = 0
-      this.naviLoccation = null
+      this.slider.style.visibility = "hidden";
+      this.slider.style.opacity = 0;
+      this.naviLoccation = null;
     },
     swithPathToId(path) {
       switch (path) {
-        case '/home':
-        case '/':
-          return 1
-        case '/allbook':
-          return 2
-        case '/rank':
-          return 3
-        case '/mybook':
-          return 5
-        case '/mynote':
-          return 6
+        case "/home":
+        case "/":
+          return 1;
+        case "/allbook":
+          return 2;
+        case "/rank":
+          return 3;
+        case "/mybook":
+          return 5;
+        case "/mynote":
+          return 6;
+        case "/mark":
+          return 4;
         default:
-          return 0
+          return 0;
       }
     },
     slideHere(event) {
-      this.slider.style.visibility = "visible"
-      this.slider.style.opacity = 1
+      this.slider.style.visibility = "visible";
+      this.slider.style.opacity = 1;
       const rect = event.target.getBoundingClientRect();
       this.slider.style.width = rect.width + "px";
       this.slider.style.left = rect.left + "px";
@@ -111,8 +144,8 @@ export default {
         this.slider.style.left = this.naviLoccation.left + "px";
         this.slider.style.height = this.naviLoccation.height + "px";
       } else {
-        this.slider.style.visibility = "hidden"
-        this.slider.style.opacity = 0
+        this.slider.style.visibility = "hidden";
+        this.slider.style.opacity = 0;
       }
     },
     storeNavi(event) {
@@ -129,8 +162,12 @@ export default {
       if (id === "3") {
         this.$router.push({ name: "rank" });
       }
+
       if (id === "5") {
         this.$router.push({ name: "mybook" });
+      }
+      if (id === "4") {
+        this.$router.push({ name: "mark" });
       }
     },
   },

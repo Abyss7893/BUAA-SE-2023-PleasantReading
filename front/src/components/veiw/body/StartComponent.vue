@@ -2,6 +2,7 @@
   <div>
     <!-- <transition name="fade"> -->
     <div
+      v-if="hidethis"
       class="start-component"
       :class="{ 'start-component-hidden': !showComponent }"
       :style="{
@@ -44,6 +45,7 @@ export default {
       backgroundImage: null,
       showComponent: true,
       i: 0,
+      hidethis: true,
       typewriter: "",
       strs: [
         "读书之法，在循序而渐进，熟读而精思。——朱熹",
@@ -67,6 +69,9 @@ export default {
       // this.$refs.startComponentRef.classList.add('slide-up');
       setTimeout(() => {
         this.$emit("hide");
+        setTimeout(() => {
+          this.hidethis = false;
+        }, 500);
       }, 50);
     },
     typing() {
