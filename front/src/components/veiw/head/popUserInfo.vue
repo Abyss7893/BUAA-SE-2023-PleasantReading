@@ -103,16 +103,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pop-wrap {
-  animation-name: fadeInDown;
-  animation-duration: .3s;
   position: absolute;
-  top: 75px;
+  top: 20px;
   left: -8px;
-  visibility: hidden;
-  transition: visibility .3s ease-out, opacity .3s ease-out;
-  opacity: 0;
   z-index: 150;
-
 }
 
 .pop {
@@ -126,10 +120,6 @@ export default {
   box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
 }
 
-.avatar:hover .pop-wrap {
-  visibility: visible;
-  opacity: 1;
-}
 
 .username {
   font-family: PingFang SC, HarmonyOS_Regular, Helvetica Neue, Microsoft YaHei, sans-serif;

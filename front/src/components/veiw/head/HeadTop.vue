@@ -91,14 +91,14 @@
         </div>
       </template>
       <template v-else>
-        <div class="avatar" @mouseleave="popleave" @mouseover="popover">
+        <div class="avatar" @mouseleave="popleave" @mouseenter="popover">
           <!-- <ElDropdown trigger="click"> -->
-          <div class="proshake">
+          <div class="edavatar" ref="edavatar">
             <router-link to="/user/info">
-              <ElAvatar class="edavatar" :src="avatar" size="large"></ElAvatar>
+              <ElAvatar :src="avatar" size="large"></ElAvatar>
             </router-link>
           </div>
-          <div :style="{ display: popShow }">
+          <div :style="{ opacity: popShow }" class="popuserinfo">
             <popUserInfo />
           </div>
         </div>
@@ -178,41 +178,34 @@ export default {
     popover() {
       if (!this.throttling2) {
         this.throttling2 = true
-        this.popShow = "block"
-        setTimeout(() => {
-          this.throttling2 = false
-        }, 500);
-
+        this.popShow = "1"
+        this.$refs.edavatar.classList.add("large")
+        // this.$refs.edavatar.classList.add("large")
       }
     },
     popleave() {
-      if (!this.throttling1) {
-        this.throttling1 = true
-        setTimeout(() => {
-          this.popShow = "none"
-          setTimeout(() => {
-            this.throttling1 = false
-          }, 500);
-        }, 500)
-
-      }
-    },
-    showLogina() {
-      this.showLogin = true
+      this.$refs.edavatar.classList.remove("large")
+      this.popShow = "0"
       setTimeout(() => {
-        if (this.$refs.login.showStatus())
-          this.$refs.login.changeForm()
-      }, 200)
-    },
-    showRegister() {
-      this.showLogin = true
-      setTimeout(() => {
-        if (!this.$refs.login.showStatus())
-          this.$refs.login.changeForm()
-      }, 200)
-    },
+        this.throttling2 = false
+      }, 400);
+    }
   },
-};
+  showLogina() {
+    this.showLogin = true
+    setTimeout(() => {
+      if (this.$refs.login.showStatus())
+        this.$refs.login.changeForm()
+    }, 200)
+  },
+  showRegister() {
+    this.showLogin = true
+    setTimeout(() => {
+      if (!this.$refs.login.showStatus())
+        this.$refs.login.changeForm()
+    }, 200)
+  },
+}
 </script>
 <style >
 .mycardlogin {
@@ -392,17 +385,28 @@ export default {
 
 
 .edavatar {
+  height: auto;
+  background-color: transparent;
   position: relative;
   top: 0;
   right: 0;
   transition: all .3s ease-in-out;
+  z-index: 200;
 }
 
-.avatar:hover .edavatar {
+.edavatar:hover .el-avatar {
+  box-shadow: 0 1px 20px rgba(0, 0, 0, .2);
+}
+
+.large {
   transform-origin: right top;
   transform: translateZ(0) scale(2);
-  z-index: 200;
-  box-shadow: 0 1px 20px rgba(0, 0, 0, .2);
+}
+
+.popuserinfo {
+  transition: opacity .3s ease-in;
+  position: absolute;
+  z-index: 160;
 }
 
 .avatar {
