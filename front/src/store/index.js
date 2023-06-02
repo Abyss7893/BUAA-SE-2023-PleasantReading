@@ -3,7 +3,7 @@ const store = createStore({
   state() {
     return {
       tempAvatar: null,
-      showLogin:false,
+      showLogin: false,
       isLogin: false,
       isVIP: true,
       userId: null,
@@ -65,6 +65,7 @@ const store = createStore({
   },
   getters: {
     tempAvatar: state => state.tempAvatar,
+    islogin: state => state.isLogin,
     // ...
   },
   mutations: {
@@ -82,8 +83,8 @@ const store = createStore({
         state.isVIP = false
       }
     },
-    changeShowLogin(state){
-      state.showLogin=!state.showLogin
+    changeShowLogin(state) {
+      state.showLogin = !state.showLogin
       console.log("1111")
     },
     setTempAvatar(state, url) {

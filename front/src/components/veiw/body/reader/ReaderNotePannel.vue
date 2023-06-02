@@ -83,6 +83,7 @@
 import { getNotes, submitNote } from "@/api/api";
 import { encodeForHTML } from "@/XSS/encode"
 import { ElMessage } from "element-plus";
+import { mapGetters } from "vuex";
 export default {
   name: "ReaderNotePanel",
   components: {},
@@ -94,7 +95,24 @@ export default {
       mynote: "",
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['islogin'])
+  },
+  watch: {
+    islogin(newVal) {
+      if (newVal)
+        getNotes(this.$route.params.bookid, this.$route.params.chapter, 1).then((data) => {
+          if (data.status && data.status == 200) {
+            this.notes = data.data.notes
+            this.pages = data.data.pages
+          }
+          else
+            console.log(data.response)
+        })
+      else
+        this.notes = []
+    }
+  },
   methods: {
     handleCurrentChange(val) {
       this.thisPage = val
@@ -132,7 +150,7 @@ export default {
             grouping: true,
             type: 'info',
           })
-        
+
         } else {
           ElMessage({
             message: '不可预知的错误发生了!提交笔记失败!TAT~',

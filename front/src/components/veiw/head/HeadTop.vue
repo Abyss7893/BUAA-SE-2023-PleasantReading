@@ -2,7 +2,8 @@
 <template>
   <div class="proeffect">
     <ElDialog v-model="showLogin" style="background-color: transparent; width: 800px;">
-      <newLogin class="mycardlogin" style="z-index: 1000; background-color: transparent;" @submit="showLogin = false" ref="login"></newLogin>
+      <newLogin class="mycardlogin" style="z-index: 1000; background-color: transparent;" @submit="showLogin = false"
+        ref="login"></newLogin>
     </ElDialog>
   </div>
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
@@ -90,7 +91,7 @@
         </div>
       </template>
       <template v-else>
-        <div class="avatar" @mouseleave="popleave" @mouseenter="popover">
+        <div class="avatar" @mouseleave="popleave" @mouseover="popover">
           <!-- <ElDropdown trigger="click"> -->
           <div class="proshake">
             <router-link to="/user/info">
@@ -132,6 +133,8 @@ export default {
       keywords: "",
       showLogin: false,
       popShow: "none",
+      throttling1: false,
+      throttling2: false,
     }
   },
   computed: {
@@ -173,12 +176,26 @@ export default {
       this.keywords = ""
     },
     popover() {
-      this.popShow = "block"
+      if (!this.throttling2) {
+        this.throttling2 = true
+        this.popShow = "block"
+        setTimeout(() => {
+          this.throttling2 = false
+        }, 500);
+
+      }
     },
     popleave() {
-      setTimeout(() => {
-        this.popShow = "none"
-      }, 200)
+      if (!this.throttling1) {
+        this.throttling1 = true
+        setTimeout(() => {
+          this.popShow = "none"
+          setTimeout(() => {
+            this.throttling1 = false
+          }, 500);
+        }, 500)
+
+      }
     },
     showLogina() {
       this.showLogin = true
@@ -392,9 +409,13 @@ export default {
   position: relative;
 }
 
+.proeffect .el-dialog {
+  box-shadow: none;
+}
+
 .proeffect .el-dialog__headerbtn {
   left: 100%;
-  top: -20px;
+  top: -2px;
   margin-left: 64px;
   z-index: 1000;
 }

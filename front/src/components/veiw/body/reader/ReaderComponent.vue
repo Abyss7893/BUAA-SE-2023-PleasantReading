@@ -52,6 +52,7 @@ import { getBookDetiles, getBookCharpter, addBookmark, deletBookmark } from "@/a
 import { nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
 import popOver from './popOver.vue';
+import { mapGetters } from 'vuex';
 export default {
   name: "ReaderComponent",
   data() {
@@ -72,6 +73,14 @@ export default {
   },
   components: {
     popOver,
+  },
+  computed: {
+    ...mapGetters(['islogin'])
+  },
+  watch: {
+    islogin() {
+      this.initChapter()
+    }
   },
   methods: {
     markTheChapter() {
@@ -111,7 +120,7 @@ export default {
           const code = data.request.status
           switch (code) {
             case 200:
-             ElMessage({
+              ElMessage({
                 message: '删除书签成功！',
                 grouping: true,
                 type: 'success',
@@ -181,7 +190,7 @@ export default {
     },
     previousChapter() {
       if (this.bookInfo.chapterId == 1) {
-         ElMessage({
+        ElMessage({
           message: '本章为第一章，没有前一章节内容咯~',
           grouping: true,
           type: 'info',

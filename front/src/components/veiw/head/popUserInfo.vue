@@ -97,7 +97,7 @@ export default {
     },
     openPay() {
       this.pay = true
-    }
+    },
   },
 };
 </script>

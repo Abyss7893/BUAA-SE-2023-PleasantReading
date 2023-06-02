@@ -117,7 +117,7 @@ router.beforeEach((to, from, next) => {
   if (token && flag) {
     // if (to.path == '/login') return next()
     // 注意要import element的Message组件
-    ElMessage.error("132")
+    ElMessage.error("用户登录过期，请重新登录")
     localStorage.clear()
     // return next('/login')
     // 如果token没有过期，又是选择了登录页面就直接重定向到首页，不需要重新输入账户密码
