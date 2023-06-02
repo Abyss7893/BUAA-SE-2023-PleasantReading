@@ -1,10 +1,10 @@
 <!-- 网页的主页的中间内容部分 -->
 <template>
   <div style="display: flex; flex-direction: column">
-    <start-component @hide="hideStartComponent" />
-    <div v-show="showHeadAndFoot">
+    <start-component  @hide="hideStartComponent" />
+    <div >
       <!-- <ElAffix> -->
-        <WebHead style="margin: 0,position:fixed;" />
+      <WebHead style="margin: 0,position:fixed;" />
       <!-- </ElAffix> -->
       <div>
         <div class="box-center">
@@ -44,6 +44,7 @@ export default {
   data() {
     return {
       showHeadAndFoot: false,
+      showStartComponent:true
     };
   },
   methods: {
@@ -65,6 +66,7 @@ export default {
       setTimeout(() => {
         this.showHeadAndFoot = true;
       }, 50);
+
     },
   },
 };
