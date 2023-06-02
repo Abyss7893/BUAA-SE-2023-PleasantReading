@@ -327,6 +327,19 @@ function submitNote(bookid, chapter, note) {
     return data;
   });
 }
+function getBriefInfo() {
+  var token = localStorage.getItem("token")
+  return axios({
+    method: 'get',
+    url: `http://154.8.183.51/book/briefinfo`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    }
+  }).catch(function (data) {
+    return data;
+  });
+
+}
 
 export {
   getBookDetiles,
@@ -340,10 +353,10 @@ export {
   submitBookComment,
   addBookToFavor,
   getSearchBookIds,
-  deleteColection, submitRating, getMyRating,getRecent
-  ,
+  deleteColection, submitRating, getMyRating, getRecent,
   getAuthor,
-  getNotes, submitNote
+  getNotes, submitNote,
+  getBriefInfo
 }
 // 使用示例
 
