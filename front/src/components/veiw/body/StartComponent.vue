@@ -7,7 +7,6 @@
       :style="{
         backgroundImage: `url(${backgroundImage})`,
         marginTop: showComponent ? '' : 'calc(-106vh )',
-
       }"
       ref="startComponentRef"
     >
@@ -133,7 +132,11 @@ export default {
     },
     randomBg(index) {
       this.backgroundImage = this.imgs[index];
-      index = Math.floor(Math.random() * this.imgs.length);
+      let index2 = Math.floor(Math.random() * this.imgs.length);
+      while (index2 == index) {
+        index2 = Math.floor(Math.random() * this.imgs.length);
+      }
+      index = index2;
       const img = new Image();
       img.onload = () => {};
       img.onerror = () => {};
