@@ -604,14 +604,15 @@ export default {
         // if (response.status == 200) {
 
         var data = [];
+
         if (response.status == 200) {
           data = response.data.list;
           // data =data.slice(0,3);
-          console.log("data", data);
+          // console.log("data", data);
         }
         let i = 0;
         // if (data.length > 0) {
-
+        // console.log("response", data);
         console.log("book", i);
         for (let book of data) {
           this.imgs[i] = {
@@ -624,11 +625,17 @@ export default {
             chapter: book.title,
           };
           i++;
+          // console.log("book", i);
         }
         // }
         console.log("imgs", this.imgs);
-        if (i >= 7) this.mode = 7;
-        else {
+        if (i >= 7) {
+          this.mode = 7;
+          this.imgs = this.imgs.slice(0, 7);
+          // console.log("end", this.imgs);
+          for (let i = 0; i < 3; i++) this.prev();
+          setTimeout(() => (this.isshow = true), 100);
+        } else {
           let optheon = {
             page: "1",
             order: "weekpop",
