@@ -1,133 +1,141 @@
 <template>
   <div>
-    <div v-show="isshow">
+    <div>
       <h1 class="quote" style="text-align: center">最近阅读</h1>
-      <div>
-        <transition name="fade">
-          <div
-            @touchend="end"
-            @touchstart="start"
-            @touchmove="move"
-            class="swiper"
-          >
-            <div
-              @click="chooseItem(item, index)"
-              v-for="(item, index) in imgs"
-              :style="config5[index]"
-              :key="item.cover"
-              @mouseover="touchcenter(config5[index].id === 'center')"
-              @mouseout="leavecenter(config5[index].id === 'center')"
-              style="
-                /* background-color: red; */
-                width: 150px;
-                height: 208px;
-                border-radius: 20px;
-              "
-              :class="{
-                'hover-effect': config5[index].id === 'center',
-                'other-hover-effect': config5[index].id !== 'center',
-              }"
-              class="card-control"
-            >
-              <img
-                :src="item.cover"
-                class="card-img"
-                style="z-index: 4 !important"
-              />
-              <!-- <div class="wordblock"
+      <div style="min-height: 400px">
+        <transition name="el-zoom-in-top">
+          <div v-if="isshow">
+            <transition name="fade">
+              <div
+                @touchend="end"
+                @touchstart="start"
+                @touchmove="move"
+                class="swiper"
+              >
+                <div
+                  @click="chooseItem(item, index)"
+                  v-for="(item, index) in imgs"
+                  :style="config5[index]"
+                  :key="item.cover"
+                  @mouseover="touchcenter(config5[index].id === 'center')"
+                  @mouseout="leavecenter(config5[index].id === 'center')"
+                  style="
+                    /* background-color: red; */
+                    width: 150px;
+                    height: 208px;
+                    border-radius: 20px;
+                  "
+                  :class="{
+                    'hover-effect': config5[index].id === 'center',
+                    'other-hover-effect': config5[index].id !== 'center',
+                  }"
+                  class="card-control"
+                >
+                  <img
+                    :src="item.cover"
+                    class="card-img"
+                    style="z-index: 4 !important"
+                  />
+                  <!-- <div class="wordblock"
             style="z-index: 9999;"> -->
-              <el-collapse-transition>
-                <el-tooltip
-                  class="box-item"
-                  effect="dark"
-                  :content="item.id"
-                  placement="right"
-                >
-                  <!-- <el-button>right</el-button> -->
+                  <el-collapse-transition>
+                    <el-tooltip
+                      class="box-item"
+                      effect="dark"
+                      :content="item.id"
+                      placement="right"
+                    >
+                      <!-- <el-button>right</el-button> -->
 
-                  <router-link :to="{path:'/book/'+item.bookId}">
-                    <p
-                      v-if="config5[index].id === 'center'"
-                      style="
-                        /* position: absolute; */
-                        /* color: rgba(126, 84, 84, 0.582); */
-                        color: rgba(202, 197, 197, 0);
-                        /* left: 10%; */
-                        text-align: center;
-                        margin: 3px;
-                        bottom: 50px;
-                        transition: ease-in-out 0.2s;
-                        z-index: 3 !important;
-                        -webkit-user-select: none;
-                        -moz-user-select: none;
-                        -ms-user-select: none;
-                        user-select: none;
-                        white-space: normal;
-                        word-break: break-all;
-                        text-overflow: ellipsis;
-                        display: -webkit-box;
-                        -webkit-box-orient: vertical;
-                        -webkit-line-clamp: 1;
-                        /* 这里是超出几行省略 */
-                        overflow: hidden;
-                      "
-                      class="content-effect"
+                      <router-link :to="{ path: '/book/' + item.bookId }">
+                        <p
+                          v-if="config5[index].id === 'center'"
+                          style="
+                            /* position: absolute; */
+                            /* color: rgba(126, 84, 84, 0.582); */
+                            color: rgba(202, 197, 197, 0);
+                            /* left: 10%; */
+                            text-align: center;
+                            margin: 3px;
+                            bottom: 50px;
+                            transition: ease-in-out 0.2s;
+                            z-index: 3 !important;
+                            -webkit-user-select: none;
+                            -moz-user-select: none;
+                            -ms-user-select: none;
+                            user-select: none;
+                            white-space: normal;
+                            word-break: break-all;
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 1;
+                            /* 这里是超出几行省略 */
+                            overflow: hidden;
+                          "
+                          class="content-effect"
+                        >
+                          {{ item.id }}
+                        </p>
+                      </router-link>
+                    </el-tooltip>
+                  </el-collapse-transition>
+                  <el-collapse-transition>
+                    <el-tooltip
+                      class="box-item"
+                      effect="dark"
+                      :content="item.chapter"
+                      placement="right"
                     >
-                      {{ item.id }}
-                    </p>
-                  </router-link>
-                </el-tooltip>
-              </el-collapse-transition>
-              <el-collapse-transition>
-                <el-tooltip
-                  class="box-item"
-                  effect="dark"
-                  :content="item.chapter"
-                  placement="right"
-                >
-                  <router-link :to="{path:'/reader/'+item.bookId+'/'+item.chapterid}">
-                    <p
-                      v-if="config5[index].id === 'center'"
-                      style="
-                        /* position: absolute; */
-                        bottom: 30px;
-                        /* margin-left: 10px; */
-                        left: 10%;
-                        color: rgba(216, 212, 203, 0);
-                        text-align: center;
-                        font-family: kaiti;
-                        margin: 3px;
-                        transition: 0.2s;
-                        z-index: 3 !important;
-                        white-space: normal;
-                        word-break: break-all;
-                        text-overflow: ellipsis;
-                        display: -webkit-box;
-                        -webkit-box-orient: vertical;
-                        -webkit-line-clamp: 3;
-                        /* 这里是超出几行省略 */
-                        overflow: hidden;
-                      "
-                      class="content-effect"
-                    >
-                      {{ item.chapter }}
-                    </p>
-                  </router-link>
-                </el-tooltip>
-              </el-collapse-transition>
-              <!-- </div> -->
-              <!-- <span>{{ item.dindex }}</span> -->
-            </div>
-          </div>
-        </transition>
-      </div>
-      <!-- <div style="display: flex; align-items: center">
+                      <router-link
+                        :to="{
+                          path: '/reader/' + item.bookId + '/' + item.chapterid,
+                        }"
+                      >
+                        <p
+                          v-if="config5[index].id === 'center'"
+                          style="
+                            /* position: absolute; */
+                            bottom: 30px;
+                            /* margin-left: 10px; */
+                            left: 10%;
+                            color: rgba(216, 212, 203, 0);
+                            text-align: center;
+                            font-family: kaiti;
+                            margin: 3px;
+                            transition: 0.2s;
+                            z-index: 3 !important;
+                            white-space: normal;
+                            word-break: break-all;
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 3;
+                            /* 这里是超出几行省略 */
+                            overflow: hidden;
+                          "
+                          class="content-effect"
+                        >
+                          {{ item.chapter }}
+                        </p>
+                      </router-link>
+                    </el-tooltip>
+                  </el-collapse-transition>
+                  <!-- </div> -->
+                  <!-- <span>{{ item.dindex }}</span> -->
+                </div>
+              </div>
+            </transition>
+          </div></transition
+        >
+        <!-- <div style="display: flex; align-items: center">
       <h1 @click="prev">上一个</h1>
       |
       <h1>当前：{{ centerInfo.id }}</h1>
       |
       <h1 @click="next">下一个</h1>
     </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -135,7 +143,7 @@
 // import { da } from 'element-plus/es/locale';
 // import { fa } from "element-plus/es/locale";
 // import BookCard from "../mybooks/BookCard.vue";
-import { getRecent } from "@/api/api";
+import { getRecent, getBookList, getBookDetiles } from "@/api/api";
 export default {
   // components: { BookCard },
   //   name: "zt",
@@ -555,91 +563,113 @@ export default {
         chapter: x.chapter,
       };
     },
-    setData() {
-      // getRecent().then()
-      getRecent().then((response) => {
-        if (response.status == 200) {
-          var data = response.data.list;
-          // data =data.slice(0,3);
-          console.log("data", data);
-          let i = 0;
-          // if (data.length > 0) {
-
-          console.log("book", i);
-          for (let book of data) {
-            this.isshow = true;
-            this.imgs.push({
-              id: book.name,
-              bookId: book.bookID,
-              cover: "http://154.8.183.51/media/" + book.img,
-              // dindex: book.dindex,
-              index: i,
-              chapterid: book.chapter,
-              chapter: book.title,
+    getweekpoplist(weekpoplist) {
+      let optheon = {
+        page: "1",
+        order: "weekpop",
+      };
+      getBookList(optheon).then((data) => {
+        var list = data.books;
+        for (let i = 0; i < list.length; i++) {
+          getBookDetiles(list[i]).then((book) => {
+            weekpoplist.push({
+              name: book.title,
+              id: book.id,
+              author: book.author,
+              cover: book.cover,
+              state: [
+                book.vip ? "VIP" : "免费",
+                book.category,
+                this.getSimpleSize(book.cnt),
+              ],
             });
-            i++;
-          }
-          // }
-          console.log("imgs", this.imgs);
-          if (this.imgs.length >= 7) this.mode = 7;
-          else if (this.imgs.length >= 5) this.mode = 5;
-          else if (this.imgs.length >= 3) this.mode = 3;
-          else this.mode = this.imgs.length > 0 ? 1 : 0;
-          //todo : 多出来的书按照推荐图书填充即可
-
-          if (this.mode == 7) {
-            this.data.push(...this.imgs);
-            // for (let i = 0; i < 3; i++) this.next();
-          }
-          if (this.mode == 5) {
-            for (let i = 0; i < 2; i++) {
-              for (let q of this.imgs) this.data.push(this.deepCopy(q));
-            }
-            // for (let i = 0; i < 3; i++) this.next();
-          }
-          if (this.mode == 3) {
-            this.config5[1].opacity = 0;
-            this.config5[5].opacity = 0;
-            for (let i = 0; i < 3; i++) {
-              for (let q of this.imgs) this.data.push(this.deepCopy(q));
-            }
-            // for (let i = 0; i < 3; i++) this.next();
-          }
-          // if (this.mode == 2) {
-          //   for (let i = 0; i < 4; i++) {
-          //     for (let q of this.imgs) this.data.push(this.deepCopy(q));
-          //   }
-          // }
-          if (this.mode == 1) {
-            this.config5[1].opacity = 0;
-            this.config5[5].opacity = 0;
-            this.config5[2].opacity = 0;
-            this.config5[4].opacity = 0;
-            for (let i = 0; i < 7; i++) {
-              for (let q of this.imgs) this.data.push(this.deepCopy(q));
-            }
-          }
-          this.imgs = [];
-          for (let i = 0; i < this.data.length; i++) {
-            this.data[i].index = i;
-            this.data[i].dindex = i;
-
-            this.imgs.push(this.data[i]);
-          }
-          this.imgs = this.imgs.slice(0, 7);
-          for (let i = 0; i < 3; i++) this.prev();
+          });
         }
       });
+    },
+    setData() {
+      for (var i = 0; i < 7; i++) {
+        this.imgs.push({
+          id: "",
+          bookId: 0,
+          cover: "",
+          // dindex: book.dindex,
+          index: 0,
+          chapterid: 0,
+          chapter: "",
+        });
+      }
+      // getRecent().then()
+      getRecent().then((response) => {
+        // if (response.status == 200) {
 
-      // console.log(this.imgs);
+        var data = [];
+        if (response.status == 200) {
+          data = response.data.list;
+          // data =data.slice(0,3);
+          console.log("data", data);
+        }
+        let i = 0;
+        // if (data.length > 0) {
 
-      // if (this.mode == 1) {
-      // }
+        console.log("book", i);
+        for (let book of data) {
+          this.imgs[i] = {
+            id: book.name,
+            bookId: book.bookID,
+            cover: "http://154.8.183.51/media/" + book.img,
+            // dindex: book.dindex,
+            index: i,
+            chapterid: book.chapter,
+            chapter: book.title,
+          };
+          i++;
+        }
+        // }
+        console.log("imgs", this.imgs);
+        if (i >= 7) this.mode = 7;
+        else {
+          let optheon = {
+            page: "1",
+            order: "weekpop",
+          };
+          getBookList(optheon).then((tdata) => {
+            var list = tdata.books;
+            var t = i;
+            for (let j = 0; j < 7 - t; j++) {
+              getBookDetiles(list[j]).then((book) => {
+                this.imgs[i] = {
+                  id: book.title,
+                  bookId: book.id,
+
+                  cover: book.cover,
+                  index: i++,
+                  chapterid: 1,
+                  chapter: "本周推荐",
+                };
+
+                // console.log(i, this.imgs);
+                if (i == 7) {
+                  this.mode = 7;
+                  // console.log(this.mode, this.imgs);
+
+                  // this.data.push(...this.imgs);
+                  this.imgs = this.imgs.slice(0, 7);
+                  // console.log("end", this.imgs);
+                  for (let i = 0; i < 3; i++) this.prev();
+                  this.isshow = true;
+
+                  return;
+                }
+              });
+            }
+          });
+        }
+      });
     },
     initThis() {},
   },
   created() {
-    
     this.setData();
     console.log(this.imgs);
     this.getData();

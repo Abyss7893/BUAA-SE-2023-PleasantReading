@@ -275,7 +275,7 @@ export default {
   color: #fff;
   margin-bottom: 20px;
   max-height: 100px;
-  text-shadow: 1px 1px #0000004d;
+  text-shadow: 2px 1px #000000b5;
 }
 
 .start-button {
