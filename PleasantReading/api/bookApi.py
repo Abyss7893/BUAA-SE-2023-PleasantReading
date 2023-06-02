@@ -358,7 +358,7 @@ def putScore(request, bookid, score):
     ret = Score.objects.filter(userID=userid, bookID=bookid)
     if ret.count() > 0:
         book = BookBasicInfo.objects.get(bookID=bookid)
-        book.totScore += score - ret.first().score
+        book.totScore = float(book.totScore) + score - float(ret.first().score)
         book.save()
         print(ret.first().score)
         record = ret.first()
