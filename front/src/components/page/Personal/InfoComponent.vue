@@ -7,22 +7,22 @@
                     <el-button v-else type="primary"  size="large" @click="handleEdit">提交修改</el-button>
                 </template>
                 <div>
-                    <ElDescriptionsItem min-width="100px">
+                    <ElDescriptionsItem  width="40px" >
                         <template #label>
                             <el-icon :style="iconStyle">
                                 <user />
                             </el-icon>
                             昵称
                         </template>
-                        <ElInput v-if="editing" v-model="tempInfo.nickname" style="border: none;"></ElInput>
-                        <span v-else>{{ info.nickname }}</span>
+                        <ElInput v-if="editing" v-model="tempInfo.nickname" style="border: none; height: 45px;" ></ElInput>
+                        <span v-else class="item">{{ info.nickname }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
                             <template #label>
                                 <el-icon><Avatar /></el-icon>
                                 账户名
                             </template>
-                            {{ info.username }}
+                            <span class="item">{{ info.username }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
                             <template #label>
@@ -31,22 +31,22 @@
                                 <el-icon v-else><Female /></el-icon>
                                 性别
                              </template>
-                            <ElInput v-if="editing" v-model="tempInfo.gender"></ElInput>
-                            <span v-else>{{ info.gender }}</span>
+                            <ElInput v-if="editing" v-model="tempInfo.gender" style="height: 45px;"></ElInput>
+                            <span v-else class="item">{{ info.gender }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
                         <template #label>
                             <el-icon><Clock /></el-icon>
                             年龄
                         </template>
-                        <span >{{ age }}</span>
+                        <span class="item">{{ age }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
                         <template #label>
                             <el-icon><Message /></el-icon>
                             邮箱
                         </template>
-                        {{ info.email }}
+                        <span  class="item"> {{ info.email }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
                         <template #label>
@@ -54,7 +54,7 @@
                             生日
                         </template>
                         <el-date-picker v-if="editing" v-model="tempInfo.birthday" type="date" placeholder="请选择生日" :picker-options="pickerOptions"></el-date-picker>
-                        <span v-else>{{ info.birthday }}</span>
+                        <span v-else  class="item">{{ info.birthday }}</span>
                     </ElDescriptionsItem>          
                     <ElDescriptionsItem class="motto" style="font-size: 16px;">
                         <template #label>
@@ -62,7 +62,7 @@
                             个人简介
                         </template>
                         <ElInput type="textarea" rows="3" v-if="editing" v-model="tempInfo.motto"></ElInput>
-                        <span v-else class="clamp">{{ info.motto }}</span>
+                        <span v-else style="line-height: 50px;">{{ info.motto }}</span>
                     </ElDescriptionsItem>
                 </div>
                 
@@ -183,11 +183,16 @@ export default defineComponent({
     overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3; /* 最多显示两行内容 */
-  
+  line-height: 25px;
   -webkit-box-orient: vertical;
    overflow-y: auto; /* 自动添加滚动条 */
 }
-
+.item{
+   line-height: 36px;
+}
+.mycontext{
+height: 480px;
+}
 .el-input {
   border: none;
 }

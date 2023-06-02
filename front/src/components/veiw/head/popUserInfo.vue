@@ -157,7 +157,7 @@ export default {
 
 .pop li {
   cursor: pointer;
-  transition: all .3s ease-in-out;
+  transition: background-color .3s ease-in-out;
   display: flex;
   justify-content: space-between;
   border-radius: 6px;
@@ -266,7 +266,7 @@ export default {
   border-radius: 6px;
   padding: 2px 8px;
   left: 100%;
-  transition: all .3s ease-in-out;
+  transition: background-color .3s ease-in-out;
 }
 
 .vip-goon {

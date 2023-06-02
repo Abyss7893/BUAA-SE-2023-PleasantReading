@@ -24,7 +24,7 @@
             <span> {{ design }}</span>
           </div>
           <div class="user_anniu">
-            <el-button class="el-icon-edit" @click="setAvatar">上传头像</el-button>
+            <el-button class="el-icon-edit pink-button" @click="setAvatar">上传头像</el-button>
           </div>
 
         </div>
@@ -39,44 +39,44 @@
       <div class="person_body_left">
         <el-card class="box-card" :body-style="{ padding: '0px' }">
           <div class="clearfix">
-            <span class="person_body_list" style="border-bottom: none">个人中心</span>
+            <span class="person_body_list" style="border-bottom: none;">个人中心</span>
           </div>
-          <el-menu router active-text-color="#00c3ff" class="el-menu-vertical-demo">
-            <el-menu-item @click="$router.push({ name: 'info' })">
+          <el-menu router active-text-color="#fffff" class="el-menu-vertical-demo">
+            <el-menu-item class="menu-item" @click="$router.push({ name: 'info' })">
               <el-icon>
                 <User />
               </el-icon>
-              <span>个人简介</span>
+              <span class="text" >个人简介</span>
             </el-menu-item>
-            <el-menu-item @click="$router.push({ name: 'comment' })">
+            <el-menu-item class="menu-item" @click="$router.push({ name: 'comment' })">
               <el-icon>
                 <ChatLineSquare />
               </el-icon>
-              <span>我的评论</span>
+              <span class="text">我的评论</span>
             </el-menu-item>
-            <el-menu-item>
+            <el-menu-item class="menu-item">
               <el-icon>
                 <Notebook />
               </el-icon>
-              <span>我的笔记</span>
+              <span class="text">我的笔记</span>
             </el-menu-item>
-            <el-menu-item>
+            <el-menu-item class="menu-item">
               <el-icon>
                 <Flag />
               </el-icon>
-              <span>我的书签</span>
+              <span class="text">我的书签</span>
             </el-menu-item>
-            <el-menu-item @click="$router.push('/mybook')">
+            <el-menu-item class="menu-item" @click="$router.push('/mybook')">
               <el-icon>
                 <Reading />
               </el-icon>
-              <span>我的书架</span>
+              <span class="text">我的书架</span>
             </el-menu-item>
-            <el-menu-item @click="$router.push('/')">
+            <el-menu-item class="menu-item" @click="$router.push('/')">
               <el-icon>
                 <Back />
               </el-icon>
-              <span>返回主界面</span>
+              <span class="text" >返回主界面</span>
             </el-menu-item>
           </el-menu>
         </el-card>
@@ -191,11 +191,25 @@ export default {
   position: relative;
   flex-direction: column;
   width: 100%;
-  height: 800px;
+  height: 850px;
   min-height: 70vh;
 }
 .mycard{
   z-index: 1000;
+}
+.el-menu-vertical-demo{
+  font-size: 20px;
+}
+
+.text{
+
+  font-size: 20px;
+}
+.clearfix{
+  margin-top: 10px;
+}
+.menu-item{
+  height: 80px;
 }
 .mask {
   position: fixed;
@@ -304,12 +318,20 @@ export default {
   margin-right: 3%;
   text-align: center;
 }
-
+.pink-button {
+  background-color: #fcdfe3; /* 设置按钮默认背景色 */
+  color: #fff; /* 设置文字颜色 */
+  padding: 10px 20px; /* 设置按钮内边距 */
+  border-radius: 4px; /* 设置按钮圆角 */
+  /* 使用 hover 伪类实现鼠标悬浮时改变背景色的效果 */
+  /* 当鼠标悬浮时，将背景色改为淡粉色 */
+  background-color: #ffdce0;
+}
 .person_body_list {
   width: 100%;
   height: 50px;
   margin-top: 25px;
-  font-size: 22px;
+  font-size: 30px;
   border-bottom: 1px solid #f0f0f0;
   background-image: -webkit-linear-gradient(left,
       rgb(42, 134, 141),
@@ -333,7 +355,7 @@ export default {
 }
 
 .box-card {
-  height: 380px;
+  height: 523px;
   min-height: 380px;
   margin-top: 40px;
   margin-right: 30px;
