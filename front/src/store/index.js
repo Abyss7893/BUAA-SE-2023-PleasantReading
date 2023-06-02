@@ -3,6 +3,7 @@ const store = createStore({
   state() {
     return {
       tempAvatar: null,
+      showLogin:false,
       isLogin: false,
       isVIP: true,
       userId: null,
@@ -80,6 +81,10 @@ const store = createStore({
         state.isLogin = true
         state.isVIP = false
       }
+    },
+    changeShowLogin(state){
+      state.showLogin=!state.showLogin
+      console.log("1111")
     },
     setTempAvatar(state, url) {
       state.tempAvatar = url

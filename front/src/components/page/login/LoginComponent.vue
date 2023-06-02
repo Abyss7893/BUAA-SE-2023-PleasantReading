@@ -47,21 +47,20 @@
 
 <script>
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import axios from "axios";
 import { reactive, ref } from "@vue/runtime-core";
 import ForgetDialog from "./ForgetPwd.vue";
-import { ElDialog, ElButton } from "element-plus";
+import { ElDialog, ElButton,ElMessage } from "element-plus";
 export default {
   name: "LoginComponent",
   components: {
     ForgetDialog,
     ElDialog,
     ElButton,
+   
   },
   setup() {
     const store = useStore();
-    const router = useRouter();
     let userLoginForm = reactive({
       username: "",
       password: "",
@@ -97,7 +96,11 @@ export default {
             // 登录成功后的操作，例如跳转到其他页面
             const userId = response.data.userId;
             store.commit("setUser", userId);
-            const isTo = confirm("登录成功!是否跳转到首页");
+            ElMessage({
+              message: '登陆成功',
+              grouping: true,
+              type: 'success',
+            })
             // 登录成功后要获取用户信息储存到vuex中
             axios
               .get(`http://154.8.183.51/user/getinfo/${userLoginForm.username}`)
@@ -118,16 +121,22 @@ export default {
                 store.commit("setAvatarUrl", url);
               })
               .catch(() => {
-                alert("账号或密码错误");
+                ElMessage({
+                  message: '账号或密码错误',
+                  grouping: true,
+                  type: 'error',
+                })
               });
-            if (isTo) {
-              router.push("/");
-            }
+            
           })
           .catch(() => {
             // 处理登录错误
             userLoginForm.password = userLoginForm.username = "";
-            alert("账号或密码错误");
+            ElMessage({
+              message: '账号或密码错误',
+              grouping: true,
+              type: 'error',
+            })
           });
       } catch (_) {
         // 处理错误

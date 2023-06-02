@@ -40,6 +40,7 @@
 import 'css/search/search.css'
 import { getBookDetiles, getSearchBookIds } from '@/api/api'
 import BookInfoCompnent from './BookInfoCompnent.vue'
+import { ElMessage } from 'element-plus'
 export default {
   name: "seach-book",
   mounted() {
@@ -62,7 +63,12 @@ export default {
           this.bookids = data.data.books
           this.pages = data.data.pages
           if (this.$route.page > data.data.pages) {
-            alert("非法页面访问！")
+            ElMessage({
+              message: '非法页面访问！',
+              grouping: true,
+              type: 'error',
+            })
+           
             return
           }
           if (this.bookids.length == 0) {
@@ -75,17 +81,32 @@ export default {
             })
           }
         } else {
-          alert("该关键词查询不到任何结果！")
+          ElMessage({
+            message: '该关键词查询不到任何结果！',
+            grouping: true,
+            type: 'warning',
+          })
+          
         }
       })
     },
     jumpToPage(page) {
       if (isNaN(page)) {
-        alert("非数字的页面请求!")
+        ElMessage({
+          message: '非数字的页面请求',
+          grouping: true,
+          type: 'error',
+        })
+        
         return
       }
       if (page <= 0 || page > this.pages) {
-        alert("请求页面超出范围哦!")
+        ElMessage({
+          message: '请求页面超出范围哦',
+          grouping: true,
+          type: 'warning',
+        })
+        
         return
       }
       this.$router.push({ path: '/search', query: { "keywords": this.$route.query.keywords, "page": page } })

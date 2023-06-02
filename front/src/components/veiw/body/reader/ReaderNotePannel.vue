@@ -82,6 +82,7 @@
 
 import { getNotes, submitNote } from "@/api/api";
 import { encodeForHTML } from "@/XSS/encode"
+import { ElMessage } from "element-plus";
 export default {
   name: "ReaderNotePanel",
   components: {},
@@ -113,7 +114,11 @@ export default {
       if (this.mynote.length === 0)
         return
       else if (this.mynote.length > 300) {
-        alert("笔记不可以超过300字哦，请精简一下吧~")
+        ElMessage({
+          message: '笔记不可以超过300字哦，请精简一下吧~',
+          grouping: true,
+          type: 'warning',
+        })
         return
       }
       submitNote(this.$route.params.bookid, this.$route.params.chapter, this.mynote).then((data) => {
@@ -122,9 +127,18 @@ export default {
           this.handleCurrentChange(1)
           this.mynote = ''
         } else if (data.response && data.response.status == 401) {
-          alert("未登录不可以提交笔记哟!QAQ~")
+          ElMessage({
+            message: '未登录不可以提交笔记哟!QAQ~',
+            grouping: true,
+            type: 'info',
+          })
+        
         } else {
-          alert("不可预知的错误发生了!提交笔记失败!TAT~")
+          ElMessage({
+            message: '不可预知的错误发生了!提交笔记失败!TAT~',
+            grouping: true,
+            type: 'error',
+          })
         }
       })
     },

@@ -6,6 +6,7 @@
     </ElAffix>
 
     <div class="box-center">
+       <newLogin class="mycard" v-if="this.$store.state.showLogin" @close="showLogin = false" ></newLogin>
       <div class="novel-body">
         <div class="category-component-wrapper">
           <CategoryComponent />
@@ -21,6 +22,7 @@
 </template>
   
   <script>
+  import newLogin from "@/components/page/login/newLogin.vue";
 import WebHead from "../head/WebHead.vue";
 import FootComponents from "../foot/WebFoot.vue";
 import { ElAffix } from "element-plus";
@@ -40,7 +42,7 @@ export default {
     // StartComponent,
     WebHead,
     FootComponents,
-
+    newLogin,
     ElAffix,
   },
   computed: {},
@@ -56,17 +58,7 @@ export default {
       this.Option[key] = this.$route.query[key];
       // console.log(key, this.Option[key]);
     }
-    // console.log({
-    //   category: this.category,
-    //   vip: this.property == "VIP",
-    //   status: this.status,
-    //   range: this.wordCount,
-    //   order: this.sort,
-    // });
-    // this.naviLoccation = document
-    //   .querySelector(`li[navi-id="${id}"]`)
-    //   .getBoundingClientRect();
-    // this.$store.commit("changeNaviLoc", id);
+    
   },
 };
 </script>
@@ -77,7 +69,9 @@ export default {
   margin-right: auto;
   width: 1200px;
 }
-
+.mycard{
+  z-index: 100;
+}
 .category-component-wrapper {
   width: 200px;
   float: left;
