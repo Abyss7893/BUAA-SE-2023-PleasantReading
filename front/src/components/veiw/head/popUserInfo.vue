@@ -70,6 +70,7 @@
 
 <script>
 import PayComponent from '@/components/page/Personal/PayComponent.vue';
+import { getBriefInfo } from '@/api/api'
 export default {
   name: "popUserInfo",
   components: { PayComponent, },
@@ -77,6 +78,12 @@ export default {
     return {
       pay: false,
     };
+  },
+  created() {
+    getBriefInfo().then((data) => {
+      if (data.status && data.status == 200)
+        console.log(data)
+    })
   },
   methods: {
     jumpToVip() {

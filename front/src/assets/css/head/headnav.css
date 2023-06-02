@@ -1,8 +1,11 @@
 /* 头部导航栏 */
 .head-nav {
-  border-bottom: 2px solid #ededed;
+  border-top: 1px solid #87878798;
+  border-bottom: 2px solid #d3d0d0;
   margin: auto;
-  background-color: #3e3d43;
+  /* margin-top: 2px; */
+  background-color: #050505a6;
+  backdrop-filter: blur(20px);
   z-index: 0;
   box-shadow: 0px 0px 5px #888888;
 }

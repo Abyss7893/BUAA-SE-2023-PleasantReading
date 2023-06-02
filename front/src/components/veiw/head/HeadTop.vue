@@ -1,11 +1,10 @@
 <!-- 网页头部顶侧，包含logo、登录&&注册、搜索栏等 -->
 <template>
-  <ElDialog v-model="showLogin"  style="background-color: transparent; width: 800px;" >
-      <newLogin class="mycard" @submit="showLogin = false"></newLogin>
-
-    
-  </ElDialog>
-  
+  <div class="proeffect">
+    <ElDialog v-model="showLogin" style="background-color: transparent; width: 800px;">
+      <newLogin class="mycardlogin" @submit="showLogin = false" ref="login"></newLogin>
+    </ElDialog>
+  </div>
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
   <div class="head-top">
@@ -41,7 +40,7 @@
       <template v-if="!isLogin">
         <div class="avatar">
           <el-popover trigger="hover" :show-arrow=false transition="el-zoom-in-top" width="480">
-            <div class="title">登录后你可以</div>
+            <div class="logininfo">登录后你可以</div>
             <div class="login-pri">
               <li><svg t="1685433487956" class="icon" viewBox="0 0 1024 1024" version="1.1"
                   xmlns="http://www.w3.org/2000/svg" p-id="2670" width="24" height="24">
@@ -82,11 +81,10 @@
                     p-id="1481" fill="#ed4259"></path>
                 </svg>热门书籍看不停</li>
             </div>
-            <el-button class="login-button" type="primary" color="#f33f3f"
-              @click="this.$router.push({ path: '/login' })">立即登录</el-button>
-            <div class="register"><span>首次使用?<router-link to="/register">点我注册</router-link></span></div>
+            <el-button class="login-button" type="primary" color="#f33f3f" @click="showLogina">立即登录</el-button>
+            <div class="register"><span>首次使用?<a @click="showRegister">点我注册</a></span></div>
             <template #reference>
-              <ElAvatar class="login-avatar" size="large" ><span @click="showLogin=true">登录</span></ElAvatar>
+              <ElAvatar class="login-avatar" size="large"><span @click="showLogina">登录</span></ElAvatar>
             </template>
           </el-popover>
         </div>
@@ -126,13 +124,13 @@ export default {
     popUserInfo,
     newLogin,
     ElDialog
-},
+  },
   data() {
     return {
       searchHots: ["青春北航男童不会梦到清华女学长", "重生之我在北航卖西瓜", "飘飘何所似", "红楼梦", "杨过"],
       clearExit: false,
       keywords: "",
-      showLogin:false,
+      showLogin: false,
       popShow: "none",
     }
   },
@@ -150,7 +148,7 @@ export default {
   mounted() {
     this.keywords = this.$route.query.keywords ? this.$route.query.keywords : ""
   },
-  
+
   methods: {
     onCloseDialog(value) {
       // 接收到子组件传递过来的布尔值，赋值给 showLogin 属性
@@ -182,19 +180,30 @@ export default {
         this.popShow = "none"
       }, 200)
     },
+    showLogina() {
+      this.showLogin = true
+      setTimeout(() => {
+        if (this.$refs.login.showStatus())
+          this.$refs.login.changeForm()
+      }, 200)
+    },
+    showRegister() {
+      this.showLogin = true
+      setTimeout(() => {
+        if (!this.$refs.login.showStatus())
+          this.$refs.login.changeForm()
+      }, 200)
+    },
   },
 };
 </script>
-<style scoped>
-.personal-dropdown-menu {
-  --el-dropdown-menuItem-hover-fill: #f56c6c;
-  --el-dropdown-menuItem-hover-color: white;
-}
-.mycard {
+<style>
+.mycardlogin {
   z-index: 1000;
   background-color: transparent;
-  
+
 }
+
 .mask {
   position: fixed;
   top: 0;
@@ -204,6 +213,7 @@ export default {
   height: 100%;
   background-color: rgba(254, 253, 253, 0.5);
 }
+
 .shell {
   position: relative;
   width: 500px;
@@ -316,10 +326,11 @@ export default {
 }
 
 .login-avatar {
-  --el-avatar-bg-color: #f56c6c
+  --el-avatar-bg-color: #f56c6c;
+  cursor: pointer;
 }
 
-.title {
+.logininfo {
   margin: 16px 0 0 16px;
   font-size: 18px;
 }
@@ -332,6 +343,7 @@ export default {
 }
 
 .register {
+  cursor: pointer;
   width: 100%;
   margin-top: 24px;
   display: flex;
@@ -378,5 +390,17 @@ export default {
 
 .avatar {
   position: relative;
+}
+
+.proeffect .el-dialog__headerbtn {
+  left: 100%;
+  top: -20px;
+  margin-left: 64px;
+  z-index: 1000;
+}
+
+.proeffect .el-dialog__headerbtn:focus .el-dialog__close,
+.proeffect .el-dialog__headerbtn:hover .el-dialog__close {
+  color: #f56c6c !important;
 }
 </style>

@@ -1,10 +1,15 @@
 <template>
   <div>
     <!-- <transition name="fade"> -->
-    <div class="start-component" :class="{ 'start-component-hidden': !showComponent }" :style="{
-      backgroundImage: `url(${backgroundImage})`,
-      marginTop: showComponent ? '' : 'calc(-106vh )',
-    }" ref="startComponentRef">
+    <div
+      class="start-component"
+      :class="{ 'start-component-hidden': !showComponent }"
+      :style="{
+        backgroundImage: `url(${backgroundImage})`,
+        marginTop: showComponent ? '' : 'calc(-106vh )',
+      }"
+      ref="startComponentRef"
+    >
       <img src="../../../assets/logo-yixinyuedu.png" class="start-image" />
       <div style="height: 15%">
         <div class="hello-user">
@@ -19,8 +24,9 @@
       <div v-if="this.$store.state.isLogin" style="max-height: 300px">
         <slide-card> </slide-card>
       </div>
-      <button class="start-button" @click="hideComponent">{{ this.$store.state.isLogin ? "探索更多" : "开始探索" }} ></button>
-
+      <button class="start-button" @click="hideComponent">
+        {{ this.$store.state.isLogin ? "探索更多" : "开始探索" }} >
+      </button>
     </div>
     <!-- </transition> -->
   </div>
@@ -124,6 +130,22 @@ export default {
         img.src = imagePath;
       });
     },
+    randomBg(index) {
+      this.backgroundImage = this.imgs[index];
+      let index2 = Math.floor(Math.random() * this.imgs.length);
+      while (index2 == index) {
+        index2 = Math.floor(Math.random() * this.imgs.length);
+      }
+      index = index2;
+      const img = new Image();
+      img.onload = () => {};
+      img.onerror = () => {};
+      img.src = this.imgs[index];
+
+      setTimeout(() => {
+        this.randomBg(index);
+      }, 5000);
+    },
   },
   computed: {
     username() {
@@ -175,20 +197,20 @@ export default {
       "https://i.imgloc.com/2023/05/29/Vtg73Z.jpeg",
       "https://i.imgloc.com/2023/05/29/VtgxD8.jpeg",
     ];
-    let index = Math.floor(Math.random() * this.imgs.length);
+
     // for (let i = 0; i < this.imgs.length; i++) {
     //   this.imgs[i] = require("../../../assets/imgs/homepage/" +
     //     this.imgs[i].substring(2));
     // }
-    this.backgroundImage = this.imgs[index];
+
     // let img = imgs[Math.floor(Math.random() * imgs.length)];
     // let path = ;
     // console.log(path);
-
+    let index = Math.floor(Math.random() * this.imgs.length);
+    this.randomBg(index);
     this.typing();
   },
 };
-
 </script>
 
 <style scoped>
@@ -244,7 +266,7 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  transition: all 0.5s;
+  transition: margin-top 0.5s, background-image 2s;
   /* transition: background-image 2s; */
 }
 
@@ -275,7 +297,7 @@ export default {
   color: #fff;
   margin-bottom: 20px;
   max-height: 100px;
-  text-shadow: 1px 1px #0000004d;
+  text-shadow: 2px 1px #000000b5;
 }
 
 .start-button {

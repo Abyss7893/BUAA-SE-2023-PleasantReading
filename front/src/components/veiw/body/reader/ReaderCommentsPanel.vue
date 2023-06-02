@@ -1,7 +1,10 @@
 <template>
   <div class="panel-box">
-    <div class="mask" v-if="showMyCard"></div>
-    <MyCard class="mycard" v-if="showMyCard" @close="showMyCard = false" :userID="currentId"></MyCard>
+    <!-- <div class="mask" v-if="showMyCard"></div> -->
+    <!-- <MyCard class="mycard" v-if="showMyCard" @close="showMyCard = false" :userID="currentId"></MyCard> -->
+    <el-dialog v-model="showMyCard" :destroy-on-close="true" width="500px">
+      <PersonalInfo :userID="currentId" :userImg="currentImg"></PersonalInfo>
+    </el-dialog>
     <a class="close-panel-button" @click="closeComments"><el-icon class="close-panel-button-icon" size="26"
         color="#a6a6a6">
         <Close />
@@ -12,7 +15,8 @@
         <ul v-if="this.comments.length > 0">
           <li class="comment-list" v-for="(comment, commentId) in this.comments.slice(0, this.commentsNum)"
             :key="commentId">
-            <div class="comment-avatar"><img :src="comment.img" alt="" @click="showPersonInfo(comment.userID)"></div>
+            <div class="comment-avatar"><img :src="comment.img" alt=""
+                @click="showPersonInfo(comment.userID, comment.img)"></div>
             <div class="comment-text">
               <div class="comment-name">{{ comment.nickname }}</div>
               <div class="comment-time">{{ parseTime(comment.timestamp) }}</div>
@@ -43,14 +47,15 @@
 <script>
 import { getBookComments, submitBookComment } from "@/api/api";
 import { encodeForHTML } from "@/XSS/encode"
-import MyCard from "@/components/page/Personal/MyCard.vue";
+import PersonalInfo from "@/components/page/Personal/PersonalInfo.vue";
 import { ElMessage } from "element-plus";
 export default {
   name: "ReaderCommentsPanel",
-  components: { MyCard },
+  components: { PersonalInfo },
   data() {
     return {
       currentId: null,
+      currentImg: "",
       showMyCard: false,
       pages: 1,
       thisPage: 1,
@@ -92,9 +97,10 @@ export default {
         this.$refs['i' + commentId][0].appendChild(svg);
       }
     },
-    showPersonInfo(userid) {
+    showPersonInfo(userid, userimg) {
       this.showMyCard = true;
       this.currentId = userid;
+      this.currentImg = userimg
     },
     closeComments() {
       this.$parent.changeComments()
@@ -190,7 +196,7 @@ export default {
               grouping: true,
               type: 'waring',
             })
-            
+
             this.$store.commit('refresh')
             break;
           default:
@@ -214,7 +220,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 111;
   width: 100%;
   height: 100%;
   background-color: rgba(254, 253, 253, 0.5);
@@ -231,5 +237,31 @@ export default {
   --el-pagination-hover-color: #f03636;
   --el-pagination-bg-color: rgba(249, 240, 223, 0.543);
   --el-pagination-button-disabled-bg-color: rgba(250, 245, 235, 0.8);
+}
+
+.panel-box .el-dialog {
+  margin: auto;
+  width: 440px;
+  background: linear-gradient(45deg, #fbda61, #ff5acd);
+}
+
+.panel-box .el-dialog__headerbtn svg path {
+  fill: #fbda61;
+}
+
+.panel-box .el-dialog__headerbtn:hover svg path {
+  fill: #fb526bf2;
+}
+
+.panel-box .el-overlay-dialog {
+  display: flex;
+  justify-content: center;
+  vertical-align: center;
+}
+
+.panel-box .el-dialog__body {
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
 }
 </style>
