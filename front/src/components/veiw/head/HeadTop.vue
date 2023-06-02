@@ -1,9 +1,10 @@
 <!-- 网页头部顶侧，包含logo、登录&&注册、搜索栏等 -->
 <template>
-  <ElDialog v-model="showLogin" style="background-color: transparent; width: 800px;">
-    <newLogin class="mycardlogin" @submit="showLogin = false" ref="login"></newLogin>
-  </ElDialog>
-
+  <div class="proeffect">
+    <ElDialog v-model="showLogin" style="background-color: transparent; width: 800px;">
+      <newLogin class="mycardlogin" @submit="showLogin = false" ref="login"></newLogin>
+    </ElDialog>
+  </div>
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
   <div class="head-top">
@@ -39,7 +40,7 @@
       <template v-if="!isLogin">
         <div class="avatar">
           <el-popover trigger="hover" :show-arrow=false transition="el-zoom-in-top" width="480">
-            <div class="title">登录后你可以</div>
+            <div class="logininfo">登录后你可以</div>
             <div class="login-pri">
               <li><svg t="1685433487956" class="icon" viewBox="0 0 1024 1024" version="1.1"
                   xmlns="http://www.w3.org/2000/svg" p-id="2670" width="24" height="24">
@@ -329,7 +330,7 @@ export default {
   cursor: pointer;
 }
 
-.title {
+.logininfo {
   margin: 16px 0 0 16px;
   font-size: 18px;
 }
@@ -391,15 +392,15 @@ export default {
   position: relative;
 }
 
-.el-dialog__headerbtn {
+.proeffect .el-dialog__headerbtn {
   left: 100%;
   top: -20px;
-  margin-left: 40px;
+  margin-left: 64px;
   z-index: 1000;
 }
 
-.el-dialog__headerbtn:focus .el-dialog__close,
-.el-dialog__headerbtn:hover .el-dialog__close {
+.proeffect .el-dialog__headerbtn:focus .el-dialog__close,
+.proeffect .el-dialog__headerbtn:hover .el-dialog__close {
   color: #f56c6c !important;
 }
 </style>

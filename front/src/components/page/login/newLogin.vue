@@ -2,7 +2,7 @@
   <body>
     <div class="main">
 
-      <div class="container a-container" id="a-container">
+      <div class="logincontainer a-logincontainer" id="a-logincontainer">
         <form class="form" id="b-form" method="" action="">
           <h2 class="form_title title">登录账号</h2>
           <div style="display: flex">
@@ -32,7 +32,7 @@
           <button class="form__button button submit" @click.prevent="userList">登录</button>
         </form>
       </div>
-      <div class="container b-container" id="b-container">
+      <div class="logincontainer b-logincontainer" id="b-logincontainer">
         <form class="form" id="a-form" method="" action="">
           <h2 class="form_title title">创建账号</h2>
           <div style="display: flex">
@@ -159,6 +159,7 @@ export default {
             const token = response.data.access;
             // 将令牌存储在本地存储中
             localStorage.setItem("token", token);
+            localStorage.setItem("tokenStartTime", new Date().getTime());
             // 更新默认请求头中的令牌
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
             // 登录成功后的操作，例如跳转到其他页面
@@ -300,8 +301,8 @@ export default {
       switchCtn.value = document.querySelector("#switch-cnt")
       switchC1.value = document.querySelector("#switch-c1")
       switchC2.value = document.querySelector("#switch-c2")
-      aContainer.value = document.querySelector("#a-container")
-      bContainer.value = document.querySelector("#b-container")
+      aContainer.value = document.querySelector("#a-logincontainer")
+      bContainer.value = document.querySelector("#b-logincontainer")
       mainF()
     })
 
@@ -369,7 +370,7 @@ body {
   margin-bottom: 10px;
 }
 
-.container {
+.logincontainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -474,12 +475,12 @@ body {
 }
 
 /**/
-.a-container {
+.a-logincontainer {
   z-index: 100;
   left: calc(100% - 600px);
 }
 
-.b-container {
+.b-logincontainer {
   left: calc(100% - 600px);
   z-index: 0;
 }

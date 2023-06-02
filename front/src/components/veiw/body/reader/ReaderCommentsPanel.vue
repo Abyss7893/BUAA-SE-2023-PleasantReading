@@ -239,27 +239,27 @@ export default {
   --el-pagination-button-disabled-bg-color: rgba(250, 245, 235, 0.8);
 }
 
-.el-dialog {
+.panel-box .el-dialog {
   margin: auto;
   width: 440px;
   background: linear-gradient(45deg, #fbda61, #ff5acd);
 }
 
-.el-dialog__headerbtn svg path {
+.panel-box .el-dialog__headerbtn svg path {
   fill: #fbda61;
 }
 
-.el-dialog__headerbtn:hover svg path {
+.panel-box .el-dialog__headerbtn:hover svg path {
   fill: #fb526bf2;
 }
 
-.el-overlay-dialog {
+.panel-box .el-overlay-dialog {
   display: flex;
   justify-content: center;
   vertical-align: center;
 }
 
-.el-dialog__body {
+.panel-box .el-dialog__body {
   font-size: 18px;
   display: flex;
   justify-content: center;
