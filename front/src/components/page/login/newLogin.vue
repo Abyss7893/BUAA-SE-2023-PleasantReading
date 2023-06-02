@@ -1,6 +1,6 @@
 <template>
     <body>
-        <div class="main">
+        <div class="main" id="mycard">
             
             <div class="container a-container" id="a-container">
                  <form class="form" id="b-form" method="" action="">
@@ -46,14 +46,20 @@
                 <p class="switch__description description">输入您的个人信息,并开始与我们沟通</p>
                 <span class="form__span">已有账号?点击下方按钮前往登录</span>
                 <button class="switch__button button switch-btn">立即登录</button>
+                
             </div>
+            <div class="switch__container is-hidden" id="switch-c3">
+                    <h2 class="switch__title welcome" >欢迎登录 !</h2>
+                    
+                </div>
         </div>
+        
     </div>
 
 </body>
 </template>
 <script>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive} from 'vue';
 import axios from 'axios'
 import { useStore } from "vuex";
 
@@ -62,10 +68,14 @@ export default {
     name: 'newLoginComponent',
     emits: ['submit'],
     setup(_,{emit}) {
+        const test=ref(null)
+        console.log(test)
         const store = useStore();
         const switchCtn = ref(null)
+        const Mycard = ref(null)
         const switchC1 = ref(null)
         const switchC2 = ref(null)
+        const switchC3 = ref(null)
         const switchCircle = ref([])
         const switchBtn = ref([])
         const aContainer = ref(null)
@@ -108,7 +118,28 @@ export default {
             for (var i = 0; i < switchBtn.value.length; i++)
                 switchBtn.value[i].addEventListener("click", changeForm);
         }
-
+        function ending(){
+            switchC1.value.classList.toggle("is-hidden");
+            switchC3.value.classList.toggle("is-hidden");
+            setTimeout(() => {
+                switchCtn.value.classList.toggle("login-success");
+            }, 100);
+            
+            setTimeout(() => {
+                Mycard.value.classList.toggle("endup");
+            }, 1500);
+            setTimeout(() => {
+                emit('submit')
+                
+            }, 2700);
+            setTimeout(() => {
+                switchC1.value.classList.toggle("is-hidden");
+                switchC3.value.classList.toggle("is-hidden");
+                switchCtn.value.classList.toggle("login-success");
+                Mycard.value.classList.toggle("endup");
+            }, 4000);
+            
+        }
         async function userList() {
             try {
                 axios
@@ -140,7 +171,8 @@ export default {
                             grouping: true,
                             type: 'success',
                         })
-                        emit('submit')
+                        ending()
+                        
                         // 登录成功后要获取用户信息储存到vuex中
                         axios
                             .get(`http://154.8.183.51/user/getinfo/${userLoginForm.username}`)
@@ -270,6 +302,8 @@ export default {
             switchCtn.value = document.querySelector("#switch-cnt")
             switchC1.value = document.querySelector("#switch-c1")
             switchC2.value = document.querySelector("#switch-c2")
+            switchC3.value = document.querySelector("#switch-c3")
+            Mycard.value=document.querySelector("#mycard")
             aContainer.value = document.querySelector("#a-container")
             bContainer.value = document.querySelector("#b-container")
             mainF()
@@ -279,6 +313,7 @@ export default {
             switchCtn,
             switchC1,
             switchC2,
+            switchC3,
             switchCircle,
             switchBtn,
             aContainer,
@@ -287,7 +322,7 @@ export default {
             userLoginForm,
             userRegisterForm,
             userList,
-            register,
+            register
         }
     }
 }
@@ -420,7 +455,23 @@ body {
     text-align: center;
     line-height: 1.6;
 }
+.welcome{
+font-size: 3rem;
+letter-spacing: -0.05rem;
+text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+color: #007bff;
+background-color: transparent;
+padding: 0.5rem 1rem;
 
+
+font-family: 'Segoe UI', Arial, sans-serif;
+background-image: linear-gradient(to right, #007bff, #00d4ff);
+background-clip: text;
+-webkit-background-clip: text;
+color: transparent;
+border: none; /* 新增的样式 */
+
+}
 .button {
     width: 180px;
     height: 50px;
@@ -539,7 +590,36 @@ body {
 .is-gx {
     animation: is-gx 1.25s;
 }
+.login-success{
+    animation: login-success 1.25s forwards;
+    transform-origin: left;
+}
+.hello{
+    margin-bottom: 200px;
+}
+.endup{
+    animation: endup 1.25s forwards;
+    transform-origin: bottom;
+}
 
+@keyframes endup{
+    from{
+        transform: translateY(1)
+    }
+    to{
+        transform: translateY(-1000px);
+    }
+}
+@keyframes login-success {
+    from {
+    transform: scaleX(1);
+    width: 400px;
+  }
+  to {
+    transform: scaleX(1);
+    width: 1000px;
+}
+}
 @keyframes is-gx {
 
     0%,
