@@ -266,8 +266,8 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  /* transition: all 0.5s; */
-  transition: background-image 2s;
+  transition: margin-top 0.5s, background-image 2s;
+  /* transition: background-image 2s; */
 }
 
 .start-component-hidden {
