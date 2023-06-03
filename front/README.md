@@ -23,8 +23,3 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-
-### Push To Server
-```shell
-scp -r dist/ root@47.120.6.129:/PleasantReading/front/
-```
