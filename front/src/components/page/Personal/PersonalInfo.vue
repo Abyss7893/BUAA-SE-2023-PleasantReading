@@ -11,9 +11,9 @@
           <span>{{ user?.birthday || "ta还没有填写生日哦" }}</span>
         </div>
         <div class="data">
-          <h3>342<br><span>收藏</span></h3>
-          <h3>120k<br><span>笔记</span></h3>
-          <h3>285<br><span>书签</span></h3>
+          <h3>{{ }}<br><span>评论</span></h3>
+          <h3>{{ 342 }}<br><span>笔记</span></h3>
+          <h3>{{ 342 }}<br><span>书签</span></h3>
         </div>
         <div class="actionBtn">
           <button>Follow</button>
@@ -26,6 +26,7 @@
 
 <script>
 import { ref, onBeforeMount, onMounted } from 'vue'
+import { getBriefInfo } from '@/api/api'
 import axios from 'axios';
 export default {
   name: "PersonalInfo",
@@ -43,6 +44,7 @@ export default {
   setup(props) {
     const img = ref("")
     const user = ref(null)
+    const userbdata = ref(null)
     onBeforeMount(() => {
       axios.get(`http://154.8.183.51/user/getinfo/${props.userID}`)
         .then(res => {
@@ -54,6 +56,13 @@ export default {
     })
     onMounted(() => {
       img.value = new URL(props.userImg, import.meta.url).href
+      getBriefInfo(props.userID).then((data) => {
+        if (data.status && data.status == 200) {
+          userbdata.value = data.data
+        }
+        else
+          console.log(data)
+      })
     })
     return {
       user,

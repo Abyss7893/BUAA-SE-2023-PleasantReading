@@ -111,6 +111,7 @@
 <script>
 import "css/head/headtop.css";
 import newLogin from "@/components/page/login/newLogin.vue";
+import { mapGetters } from "vuex";
 import {
   ElAvatar, ElDialog,
   // ElDropdown,
@@ -147,11 +148,16 @@ export default {
     clearShow() {
       return this.clearExit
     },
+    ...mapGetters(['loginshow']),
+  },
+  watch: {
+    loginshow() {
+      this.showLogin = true
+    }
   },
   mounted() {
     this.keywords = this.$route.query.keywords ? this.$route.query.keywords : ""
   },
-
   methods: {
     onCloseDialog(value) {
       // 接收到子组件传递过来的布尔值，赋值给 showLogin 属性

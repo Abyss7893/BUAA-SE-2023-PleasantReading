@@ -19,15 +19,15 @@
       </div>
       <div class="fav">
         <div class="shelf">
-          <div class="num">123</div>
+          <div class="num">{{ briefdata.comments }}</div>
           <div>收藏</div>
         </div>
         <div class="note">
-          <div class="num">123</div>
+          <div class="num">{{ briefdata.notes }}</div>
           <div>笔记</div>
         </div>
         <div class="mark">
-          <div class="num">123</div>
+          <div class="num">{{ briefdata.marks }}</div>
           <div>书签</div>
         </div>
       </div>
@@ -77,11 +77,18 @@ export default {
   data() {
     return {
       pay: false,
+      briefdata: {
+        comments: 0,
+        marks: 0,
+        notes: 0
+      },
     };
   },
   created() {
     getBriefInfo().then((data) => {
       if (data.status && data.status == 200)
+        this.briefdata = data.data
+      else
         console.log(data)
     })
   },
@@ -204,6 +211,8 @@ export default {
   color: #000;
   font-weight: bold;
   font-size: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .fav .shelf:hover,

@@ -2,9 +2,11 @@
   <div class="panel-box">
     <!-- <div class="mask" v-if="showMyCard"></div> -->
     <!-- <MyCard class="mycard" v-if="showMyCard" @close="showMyCard = false" :userID="currentId"></MyCard> -->
-    <el-dialog v-model="showMyCard" :destroy-on-close="true" width="500px">
-      <PersonalInfo :userID="currentId" :userImg="currentImg"></PersonalInfo>
-    </el-dialog>
+    <div class="infodialog">
+      <el-dialog v-model="showMyCard" :destroy-on-close="true" width="500px">
+        <PersonalInfo :userID="currentId" :userImg="currentImg"></PersonalInfo>
+      </el-dialog>
+    </div>
     <a class="close-panel-button" @click="closeComments"><el-icon class="close-panel-button-icon" size="26"
         color="#a6a6a6">
         <Close />
@@ -239,21 +241,21 @@ export default {
   --el-pagination-button-disabled-bg-color: rgba(250, 245, 235, 0.8);
 }
 
-.panel-box .el-dialog {
+.infodialog .el-dialog {
   margin: auto;
   width: 440px;
   background: linear-gradient(45deg, #fbda61, #ff5acd);
 }
 
-.panel-box .el-dialog__headerbtn svg path {
+.infodialog .el-dialog__headerbtn svg path {
   fill: #fbda61;
 }
 
-.panel-box .el-dialog__headerbtn:hover svg path {
+.infodialog .el-dialog__headerbtn:hover svg path {
   fill: #fb526bf2;
 }
 
-.panel-box .el-overlay-dialog {
+.infodialog .el-overlay-dialog {
   display: flex;
   justify-content: center;
   vertical-align: center;

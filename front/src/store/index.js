@@ -8,7 +8,7 @@ const store = createStore({
       isVIP: true,
       userId: null,
       userAvatar: null,
-      categoriesIndex: [0, 0, 0, 0],
+      loginShow: false,
       userInfo: {
         username: null,
         gender: null,
@@ -66,9 +66,13 @@ const store = createStore({
   getters: {
     tempAvatar: state => state.tempAvatar,
     islogin: state => state.isLogin,
+    loginshow: state => state.loginShow
     // ...
   },
   mutations: {
+    showlogin(state) {
+      state.loginShow = !state.loginShow
+    },
     refresh(state) {
       state.isLogin = false
       localStorage.clear()
