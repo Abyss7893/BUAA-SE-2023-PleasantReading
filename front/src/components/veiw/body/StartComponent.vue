@@ -245,7 +245,8 @@ export default {
     // this.randomBg(index);
     // this.backgroundImage = require("./test2.mp4");
     this.backgroundImage =
-      "https://public.sn.files.1drv.com/y4m5a7rSF9xTyH2p0-lCHVJcuP5OVBmn41Mjy039JIJozmuQ6Z_tgk0gHqbSpPXeXZfhY4pn3JC8u9neannjT2J49bw_YuRa3a02UpjfuKu5wo36hB691n0CMuMNcC7t45KZEh3sxAPZ9bNQ0X9boFJMsFDZcXOm4ZElAZBjmRIuO8DTbMw0pfCe2MgJt9sSXYLRydy-E3gBm_uSffnsi1beFF6AqAMktF_BO73lDJWmfw?AVOverride=1";
+      "https://f.video.weibocdn.com/o0/RnoGFpAKlx085XlUeSs001041200tx1t0E010.mp4?label=mp4_1080p&template=1920x1080.25.0&media_id=4908706224341043&tp=8x8A3El:YTkl0eM8&us=0&ori=1&bf=4&ot=h&lp=yODMjrxF3as1Scr5E8mea&ps=mZ6WB&uid=7xPfPa&ab=,3601-g32,8143-g0,8013-g0,7598-g1&Expires=1685818267&ssig=hsfEtpzXci&KID=unistore,video";
+    // "https://public.sn.files.1drv.com/y4m5a7rSF9xTyH2p0-lCHVJcuP5OVBmn41Mjy039JIJozmuQ6Z_tgk0gHqbSpPXeXZfhY4pn3JC8u9neannjT2J49bw_YuRa3a02UpjfuKu5wo36hB691n0CMuMNcC7t45KZEh3sxAPZ9bNQ0X9boFJMsFDZcXOm4ZElAZBjmRIuO8DTbMw0pfCe2MgJt9sSXYLRydy-E3gBm_uSffnsi1beFF6AqAMktF_BO73lDJWmfw?AVOverride=1";
     this.typing();
   },
 };
