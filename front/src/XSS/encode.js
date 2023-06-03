@@ -13,6 +13,7 @@ function encodeForHTMLAttibute(str) {
 function encodeForHTML(str) {
   return ('' + str)
     .replace(/&/g, '&amp;')
+  
     .replace(/</g, '&lt;')     // DEC=> &#60; HEX=> &#x3c; Entity=> &lt;
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
