@@ -413,7 +413,7 @@ export default {
 }
 
 .popuserinfo {
-  transition: opacity .3s ease-in;
+  transition: all .3s ease-in;
   position: absolute;
   z-index: 160;
 }
