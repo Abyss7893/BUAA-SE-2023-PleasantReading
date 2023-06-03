@@ -2,8 +2,8 @@
 <template>
   <div class="proeffect">
     <ElDialog v-model="showLogin" style="background-color: transparent; width: 800px;">
-      <newLogin class="mycardlogin" style="z-index: 1000; background-color: transparent;" @submit="showLogin = false"
-        ref="login"></newLogin>
+      <newLogin class="mycardlogin" v-if="showLogin" style="z-index: 1000; background-color: transparent;"
+        @submit="showLogin = false" ref="login"></newLogin>
     </ElDialog>
   </div>
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
@@ -424,11 +424,12 @@ export default {
 
 .proeffect .el-dialog {
   box-shadow: none;
+  /* margin-top: 200px; */
 }
 
 .proeffect .el-dialog__headerbtn {
   left: 100%;
-  top: -2px;
+  top: -6px;
   margin-left: 64px;
   z-index: 1000;
 }

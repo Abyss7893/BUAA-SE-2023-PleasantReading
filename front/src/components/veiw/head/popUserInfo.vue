@@ -90,8 +90,8 @@ export default {
       this.$router.push("/allbook?vip=true")
     },
     signOut() {
+      this.$parent.popleave()
       this.$store.commit("signOut")
-      console.log(this.$route.path)
       if (this.$route.path === '/user/info' || this.$route.path === '/user/comment' || this.$route.path === '/user')
         this.$router.push('/');
     },
