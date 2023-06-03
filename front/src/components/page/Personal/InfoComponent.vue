@@ -3,7 +3,7 @@
         <el-card shadow="hover">
             <ElDescriptions class="mycontext" title="简介" :column="1" border>
                 <template #extra>
-                    <el-button v-if="!editing" type="primary"  size="large" @click="handleEdit">修改个人信息</el-button>
+                    <el-button v-if="!editing" type="primary"  size="large" @click="handleEdit" class="pink-button">修改个人信息</el-button>
                     <el-button v-else type="primary"  size="large" @click="handleEdit">提交修改</el-button>
                 </template>
                 <div>
@@ -192,6 +192,16 @@ export default defineComponent({
 }
 .mycontext{
 height: 480px;
+}
+.pink-button {
+  background-color: #fcdfe3; /* 设置按钮默认背景色 */
+  color: #fff; /* 设置文字颜色 */
+  padding: 10px 20px; /* 设置按钮内边距 */
+  border-radius: 4px; /* 设置按钮圆角 */
+  /* 使用 hover 伪类实现鼠标悬浮时改变背景色的效果 */
+  /* 当鼠标悬浮时，将背景色改为淡粉色 */
+  border:#fcdfe3;
+  background-color: #ffdce0;
 }
 .el-input {
   border: none;
