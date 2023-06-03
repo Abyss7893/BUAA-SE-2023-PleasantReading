@@ -15,11 +15,11 @@ jobs:
     # 使用别人的action
     - uses: actions/checkout@v3
     # 步骤名称
+    - name: cd to front
+      run: cd front
     - name: npm install
       # 步骤执行指令
-      run: 
-        cd front
-        npm install
+      run: npm install
     - name: npm run build
       run: npm run build
     # 命名这个任务为发布Deploy
