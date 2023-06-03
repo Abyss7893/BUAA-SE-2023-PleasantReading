@@ -15,7 +15,7 @@ if ret != 0:
     sys.exit()
 
 trans = paramiko.Transport('47.120.6.129', 22)  # 此处为服务器ip和端口，可自行更改
-trans.connect(username='root', password="91216wyf@")
+trans.connect(username='root', password="###")
 sftp = paramiko.SFTPClient.from_transport(trans)
 path = os.path.abspath('.') + '\dist\PleasantReading.war'
 print(f'传递文件绝对位置为{path}')
@@ -27,7 +27,7 @@ ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 # 链接服务器
 ssh.connect(hostname='47.120.6.129', port=22,
-            username='root', password="91216wyf@")
+            username='root', password="###")
 command = "cd /PleasantReading/front; rm -rf dist; unzip PleasantReading.war -d dist;rm -rf PleasantReading.war; nginx -s reload;"
 stdin, stdout, stderr = ssh.exec_command(command)
 res = stdout.read()
