@@ -327,6 +327,25 @@ function submitNote(bookid, chapter, note) {
     return data;
   });
 }
+function getMyBookMark() {
+  var axios = require('axios');
+  var token = localStorage.getItem("token")
+  var config = {
+    method: 'get',
+    url: 'http://154.8.183.51/book/marks',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      'Content-Type': 'application/json'
+    }
+  };
+  // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+  return axios(config)
+    .catch(function (error) {
+      return error
+    });
+}
 function getBriefInfo() {
   var token = localStorage.getItem("token")
   return axios({
@@ -356,7 +375,7 @@ export {
   deleteColection, submitRating, getMyRating, getRecent,
   getAuthor,
   getNotes, submitNote,
-  getBriefInfo
+  getBriefInfo, getMyBookMark
 }
 // 使用示例
 

@@ -26,7 +26,6 @@
           <rank-card :booklist="yearpop" title="人气年榜"></rank-card>
         </el-col>
       </el-row>
-
     </el-space>
     <!-- </transition> -->
   </div>
@@ -124,28 +123,6 @@ export default {
           });
         }
       });
-      // let optheon2 = {
-      //   page: "2",
-      //   order: "favorcnt",
-      // };
-      // getBookList(optheon2).then((data) => {
-      //   var list = data.books;
-      //   for (let i = 0; i < list.length; i++) {
-      //     getBookDetiles(list[i]).then((book) => {
-      //       this.collectionlist[i+10] = {
-      //         name: book.title,
-      //         id: book.id,
-      //         author: book.author,
-      //         cover: book.cover,
-      //         state: [
-      //           book.vip ? "VIP" : "免费",
-      //           book.category,
-      //           this.getSimpleSize(book.cnt),
-      //         ],
-      //       };
-      //     });
-      //   }
-      // });
     },
     getmonthpop() {
       let optheon = {
