@@ -1,4 +1,4 @@
-name: Build front and deploy to Server(front CD)
+name: Build front and deploy to Server(frontCD)
 on:
   #监听push操作
   push:
