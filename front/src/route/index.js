@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import Home from 'components/page/Home'
-const newLoginComponent = () => import('../components/page/login/newLogin')
-const RegisterComponent = () => import('../components/page/login/RegisterComponent')
+// const newLoginComponent = () => import('../components/page/login/newLogin')
+// const RegisterComponent = () => import('../components/page/login/RegisterComponent')
 const BookDetail = () => import('../components/veiw/book/BookDetail')
 const PersonalCenter = () => import('../components/page/PersonalCenter')
 const InfoComponent = () => import('../components/page/Personal/InfoComponent')
@@ -24,9 +24,9 @@ const router = createRouter({
       name: 'home',
       component: Home,
     },
-    { path: '/login', component: newLoginComponent },
+    // { path: '/login', component: newLoginComponent },
     // { path:'/test',name:'test',component:HelloWorld},
-    { path: '/register', component: RegisterComponent },
+    // { path: '/register', component: RegisterComponent },
     {
       path: '/book/:id',
       name: 'book-detail',

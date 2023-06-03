@@ -1,43 +1,27 @@
 <template>
   <head-and-foot>
-    <check-login></check-login>
+    <!-- <check-login></check-login> -->
     <!-- <el-space direction="vertical" alignment="start" :size="30"> -->
     <div class="box-center">
       <el-divider />
       <div v-if="mybooks.length === 0">
-        <el-empty
-          description="暂无书籍"
-          :image="require('assets/imgs/book_null.png')"
-          image-size="300px"
-        />
+        <el-empty description="暂无书籍" :image="require('assets/imgs/book_null.png')" image-size="300px" />
       </div>
       <div v-else>
         <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
-          <el-col
-            v-for="o in colsize"
-            :key="(ro - 1) * colsize + o - 1"
-            :span="24 / colsize"
-          >
-            <book-card
-              :cover="mybooks[(ro - 1) * colsize + o - 1].cover"
-              :name="mybooks[(ro - 1) * colsize + o - 1].name"
-              :bookid="mybooks[(ro - 1) * colsize + o - 1].bookid"
-            ></book-card>
+          <el-col v-for="o in colsize" :key="(ro - 1) * colsize + o - 1" :span="24 / colsize">
+            <book-card :cover="mybooks[(ro - 1) * colsize + o - 1].cover" :name="mybooks[(ro - 1) * colsize + o - 1].name"
+              :bookid="mybooks[(ro - 1) * colsize + o - 1].bookid"></book-card>
           </el-col>
           <el-divider />
         </el-row>
         <div v-if="mybooks.length - (rownum - 1) * colsize > 0">
           <el-row gutter="60">
-            <el-col
-              v-for="o in mybooks.length - (rownum - 1) * colsize"
-              :key="(rownum - 1) * colsize + o - 1"
-              :span="24 / colsize"
-            >
-              <book-card
-                :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
+            <el-col v-for="o in mybooks.length - (rownum - 1) * colsize" :key="(rownum - 1) * colsize + o - 1"
+              :span="24 / colsize">
+              <book-card :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
                 :name="mybooks[(rownum - 1) * colsize + o - 1].name"
-                :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid"
-              />
+                :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid" />
             </el-col>
             <el-divider />
           </el-row>
@@ -52,11 +36,11 @@
 import { getMyBook } from "@/api/api";
 import HeadAndFoot from "../../HeadAndFoot.vue";
 import BookCard from "./BookCard.vue";
-import CheckLogin from "../../../check/checkLogin.vue";
+// import CheckLogin from "../../../check/checkLogin.vue";
 // import { nextTick } from "vue";
 
 export default {
-  components: { BookCard, HeadAndFoot, CheckLogin },
+  components: { BookCard, HeadAndFoot, },
   data() {
     return {
       mybooks: [],

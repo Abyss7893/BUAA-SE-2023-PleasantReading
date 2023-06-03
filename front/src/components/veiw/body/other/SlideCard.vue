@@ -3,7 +3,7 @@
     <div>
       <h1 class="quote" style="text-align: center">最近阅读</h1>
       <div style="min-height: 400px">
-        <transition name="el-zoom-in-top">
+        <transition name="el-zoom-in-center">
           <div v-if="isshow">
             <transition name="fade">
               <div

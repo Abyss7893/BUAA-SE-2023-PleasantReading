@@ -2,9 +2,9 @@
   <HeadTop />
   <div class="contain">
     <div class="mask" v-if="showMyCard"></div>
-    <MyCard class="mycard" v-if="showMyCard" @close="showMyCard=false"></MyCard>
-    <ElDialog v-model="test" :destroy-on-close="true">
-      <CropComponent @close="test = false" />
+    <MyCard class="mycard" v-if="showMyCard" @close="showMyCard = false"></MyCard>
+    <ElDialog v-model="test" :destroy-on-close="true" width="600px">
+      <CropComponent @close="test = false" @reloadAvatar="setAvatar" v-if="test" />
     </ElDialog>
     <ElDialog v-model="showPayDialog" title="充值VIP" :destroy-on-close="true" width="900px">
       <PayComponent />
@@ -79,7 +79,7 @@
               <el-icon>
                 <User />
               </el-icon>
-              <span class="text" >个人简介</span>
+              <span class="text">个人简介</span>
             </el-menu-item>
             <el-menu-item class="menu-item" @click="$router.push({ name: 'comment' })">
               <el-icon>
@@ -109,20 +109,20 @@
               <el-icon>
                 <Back />
               </el-icon>
-              <span class="text" >返回主界面</span>
+              <span class="text">返回主界面</span>
             </el-menu-item>
           </el-menu>
         </el-card>
       </div>
-      
+
       <div class="person_body_right">
         <router-view></router-view>
       </div>
     </div>
-    
+
 
   </div>
-  <WebFoot/>
+  <WebFoot />
 </template>
 
 <script>
@@ -153,7 +153,7 @@ export default {
     const showPayDialog = ref(false);
     const isfollow = ref(true);
     const showChangePwd = ref(false)
-    const showMyCard=ref(false)
+    const showMyCard = ref(false)
     const followData = ref({
       fanId: "",
       followId: "",
@@ -187,7 +187,10 @@ export default {
         reader.onload = function (event) {
           const dataURL = event.target.result;
           store.commit('setTempAvatar', dataURL)
-          test.value = true
+          test.value = false
+          setTimeout(() => {
+            test.value = true
+          }, 200);
         }
       });
     }
@@ -221,30 +224,36 @@ export default {
   background-color: #f7f8fc !important;
   display: flex;
   background-position: center;
-  background-attachment: fixed; /* 添加属性 */
+  background-attachment: fixed;
+  /* 添加属性 */
   position: relative;
   flex-direction: column;
   width: 100%;
   height: 850px;
   min-height: 70vh;
 }
-.mycard{
+
+.mycard {
   z-index: 1000;
 }
-.el-menu-vertical-demo{
+
+.el-menu-vertical-demo {
   font-size: 20px;
 }
 
-.text{
+.text {
 
   font-size: 20px;
 }
-.clearfix{
+
+.clearfix {
   margin-top: 10px;
 }
-.menu-item{
+
+.menu-item {
   height: 80px;
 }
+
 .mask {
   position: fixed;
   top: 0;
@@ -254,15 +263,19 @@ export default {
   height: 100%;
   background-color: rgba(254, 253, 253, 0.5);
 }
-.person_bottom{
+
+.person_bottom {
   width: 100%;
   height: 50px;
   min-height: 50px;
   justify-content: space-between;
   font-size: 14px;
-  position: fixed; /* 修改属性 */
-  bottom: 121px; /* 添加属性 */
+  position: fixed;
+  /* 修改属性 */
+  bottom: 121px;
+  /* 添加属性 */
 }
+
 .userAvatar {
   margin-top: 10px;
   margin-left: 20px;
@@ -344,7 +357,7 @@ export default {
   display: flex;
   position: absolute;
   left: 50%;
-  
+
   transform: translateX(-50%);
   border-radius: 5px;
 }
@@ -357,11 +370,16 @@ export default {
   margin-right: 3%;
   text-align: center;
 }
+
 .pink-button {
-  background-color: #fcdfe3; /* 设置按钮默认背景色 */
-  color: #fff; /* 设置文字颜色 */
-  padding: 10px 20px; /* 设置按钮内边距 */
-  border-radius: 4px; /* 设置按钮圆角 */
+  background-color: #fcdfe3;
+  /* 设置按钮默认背景色 */
+  color: #fff;
+  /* 设置文字颜色 */
+  padding: 10px 20px;
+  /* 设置按钮内边距 */
+  border-radius: 4px;
+  /* 设置按钮圆角 */
   /* 使用 hover 伪类实现鼠标悬浮时改变背景色的效果 */
   /* 当鼠标悬浮时，将背景色改为淡粉色 */
   background-color: #ffdce0;

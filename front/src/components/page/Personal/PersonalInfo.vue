@@ -11,9 +11,9 @@
           <span>{{ user?.birthday || "ta还没有填写生日哦" }}</span>
         </div>
         <div class="data">
-          <h3>342<br><span>收藏</span></h3>
-          <h3>120k<br><span>笔记</span></h3>
-          <h3>285<br><span>书签</span></h3>
+          <h3>{{ userbdata?.comments || 0 }}<br><span>评论</span></h3>
+          <h3>{{ userbdata?.notes || 0 }}<br><span>笔记</span></h3>
+          <h3>{{ userbdata?.marks || 0 }}<br><span>书签</span></h3>
         </div>
         <div class="actionBtn">
           <button>Follow</button>
@@ -26,6 +26,7 @@
 
 <script>
 import { ref, onBeforeMount, onMounted } from 'vue'
+import { getBriefInfo } from '@/api/api'
 import axios from 'axios';
 export default {
   name: "PersonalInfo",
@@ -43,6 +44,7 @@ export default {
   setup(props) {
     const img = ref("")
     const user = ref(null)
+    const userbdata = ref(null)
     onBeforeMount(() => {
       axios.get(`http://154.8.183.51/user/getinfo/${props.userID}`)
         .then(res => {
@@ -51,6 +53,12 @@ export default {
         .catch(err => {
           console.log(err)
         })
+      getBriefInfo(props.userID).then((data) => {
+        if (data.status && data.status == 200)
+          userbdata.value = data.data
+        else
+          console.log(data)
+      })
     })
     onMounted(() => {
       img.value = new URL(props.userImg, import.meta.url).href
@@ -58,6 +66,7 @@ export default {
     return {
       user,
       img,
+      userbdata,
     }
   }
 };
@@ -86,8 +95,8 @@ export default {
 
 .infocard {
   position: relative;
-  width: 350px;
-  height: 250px;
+  width: 300px;
+  height: 180px;
   /* height: 450px; */
   background: #fff;
   border-radius: 20px;
@@ -96,6 +105,7 @@ export default {
 }
 
 .infocard:hover {
+  width: 360px;
   height: 510px;
 }
 
@@ -142,7 +152,7 @@ export default {
   text-align: center;
   width: 100%;
   transition: 0.5s;
-  transform: translateY(150px);
+  transform: translateY(228px);
 }
 
 .infocard:hover .content .details {
@@ -174,7 +184,7 @@ export default {
 }
 
 .infocard .content .details .data h3 {
-  font-size: 1em;
+  font-size: 1.2em;
   color: #555;
   line-height: 1.2em;
   font-weight: 600;

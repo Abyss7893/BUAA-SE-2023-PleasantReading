@@ -1,6 +1,6 @@
 <template>
   <body>
-    <div class="main" id="mycard">
+    <div class="main" id="mycard" ref="main">
 
       <div class="container a-container" id="a-container">
         <form class="form" id="b-form" method="" action="">
@@ -110,6 +110,7 @@ export default {
     const aContainer = ref(null)
     const bContainer = ref(null)
     const allButtons = ref([])
+    const main = ref(null)
     const userLoginForm = reactive({
       username: '',
       password: '',
@@ -124,11 +125,12 @@ export default {
 
 
     const changeForm = () => {
+      main.value.classList.add("disable")
       switchCtn.value.classList.add("is-gx");
-      switchCtn.value.classList.add("disable");
       setTimeout(function () {
         switchCtn.value.classList.remove("is-gx");
-        switchCtn.value.classList.remove("disable");
+        if (main.value)
+          main.value.classList.remove("disable");
       }, 1200)
 
       switchCtn.value.classList.toggle("is-txr");
@@ -147,7 +149,13 @@ export default {
     const mainF = () => {
       switchBtn.value = document.querySelectorAll(".switch-btn");
       switchCircle.value = document.querySelectorAll(".switch__circle");
-
+      switchC1.value.classList.remove("is-hidden");
+      switchC2.value.classList.add("is-hidden");
+      switchC3.value.classList.add("is-hidden");
+      switchCtn.value.classList.remove("login-success");
+      Mycard.value.classList.remove("endup");
+      if (main.value)
+        main.value.classList.remove("disable")
       // for (var i = 0; i < switchBtn.value.length; i++)
       //   switchBtn.value[i].addEventListener("click", changeForm);
     }
@@ -170,10 +178,13 @@ export default {
         switchC3.value.classList.toggle("is-hidden");
         switchCtn.value.classList.toggle("login-success");
         Mycard.value.classList.toggle("endup");
+        if (main.value)
+          main.value.classList.remove("disable")
       }, 4000);
 
     }
     async function userList() {
+      main.value.classList.add("disable")
       try {
         axios
           .post(
@@ -205,7 +216,6 @@ export default {
               type: 'success',
             })
             ending()
-
             // 登录成功后要获取用户信息储存到vuex中
             axios
               .get(`http://154.8.183.51/user/getinfo/${userLoginForm.username}`)
@@ -244,6 +254,7 @@ export default {
               grouping: true,
               type: 'error',
             })
+            main.value.classList.remove("disable")
           });
       } catch (_) {
         // 处理错误
@@ -251,7 +262,6 @@ export default {
       }
     }
     async function register() {
-
       const emailReg = /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
       if (!emailReg.test(userRegisterForm.email)) {
         ElMessage({
@@ -343,6 +353,7 @@ export default {
     })
 
     return {
+      main,
       switchCtn,
       switchC1,
       switchC2,
@@ -375,7 +386,7 @@ export default {
 /* Generic */
 body {
   width: 50%;
-  height: 50vh;
+  height: 450px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -392,6 +403,7 @@ body {
   min-width: 1000px;
   min-height: 600px;
   margin-right: 400px;
+  /* margin-top: 15vh; */
   height: 600px;
   padding: 25px;
   background-color: #ecf0f3;

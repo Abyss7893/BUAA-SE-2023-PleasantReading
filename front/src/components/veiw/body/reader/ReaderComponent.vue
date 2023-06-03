@@ -160,20 +160,23 @@ export default {
         getBookCharpter(this.$route.params.bookid, this.$route.params.chapter).then((data) => {
 
           if (!data.status && data.response.status == 401) {
+            this.$router.push('/book/' + this.$route.params.bookid)
             ElMessage({
               message: '该书籍仅供vip阅读！而您甚至未登录！',
               grouping: true,
               type: 'info',
             })
-            window.location.href = '/book/' + this.$route.params.bookid
             return
           } else if (!data.status && data.response.status == 403) {
-            ElMessage({
-              message: '该书籍仅供vip阅读！',
-              grouping: true,
-              type: 'info',
-            })
-            window.location.href = '/book/' + this.$route.params.bookid
+            this.$router.push('/book/' + this.$route.params.bookid)
+            setTimeout(() => {
+              ElMessage({
+                message: '该书籍仅供vip阅读！',
+                grouping: true,
+                type: 'info',
+              })
+            }, 1000);
+
             return
           } else {
             let data2 = data.data

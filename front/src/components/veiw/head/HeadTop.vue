@@ -2,8 +2,8 @@
 <template>
   <div class="proeffect">
     <ElDialog v-model="showLogin" style="background-color: transparent; width: 800px;">
-      <newLogin class="mycardlogin" style="z-index: 1000; background-color: transparent;" @submit="showLogin = false"
-        ref="login"></newLogin>
+      <newLogin class="mycardlogin" v-if="showLogin" style="z-index: 1000; background-color: transparent;"
+        @submit="showLogin = false" ref="login"></newLogin>
     </ElDialog>
   </div>
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
@@ -111,6 +111,7 @@
 <script>
 import "css/head/headtop.css";
 import newLogin from "@/components/page/login/newLogin.vue";
+import { mapGetters } from "vuex";
 import {
   ElAvatar, ElDialog,
   // ElDropdown,
@@ -147,11 +148,16 @@ export default {
     clearShow() {
       return this.clearExit
     },
+    ...mapGetters(['loginshow']),
+  },
+  watch: {
+    loginshow() {
+      this.showLogin = true
+    }
   },
   mounted() {
     this.keywords = this.$route.query.keywords ? this.$route.query.keywords : ""
   },
-
   methods: {
     onCloseDialog(value) {
       // 接收到子组件传递过来的布尔值，赋值给 showLogin 属性
@@ -400,7 +406,7 @@ export default {
   top: 0;
   right: 0;
   transition: all .3s ease-in-out;
-  z-index: 200;
+  z-index: 100;
 }
 
 .edavatar:hover .el-avatar {
@@ -413,9 +419,9 @@ export default {
 }
 
 .popuserinfo {
-  transition: opacity .3s ease-in;
+  transition: all .3s ease-in;
   position: absolute;
-  z-index: 160;
+  z-index: 99;
 }
 
 .avatar {
@@ -424,11 +430,12 @@ export default {
 
 .proeffect .el-dialog {
   box-shadow: none;
+  /* margin-top: 200px; */
 }
 
 .proeffect .el-dialog__headerbtn {
   left: 100%;
-  top: -2px;
+  top: -6px;
   margin-left: 64px;
   z-index: 1000;
 }
