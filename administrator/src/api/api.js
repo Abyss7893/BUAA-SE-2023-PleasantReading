@@ -1,7 +1,25 @@
 import axios from 'axios'
 // import VueAxios from 'vue-axios'
 var back = "http://154.8.183.51/";
+function getMyBookMark() {
+  var axios = require('axios');
+  var token = localStorage.getItem("token")
+  var config = {
+    method: 'get',
+    url: 'http://154.8.183.51/book/marks',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      // 'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      'Content-Type': 'application/json'
+    }
+  };
+  // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
+  return axios(config)
+    .catch(function (error) {
+      return error
+    });
+}
 function submitRating(bookid, rate) {
   var token = localStorage.getItem("token")
   var axios = require('axios');
@@ -192,5 +210,5 @@ function deletBookmark(bookid, chapter) {
 
 
 export {
-  getBookDetiles, getBookContent, getBookList, getBookCharpter, getBookComments,getSearchBookIds, addBookmark, getMyBook, deletBookmark, submitRating
+  getBookDetiles, getMyBookMark, getBookContent, getBookList, getBookCharpter, getBookComments, getSearchBookIds, addBookmark, getMyBook, deletBookmark, submitRating
 }

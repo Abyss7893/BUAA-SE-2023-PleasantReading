@@ -2,42 +2,72 @@
   <div>
     <!-- <transition name="fade"> -->
     <div
-      v-if="hidethis"
-      class="start-component"
-      :class="{ 'start-component-hidden': !showComponent }"
+      class="video-box"
       :style="{
-        backgroundImage: `url(${backgroundImage})`,
+        // backgroundImage: `url(${backgroundImage})`,
         marginTop: showComponent ? '' : 'calc(-106vh )',
       }"
-      ref="startComponentRef"
     >
-      <img src="../../../assets/logo-yixinyuedu.png" class="start-image" />
-      <div style="height: 15%">
-        <div class="hello-user">
-          <div class="content">
-            <h1 class="quote">
-              {{ "你好，" + username }}
-              <p class="startquote">{{ typewriter }}</p>
-            </h1>
+      <video
+        class="video-background"
+        preload="auto"
+        loop
+        playsinline
+        autoplay
+        :src="backgroundImage"
+        tabindex="-1"
+        muted="muted"
+      ></video>
+      <div
+        v-if="hidethis"
+        class="start-component"
+        :class="{ 'start-component-hidden': !showComponent }"
+        :style="{
+          // backgroundImage: `url(${backgroundImage})`,
+          marginTop: showComponent ? '' : 'calc(-106vh )',
+        }"
+        ref="startComponentRef"
+      >
+        <img
+          src="../../../assets/logo-yixinyuedu.png"
+          class="start-image"
+          style="position: relative"
+        />
+        <div style="height: 15%">
+          <div class="hello-user" style="position: relative">
+            <div class="content">
+              <h1 class="quote">
+                {{ "你好，" + username }}
+                <p class="startquote">{{ typewriter }}</p>
+              </h1>
+            </div>
           </div>
         </div>
+        <div v-if="this.$store.state.isLogin" style="max-height: 300px">
+          <slide-card> </slide-card>
+        </div>
+        <button
+          class="start-button"
+          @click="hideComponent"
+          style="position: relative"
+        >
+          {{ this.$store.state.isLogin ? "探索更多" : "开始探索" }} >
+        </button>
+        <flip-clock style="position: relative; left: -30%; bottom: 7%" />
       </div>
-      <div v-if="this.$store.state.isLogin" style="max-height: 300px">
-        <slide-card> </slide-card>
-      </div>
-      <button class="start-button" @click="hideComponent">
-        {{ this.$store.state.isLogin ? "探索更多" : "开始探索" }} >
-      </button>
     </div>
+
     <!-- </transition> -->
   </div>
 </template>
 <script>
+import FlipClock from "./other/FlipClock.vue";
+// import Flipper from "./other/Flipper.vue";
 import SlideCard from "./other/SlideCard.vue";
 // import store from "@/store";
 // import { useStore } from "vuex";
 export default {
-  components: { SlideCard },
+  components: { SlideCard, FlipClock },
   data() {
     return {
       imgs: [],
@@ -211,8 +241,11 @@ export default {
     // let img = imgs[Math.floor(Math.random() * imgs.length)];
     // let path = ;
     // console.log(path);
-    let index = Math.floor(Math.random() * this.imgs.length);
-    this.randomBg(index);
+    // let index = Math.floor(Math.random() * this.imgs.length);
+    // this.randomBg(index);
+    // this.backgroundImage = require("./test2.mp4");
+    this.backgroundImage =
+      "https://public.sn.files.1drv.com/y4m5a7rSF9xTyH2p0-lCHVJcuP5OVBmn41Mjy039JIJozmuQ6Z_tgk0gHqbSpPXeXZfhY4pn3JC8u9neannjT2J49bw_YuRa3a02UpjfuKu5wo36hB691n0CMuMNcC7t45KZEh3sxAPZ9bNQ0X9boFJMsFDZcXOm4ZElAZBjmRIuO8DTbMw0pfCe2MgJt9sSXYLRydy-E3gBm_uSffnsi1beFF6AqAMktF_BO73lDJWmfw?AVOverride=1";
     this.typing();
   },
 };
@@ -258,7 +291,10 @@ export default {
   /* filter: grayscale(1) contrast(9); */
   /* backdrop-filter: blur(10px); */
 }
-
+.fullscreenVideo {
+  width: inherit;
+  height: inherit;
+}
 .start-component {
   margin-top: -3%;
   /* position: fixed; */
@@ -317,6 +353,33 @@ export default {
   cursor: pointer;
   transition: all 0.5s;
   z-index: 10;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.video-box {
+  transition: margin-top 0.5s;
+  position: relative;
+  height: 100vh;
+  background-color: #c1cff7;
+  z-index: 2;
+  /*进行视频裁剪*/
+  overflow: hidden;
+}
+
+.video-box .video-background {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  /*保证视频内容始终居中*/
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  /*保证视频充满屏幕*/
+  object-fit: cover;
+  min-height: 800px;
 }
 
 .start-button:hover {
