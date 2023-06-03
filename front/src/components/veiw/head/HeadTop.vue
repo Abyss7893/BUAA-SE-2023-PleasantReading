@@ -406,7 +406,7 @@ export default {
   top: 0;
   right: 0;
   transition: all .3s ease-in-out;
-  z-index: 200;
+  z-index: 100;
 }
 
 .edavatar:hover .el-avatar {
@@ -421,7 +421,7 @@ export default {
 .popuserinfo {
   transition: all .3s ease-in;
   position: absolute;
-  z-index: 160;
+  z-index: 99;
 }
 
 .avatar {

@@ -347,7 +347,7 @@ function getMyBookMark() {
       return error
     });
 }
-function getBriefInfo() {
+function getBriefInfo(uid) {
   var token = localStorage.getItem("token")
   var qurl;
   if (uid)

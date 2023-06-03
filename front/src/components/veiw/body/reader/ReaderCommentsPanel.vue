@@ -3,7 +3,7 @@
     <!-- <div class="mask" v-if="showMyCard"></div> -->
     <!-- <MyCard class="mycard" v-if="showMyCard" @close="showMyCard = false" :userID="currentId"></MyCard> -->
     <div class="infodialog">
-      <el-dialog v-model="showMyCard" :destroy-on-close="true" width="500px">
+      <el-dialog v-model="showMyCard" :destroy-on-close="true" width="400px">
         <PersonalInfo :userID="currentId" :userImg="currentImg"></PersonalInfo>
       </el-dialog>
     </div>
@@ -242,8 +242,9 @@ export default {
 }
 
 .infodialog .el-dialog {
+  border-radius: 16px;
   margin: auto;
-  width: 440px;
+  min-width: 360px;
   background: linear-gradient(45deg, #fbda61, #ff5acd);
 }
 
