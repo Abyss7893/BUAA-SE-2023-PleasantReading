@@ -21,14 +21,14 @@
       <div class="PersonTop_text">
         <div class="user_text">
           <div class="user_qianming">
-            <span> 名字</span>
+            <span> {{ store.state.userInfo.nickname }}</span>
           </div>
           <div class="motto">
             <div class="mysvg">
             <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M460.8 36.498286c8.045714 0 14.628571 6.582857 14.628571 14.628571v58.514286a14.628571 14.628571 0 0 1-14.628571 14.628571L124.342857 124.342857v775.314286h775.314286v-117.028572c0-8.045714 6.582857-14.628571 14.628571-14.628571h58.514286c8.045714 0 14.628571 6.582857 14.628571 14.628571V950.857143a36.571429 36.571429 0 0 1-36.571428 36.571428H73.142857a36.571429 36.571429 0 0 1-36.571428-36.571428V73.142857A36.571429 36.571429 0 0 1 73.142857 36.571429L460.8 36.498286z m158.573714 44.982857a43.885714 43.885714 0 0 1 61.878857-5.412572l79.140572 66.56C852.333714 19.017143 1024 68.388571 1024 217.673143c0 25.6-2.925714 42.203429-15.652571 71.753143l-8.850286 19.529143-18.505143 37.302857-7.68 15.213714c-56.685714 111.177143-61.732571 173.933714 6.436571 264.557714a36.571429 36.571429 0 0 1-58.514285 43.958857c-84.845714-112.859429-81.554286-201.142857-20.992-325.997714l25.307428-50.395428 8.557715-17.773715 6.509714-14.409143 2.486857-6.217142 3.803429-10.825143c2.048-6.582857 3.145143-12.288 3.657142-17.993143l0.292572-8.777143c0-77.531429-83.017143-101.302857-134.217143-28.013714l60.708571 50.980571a43.885714 43.885714 0 0 1 5.412572 61.805714l-378.587429 451.218286a43.885714 43.885714 0 0 1-27.501714 15.213714l-189.586286 26.843429a43.885714 43.885714 0 0 1-50.029714-41.910857l-6.509714-191.414857a43.885714 43.885714 0 0 1 10.24-29.696z m38.985143 89.965714L318.902857 576.219429l4.242286 125.805714 124.635428-17.627429 339.529143-404.699428-128.877714-108.105143z"></path></svg>
             </div>
             <div class="user-motto">
-              <span>motto</span>
+              <span>{{store.state.userInfo.motto}}</span>
             </div>
           </div>
           <div class="ip">
@@ -55,9 +55,9 @@
               <span class="num_text">笔记</span>
             </div>
           </div>
-          <div class="user_anniu">
+          <!-- <div class="user_anniu">
             <el-button class="el-icon-edit pink-button" @click="setAvatar">上传头像</el-button>
-          </div>
+          </div> -->
 
         </div>
       </div>
@@ -74,6 +74,7 @@
           <div class="clearfix">
             <span class="person_body_list" style="border-bottom: none;">个人中心</span>
           </div>
+          <el-divider style=" margin: 5px 0 0 0;"></el-divider>
           <el-menu router active-text-color="#fffff" class="el-menu-vertical-demo">
             <el-menu-item class="menu-item" @click="$router.push({ name: 'info' })">
               <el-icon>
@@ -105,11 +106,24 @@
               </el-icon>
               <span class="text">我的书架</span>
             </el-menu-item>
+            <el-divider style=" margin: 0px 0 0 0;"></el-divider>
+            <el-menu-item class="menu-item" @click="setAvatar">
+              <el-icon><Avatar /></el-icon>
+            <span class="text" >上传头像</span>
+            </el-menu-item>
+            <el-menu-item class="menu-item" @click="showChangePwd = true">
+              <el-icon><Lock /></el-icon>
+            <span class="text">修改密码</span>
+            </el-menu-item>
+            <el-menu-item class="menu-item" @click="openPayDia()">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M558.811429 155.574857a73.142857 73.142857 0 0 1 9.386666 9.386667L707.047619 331.580952l153.161143-113.103238a73.142857 73.142857 0 0 1 114.419809 76.556191L828.952381 877.714286H195.047619L49.371429 295.058286A73.142857 73.142857 0 0 1 163.791238 218.453333L316.952381 331.580952l138.849524-166.619428a73.142857 73.142857 0 0 1 103.033905-9.386667zM512 211.772952l-183.003429 219.623619-208.65219-154.087619L252.14781 804.571429h519.70438l131.803429-527.262477-208.65219 154.087619L512 211.772952z m170.666667 457.874286v78.019048H341.333333v-78.019048h341.333334z"></path></svg>
+            <span class="text">充值VIP</span>
+            </el-menu-item>
             <el-menu-item class="menu-item" @click="$router.push('/')">
               <el-icon>
                 <Back />
               </el-icon>
-              <span class="text">返回主界面</span>
+            <span class="text">返回主界面</span>
             </el-menu-item>
           </el-menu>
         </el-card>
@@ -133,7 +147,7 @@ import CropComponent from './Personal/CropComponent.vue'
 import ChangePwd from './Personal/ChangePwd.vue';
 import '../../../node_modules/cropperjs/dist/cropper.min.css'
 import WebFoot from '../veiw/foot/WebFoot.vue';
-import { ElAvatar, ElButton, ElDialog } from 'element-plus';
+import { ElAvatar, ElDialog } from 'element-plus';
 import HeadTop from '../veiw/head/HeadTop';
 //import axios from 'axios';
 import { ref, computed } from 'vue';
@@ -144,7 +158,7 @@ export default {
 
   name: "PersonalCenter",
   inject: ["reload"],
-  components: { ElAvatar, HeadTop, ElButton, ElDialog, PayComponent, WebFoot, CropComponent, ChangePwd },
+  components: { ElAvatar, HeadTop,ElDialog, PayComponent, WebFoot, CropComponent, ChangePwd },
   setup() {
     const test = ref(false)
     const store = useStore();
@@ -207,6 +221,7 @@ export default {
       showPayDialog,
       showChangePwd,
       test,
+      store,
       showMyCard,
       signOut,
       openPayDia,
@@ -250,9 +265,7 @@ export default {
   margin-top: 10px;
 }
 
-.menu-item {
-  height: 80px;
-}
+
 
 .mask {
   position: fixed;
@@ -287,9 +300,11 @@ export default {
   min-height: 200px;
   padding-top: 20px;
   background-color: white;
-
+  background-image: url("../../assets/imgs/personaltop.png");
+  background-size:332.8px 300.2px;
   background-repeat: no-repeat;
-  background-position: center;
+ 
+  background-position: 720px -70px;
   margin-top: 12px;
   position: absolute;
   left: 50%;
@@ -361,16 +376,22 @@ export default {
   transform: translateX(-50%);
   border-radius: 5px;
 }
-
+.icon{
+  width: 18px;
+  margin-left: 3px;
+  margin-right: 10px;
+}
 .person_body_left {
   width: 27%;
-  height: 380px;
+  height: 480px;
 
   border-radius: 5px;
   margin-right: 3%;
   text-align: center;
 }
-
+.el-menu-vertical-demo .el-menu-item:hover {
+  background-color: #f5e7ea;
+}
 .pink-button {
   background-color: #fcdfe3;
   /* 设置按钮默认背景色 */
@@ -426,8 +447,8 @@ export default {
 .person_body_list {
   width: 100%;
   height: 50px;
-  margin-top: 25px;
-  font-size: 30px;
+  margin-top: 20px;
+  font-size: 25px;
   border-bottom: 1px solid #f0f0f0;
   background-image: -webkit-linear-gradient(left,
       rgb(42, 134, 141),
@@ -440,6 +461,7 @@ export default {
   background-clip: text;
   background-size: 200% 100%;
   animation: masked-animation 4s linear infinite;
+
 }
 
 .person_body_right {
@@ -451,8 +473,8 @@ export default {
 }
 
 .box-card {
-  height: 523px;
-  min-height: 380px;
+  height: 550px;
+  min-height: 480px;
   margin-top: 40px;
   margin-right: 30px;
 }

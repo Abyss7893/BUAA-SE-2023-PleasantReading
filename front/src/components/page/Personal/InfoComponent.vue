@@ -4,7 +4,11 @@
             <ElDescriptions class="mycontext" title="简介" :column="1" border>
                 <template #extra>
                     <el-button v-if="!editing" type="primary"  size="large" @click="handleEdit" class="pink-button">修改个人信息</el-button>
-                    <el-button v-else type="primary"  size="large" @click="handleEdit">提交修改</el-button>
+                    <div v-else>
+                        <el-button type="primary" class="pink-button"  size="large" @click="handleEdit">提交修改</el-button>
+                        <el-button  type="primary" class="pink-button"  size="large" @click="cancleEdit">取消</el-button>
+                    </div>
+                    
                 </template>
                 <div>
                     <ElDescriptionsItem  width="40px" >
@@ -24,14 +28,22 @@
                             </template>
                             <span class="item">{{ info.username }}</span>
                     </ElDescriptionsItem>
-                    <ElDescriptionsItem>
-                            <template #label>
+                    <ElDescriptionsItem >
+                            <template #label >
                                 <el-icon v-if="info.gender
                                     === '男'"><Male /></el-icon>
+                                <el-icon v-else-if="info.gender === '保密'"><Lock /></el-icon>
                                 <el-icon v-else><Female /></el-icon>
+                                  
+                                   
                                 性别
                              </template>
-                            <ElInput v-if="editing" v-model="tempInfo.gender" style="height: 45px;"></ElInput>
+                            <el-radio-group v-if="editing" v-model="tempInfo.gender" style="height: 45px;">
+                                <el-radio :label="'男'">男</el-radio>
+                                <el-radio :label="'女'">女</el-radio>
+                                <el-radio :label="'保密'">保密</el-radio>
+                            </el-radio-group>
+                            <!-- <ElInput v-if="editing" v-model="tempInfo.gender" style="height: 45px;"></ElInput> -->
                             <span v-else class="item">{{ info.gender }}</span>
                     </ElDescriptionsItem>
                     <ElDescriptionsItem>
@@ -61,7 +73,7 @@
                             <el-icon><ChatDotSquare /></el-icon>
                             个人简介
                         </template>
-                        <ElInput type="textarea" rows="3" v-if="editing" v-model="tempInfo.motto"></ElInput>
+                        <ElInput type="textarea" maxlength="27" show-word-limit autosize="true" resize="none" v-if="editing" v-model="tempInfo.motto"></ElInput>
                         <span v-else style="line-height: 50px;">{{ info.motto }}</span>
                     </ElDescriptionsItem>
                 </div>
@@ -70,7 +82,6 @@
         </el-card>
     </div>
 </template>
-
 <script>
 // import PersonalDialog from './PersonalDialog';
 import { defineComponent ,ref,computed} from 'vue';
@@ -123,17 +134,33 @@ export default defineComponent({
             }
             return age;
         }
+        function cancleEdit(){
+            editing.value=false;
+            tempInfo.nickname = state.info.nickname
+            tempInfo.gender = state.info.gender
+            tempInfo.birthday = state.info.birthday
+            tempInfo.motto = state.info.motto
+        }
         const handleEdit = () => {
-            editing.value=!editing.value;
-            if (editing.value) {
+            if(editing.value==true&& tempInfo.motto.length>27){
+                ElMessage({
+                    message: '因为个人简介超过最大字数限制，修改失败',
+                    grouping: true,
+                    type: 'error',
+                })
+                return;
+            }
+            
+            if (!editing.value) {
                 // 编辑状态下不执行保存操作
+                editing.value = !editing.value;
                 return;
             }
             
             // TODO: 接下来需要做的是把修改的值传回数据库中
             const birthDate = new Date(tempInfo.birthday);
             tempInfo.birthday = birthDate.toLocaleDateString('zh-CN').replace(/\//g, '-');
-            console.log(tempInfo)
+            
             axios({
                 method: 'post',
                 url: 'http://154.8.183.51/user/changeinfo',
@@ -154,6 +181,7 @@ export default defineComponent({
                         grouping: true,
                         type: 'success',
                     })
+                    editing.value = !editing.value;
                 })
                 .catch(() => {
                     
@@ -166,14 +194,15 @@ export default defineComponent({
                         grouping: true,
                         type: 'error',
                     })
-
+                    editing.value = !editing.value;
                 });
 
         };
         return {
             tempInfo,
             ...state, editing,age,
-            handleEdit
+            handleEdit,
+            cancleEdit
         };
     },
 });
@@ -194,14 +223,18 @@ export default defineComponent({
 height: 480px;
 }
 .pink-button {
-  background-color: #fcdfe3; /* 设置按钮默认背景色 */
-  color: #fff; /* 设置文字颜色 */
+  font-weight: bold;
+  background-color: #ffafc9; /* 设置按钮默认背景色为白粉色 */
+  color: #fff; /* 设置文字颜色为白色 */
   padding: 10px 20px; /* 设置按钮内边距 */
   border-radius: 4px; /* 设置按钮圆角 */
-  /* 使用 hover 伪类实现鼠标悬浮时改变背景色的效果 */
-  /* 当鼠标悬浮时，将背景色改为淡粉色 */
-  border:#fcdfe3;
-  background-color: #ffdce0;
+  border: none; /* 去掉按钮边框 */
+}
+
+/* 使用 hover 伪类实现鼠标悬浮时改变背景色的效果 */
+/* 当鼠标悬浮时，将背景色改为红粉色 */
+.pink-button:hover {
+  background-color: #ff5e7d; /* 设置鼠标悬浮时的背景色为红粉色 */
 }
 .el-input {
   border: none;
