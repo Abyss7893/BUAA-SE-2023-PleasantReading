@@ -169,6 +169,9 @@ export default {
       if (id === "4") {
         this.$router.push({ name: "mark" });
       }
+      if (id === "6") {
+        this.$router.push({ name: "note" });
+      }
     },
   },
 };

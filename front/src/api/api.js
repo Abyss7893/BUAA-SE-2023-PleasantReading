@@ -4,7 +4,24 @@ import axios from 'axios'
 var back = "http://154.8.183.51/";
 
 
+function getMyNote() {
+  var axios = require('axios');
+  var token = localStorage.getItem("token")
+  var config = {
+    method: 'get',
+    url: 'http://154.8.183.51/book/notes',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
 
+  };
+  return axios(config)
+    .catch(function (error) {
+      console.log(error);
+      return error;
+    });
+}
 function getBookDetiles(bookid) {
   var token = localStorage.getItem("token")
   var axios = require('axios');
@@ -381,7 +398,7 @@ export {
   deleteColection, submitRating, getMyRating, getRecent,
   getAuthor,
   getNotes, submitNote,
-  getBriefInfo, getMyBookMark
+  getBriefInfo, getMyBookMark, getMyNote
 }
 // 使用示例
 

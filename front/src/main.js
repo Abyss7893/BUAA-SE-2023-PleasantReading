@@ -1,12 +1,12 @@
 import { createApp } from 'vue'
 
-
+import 'vue-good-table-next/dist/vue-good-table-next.css'
 import App from './App.vue'
 import router from './route/index'
 import store from './store/index'
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
+import VueGoodTablePlugin from 'vue-good-table-next';
 
 // import loginState from './store/loginState'
 import axios from 'axios'
@@ -45,7 +45,7 @@ window.ResizeObserver = class ResizeObserver extends _ResizeObserver {
 app.use(ElementPlus)
 app.use(router)
 app.use(store)
-
+app.use(VueGoodTablePlugin)
 
 app.mount('#app')
 

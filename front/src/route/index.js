@@ -15,6 +15,7 @@ const AllBook = () => import('../components/veiw/body/AllBook')
 const MyMarkBody = () => import('../components/veiw/body/mymark/MyMarkBody')
 const Search = () => import('../components/page/Search')
 const Author = () => import('components/page/Author')
+const MyNote = () => import('../components/veiw/body/mynote/MyNotesComponent')
 import 'css/home.css'
 const router = createRouter({
   history: createWebHistory(),
@@ -36,6 +37,10 @@ const router = createRouter({
       path: '/mark',
       name: 'mark',
       component: MyMarkBody
+    }, {
+      path: '/mynote',
+      name: 'note',
+      component: MyNote
     },
     {
       path: '/user',
