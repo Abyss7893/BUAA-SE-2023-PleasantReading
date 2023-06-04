@@ -307,9 +307,13 @@ def updateFavor(request, bookid):
         return JsonResponse({'message': 'login please'}, status=401)
     userid = getUsername(request)
     if request.method == 'PUT':
+        if Collections.objects.filter(userID=userid, bookID=bookid).count() > 0:
+            return JsonResponse({'message': 'exists'}, status=400)
         Collections.objects.create(userID=userid, bookID=bookid)
     elif request.method == 'DELETE':
         favs = Collections.objects.filter(userID=userid, bookID=bookid)
+        if favs.count() == 0:
+            return JsonResponse({'message': 'no record'}, status=400)
         favs.delete()
     return JsonResponse({'message': 'success'})
 
@@ -431,10 +435,12 @@ def getBriefInfo(request):
     nnotes = Comments.objects.filter(userID=userid, visible=False).count()
     ncomments = Comments.objects.filter(userID=userid, visible=True).count()
     nmarks = Bookmark.objects.filter(userID=userid).count()
-    return JsonResponse({'notes': nnotes, 'comments': ncomments, 'marks': nmarks})
+    nfav = Collections.objects.filter(userID=userid).count()
+    return JsonResponse({'notes': nnotes, 'comments': ncomments, 'marks': nmarks, 'collections': nfav})
 
 def getBriefInfo1(request, userid):
     nnotes = Comments.objects.filter(userID=userid, visible=False).count()
     ncomments = Comments.objects.filter(userID=userid, visible=True).count()
     nmarks = Bookmark.objects.filter(userID=userid).count()
-    return JsonResponse({'notes': nnotes, 'comments': ncomments, 'marks': nmarks})
+    nfav = Collections.objects.filter(userID=userid).count()
+    return JsonResponse({'notes': nnotes, 'comments': ncomments, 'marks': nmarks, 'collections': nfav})
