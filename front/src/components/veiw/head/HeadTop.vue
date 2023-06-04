@@ -111,7 +111,7 @@
                 <ElAvatar :src="avatar" size="large"></ElAvatar>
               </router-link>
             </div>
-            <div :style="{ opacity: popShow }" class="popuserinfo" ref="popuserinfo">
+            <div :style="{ opacity: popShow }" class="popuserinfo hidden" ref="popuserinfo">
               <popUserInfo />
             </div>
           </div>
@@ -301,6 +301,7 @@ export default {
 
 .hidden {
   visibility: hidden;
+  z-index: -100;
 }
 
 .mask {
