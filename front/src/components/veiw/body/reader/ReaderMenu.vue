@@ -156,8 +156,8 @@ export default {
       return -(this.pageWidth / 2) - 68 + 'px'
     },
     menuTop() {
-      if (this.Top < 0)
-        return "0"
+      if (this.Top < 64)
+        return "64"
       else
         return this.Top + "px"
     },
@@ -242,7 +242,7 @@ export default {
               grouping: true,
               type: 'warning',
             })
-           
+
             this.$store.commit('refresh')
             break;
           default:

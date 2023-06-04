@@ -8,9 +8,10 @@
   </div>
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+  <div class="placeholder" style="height: 64px;" v-if="holdplace"></div>
   <div class="head-top" :class="navishow ? 'slide-down' : ''" :id="navishow ? 'fixheight' : ''">
     <!-- <check-login/> -->
-    <div v-show="navishow">
+    <div v-if="navishow">
       <a class="logoa" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt="" /></a>
     </div>
     <div class="left-navi" v-if="navishow">
@@ -152,7 +153,14 @@ export default {
     ElDialog
   },
   props: {
-    navishow: Boolean,
+    navishow: {
+      type: Boolean,
+      default: true
+    },
+    holdplace: {
+      type: Boolean,
+      default: false
+    },
   },
   data() {
     return {

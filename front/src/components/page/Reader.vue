@@ -1,5 +1,5 @@
 <template>
-  <HeadTop />
+  <HeadTop :holdplace="true" />
   <ReaderBody />
   <WebFoot />
 </template>
