@@ -191,12 +191,15 @@ export default {
           case 200:
             this.mycomment = ''
             this.handleCurrentChange(1)
+            updateNum().then((res)=>{
+              this.$store.commit('updateNum',res.data)
+            })
             break;
           case 401:
             ElMessage({
               message: '用户未登录！或登录失效！请重新登录',
               grouping: true,
-              type: 'waring',
+              type: 'warning',
             })
 
             this.$store.commit('refresh')
@@ -205,7 +208,8 @@ export default {
             break;
         }
       })
-      updateNum();
+      
+      
     },
     initComments() {
       this.getComments()

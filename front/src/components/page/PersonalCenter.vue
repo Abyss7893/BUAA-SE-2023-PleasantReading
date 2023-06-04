@@ -94,13 +94,13 @@
               </el-icon>
               <span class="text">我的评论</span>
             </el-menu-item>
-            <el-menu-item class="menu-item">
+            <el-menu-item class="menu-item" @click="$router.push('/mynote')">
               <el-icon>
                 <Notebook />
               </el-icon>
-              <span class="text">我的笔记</span>
+              <span class="text" >我的笔记</span>
             </el-menu-item>
-            <el-menu-item class="menu-item">
+            <el-menu-item class="menu-item" @click="$router.push('/mark')">
               <el-icon>
                 <Flag />
               </el-icon>
@@ -187,9 +187,14 @@ export default {
       followId: "",
     });
     const isfollowid = ref([]);
-    const num=computed(()=>{
-      return store.state.num;
-    })
+    const num = computed({
+      get() {
+        return store.state.num;
+      },
+      set(value) {
+        store.commit('updateNum', value);
+      }
+    });
     
     const VIP = computed(() => {
       return store.state.isVip;

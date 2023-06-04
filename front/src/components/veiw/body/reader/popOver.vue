@@ -99,7 +99,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 ::highlight(highlight1) {
   color: #d7cb1e;
 }

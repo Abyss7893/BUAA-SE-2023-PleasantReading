@@ -19,7 +19,7 @@
       </div>
       <div class="fav">
         <div class="shelf">
-          <div class="num">{{ briefdata.comments }}</div>
+          <div class="num">{{ briefdata.collections }}</div>
           <div>收藏</div>
         </div>
         <div class="note">
@@ -70,27 +70,30 @@
 
 <script>
 import PayComponent from '@/components/page/Personal/PayComponent.vue';
-import { getBriefInfo } from '@/api/api'
+// import { getBriefInfo } from '@/api/api'
 export default {
   name: "popUserInfo",
   components: { PayComponent, },
   data() {
     return {
       pay: false,
-      briefdata: {
-        comments: 0,
-        marks: 0,
-        notes: 0
-      },
+      
     };
   },
-  created() {
-    getBriefInfo().then((data) => {
-      if (data.status && data.status == 200)
-        this.briefdata = data.data
-      else
-        console.log(data)
-    })
+
+  // created() {
+  //   briefdata=this.$store.state.num
+  //   getBriefInfo().then((data) => {
+  //     if (data.status && data.status == 200)
+  //       this.briefdata = data.data
+  //     else
+  //       console.log(data)
+  //   })
+  // },
+  computed:{
+    briefdata(){
+      return this.$store.state.num
+    }
   },
   methods: {
     jumpToVip() {

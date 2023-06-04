@@ -226,7 +226,9 @@ export default {
           }
         });
       }
-      updateNum()
+      updateNum().then((res) => {
+        this.$store.commit('updateNum', res.data)
+      })
     },
     submitRate() {
       submitRating(this.bookId, this.valueRate).then((date) => {
@@ -235,11 +237,7 @@ export default {
         }
       })
       .catch(()=>{
-        ElMessage({
-            message: '评分失败',
-            grouping: true,
-            type: 'error',
-          })
+        
       })
     },
     alertMessage() {

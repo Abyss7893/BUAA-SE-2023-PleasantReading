@@ -1,5 +1,6 @@
 
 import axios from 'axios'
+import { ElMessage } from 'element-plus';
 // import VueAxios from 'vue-axios'
 var back = "http://154.8.183.51/";
 
@@ -236,12 +237,15 @@ function submitRating(bookid, rate) {
   };
 
   return axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
+    .then(function () {
       return true;
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch(function () {
+      ElMessage({
+            message: '评分失败',
+            grouping: true,
+            type: 'error',
+          })
     });
 }
 function getMyRating(bookid) {
@@ -383,10 +387,10 @@ function getBriefInfo(uid) {
 
 }
 function updateNum(){
-  axios
+  return axios
     .get('http://154.8.183.51/book/briefinfo')
     .then((res)=>{
-      this.$store.commit('updateNum',res.data)
+      return res
     })
 }
 export {

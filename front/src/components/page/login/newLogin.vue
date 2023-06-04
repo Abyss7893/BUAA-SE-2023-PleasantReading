@@ -243,16 +243,13 @@ export default {
 
               })
               .catch(() => {
-                ElMessage({
-                  message: '账号或密码错误',
-                  grouping: true,
-                  type: 'error',
-                })
+                
               });
 
           })
           .catch(() => {
             // 处理登录错误
+            
             userLoginForm.password = userLoginForm.username = "";
             ElMessage({
               message: '账号或密码错误',
@@ -262,6 +259,7 @@ export default {
             main.value.classList.remove("disable")
           });
       } catch (_) {
+        
         // 处理错误
         userLoginForm.password = userLoginForm.username = "";
       }

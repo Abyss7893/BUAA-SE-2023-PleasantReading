@@ -151,13 +151,16 @@ export default {
           // alert("提交笔记成功!WAW")
           this.handleCurrentChange(1)
           this.mynote = ''
+          updateNum().then((res) => {
+            this.$store.commit('updateNum', res.data)
+          })
         } else if (data.response && data.response.status == 401) {
           ElMessage({
             message: '未登录不可以提交笔记哟!QAQ~',
             grouping: true,
             type: 'info',
           })
-          updateNum()
+          
         } else {
           ElMessage({
             message: '不可预知的错误发生了!提交笔记失败!TAT~',

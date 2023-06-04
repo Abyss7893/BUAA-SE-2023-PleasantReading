@@ -48,7 +48,7 @@
 </template>
 <script>
 import 'css/reader/reader.css'
-import { getBookDetiles, getBookCharpter, addBookmark, deletBookmark } from "@/api/api";
+import { getBookDetiles, getBookCharpter, addBookmark, deletBookmark ,updateNum} from "@/api/api";
 import { nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
 import popOver from './popOver.vue';
@@ -94,6 +94,9 @@ export default {
                 grouping: true,
                 type: 'success',
               })
+              updateNum().then((res)=>{
+                this.$store.commit('updateNum',res.data)
+              })
               this.chapterInfo.marked = true
               break
             case 401:
@@ -124,6 +127,9 @@ export default {
                 message: '删除书签成功！',
                 grouping: true,
                 type: 'success',
+              })
+              updateNum().then((res) => {
+                this.$store.commit('updateNum', res.data)
               })
               this.chapterInfo.marked = false
               break
