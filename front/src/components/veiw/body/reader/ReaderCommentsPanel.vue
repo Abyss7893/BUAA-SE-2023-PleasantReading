@@ -47,7 +47,7 @@
   </div>
 </template>
 <script>
-import { getBookComments, submitBookComment } from "@/api/api";
+import { getBookComments, submitBookComment,updateNum } from "@/api/api";
 import { encodeForHTML } from "@/XSS/encode"
 import PersonalInfo from "@/components/page/Personal/PersonalInfo.vue";
 import { ElMessage } from "element-plus";
@@ -205,6 +205,7 @@ export default {
             break;
         }
       })
+      updateNum();
     },
     initComments() {
       this.getComments()

@@ -137,7 +137,7 @@
 
 <script>
 import { ref } from "vue";
-import { submitRating } from "@/api/api";
+import { submitRating,updateNum } from "@/api/api";
 import {
   getBookDetiles,
   getBookContent,
@@ -204,28 +204,43 @@ export default {
         return;
       }
       var bookid = this.bookId;
-      if (!this.isColected)
+      if (!this.isColected){
         addColection(bookid).then((bool) => {
-          console.log(bool);
           if (bool) {
             this.isColected = true;
+            
+            ElMessage({
+              message: '收藏成功',
+              grouping: true,
+              type: 'success',
+            })
           }
         });
+        
+      }
+        
       else {
         deleteColection(bookid).then((bool) => {
-          console.log(bool);
           if (bool) {
             this.isColected = false;
           }
         });
       }
+      updateNum()
     },
     submitRate() {
       submitRating(this.bookId, this.valueRate).then((date) => {
         if (date) {
           this.alertMessage();
         }
-      });
+      })
+      .catch(()=>{
+        ElMessage({
+            message: '评分失败',
+            grouping: true,
+            type: 'error',
+          })
+      })
     },
     alertMessage() {
       ElMessage({

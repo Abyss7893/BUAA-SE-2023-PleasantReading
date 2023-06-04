@@ -228,6 +228,11 @@ export default {
                 // 处理错误情况
               });
             axios
+              .get('http://154.8.183.51/book/briefinfo')
+              .then((res)=>{
+                store.commit('updateNum',res.data)
+              })
+            axios
               .get(
                 `http://154.8.183.51/user/getavatar/${userLoginForm.username}`,
                 {}

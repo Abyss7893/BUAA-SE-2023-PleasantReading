@@ -49,15 +49,15 @@
           <el-divider style="width: 500px; margin: 20px 0 0 20px;"></el-divider>
           <div class="user_num">
             <div style="cursor: pointer" @click="myfan">
-              <div class="num_number">123</div>
+              <div class="num_number">{{num.collections}}</div>
               <span class="num_text">收藏</span>
             </div>
             <div style="cursor: pointer" @click="myfollow">
-              <div class="num_number">123</div>
+              <div class="num_number">{{num.marks}}</div>
               <span class="num_text">书签</span>
             </div>
             <div>
-              <div class="num_number">123</div>
+              <div class="num_number">{{num.notes}}</div>
               <span class="num_text">笔记</span>
             </div>
           </div>
@@ -187,6 +187,10 @@ export default {
       followId: "",
     });
     const isfollowid = ref([]);
+    const num=computed(()=>{
+      return store.state.num;
+    })
+    
     const VIP = computed(() => {
       return store.state.isVip;
     });
@@ -201,6 +205,7 @@ export default {
     }
     function openPayDia() {
       showPayDialog.value = true;
+      console.log(num)
     }
     function setAvatar() {
       const input = document.createElement('input');
@@ -237,6 +242,7 @@ export default {
       test,
       store,
       showMyCard,
+      num,
       signOut,
       openPayDia,
       setAvatar,

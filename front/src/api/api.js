@@ -382,7 +382,13 @@ function getBriefInfo(uid) {
   });
 
 }
-
+function updateNum(){
+  axios
+    .get('http://154.8.183.51/book/briefinfo')
+    .then((res)=>{
+      this.$store.commit('updateNum',res.data)
+    })
+}
 export {
   getBookDetiles,
   getBookContent,
@@ -398,7 +404,8 @@ export {
   deleteColection, submitRating, getMyRating, getRecent,
   getAuthor,
   getNotes, submitNote,
-  getBriefInfo, getMyBookMark, getMyNote
+  getBriefInfo, getMyBookMark, getMyNote,
+  updateNum
 }
 // 使用示例
 

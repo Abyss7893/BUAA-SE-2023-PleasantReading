@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { getNotes, submitNote } from "@/api/api";
+import { getNotes, submitNote,updateNum } from "@/api/api";
 import { encodeForHTML } from "@/XSS/encode"
 import { ElMessage } from "element-plus";
 import { mapGetters } from "vuex";
@@ -157,7 +157,7 @@ export default {
             grouping: true,
             type: 'info',
           })
-
+          updateNum()
         } else {
           ElMessage({
             message: '不可预知的错误发生了!提交笔记失败!TAT~',

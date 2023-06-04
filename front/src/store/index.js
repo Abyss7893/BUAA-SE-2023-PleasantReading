@@ -11,6 +11,11 @@ const store = createStore({
       userId: null,
       userAvatar: null,
       loginShow: false,
+      num:{
+        notes:Number,
+        marks:Number,
+        collections:Number
+      },
       userInfo: {
         username: null,
         gender: null,
@@ -125,6 +130,11 @@ const store = createStore({
     },
     setReaderSettings(state, settings) {
       state.readerSettings = settings
+    },
+    updateNum(state,num){
+      state.num.notes=num.notes
+      state.num.marks=num.marks
+      state.num.collections=num.collections
     },
     updateUserInfo(state, userInfo) {
       state.userInfo = userInfo
