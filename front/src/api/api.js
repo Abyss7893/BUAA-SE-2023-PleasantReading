@@ -327,6 +327,7 @@ function submitNote(bookid, chapter, note) {
     return data;
   });
 }
+
 function getMyBookMark() {
   var axios = require('axios');
   var token = localStorage.getItem("token")
@@ -346,11 +347,16 @@ function getMyBookMark() {
       return error
     });
 }
-function getBriefInfo() {
+function getBriefInfo(uid) {
   var token = localStorage.getItem("token")
+  var qurl;
+  if (uid)
+    qurl = `http://154.8.183.51/book/briefinfo/${uid}`
+  else
+    qurl = `http://154.8.183.51/book/briefinfo`
   return axios({
     method: 'get',
-    url: `http://154.8.183.51/book/briefinfo`,
+    url: qurl,
     headers: {
       'Authorization': `Bearer ${token}`,
     }
