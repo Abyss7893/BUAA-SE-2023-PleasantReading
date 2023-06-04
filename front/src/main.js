@@ -1,9 +1,12 @@
 import { createApp } from 'vue'
 
 import 'vue-good-table-next/dist/vue-good-table-next.css'
+import _store from 'store2'
+
 import App from './App.vue'
 import router from './route/index'
 import store from './store/index'
+_store({ initState: store.state })
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import VueGoodTablePlugin from 'vue-good-table-next';

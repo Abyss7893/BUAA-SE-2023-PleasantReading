@@ -31,7 +31,7 @@
 
 .text .chapter-title {
   font: 24px/32px PingFangSC-Regular, HelveticaNeue-Light, Helvetica Neue Light, Microsoft YaHei, "sans-serif";
-  height: 32px;
+  min-height: 32px;
   margin-bottom: 12px;
 }
 
