@@ -1,4 +1,6 @@
 import { createStore } from 'vuex'
+import _ from 'lodash'
+import _store from 'store2'
 const store = createStore({
   state() {
     return {
@@ -70,11 +72,20 @@ const store = createStore({
     // ...
   },
   mutations: {
+    resetAllState(state, payload) {
+      if (payload instanceof Array === false) { // 验证传入的是一个数组
+        return
+      }
+      const initState = _store('initState') // 取出初始值的缓存
+      const _initState = payload.length ? _.omit(initState, payload) : initState // 判断传入值有无数据，有数据剔除相对应的值
+      _.extend(state, _initState)
+    },
     showlogin(state) {
       state.loginShow = !state.loginShow
     },
     refresh(state) {
       state.isLogin = false
+      this.commit('resetAllState', ["readerSettings"])
       localStorage.clear()
     },
     changeLoginState(state) {
@@ -98,8 +109,9 @@ const store = createStore({
       state.isVIP = true
     },
     signOut(state) {
-      localStorage.clear()
       state.isLogin = false;
+      this.commit('resetAllState', ["readerSettings"])
+      localStorage.clear()
     },
     setUser(state, userId) {
       state.userId = userId;
@@ -115,7 +127,6 @@ const store = createStore({
       state.readerSettings = settings
     },
     updateUserInfo(state, userInfo) {
-      console.log(userInfo)
       state.userInfo = userInfo
       state.isLogin = true
     },
