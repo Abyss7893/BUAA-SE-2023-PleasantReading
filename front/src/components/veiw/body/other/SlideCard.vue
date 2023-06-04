@@ -1,7 +1,9 @@
 <template>
   <div>
     <div>
-      <h1 class="quote" style="text-align: center">最近阅读</h1>
+      <h1 class="quote" style="text-align: center; position: relative">
+        最近阅读
+      </h1>
       <div style="min-height: 400px">
         <transition name="el-zoom-in-center">
           <div v-if="isshow">
