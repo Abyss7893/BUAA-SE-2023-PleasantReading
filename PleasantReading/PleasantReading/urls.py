@@ -49,6 +49,7 @@ urlpatterns = [
     path('book/score/<int:bookid>/', bookApi.getScore),
     path('book/score/<int:bookid>/<str:score>', bookApi.putScore),
     path('book/marks/', bookApi.getMarks),
+    path('book/marks/<int:bookid>/', bookApi.getMarks1),
     path('book/lastVisit/', bookApi.getLastVisit),
     path('book/notes/', bookApi.getAllNotes),
     path('book/comments/', bookApi.getAllComments),

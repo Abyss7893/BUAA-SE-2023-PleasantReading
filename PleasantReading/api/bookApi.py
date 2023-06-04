@@ -392,8 +392,90 @@ def getMarks(request):
     subquery = BookContext.objects.filter(bookID=OuterRef('bookID'), chapter=OuterRef('chapter')).values('title')[:1]
     marks = marks.annotate(title=Subquery(subquery.values('title')))
     marks = marks.values('bookID', 'name', 'chapter', 'title', 'img', 'timestamp')
-    return JsonResponse({'marks': list(marks)})
+    result = []
+    for item in marks:
+        book_id = str(item['bookID'])
+        name = item['name']
+        img = item['img']
 
+        existing_item = next((x for x in result if x['bookid'] == book_id), None)
+        if existing_item:
+            chapter = item['chapter']
+            title = item['title']
+            timestamp = item['timestamp']
+            mark = {
+                'chapter': chapter,
+                'title': title,
+                'timestamp': timestamp
+            }
+            existing_item['marks'].append(mark)
+        else:
+            marks = []
+            chapter = item['chapter']
+            title = item['title']
+            timestamp = item['timestamp']
+            mark = {
+                'chapter': chapter,
+                'title': title,
+                'timestamp': timestamp
+            }
+            marks.append(mark)
+
+            info = {
+                'bookid': book_id,
+                'name': name,
+                'img': img,
+                'marks': marks
+            }
+            result.append(info)
+    return JsonResponse({'markinfo': result})
+
+def getMarks1(request, bookid):
+    if not notAnonymous(request):
+        return JsonResponse({'message': 'login please'}, status=401)
+    userid = getUsername(request)
+    marks = Bookmark.objects.filter(userID=userid, bookID=bookid)
+    subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name', 'img')[:1]
+    marks = marks.annotate(name=Subquery(subquery.values('name')), img=Subquery(subquery.values('img')))
+    subquery = BookContext.objects.filter(bookID=OuterRef('bookID'), chapter=OuterRef('chapter')).values('title')[:1]
+    marks = marks.annotate(title=Subquery(subquery.values('title')))
+    marks = marks.values('bookID', 'name', 'chapter', 'title', 'img', 'timestamp')
+    result = {}
+    for item in marks:
+        book_id = str(item['bookID'])
+        name = item['name']
+        img = item['img']
+
+        if result != {}:
+            chapter = item['chapter']
+            title = item['title']
+            timestamp = item['timestamp']
+            mark = {
+                'chapter': chapter,
+                'title': title,
+                'timestamp': timestamp
+            }
+            result['marks'].append(mark)
+        else:
+            marks = []
+            chapter = item['chapter']
+            title = item['title']
+            timestamp = item['timestamp']
+            mark = {
+                'chapter': chapter,
+                'title': title,
+                'timestamp': timestamp
+            }
+            marks.append(mark)
+
+            info = {
+                'bookid': book_id,
+                'name': name,
+                'img': img,
+                'marks': marks
+            }
+            result = info
+    return JsonResponse({'markinfo': result})
 
 def getLastVisit(request):
     if not notAnonymous(request):
