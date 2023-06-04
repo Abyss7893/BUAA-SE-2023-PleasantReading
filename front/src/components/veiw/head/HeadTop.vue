@@ -8,10 +8,21 @@
   </div>
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
-  <div class="head-top">
+  <div class="head-top" :class="navishow ? 'slide-down' : ''" :id="navishow ? 'fixheight' : ''">
     <!-- <check-login/> -->
-    <div>
+    <div v-show="navishow">
       <a class="logoa" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt="" /></a>
+    </div>
+    <div class="left-navi" v-if="navishow">
+      <li navi-id="1">
+        <a href="#">首页</a>
+      </li>
+      <li navi-id="2">
+        <a href="#">全部作品</a>
+      </li>
+      <li navi-id="3">
+        <a href="#">作品排行</a>
+      </li>
     </div>
     <div class="dropdown">
       <div class="search">
@@ -21,7 +32,7 @@
             fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
               d="M8 14.75C11.7279 14.75 14.75 11.7279 14.75 8C14.75 4.27208 11.7279 1.25 8 1.25C4.27208 1.25 1.25 4.27208 1.25 8C1.25 11.7279 4.27208 14.75 8 14.75ZM9.64999 5.64303C9.84525 5.44777 10.1618 5.44777 10.3571 5.64303C10.5524 5.83829 10.5524 6.15487 10.3571 6.35014L8.70718 8.00005L10.3571 9.64997C10.5524 9.84523 10.5524 10.1618 10.3571 10.3571C10.1618 10.5523 9.84525 10.5523 9.64999 10.3571L8.00007 8.70716L6.35016 10.3571C6.15489 10.5523 5.83831 10.5523 5.64305 10.3571C5.44779 10.1618 5.44779 9.84523 5.64305 9.64997L7.29296 8.00005L5.64305 6.35014C5.44779 6.15487 5.44779 5.83829 5.64305 5.64303C5.83831 5.44777 6.15489 5.44777 6.35016 5.64303L8.00007 7.29294L9.64999 5.64303Z"
-              fill="#ff7575"></path>
+              fill="#fff"></path>
           </svg>
           <div class="proshake">
             <a @click="searchBooks">
@@ -37,72 +48,85 @@
         }}</div>
       </div>
     </div>
-    <div class="login-register">
-      <template v-if="!isLogin">
-        <div class="avatar">
-          <el-popover trigger="hover" :show-arrow=false transition="el-zoom-in-top" width="480">
-            <div class="logininfo">登录后你可以</div>
-            <div class="login-pri">
-              <li><svg t="1685433487956" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                  xmlns="http://www.w3.org/2000/svg" p-id="2670" width="24" height="24">
-                  <path
-                    d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32z m-40 656H184V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v584z"
-                    p-id="2671" fill="#ed4259"></path>
-                  <path
-                    d="M639.5 414h-45c-3 0-5.8 1.7-7.1 4.4L514 563.8h-2.8l-73.4-145.4c-1.4-2.7-4.1-4.4-7.1-4.4h-46c-1.3 0-2.7 0.3-3.8 1-3.9 2.1-5.3 7-3.2 10.9l89.3 164h-48.6c-4.4 0-8 3.6-8 8v21.3c0 4.4 3.6 8 8 8h65.1v33.7h-65.1c-4.4 0-8 3.6-8 8v21.3c0 4.4 3.6 8 8 8h65.1V752c0 4.4 3.6 8 8 8h41.3c4.4 0 8-3.6 8-8v-53.8h65.4c4.4 0 8-3.6 8-8v-21.3c0-4.4-3.6-8-8-8h-65.4v-33.7h65.4c4.4 0 8-3.6 8-8v-21.3c0-4.4-3.6-8-8-8h-49.1l89.3-164.1c0.6-1.2 1-2.5 1-3.8 0.1-4.4-3.4-8-7.9-8z"
-                    p-id="2672" fill="#ed4259"></path>
-                </svg>免费阅读大量书籍</li>
-              <li><svg t="1685433539490" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                  xmlns="http://www.w3.org/2000/svg" p-id="3810" width="24" height="24">
-                  <path d="M192 320l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3811"></path>
-                  <path d="M320 320l448 0 0 64-448 0 0-64Z" fill="#ed4259" p-id="3812"></path>
-                  <path d="M192 512l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3813"></path>
-                  <path d="M320 512l448 0 0 64-448 0 0-64Z" fill="#ed4259" p-id="3814"></path>
-                  <path d="M192 704l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3815"></path>
-                  <path d="M320 704l448 0 0 64-448 0 0-64Z" fill="#ed4259" p-id="3816"></path>
-                  <path d="M320 64l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3817"></path>
-                  <path
-                    d="M832 75.776l0 65.984C872.64 161.152 896 200.704 896 256l0 576c0 66.688-45.312 128-128 128L192 960c-61.312 0-128-64-128-128L64 256c0-46.592 25.6-87.872 64-110.272L128 75.776C53.568 102.208 0 172.544 0 256l0 576c0 106.048 85.952 192 192 192l576 0c106.048 0 192-85.952 192-192L960 256C960 172.544 906.432 102.208 832 75.776z"
-                    fill="#ed4259" p-id="3818"></path>
-                  <path d="M576 64l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3819"></path>
-                  <path d="M192 0l64 0 0 192-64 0 0-192Z" fill="#ed4259" p-id="3820"></path>
-                  <path d="M448 0l64 0 0 192-64 0 0-192Z" fill="#ed4259" p-id="3821"></path>
-                  <path d="M704 0l64 0 0 192-64 0 0-192Z" fill="#ed4259" p-id="3822"></path>
-                </svg>发表评论/记录笔记</li>
-              <li><svg t="1685433591589" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                  xmlns="http://www.w3.org/2000/svg" p-id="4934" width="24" height="24">
-                  <path
-                    d="M282.766507 610.432L100.494507 401.92 370.361173 340.48 512.014507 102.656l141.610666 237.909333 269.824 61.397334-182.272 208.512 27.306667 300.757333a42.666667 42.666667 0 0 0 84.992-7.722667l-24.021333-264.405333 174.634666-199.722667c38.144-43.648 19.2-102.229333-37.418666-115.114666l-258.474667-58.794667-135.68-228.010667c-29.738667-49.877333-91.306667-49.92-121.045333 0L315.74784 265.429333 57.273173 324.224C0.953173 337.066667-18.33216 395.648 19.854507 439.338667l174.634666 199.722666-24.021333 264.405334c-5.248 57.770667 44.544 94.037333 97.877333 71.125333l260.48-111.786667a42.666667 42.666667 0 1 0-33.706666-78.378666L257.721173 886.314667l25.045334-275.882667z"
-                    fill="#ed4259" p-id="4935"></path>
-                </svg>收藏喜欢的图书</li>
-              <li><svg t="1685433451224" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                  xmlns="http://www.w3.org/2000/svg" p-id="1480" width="24" height="24">
-                  <path
-                    d="M748.739048 352.865524c-32.743619-40.496762-29.915429 86.893714-68.169143 67.462095-38.253714-19.431619-27.087238-285.891048-259.169524-354.230857-92.769524-27.306667 36.766476 218.35581-104.374857 331.751619-141.165714 113.371429-340.845714 359.765333 113.615238 562.151619 0 0-235.398095-269.409524 68.144762-427.227429 69.632-36.205714-22.723048 89.941333 90.89219 179.882667 113.615238 89.965714 0 247.344762 0 247.344762s516.291048-165.059048 159.061334-607.134476z"
-                    p-id="1481" fill="#ed4259"></path>
-                </svg>热门书籍看不停</li>
+    <div class="right-navi" :id="navishow ? 'fixmargin' : ''">
+      <div class="login-register">
+        <template v-if="!isLogin">
+          <div class="avatar">
+            <el-popover trigger="hover" :show-arrow=false transition="el-zoom-in-top" width="480">
+              <div class="logininfo">登录后你可以</div>
+              <div class="login-pri">
+                <li><svg t="1685433487956" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="2670" width="24" height="24">
+                    <path
+                      d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32z m-40 656H184V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v584z"
+                      p-id="2671" fill="#ed4259"></path>
+                    <path
+                      d="M639.5 414h-45c-3 0-5.8 1.7-7.1 4.4L514 563.8h-2.8l-73.4-145.4c-1.4-2.7-4.1-4.4-7.1-4.4h-46c-1.3 0-2.7 0.3-3.8 1-3.9 2.1-5.3 7-3.2 10.9l89.3 164h-48.6c-4.4 0-8 3.6-8 8v21.3c0 4.4 3.6 8 8 8h65.1v33.7h-65.1c-4.4 0-8 3.6-8 8v21.3c0 4.4 3.6 8 8 8h65.1V752c0 4.4 3.6 8 8 8h41.3c4.4 0 8-3.6 8-8v-53.8h65.4c4.4 0 8-3.6 8-8v-21.3c0-4.4-3.6-8-8-8h-65.4v-33.7h65.4c4.4 0 8-3.6 8-8v-21.3c0-4.4-3.6-8-8-8h-49.1l89.3-164.1c0.6-1.2 1-2.5 1-3.8 0.1-4.4-3.4-8-7.9-8z"
+                      p-id="2672" fill="#ed4259"></path>
+                  </svg>免费阅读大量书籍</li>
+                <li><svg t="1685433539490" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="3810" width="24" height="24">
+                    <path d="M192 320l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3811"></path>
+                    <path d="M320 320l448 0 0 64-448 0 0-64Z" fill="#ed4259" p-id="3812"></path>
+                    <path d="M192 512l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3813"></path>
+                    <path d="M320 512l448 0 0 64-448 0 0-64Z" fill="#ed4259" p-id="3814"></path>
+                    <path d="M192 704l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3815"></path>
+                    <path d="M320 704l448 0 0 64-448 0 0-64Z" fill="#ed4259" p-id="3816"></path>
+                    <path d="M320 64l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3817"></path>
+                    <path
+                      d="M832 75.776l0 65.984C872.64 161.152 896 200.704 896 256l0 576c0 66.688-45.312 128-128 128L192 960c-61.312 0-128-64-128-128L64 256c0-46.592 25.6-87.872 64-110.272L128 75.776C53.568 102.208 0 172.544 0 256l0 576c0 106.048 85.952 192 192 192l576 0c106.048 0 192-85.952 192-192L960 256C960 172.544 906.432 102.208 832 75.776z"
+                      fill="#ed4259" p-id="3818"></path>
+                    <path d="M576 64l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3819"></path>
+                    <path d="M192 0l64 0 0 192-64 0 0-192Z" fill="#ed4259" p-id="3820"></path>
+                    <path d="M448 0l64 0 0 192-64 0 0-192Z" fill="#ed4259" p-id="3821"></path>
+                    <path d="M704 0l64 0 0 192-64 0 0-192Z" fill="#ed4259" p-id="3822"></path>
+                  </svg>发表评论/记录笔记</li>
+                <li><svg t="1685433591589" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="4934" width="24" height="24">
+                    <path
+                      d="M282.766507 610.432L100.494507 401.92 370.361173 340.48 512.014507 102.656l141.610666 237.909333 269.824 61.397334-182.272 208.512 27.306667 300.757333a42.666667 42.666667 0 0 0 84.992-7.722667l-24.021333-264.405333 174.634666-199.722667c38.144-43.648 19.2-102.229333-37.418666-115.114666l-258.474667-58.794667-135.68-228.010667c-29.738667-49.877333-91.306667-49.92-121.045333 0L315.74784 265.429333 57.273173 324.224C0.953173 337.066667-18.33216 395.648 19.854507 439.338667l174.634666 199.722666-24.021333 264.405334c-5.248 57.770667 44.544 94.037333 97.877333 71.125333l260.48-111.786667a42.666667 42.666667 0 1 0-33.706666-78.378666L257.721173 886.314667l25.045334-275.882667z"
+                      fill="#ed4259" p-id="4935"></path>
+                  </svg>收藏喜欢的图书</li>
+                <li><svg t="1685433451224" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="1480" width="24" height="24">
+                    <path
+                      d="M748.739048 352.865524c-32.743619-40.496762-29.915429 86.893714-68.169143 67.462095-38.253714-19.431619-27.087238-285.891048-259.169524-354.230857-92.769524-27.306667 36.766476 218.35581-104.374857 331.751619-141.165714 113.371429-340.845714 359.765333 113.615238 562.151619 0 0-235.398095-269.409524 68.144762-427.227429 69.632-36.205714-22.723048 89.941333 90.89219 179.882667 113.615238 89.965714 0 247.344762 0 247.344762s516.291048-165.059048 159.061334-607.134476z"
+                      p-id="1481" fill="#ed4259"></path>
+                  </svg>热门书籍看不停</li>
+              </div>
+              <el-button class="login-button" type="primary" color="#f33f3f" @click="showLoginblock">立即登录</el-button>
+              <div class="register"><span>首次使用?<a @click="showRegister">点我注册</a></span></div>
+              <template #reference>
+                <ElAvatar class="login-avatar" size="large"><span @click="showLoginblock">登录</span></ElAvatar>
+              </template>
+            </el-popover>
+          </div>
+        </template>
+        <template v-else>
+          <div class="avatar" @mouseleave="popleave">
+            <!-- <ElDropdown trigger="click"> -->
+            <div class="edavatar" ref="edavatar" @mouseenter="popover">
+              <router-link to="/user/info">
+                <ElAvatar :src="avatar" size="large"></ElAvatar>
+              </router-link>
             </div>
-            <el-button class="login-button" type="primary" color="#f33f3f" @click="showLoginblock">立即登录</el-button>
-            <div class="register"><span>首次使用?<a @click="showRegister">点我注册</a></span></div>
-            <template #reference>
-              <ElAvatar class="login-avatar" size="large"><span @click="showLoginblock">登录</span></ElAvatar>
-            </template>
-          </el-popover>
-        </div>
-      </template>
-      <template v-else>
-        <div class="avatar" @mouseleave="popleave">
-          <!-- <ElDropdown trigger="click"> -->
-          <div class="edavatar" ref="edavatar" @mouseenter="popover">
-            <router-link to="/user/info">
-              <ElAvatar :src="avatar" size="large"></ElAvatar>
-            </router-link>
+            <div :style="{ opacity: popShow }" class="popuserinfo" ref="popuserinfo">
+              <popUserInfo />
+            </div>
           </div>
-          <div :style="{ opacity: popShow }" class="popuserinfo" ref="popuserinfo">
-            <popUserInfo />
-          </div>
-        </div>
-      </template>
+        </template>
+      </div>
+      <ul v-if="navishow">
+        <li navi-id="4">
+          <a href="#">我的书签</a>
+        </li>
+        <li navi-id="5">
+          <a href="#">我的书架</a>
+        </li>
+        <li navi-id="6">
+          <a href="#">我的笔记</a>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -127,6 +151,9 @@ export default {
     newLogin,
     ElDialog
   },
+  props: {
+    navishow: Boolean,
+  },
   data() {
     return {
       searchHots: ["青春北航男童不会梦到清华女学长", "重生之我在北航卖西瓜", "飘飘何所似", "红楼梦", "杨过"],
@@ -135,7 +162,6 @@ export default {
       showLogin: false,
       popShow: 0,
       throttling1: false,
-
     }
   },
   computed: {
@@ -219,6 +245,45 @@ export default {
 }
 </script>
 <style >
+#fixheight {
+  height: 64px;
+}
+
+#fixheight .search {
+  margin: 0 0 0 12px;
+}
+
+#fixheight .dropdown {
+  margin: 0;
+}
+
+.dropdown {
+  margin: 0 36px 0 236px;
+}
+
+.slide-down {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  min-width: 1200px;
+  z-index: 200;
+  background-color: #f5f5f5;
+  animation: headerSlideDown .3s linear forwards;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+}
+
+@keyframes headerSlideDown {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .mycardlogin {
   z-index: 1000;
   background-color: transparent;
@@ -267,7 +332,7 @@ export default {
 }
 
 .shell input::placeholder {
-  color: #8f36367e;
+  color: #eee8e8cb;
 }
 
 .shell a {
@@ -286,7 +351,9 @@ export default {
   transition: .3s;
 }
 
-
+.head-top .dropdown {
+  display: block;
+}
 
 .shell a .fa-search {
   transform: translateX(-20px);
@@ -346,8 +413,14 @@ export default {
   }
 }
 
+.clear path {
+  position: relative;
+  top: 2px;
+  transition: fill .3s;
+}
+
 .clear:hover path {
-  fill: #f33f3f;
+  fill: #f8b2b2eb;
 }
 
 .login-avatar {
@@ -443,5 +516,61 @@ export default {
 .proeffect .el-dialog__headerbtn:focus .el-dialog__close,
 .proeffect .el-dialog__headerbtn:hover .el-dialog__close {
   color: #f56c6c !important;
+}
+
+.left-navi,
+.right-navi {
+  display: flex;
+  justify-content: center;
+  width: 300px;
+  /* height: 55px; */
+}
+
+
+.head-top .right-navi#fixmargin {
+  width: 480px;
+}
+
+.head-top .right-navi#fixmargin .login-register {
+  margin: 0 12px 0 48px;
+}
+
+.head-top .right-navi#fixmargin ul {
+  display: flex;
+  margin-right: 110px;
+}
+
+.left-navi a,
+.right-navi ul li>a {
+  width: 64px;
+  display: flex;
+  justify-content: center;
+  line-height: 56px;
+  height: 56px;
+  /* color: #fff; */
+  font-size: 16px;
+  font-weight: 300;
+  cursor: pointer;
+  margin: 0;
+  padding: 0 12px;
+}
+
+.left-navi a:hover,
+.right-navi a:hover {
+  animation: jump .3s;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 </style>

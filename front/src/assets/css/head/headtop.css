@@ -1,10 +1,15 @@
 /* 网页头部样式 / / 网页头部顶侧 */
 .head-top {
+  position: absolute;
+  min-width: 1200px;
+  width: 100%;
+  z-index: 10;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 10px;
-  background-color: #f5f5f5;
+  padding: 12px;
+  animation: fadeIn .5s;
+  box-sizing: border-box;
 }
 
 /* .head-top .logoa {
@@ -30,8 +35,9 @@
 .head-top .login-register {
   width: 132px;
   display: flex;
+  float: left;
   align-items: center;
-  margin-right: 180px;
+  margin-right: 80px;
 }
 
 
@@ -45,7 +51,6 @@
 }
 
 .dropdown {
-
   position: relative;
   display: inline-block;
 }

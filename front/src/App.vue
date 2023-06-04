@@ -1,7 +1,7 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                                                                  <LoginComponent /> -->
+                                                                          <LoginComponent /> -->
   <div id="app">
     <RouterView :key="$route.fullPath"></RouterView>
   </div>
@@ -37,6 +37,13 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-style: normal;
+  font-family: 'Harmony_Regular';
+  /*引入HarmonyOS_Sans_SC，目录别搞错*/
+  src: url('~assets/fonts/HarmonyOS_Sans_SC_Regular.ttf') format('truetype');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -51,6 +58,10 @@ export default {
   /* user-select: none; */
   /* 标准语法，其他浏览器需要 */
 
+}
+
+body {
+  font-family: 'Harmony_Regular', sans-serif !important;
 }
 
 a,
