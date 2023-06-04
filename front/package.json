@@ -20,6 +20,7 @@
     "typeit": "^8.7.1",
     "undraw-ui": "^0.9.6",
     "vue": "^3.2.13",
+    "vue-good-table-next": "^0.2.1",
     "vue-router": "^4.2.0",
     "vue-typed-js": "^0.1.2",
     "vue3typed": "^0.1.5",
