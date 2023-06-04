@@ -273,9 +273,6 @@ export default {
         } else { console.log("没有提交过评分") }
 
       }
-
-
-
       );
     },
     formatNumber(number) {

@@ -12,7 +12,7 @@
         <h3
           @click="
             () => {
-              this.$router.push({ path: '/book/' + book.bookID });
+              this.$router.push({ path: '/book/' + book.bookid });
             }
           "
         >
@@ -20,7 +20,22 @@
         </h3>
         <!-- </router-link> -->
         <!-- <router-link :to="'/reader/' + book.bookID + '/' + book.chapter"> -->
-        <p
+        <ul>
+          <li
+            v-for="chapter in book.marks"
+            :key="chapter.chapter"
+            @click="
+              () => {
+                this.$router.push({
+                  path: '/reader/' + book.bookid + '/' + chapter.chapter,
+                });
+              }
+            "
+          >
+            {{ chapter.title }}
+          </li>
+        </ul>
+        <!-- <p
           @click="
             () => {
               this.$router.push({
@@ -29,8 +44,10 @@
             }
           "
         >
-          {{ book.title }}ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-        </p>
+          {{
+            book.title
+          }}ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+        </p> -->
         <!-- </router-link> -->
       </div>
     </div>
@@ -42,21 +59,6 @@ export default {
   props: {
     book: Object,
   },
-  // props: {
-  //   book: {
-  //     type: Object,
-  //     required: true,
-  //     default: () => {
-  //       return {
-  //         img: ".jpg",
-  //         name: "book.name",
-  //         title: "book.title",
-  //         bookID: 1,
-  //         chapter: 1,
-  //       };
-  //     },
-  //   },
-  // },
   data() {
     return {};
   },
@@ -98,7 +100,6 @@ export default {
   /* overflow: hidden; */
   overflow: scroll;
   transition: 0.5s;
-  
 }
 ::-webkit-scrollbar {
   width: 0;
@@ -190,6 +191,28 @@ export default {
   text-decoration: none;
   font-weight: 500;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.content ul li {
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  white-space: normal;
+  /* max-height: 200px; */
+  white-space: normal;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-size: 1em;
+  color: #fff;
+  font-weight: 300;
+  border-radius: 4px;
+  transition: all 0.5s;
+}
+.content ul li:hover {
+  background: rgba(4, 4, 75, 0.178);
 }
 </style>
 

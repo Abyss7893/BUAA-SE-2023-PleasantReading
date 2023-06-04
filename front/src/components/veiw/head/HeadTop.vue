@@ -111,7 +111,7 @@
                 <ElAvatar :src="avatar" size="large"></ElAvatar>
               </router-link>
             </div>
-            <div :style="{ opacity: popShow }" class="popuserinfo" ref="popuserinfo">
+            <div :style="{ opacity: popShow }" class="popuserinfo hidden" ref="popuserinfo">
               <popUserInfo />
             </div>
           </div>
@@ -258,10 +258,6 @@ export default {
   height: 64px;
 }
 
-#fixheight .search {
-  margin: 0 0 0 12px;
-}
-
 #fixheight .dropdown {
   margin: 0;
 }
@@ -301,6 +297,7 @@ export default {
 
 .hidden {
   visibility: hidden;
+  z-index: -100;
 }
 
 .mask {
