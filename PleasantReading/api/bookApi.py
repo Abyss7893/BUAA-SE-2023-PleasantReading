@@ -239,7 +239,11 @@ def getAllNotes(request):
     notes = notes.annotate(
         name=Subquery(subquery.values('name'))
     )
-    notes = notes.values('bookID', 'name', 'chapter', 'text', 'timestamp')
+    subquery = BookContext.objects.filter(bookID=OuterRef('bookID'), chapter=OuterRef('chapter')).values('title')[:1]
+    notes = notes.annotate(
+        title=Subquery(subquery.values('title'))
+    )
+    notes = notes.values('bookID', 'name', 'chapter', 'text', 'timestamp', 'title')
     return JsonResponse({'notes': list(notes)})
 
 def getAllComments(request):
@@ -253,7 +257,11 @@ def getAllComments(request):
     notes = notes.annotate(
         name=Subquery(subquery.values('name'))
     )
-    notes = notes.values('bookID', 'name', 'chapter', 'text', 'timestamp')
+    subquery = BookContext.objects.filter(bookID=OuterRef('bookID'), chapter=OuterRef('chapter')).values('title')[:1]
+    notes = notes.annotate(
+        title=Subquery(subquery.values('title'))
+    )
+    notes = notes.values('bookID', 'name', 'chapter', 'text', 'timestamp', 'title')
     return JsonResponse({'comments': list(notes)})
 
 
