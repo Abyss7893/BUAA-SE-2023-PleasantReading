@@ -10,6 +10,7 @@ _store({ initState: store.state })
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import VueGoodTablePlugin from 'vue-good-table-next';
+import hovercss from 'hover.css';
 
 // import loginState from './store/loginState'
 import axios from 'axios'
@@ -49,6 +50,6 @@ app.use(ElementPlus)
 app.use(router)
 app.use(store)
 app.use(VueGoodTablePlugin)
-
+app.use(hovercss);
 app.mount('#app')
 

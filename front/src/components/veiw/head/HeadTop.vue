@@ -12,7 +12,7 @@
   <div class="head-top" :class="navishow ? 'slide-down' : ''" :id="navishow ? 'fixheight' : ''">
     <!-- <check-login/> -->
     <div v-if="navishow">
-      <a class="logoa" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt="" /></a>
+      <a class="logoa hvr-buzz-out" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt="" /></a>
     </div>
     <div class="left-navi" v-if="navishow">
       <li navi-id="1">

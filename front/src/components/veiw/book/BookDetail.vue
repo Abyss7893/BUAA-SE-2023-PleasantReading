@@ -12,7 +12,11 @@
                 <h1 class="book-name flex-view">
                   {{ detailData.title }}
                   <span>
-                    <a :href="'/author/' + detailData.author" class="author-name">{{ detailData.author }}著</a>
+                    <a
+                      :href="'/author/' + detailData.author"
+                      class="author-name"
+                      >{{ detailData.author }}著</a
+                    >
                   </span>
                 </h1>
                 <!-- <el-divider></el-divider> -->
@@ -32,7 +36,11 @@
                 <div class="translators flex-view" style="">
                   <span class="rate-text">评分：</span>
                   <span class="name rate-text">{{ detailData.rating }}</span>
-                  <el-rate v-model="detailData.rating" style="--el-rate-fill-color: #ff7d7dc9" :disabled="true"></el-rate>
+                  <el-rate
+                    v-model="detailData.rating"
+                    style="--el-rate-fill-color: #ff7d7dc9"
+                    :disabled="true"
+                  ></el-rate>
                   <!-- <span class="name">{{ detailData.size }}</span> -->
                 </div>
 
@@ -42,13 +50,18 @@
                 </div> -->
                 <div class="translators flex-view" style="">
                   <span>简介：</span>
-                  <span class="name">{{ detailData.intro }}</span>
+                  <span class="name animate__fadeInDown">{{
+                    detailData.intro
+                  }}</span>
                 </div>
               </div>
             </div>
 
             <div class="book-counts hidden-sm">
-              <div class="count-item flex-view pointer" @click="gotoRead()">
+              <div
+                class="count-item flex-view pointer hvr-bounce-to-right"
+                @click="gotoRead()"
+              >
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">开始阅读</span>
@@ -58,15 +71,23 @@
                   </div>
                 </div>
               </div>
-              <div v-if="!isColected" class="count-item flex-view pointer" @click="collect()">
+              <div
+                v-if="!isColected"
+                class="count-item flex-view pointer"
+                @click="collect()"
+              >
                 <div class="count-box flex-view">
-                  <div class="count-text-box">
+                  <div class="count-text-box hvr-bounce-to-right">
                     <span class="count-title">收藏</span>
                   </div>
                 </div>
               </div>
-              <div v-if="isColected" class="count-item flex-view pointer" @click="collect()">
-                <div class="count-box flex-view">
+              <div
+                v-if="isColected"
+                class="count-item flex-view pointer"
+                @click="collect()"
+              >
+                <div class="count-box flex-view hvr-bounce-to-right">
                   <div class="count-text-box">
                     <span class="count-title">已收藏</span>
                   </div>
@@ -79,25 +100,45 @@
                   </div>
                 </div>
               </div> -->
-              <div class="count-item flex-view pointer" @click="showRate = !showRate">
-                <div class="count-box flex-view">
+              <div
+                class="count-item flex-view pointer"
+                @click="showRate = !showRate"
+              >
+                <div class="count-box flex-view hvr-bounce-to-right">
                   <div class="count-text-box">
                     <span class="count-title">评分</span>
                   </div>
                 </div>
               </div>
-              <div v-if="showRate" class="translators flex-view" style="flex-direction: column">
-                <!-- <span class="rate-text">评分：</span> -->
-                <!-- <span class="name rate-text">{{ detailData.rating }}</span> -->
-                <div class="rate-loyar">
-                  <el-rate v-model="valueRate" allow-half style="--el-rate-fill-color: #ff7d7dc9"
-                    :texts="['shit', '厕纸', '一般', '好好好', '神中神']" show-text></el-rate>
+              <transition name="el-fade-in">
+                <div
+                  v-if="showRate"
+                  class="animate__fadeInDown animate__fadeOutDown translators flex-view"
+                  style="flex-direction: column"
+                >
+                  <!-- <span class="rate-text">评分：</span> -->
+                  <!-- <span class="name rate-text">{{ detailData.rating }}</span> -->
+                  <div class="rate-loyar">
+                    <el-rate
+                      v-model="valueRate"
+                      allow-half
+                      style="--el-rate-fill-color: #ff7d7dc9"
+                      :texts="['shit', '厕纸', '一般', '好好好', '神中神']"
+                      show-text
+                    ></el-rate>
+                  </div>
+                  <div>
+                    <el-button
+                      type="danger"
+                      plain
+                      size="small"
+                      @click="submitRate"
+                      >提交</el-button
+                    >
+                  </div>
+                  <!-- <span class="name">{{ detailData.size }}</span> -->
                 </div>
-                <div>
-                  <el-button type="danger" plain size="small" @click="submitRate">提交</el-button>
-                </div>
-                <!-- <span class="name">{{ detailData.size }}</span> -->
-              </div>
+              </transition>
             </div>
           </div>
         </div>
@@ -106,18 +147,36 @@
         <div v-show="isContent">
           <el-divider>
             目录
-            <el-icon v-show="Order" @click="changeOrder" style="--color: #315c9e">
+            <el-icon
+              v-show="Order"
+              @click="changeOrder"
+              style="--color: #315c9e"
+            >
               <SortDown />
             </el-icon>
-            <el-icon v-show="!Order" @click="changeOrder" style="--color: #315c9e">
+            <el-icon
+              v-show="!Order"
+              @click="changeOrder"
+              style="--color: #315c9e"
+            >
               <SortUp />
             </el-icon>
           </el-divider>
 
           <div class="novel-directory">
-            <div v-for="(row, index) in rows" :key="index" class="directory-row">
+            <div
+              v-for="(row, index) in rows"
+              :key="index"
+              class="directory-row"
+            >
               <!-- <a href="#"> -->
-              <div v-for="chapter in row" :key="chapter.id" class="chapter-title" @click="gotoReadChapter(chapter.id)">
+              <div
+                v-for="chapter in row"
+                :key="chapter.id"
+                class="chapter-title"
+                @click="gotoReadChapter(chapter.id)"
+                style="cursor: pointer"
+              >
                 {{ chapter.title }}
               </div>
               <!-- </a> -->
@@ -137,7 +196,7 @@
 
 <script>
 import { ref } from "vue";
-import { submitRating,updateNum } from "@/api/api";
+import { submitRating, updateNum } from "@/api/api";
 import {
   getBookDetiles,
   getBookContent,
@@ -200,26 +259,23 @@ export default {
   methods: {
     collect() {
       if (!this.$store.state.isLogin) {
-        ElMessage.warning("用户未登录，请先登录在收藏哦QAQ~")
+        ElMessage.warning("用户未登录，请先登录在收藏哦QAQ~");
         return;
       }
       var bookid = this.bookId;
-      if (!this.isColected){
+      if (!this.isColected) {
         addColection(bookid).then((bool) => {
           if (bool) {
             this.isColected = true;
-            
+
             ElMessage({
-              message: '收藏成功',
+              message: "收藏成功",
               grouping: true,
-              type: 'success',
-            })
+              type: "success",
+            });
           }
         });
-        
-      }
-        
-      else {
+      } else {
         deleteColection(bookid).then((bool) => {
           if (bool) {
             this.isColected = false;
@@ -227,18 +283,17 @@ export default {
         });
       }
       updateNum().then((res) => {
-        this.$store.commit('updateNum', res.data)
-      })
+        this.$store.commit("updateNum", res.data);
+      });
     },
     submitRate() {
-      submitRating(this.bookId, this.valueRate).then((date) => {
-        if (date) {
-          this.alertMessage();
-        }
-      })
-      .catch(()=>{
-        
-      })
+      submitRating(this.bookId, this.valueRate)
+        .then((date) => {
+          if (date) {
+            this.alertMessage();
+          }
+        })
+        .catch(() => {});
     },
     alertMessage() {
       ElMessage({
@@ -270,10 +325,10 @@ export default {
         if (response.status == 200) {
           if (response.data.message === "success")
             this.valueRate = parseFloat(response.data.score);
-        } else { console.log("没有提交过评分") }
-
-      }
-      );
+        } else {
+          console.log("没有提交过评分");
+        }
+      });
     },
     formatNumber(number) {
       if (number >= 100000) {
@@ -574,8 +629,9 @@ export default {
   }
 
   .count-box {
+    // border-radius: 0 13px 13px 13px;
     position: relative;
-    border-bottom: 1px solid #cedce4;
+  
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -589,14 +645,15 @@ export default {
     height: 100%;
   }
 
-  .count-box:hover {
-    border-bottom: 3px solid #f73f1152;
-  }
+  // .count-box:hover {
+  //   border-bottom: 3px solid #f73f1152;
+  // }
 
   .count-text-box {
     font-size: 0;
 
     .count-title {
+      margin-left: 13px;
       color: #152844;
       font-weight: 600;
       font-size: 16px;
@@ -842,7 +899,9 @@ export default {
 .flex-view {
   display: flex;
 }
-
+.detail-content-top {
+  min-height: 389px;
+}
 .book-comment {
   .title {
     font-weight: 600;
@@ -1045,5 +1104,60 @@ export default {
 
 .chapter-title:hover {
   background-color: rgba(249, 26, 26, 0.144);
+}
+</style>
+
+<style scoped>
+.hvr-bounce-to-right {
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.5s;
+  border-radius: 13px;
+  transition-duration: 0.5s;
+}
+
+.hvr-bounce-to-right:before {
+  content: "";
+  border-radius: 13px;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f23d3d1a;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+
+.hvr-bounce-to-right:hover,
+.hvr-bounce-to-right:focus,
+.hvr-bounce-to-right:active {
+  border-radius: 13px;
+  color: white;
+  border-bottom: 1px solid #cedce4;
+}
+
+.hvr-bounce-to-right:hover:before,
+.hvr-bounce-to-right:focus:before,
+.hvr-bounce-to-right:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+  border-radius: 13px;
+  -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
 }
 </style>

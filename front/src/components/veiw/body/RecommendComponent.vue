@@ -6,7 +6,7 @@
         style="line-height: 150%"
         trigger="click"
       >
-        <span class="demonstration">
+        <span class="demonstration" style="cursor: pointer">
           {{ cod
           }}<el-icon class="el-icon--right">
             <arrow-down /><i class="arrow-down"></i

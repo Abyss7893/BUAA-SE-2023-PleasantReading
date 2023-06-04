@@ -9,6 +9,7 @@
         ref="firstli"
         @mouseout="slideAway"
         @click="storeNavi"
+        class="hvr-bounce-in"
       >
         <a href="#">首页</a>
       </li>
@@ -17,6 +18,7 @@
         @mouseover="slideHere"
         @mouseout="slideAway"
         @click="storeNavi"
+        class="hvr-bounce-in"
       >
         <a href="#">全部作品</a>
       </li>
@@ -25,6 +27,7 @@
         @mouseover="slideHere"
         @mouseout="slideAway"
         @click="storeNavi"
+        class="hvr-bounce-in"
       >
         <a href="#">作品排行</a>
       </li>
@@ -33,6 +36,7 @@
         @mouseover="slideHere"
         @mouseout="slideAway"
         @click="storeNavi"
+        class="hvr-bounce-in"
       >
         <a href="#">我的书签</a>
       </li>
@@ -42,6 +46,7 @@
         @mouseover="slideHere"
         @mouseout="slideAway"
         @click="storeNavi"
+        class="hvr-bounce-in"
       >
         <a href="#">我的书架</a>
       </li>
@@ -51,6 +56,7 @@
         @mouseover="slideHere"
         @mouseout="slideAway"
         @click="storeNavi"
+        class="hvr-bounce-in"
       >
         <a href="#">我的笔记</a>
       </li>
