@@ -129,6 +129,7 @@
         </li>
       </ul>
     </div>
+    <div v-if="navishow" style="width: 100px;height: 10px;"></div>
   </div>
 </template>
 
