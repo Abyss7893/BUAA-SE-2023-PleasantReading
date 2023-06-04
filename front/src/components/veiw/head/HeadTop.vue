@@ -258,10 +258,6 @@ export default {
   height: 64px;
 }
 
-#fixheight .search {
-  margin: 0 0 0 12px;
-}
-
 #fixheight .dropdown {
   margin: 0;
 }
