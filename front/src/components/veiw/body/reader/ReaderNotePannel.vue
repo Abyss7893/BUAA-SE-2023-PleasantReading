@@ -9,7 +9,8 @@
         <div class="note-box" v-if="this.notes.length != 0">
           <ul>
             <li v-for="(note, idx) in this.notes" :key="idx">
-              {{ note }}
+              <div class="time">{{ parseTime(note.timestamp) }}</div>
+              {{ note.text }}
             </li>
           </ul>
           <el-pagination small hide-on-single-page layout="prev, pager, next" :total="this.pages * 5" :page-size="5"
@@ -86,8 +87,7 @@
 </template>
 
 <script>
-import { getNotes, submitNote,updateNum } from "@/api/api";
-import { encodeForHTML } from "@/XSS/encode"
+import { getNotes, submitNote, updateNum } from "@/api/api";
 import { ElMessage } from "element-plus";
 import { mapGetters } from "vuex";
 export default {
@@ -95,7 +95,7 @@ export default {
   components: {},
   data() {
     return {
-      notes: ["这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。", "这本书很好看，我看到第三章了。",],
+      notes: [],
       thisPage: 1,
       pages: 1,
       mynote: "",
@@ -121,14 +121,20 @@ export default {
     }
   },
   methods: {
+    parseTime(time) {
+      var date = new Date(time);
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      var hour = date.getHours();
+      var minute = date.getMinutes();
+      return year + "年" + month + "月" + day + "日" + hour + "时" + minute + "分"
+    },
     handleCurrentChange(val) {
       this.thisPage = val
       getNotes(this.$route.params.bookid, this.$route.params.chapter, val).then((data) => {
         if (data.status && data.status == 200) {
-          this.notes = []
-          data.data.notes.forEach(note => {
-            this.notes.push(encodeForHTML(note))
-          });
+          this.notes = data.data.notes
           this.pages = parseInt(data.data.pages)
         }
         else
@@ -160,7 +166,7 @@ export default {
             grouping: true,
             type: 'info',
           })
-          
+
         } else {
           ElMessage({
             message: '不可预知的错误发生了!提交笔记失败!TAT~',
@@ -244,7 +250,13 @@ export default {
 }
 
 .elbutton:hover {
+  color: #fff;
   border-color: #f37e7e;
   background-color: #ed5050;
+}
+
+.note-box li .time {
+  font-size: 12px;
+  margin-bottom: 4px;
 }
 </style>

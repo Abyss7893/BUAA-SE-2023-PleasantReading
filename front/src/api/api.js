@@ -242,10 +242,10 @@ function submitRating(bookid, rate) {
     })
     .catch(function () {
       ElMessage({
-            message: '评分失败',
-            grouping: true,
-            type: 'error',
-          })
+        message: '评分失败',
+        grouping: true,
+        type: 'error',
+      })
     });
 }
 function getMyRating(bookid) {
@@ -386,12 +386,24 @@ function getBriefInfo(uid) {
   });
 
 }
-function updateNum(){
+function updateNum() {
   return axios
     .get('http://154.8.183.51/book/briefinfo')
-    .then((res)=>{
+    .then((res) => {
       return res
     })
+}
+function getbookMarks(bookid) {
+  var token = localStorage.getItem("token")
+  return axios({
+    method: 'get',
+    url: `http://154.8.183.51/book/marks/${bookid}`,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    }
+  }).catch(function (data) {
+    return data;
+  });
 }
 export {
   getBookDetiles,
@@ -399,9 +411,9 @@ export {
   getBookList,
   getBookCharpter,
   getBookComments,
-  addBookmark,
   getMyBook,
-  deletBookmark, addColection,
+  addBookmark, deletBookmark, getbookMarks,
+  addColection,
   submitBookComment,
   addBookToFavor,
   getSearchBookIds,
@@ -409,7 +421,7 @@ export {
   getAuthor,
   getNotes, submitNote,
   getBriefInfo, getMyBookMark, getMyNote,
-  updateNum
+  updateNum,
 }
 // 使用示例
 

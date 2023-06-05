@@ -49,8 +49,8 @@
         :key="book"
         class="text item"
       >
-        <router-link :to="{ path: 'book/' + booklist[index+1].id }">
-          <div class="book-item-list">
+        <router-link :to="{ path: 'book/' + booklist[index + 1].id }">
+          <div class="book-item-list hvr-backward">
             <span> No.{{ index + 2 }}:{{ book.name }}</span>
           </div>
         </router-link>
@@ -81,18 +81,16 @@ export default {
 
     
 <style scoped>
-.book-item-list{
+.book-item-list {
   width: 90%;
-  padding-left:4px ;
-  margin-right:-3px ;
-
-  
+  padding-left: 4px;
+  margin-right: -3px;
+  transition: all 0.5s;
 }
-.book-item-list:hover{
+.book-item-list:hover {
   /* background-color:red; */
-  border-bottom:solid rgba(255, 0, 0, 0.263) 1px ;
-  border-left:solid rgba(255, 0, 0, 0.263) 1px ;
-
+  border-bottom: solid rgba(255, 0, 0, 0.263) 1px;
+  border-left: solid rgba(255, 0, 0, 0.263) 1px;
 }
 .other-books {
   margin-top: -20px;

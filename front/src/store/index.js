@@ -28,13 +28,13 @@ const store = createStore({
       themes: [
         {
           "name": "默认",
-          "color": "hsla(40,60%,95%,.8)",
+          "color": "rgba(250, 245, 235, 0.8)",
           "bg1": require('assets/imgs/readerbcg/default/body.png'),
           "bg2": require('assets/imgs/readerbcg/default/basic.png'),
         },
         {
           "name": "牛皮纸",
-          "color": "hsla(44,67%,88%,.8)",
+          "color": "rgba(245, 234, 204, 0.8)",
           "bg1": require('assets/imgs/readerbcg/lightyellow/body.png'),
           "bg2": require('assets/imgs/readerbcg/lightyellow/basic.png'),
         },
@@ -52,9 +52,15 @@ const store = createStore({
         },
         {
           "name": "淡粉色",
-          "color": "hsla(0,46%,93%,.8)",
+          "color": "rgba(245, 229, 229, 0.8)",
           "bg1": require('assets/imgs/readerbcg/lightpink/body.png'),
           "bg2": require('assets/imgs/readerbcg/lightpink/basic.png'),
+        },
+        {
+          "name": "黑色",
+          "color": "#000",
+          "bg1": require('assets/imgs/readerbcg/dark/base.png'),
+          "bg2": require('assets/imgs/readerbcg/dark/base.png'),
         },
       ],
       readerSettings: [{
@@ -73,7 +79,8 @@ const store = createStore({
   getters: {
     tempAvatar: state => state.tempAvatar,
     islogin: state => state.isLogin,
-    loginshow: state => state.loginShow
+    loginshow: state => state.loginShow,
+    markupdate: state => state.num.marks
     // ...
   },
   mutations: {

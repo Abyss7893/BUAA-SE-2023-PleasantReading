@@ -11,6 +11,19 @@
               d="M695.1 455.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM695.1 578.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM695.1 701.2H341.2c-17.9 0-32.4-14.5-32.4-32.4s14.5-32.4 32.4-32.4h353.9c17.9 0 32.4 14.5 32.4 32.4s-14.5 32.4-32.4 32.4zM379.1 281.1c-17.9 0-32.4-14.5-32.4-32.4V115.4c0-17.9 14.5-32.4 32.4-32.4s32.4 14.5 32.4 32.4v133.2c0 17.9-14.5 32.5-32.4 32.5zM657.1 281.1c-17.9 0-32.4-14.5-32.4-32.4V115.4c0-17.9 14.5-32.4 32.4-32.4s32.4 14.5 32.4 32.4v133.2c0 17.9-14.5 32.5-32.4 32.5z"
               fill="#262626" p-id="41512"></path>
           </svg><span>图书目录</span></a></dd>
+      <dd :class="isMarkAct"><a @click="changeMark"><svg t="1685968229100" class="icon" viewBox="0 0 1024 1024"
+            version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2437" width="16" height="16">
+            <path
+              d="M860.636279 5.215256v665.171349H294.983442c-32.910884 0-60.058791 25.576186-62.082977 57.248744l-0.11907 3.810232v30.291349c0 32.148837 25.861953 58.963349 58.296558 60.963721l3.905489 0.142884h171.246139v59.534884h-171.222325c-61.725767 0-113.116279-45.984744-120.784372-105.257675l-0.571535-5.501023H173.246512V156.100465C173.246512 74.775814 238.853953 8.168186 320.178605 5.310512l5.477209-0.095256H860.636279z m-59.558698 59.51107l-475.445581 0.023814c-49.485395 0-90.254884 38.721488-92.731535 86.68279l-0.11907 4.667535-0.023814 471.802047 0.904931-0.547721a121.641674 121.641674 0 0 1 56.20093-16.384l5.12-0.11907H801.101395V64.726326z"
+              fill="#262626" p-id="2438"></path>
+            <path
+              d="M860.636279 822.843535v59.534884H547.673302v-59.534884zM341.015814 37.673674v600.111628h-59.534884v-600.111628z"
+              fill="#262626" p-id="2439"></path>
+            <path
+              d="M471.802047 747.63907v162.45879l36.840186-24.123534 36.864 24.123534v-162.45879h59.534883v272.669767l-96.398883-63.178418-96.37507 63.178418v-272.669767z"
+              fill="#262626" p-id="2440"></path>
+            <path d="M861.231628 703.964279v59.534884H280.480744v-59.534884z" fill="#262626" p-id="2441"></path>
+          </svg><span>图书书签</span></a></dd>
       <dd><a @click="addToFavor"><svg t="1684569110214" class="icon" viewBox="0 0 1024 1024" version="1.1"
             xmlns="http://www.w3.org/2000/svg" p-id="32295">
             <path
@@ -68,6 +81,8 @@
     <ReaderSettingsPanel ref="child1" :style="{ display: settingsDisplay }" />
     <ReaderCommentsPanel ref="child3" :style="{ display: commentsDisplay }" />
     <ReaderNotePannel ref="child4" :style="{ display: noteDisplay }" />
+    <ReaderMarkPanel ref="child5" :style="{ display: markDisplay }" />
+
   </div>
 </template>
 <script>
@@ -76,6 +91,7 @@ import ReaderSettingsPanel from './ReaderSettingsPanel.vue';
 import ReaderCatalogPanel from './ReaderCatalogPanel.vue';
 import ReaderCommentsPanel from './ReaderCommentsPanel.vue';
 import ReaderNotePannel from './ReaderNotePannel.vue';
+import ReaderMarkPanel from './ReaderMarkPanel.vue'
 import { addBookToFavor } from "@/api/api";
 import { ElMessage } from 'element-plus';
 export default {
@@ -85,6 +101,7 @@ export default {
     ReaderCatalogPanel,
     ReaderCommentsPanel,
     ReaderNotePannel,
+    ReaderMarkPanel,
   },
   data() {
     return {
@@ -94,6 +111,7 @@ export default {
       catalogExist: false,
       commentsExist: false,
       noteExist: false,
+      markExist: false,
     }
   },
   mounted() {
@@ -128,6 +146,11 @@ export default {
         return "act"
       return null
     },
+    isMarkAct() {
+      if (this.markExist)
+        return "act"
+      return null
+    },
     settingsDisplay() {
       if (this.settingsExist)
         return "block"
@@ -152,6 +175,12 @@ export default {
       else
         return "none"
     },
+    markDisplay() {
+      if (this.markExist)
+        return "block"
+      else
+        return "none"
+    },
     menuLoc() {
       return -(this.pageWidth / 2) - 68 + 'px'
     },
@@ -167,10 +196,12 @@ export default {
       this.Top = document.getElementsByClassName("center-box")[0].getBoundingClientRect().top;
     },
     panelInit() {
+      this.$refs.child1.cancelSettings()
       this.settingsExist = false
       this.catalogExist = false
       this.commentsExist = false
       this.noteExist = false
+      this.markExist = false
     },
     changeVisiable(pannelName) {
       switch (pannelName) {
@@ -185,6 +216,9 @@ export default {
           break
         case "note":
           this.noteExist = !this.noteExist
+          break
+        case "mark":
+          this.markExist = !this.markExist
           break
         default:
           break;
@@ -225,6 +259,14 @@ export default {
         this.panelInit()
       }
     },
+    changeMark() {
+      if (!this.markExist) {
+        this.panelInit()
+        this.changeVisiable("mark")
+      } else {
+        this.panelInit()
+      }
+    },
     addToFavor() {
       addBookToFavor(this.$route.params.bookid).then((data) => {
         const code = data.request.status
@@ -242,10 +284,14 @@ export default {
               grouping: true,
               type: 'warning',
             })
-
             this.$store.commit('refresh')
             break;
           default:
+            ElMessage({
+              message: '书籍已经加入书架了！',
+              grouping: true,
+              type: 'warning',
+            })
             break;
         }
       })
