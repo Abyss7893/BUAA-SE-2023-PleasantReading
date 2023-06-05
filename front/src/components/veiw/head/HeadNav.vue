@@ -47,7 +47,7 @@
         @mouseout="slideAway"
         @click="storeNavi"
         class="hvr-bounce-in"
-      >
+      > 
         <a href="#">我的书架</a>
       </li>
       <!-- </router-link> -->
