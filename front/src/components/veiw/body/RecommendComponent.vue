@@ -169,7 +169,7 @@ export default {
 .block-col-2 .demonstration {
   display: inline-block;
   /* 将 display 属性改为 inline-block */
-  color: rgb(0, 0, 0);
+  color: rgb(255, 253, 253);
   font-size: 14px;
   margin-bottom: 20px;
   cursor: pointer;
