@@ -28,11 +28,13 @@
         }"
         ref="startComponentRef"
       >
-        <img
-          src="../../../assets/logo-yixinyuedu.png"
-          class="start-image"
-          style="position: relative; margin-top: 4%"
-        />
+        <div style="width:  30%;min-height: 16%;margin-top: 3%; align-items: center; position: relative">
+          <img
+            src="../../../assets/logo-yixinyuedu.png"
+            class="start-image"
+            style="position: relative; margin: auto;"
+          />
+        </div>
         <div style="height: 15%">
           <div class="hello-user" style="position: relative">
             <div class="content">
@@ -253,17 +255,18 @@ export default {
 
 <style scoped>
 .start-image {
-  max-width: 32%;
+  max-width: 100%;
   /* backdrop-filter: blur(3px) invert(5%); */
   /* border-radius: 30px; */
   /* box-shadow:inset(0.5, 0.5, 0.5, 0 ); */
   /* border: solid rgba(212, 184, 6, 0.164) 1px; */
   transition: all 0.5s;
+  margin-bottom: 2%;
 }
 
 .start-image:hover {
   scale: 1.1;
-  max-width: 32%;
+  /* max-width: 32%; */
   backdrop-filter: blur(3px) invert(5%);
   border-radius: 30px;
   /* box-shadow:inset(0.5, 0.5, 0.5, 0 ); */
