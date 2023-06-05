@@ -48,16 +48,16 @@
           </div>
           <el-divider style="width: 500px; margin: 20px 0 0 20px;"></el-divider>
           <div class="user_num">
-            <div style="cursor: pointer" @click="myfan">
+            <div class="collections"  @click="$router.push('/mybook')">
               <div class="num_number">{{num.collections}}</div>
               <span class="num_text">收藏</span>
             </div>
-            <div style="cursor: pointer" @click="myfollow">
+            <div class="mark"  @click="$router.push('/mark')">
               <div class="num_number">{{num.marks}}</div>
               <span class="num_text">书签</span>
             </div>
-            <div>
-              <div class="num_number">{{num.notes}}</div>
+            <div class="note" @click="$router.push('/mynote')">
+              <div class="num_number" >{{num.notes}}</div>
               <span class="num_text">笔记</span>
             </div>
           </div>
@@ -406,7 +406,7 @@ export default {
 
 .icon {
   width: 18px;
-  margin-left: 3px;
+  margin-left: 0px;
   margin-right: 10px;
 }
 
@@ -447,13 +447,34 @@ export default {
   color: #333;
 }
 
-.user_num {
+
+.user_num .collections:hover,
+.user_num .note:hover,
+.user_num .mark:hover {
+  color: #f8b2b27d;
+  cursor: pointer;
+}
+
+.user_num .collections:hover .num_number,
+.user_num .note:hover .num_number,
+.user_num .mark:hover .num_number {
+  color: #f8b2b27d;
+  cursor: pointer;
+}
+.user_num .collections:hover .num_text,
+.user_num .note:hover .num_text,
+.user_num .mark:hover .num_text {
+  color: #f8b2b27d;
+  cursor: pointer;
+}
+.user_num{
   width: 200px;
   height: 100px;
   margin: -50px 0 0 20px;
   display: flex;
   align-items: center;
 }
+
 
 .user_num>div {
   text-align: center;

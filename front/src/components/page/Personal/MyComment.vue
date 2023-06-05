@@ -4,6 +4,9 @@
       <h4 class="lang">评论</h4>
       <div class="comments-box">
         <ul v-infinite-scroll="load">
+          <el-empty image-size="300" description="还没有评论过哦"
+      image="https://www.hqjy.com/_nuxt/img/no_content.7448e1c.png"
+    />
           <li v-for="(comment, commentId) in this.comments.slice(0, this.commentsNum)" :key="commentId">
             <div class="comment-avatar">
               <img :src="this.$store.state.userAvatar" alt="">
