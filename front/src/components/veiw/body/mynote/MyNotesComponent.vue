@@ -22,7 +22,7 @@
             class="btn twinkle"
             @click="
               () => {
-                this.$store.commit('changeShowLogin');
+                this.$store.commit('showlogin');
               }
             "
           >

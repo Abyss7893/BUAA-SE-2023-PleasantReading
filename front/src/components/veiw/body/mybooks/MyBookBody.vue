@@ -18,7 +18,16 @@
             align-items: center;
           "
         >
-          <div class="btn twinkle">登录</div>
+          <div
+            class="btn twinkle"
+            @click="
+              () => {
+                this.$store.commit('showlogin');
+              }
+            "
+          >
+            登录
+          </div>
         </div>
       </div>
       <div v-else>
@@ -119,4 +128,46 @@ export default {
 // 引入 css
 @import url(../../../../assets/css/mybooks/mybook.css);
 </style>
-  
+<style>
+.btn {
+  width: 170px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  letter-spacing: 1rem;
+  text-indent: 1rem;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+.twinkle {
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid #b36161;
+  color: #b36161;
+  transition: background-color 0.2s;
+}
+
+.twinkle::before {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 200%;
+  background-color: rgba(255, 255, 255, 0.6);
+  transform: skew(45deg) translate3d(-200px, 0, 0);
+}
+
+.twinkle:hover {
+  background-color: #bd6363;
+  color: #ffffff;
+}
+
+.twinkle:hover::before {
+  transition: ease-in-out 0.5s;
+  transform: skew(45deg) translate3d(300px, 0, 0);
+}
+</style>

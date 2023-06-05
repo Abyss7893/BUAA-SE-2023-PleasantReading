@@ -49,7 +49,7 @@
         :key="book"
         class="text item"
       >
-        <router-link :to="{ path: 'book/' + booklist[0].id }">
+        <router-link :to="{ path: 'book/' + booklist[index+1].id }">
           <div class="book-item-list">
             <span> No.{{ index + 2 }}:{{ book.name }}</span>
           </div>
