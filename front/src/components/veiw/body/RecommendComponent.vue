@@ -169,7 +169,7 @@ export default {
 .block-col-2 .demonstration {
   display: inline-block;
   /* 将 display 属性改为 inline-block */
-  color: rgb(255, 247, 247);
+  color: rgb(0, 0, 0);
   font-size: 14px;
   margin-bottom: 20px;
   cursor: pointer;
@@ -183,7 +183,7 @@ export default {
 
 .rank-dropdown-menu {
   --el-dropdown-menuItem-hover-fill: rgb(255, 132, 132);
-  --el-dropdown-menuItem-hover-color: white;
+  --el-dropdown-menuItem-hover-color: rgb(255, 132, 132);
 }
 </style>
 <style >
@@ -209,7 +209,7 @@ export default {
   left: calc(50% - 10px);
   bottom: 0;
   border-width: 10px 10px 0 10px;
-  border-color: rgb(255, 132, 132) transparent transparent transparent;
+  border-color: rgb(255, 132, 132) transparent transparent transparent !important;
 }
 
 .hvr-bubble-bottom:hover:before,
