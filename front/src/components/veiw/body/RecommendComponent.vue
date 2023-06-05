@@ -6,7 +6,7 @@
         style="line-height: 150%"
         trigger="click"
       >
-        <span class="demonstration" style="cursor: pointer">
+        <span class="demonstration hvr-bubble-bottom">
           {{ cod
           }}<el-icon class="el-icon--right">
             <arrow-down /><i class="arrow-down"></i
@@ -169,13 +169,53 @@ export default {
 .block-col-2 .demonstration {
   display: inline-block;
   /* 将 display 属性改为 inline-block */
-  color: var(--el-text-color-secondary);
+  color: rgb(255, 247, 247);
   font-size: 14px;
   margin-bottom: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 20px;
+  padding: 3px;
+  border: solid rgb(255, 132, 132) 2px;
+  border-radius: 5px;
+  background-color: rgb(255, 132, 132);
 }
 
 .rank-dropdown-menu {
-  --el-dropdown-menuItem-hover-fill: #f56c6c;
+  --el-dropdown-menuItem-hover-fill: rgb(255, 132, 132);
   --el-dropdown-menuItem-hover-color: white;
+}
+</style>
+<style >
+.hvr-bubble-bottom {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+}
+
+.hvr-bubble-bottom:before {
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  content: "";
+  border-style: solid;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  left: calc(50% - 10px);
+  bottom: 0;
+  border-width: 10px 10px 0 10px;
+  border-color: rgb(255, 132, 132) transparent transparent transparent;
+}
+
+.hvr-bubble-bottom:hover:before,
+.hvr-bubble-bottom:focus:before,
+.hvr-bubble-bottom:active:before {
+  -webkit-transform: translateY(10px);
+  transform: translateY(10px);
 }
 </style>

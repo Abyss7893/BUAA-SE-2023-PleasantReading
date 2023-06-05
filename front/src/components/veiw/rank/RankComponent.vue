@@ -6,7 +6,7 @@
     <el-space direction="vertical" alignment="start" :size="30">
       <el-row style="width: 100%" gutter="30">
         <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="collectionlist" title="收藏总榜"></rank-card>
+          <rank-card :booklist="collectionlist"  title="收藏总榜"></rank-card>
         </el-col>
         <el-col span="8" style="max-width: 30%">
           <rank-card :booklist="ratelist" title="好评总榜"></rank-card>
