@@ -1,9 +1,9 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                                                                          <LoginComponent /> -->
+                                                                              <LoginComponent /> -->
   <div id="app">
-    <RouterView :key="$route.fullPath"></RouterView>
+    <RouterView :key="$route.fullPath" prefetch></RouterView>
   </div>
 </template>
 

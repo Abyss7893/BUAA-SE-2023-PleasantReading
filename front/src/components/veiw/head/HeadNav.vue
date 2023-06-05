@@ -3,62 +3,24 @@
   <div class="head-nav">
     <ul>
       <div class="slider"></div>
-      <li
-        navi-id="1"
-        @mouseover="slideHere"
-        ref="firstli"
-        @mouseout="slideAway"
-        @click="storeNavi"
-        class="hvr-bounce-in"
-      >
-        <a href="#">首页</a>
+      <li navi-id="1" @mouseover="slideHere" ref="firstli" @mouseout="slideAway">
+        <router-link to="/">首页</router-link>
       </li>
-      <li
-        navi-id="2"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-        class="hvr-bounce-in"
-      >
-        <a href="#">全部作品</a>
+      <li navi-id="2" @mouseover="slideHere" @mouseout="slideAway">
+        <router-link to="/allbook">全部作品</router-link>
       </li>
-      <li
-        navi-id="3"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-        class="hvr-bounce-in"
-      >
-        <a href="#">作品排行</a>
+      <li navi-id="3" @mouseover="slideHere" @mouseout="slideAway">
+        <router-link to="/rank">作品排行</router-link>
       </li>
-      <li
-        navi-id="4"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-        class="hvr-bounce-in"
-      >
-        <a href="#">我的书签</a>
+      <li navi-id="4" @mouseover="slideHere" @mouseout="slideAway">
+        <router-link to="/mark">我的书签</router-link>
       </li>
-      <!-- <router-link :to="{ name: 'mybook' }"> -->
-      <li
-        navi-id="5"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-        class="hvr-bounce-in"
-      >
-        <a href="#">我的书架</a>
+      <li navi-id="5" @mouseover="slideHere" @mouseout="slideAway">
+        <router-link to="/mybook">我的书架</router-link>
       </li>
       <!-- </router-link> -->
-      <li
-        navi-id="6"
-        @mouseover="slideHere"
-        @mouseout="slideAway"
-        @click="storeNavi"
-        class="hvr-bounce-in"
-      >
-        <a href="#">我的笔记</a>
+      <li navi-id="6" @mouseover="slideHere" @mouseout="slideAway">
+        <router-link to="/mynote">我的笔记</router-link>
       </li>
     </ul>
   </div>
@@ -152,31 +114,6 @@ export default {
       } else {
         this.slider.style.visibility = "hidden";
         this.slider.style.opacity = 0;
-      }
-    },
-    storeNavi(event) {
-      const id = event.target.parentNode.getAttribute("navi-id");
-      this.naviLoccation = document
-        .querySelector(`li[navi-id="${id}"]`)
-        .getBoundingClientRect();
-      if (id === "1") {
-        this.$router.push({ name: "home" });
-      }
-      if (id === "2") {
-        this.$router.push({ name: "allbook" });
-      }
-      if (id === "3") {
-        this.$router.push({ name: "rank" });
-      }
-
-      if (id === "5") {
-        this.$router.push({ name: "mybook" });
-      }
-      if (id === "4") {
-        this.$router.push({ name: "mark" });
-      }
-      if (id === "6") {
-        this.$router.push({ name: "note" });
       }
     },
   },

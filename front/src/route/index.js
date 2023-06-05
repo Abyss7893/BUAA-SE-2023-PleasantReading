@@ -1,22 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import Home from 'components/page/Home'
-// const newLoginComponent = () => import('../components/page/login/newLogin')
-// const RegisterComponent = () => import('../components/page/login/RegisterComponent')
-const BookDetail = () => import('../components/veiw/book/BookDetail')
-const PersonalCenter = () => import('../components/page/PersonalCenter')
-const InfoComponent = () => import('../components/page/Personal/InfoComponent')
-const Reader = () => import('components/page/Reader')
-const MyBookBody = () => import('../components/veiw/body/mybooks/MyBookBody')
-const RankBody = () => import('../components/veiw/rank/RankBody')
-const MyComment = () => import('../components/page/Personal/MyComment')
+
+const MyBookBody = () => import(/* webpackChunkName: "my-book-body" */ '../components/veiw/body/mybooks/MyBookBody' /* webpackPrefetch: true */)
+const RankBody = () => import(/* webpackChunkName: "rank-body" */ '../components/veiw/rank/RankBody' /* webpackPrefetch: true */)
+const MyComment = () => import(/* webpackChunkName: "my-comment" */ '../components/page/Personal/MyComment' /* webpackPrefetch: true */)
 // const Home = () => import('components/page/Home')
-const AllBook = () => import('../components/veiw/body/AllBook')
-const MyMarkBody = () => import('../components/veiw/body/mymark/MyMarkBody')
-const Search = () => import('../components/page/Search')
-const Author = () => import('components/page/Author')
-const MyNote = () => import('../components/veiw/body/mynote/MyNotesComponent')
-import 'css/home.css'
+const AllBook = () => import(/* webpackChunkName: "all-book" */ '../components/veiw/body/AllBook' /* webpackPrefetch: true */)
+const MyMarkBody = () => import(/* webpackChunkName: "my-mark-body" */ '../components/veiw/body/mymark/MyMarkBody' /* webpackPrefetch: true */)
+const Search = () => import(/* webpackChunkName: "search" */ '../components/page/Search' /* webpackPrefetch: true */)
+const Author = () => import(/* webpackChunkName: "author" */ 'components/page/Author' /* webpackPrefetch: true */)
+const BookDetail = () => import(/* webpackChunkName: "book-detail" */ '../components/veiw/book/BookDetail' /* webpackPrefetch: true */)
+const PersonalCenter = () => import(/* webpackChunkName: "personal-center" */ '../components/page/PersonalCenter' /* webpackPrefetch: true */)
+const InfoComponent = () => import(/* webpackChunkName: "info-component" */ '../components/page/Personal/InfoComponent' /* webpackPrefetch: true */)
+const Reader = () => import(/* webpackChunkName: "reader" */ 'components/page/Reader' /* webpackPrefetch: true */)
+const MyNote = () => import(/* webpackChunkName: "my-note" */ '../components/veiw/body/mynote/MyNotesComponent' /* webpackPrefetch: true */)
+// import 'css/home.css'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -25,9 +24,6 @@ const router = createRouter({
       name: 'home',
       component: Home,
     },
-    // { path: '/login', component: newLoginComponent },
-    // { path:'/test',name:'test',component:HelloWorld},
-    // { path: '/register', component: RegisterComponent },
     {
       path: '/book/:id',
       name: 'book-detail',
@@ -126,16 +122,10 @@ router.beforeEach((to, from, next) => {
   }
   // 如果token过期了
   if (token && flag) {
-    // if (to.path == '/login') return next()
-    // 注意要import element的Message组件
     ElMessage.error("用户登录过期，请重新登录")
-    localStorage.clear()
-    // return next('/login')
-    // 如果token没有过期，又是选择了登录页面就直接重定向到首页，不需要重新输入账户密码
+    this.$store.commit("signOut")
+
   }
-  // else if (to.path == '/login') {
-  //   return next('/home/ks')
-  // }
   next()
 })
 export default router

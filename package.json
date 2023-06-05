@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "dayjs": "^1.11.8",
-    "vue-good-table-next": "^0.2.1"
-  }
-}
