@@ -3,7 +3,7 @@
     <!-- <check-login></check-login> -->
     <!-- <el-space direction="vertical" alignment="start" :size="30"> -->
     <div class="box-center" style="width: 1400px">
-      <el-divider />
+      <!-- <el-divider /> -->
       <vue-good-table :columns="columns" :rows="rows" theme="black-rhino" :pagination-options="{
         enabled: true,
         mode: 'pages',

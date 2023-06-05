@@ -161,7 +161,7 @@
 }
 
 .reader-menu .panel-box .close-panel-button .close-panel-button-icon {
-  transition: .5s;
+  transition: transform .5s, color .5s;
 }
 
 .reader-menu .panel-box .close-panel-button .close-panel-button-icon:hover {
@@ -197,6 +197,7 @@
 .reader-menu .panel .button {
   padding: 36px 0 0;
   text-align: center;
+  cursor: pointer;
 }
 
 .reader-menu .panel .button a {
@@ -255,6 +256,8 @@
 }
 
 .reader-menu .setting .setting-list li.theme-list span .icon {
+  position: relative;
+  z-index: -1;
   margin-top: 10px;
 }
 
@@ -266,8 +269,8 @@
   color: #ed4259;
 }
 
-.reader-menu .setting .setting-list li.theme-list span.act .icon path {
-  fill: #ed4259;
+.reader-menu .setting .setting-list li.theme-list span.act .icon {
+  z-index: 0;
 }
 
 .reader-menu dd.act {

@@ -14,7 +14,7 @@
                 p-id="1460" width="16" height="16">
                 <path
                   d="M1439.080665 18.734797a66.336804 66.336804 0 0 0-93.766391 1.361753l-818.024224 842.341234-413.389174-425.499045a66.336804 66.336804 0 0 0-95.176778 92.404639l460.75871 474.473504a66.336804 66.336804 0 0 0 95.176778 0l865.685564-891.364327a66.28817 66.28817 0 0 0-1.361753-93.766392z"
-                  p-id="1461" :fill=theme.color></path>
+                  p-id="1461" fill="#ed4259"></path>
               </svg></span>
           </li>
           <li class="font-list"><i>正文字体</i><span :class="actFont === 'yahei' ? 'act' : ''"
@@ -93,6 +93,10 @@ export default {
   },
   methods: {
     setTheme(themeName) {
+      if (themeName == "黑色")
+        document.body.classList.add('dark')
+      else
+        document.body.classList.remove('dark')
       // set class 'act'
       const spans = document.querySelectorAll('.theme-list span[title]'); // 获取所有具有title属性的span元素
       spans.forEach(span => {
@@ -117,7 +121,7 @@ export default {
       text.style.backgroundImage = `url(${this.theme.bg2})`;
       chapterControl.style.backgroundImage = `url(${this.theme.bg2})`;
       for (let index = 0; index < panels.length; index++) {
-        panels[index].style.backgroundColor = this.theme.color
+        panels[index].style.backgroundImage = `url(${this.theme.bg2})`
       }
       this.ddList.forEach(dd => {
         dd.style.backgroundImage = `url(${this.theme.bg2})`;
@@ -135,6 +139,10 @@ export default {
       });
     },
     changeAct(themeName) {
+      if (!this.theme)
+        this.theme = this.themes[0]
+      if (themeName == this.theme.name)
+        return
       this.undoAct(this.setTheme(themeName).name)
     },
     setFont(font) {

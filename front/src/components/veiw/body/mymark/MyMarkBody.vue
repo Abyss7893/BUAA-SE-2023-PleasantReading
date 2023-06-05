@@ -3,7 +3,7 @@
     <!-- <check-login></check-login> -->
     <!-- <el-space direction="vertical" alignment="start" :size="30"> -->
     <div class="box-center">
-      <el-divider />
+      <!-- <el-divider /> -->
       <!-- <transition name="el-zoom-in-top"> -->
       <!-- <little-card /> -->
       <div v-if="mybooks.length > 0">
