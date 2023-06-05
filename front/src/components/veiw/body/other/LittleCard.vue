@@ -1,37 +1,28 @@
 <template>
   <div class="container">
     <!-- 第一个卡片 -->
-    <div
-      class="card"
-      :style="{
-        backgroundImage: `url(${'http://154.8.183.51/media/' + book.img})`,
-      }"
-    >
+    <div class="card" :style="{
+      backgroundImage: `url(${'http://154.8.183.51/media/' + book.img})`,
+    }">
       <div class="content">
         <!-- <router-link :to="'/book/' + book.bookID"> -->
-        <h3
-          @click="
-            () => {
-              this.$router.push({ path: '/book/' + book.bookid });
-            }
-          "
-        >
+        <h3 @click="
+          () => {
+            this.$router.push({ path: '/book/' + book.bookid });
+          }
+        ">
           {{ book.name }}
         </h3>
         <!-- </router-link> -->
         <!-- <router-link :to="'/reader/' + book.bookID + '/' + book.chapter"> -->
         <ul>
-          <li
-            v-for="chapter in book.marks"
-            :key="chapter.chapter"
-            @click="
-              () => {
-                this.$router.push({
-                  path: '/reader/' + book.bookid + '/' + chapter.chapter,
-                });
-              }
-            "
-          >
+          <li v-for="chapter in book.marks" :key="chapter.chapter" @click="
+            () => {
+              this.$router.push({
+                path: '/reader/' + book.bookid + '/' + chapter.chapter,
+              });
+            }
+          ">
             {{ chapter.title }}
           </li>
         </ul>
@@ -62,14 +53,12 @@ export default {
   data() {
     return {};
   },
-  methods() {},
+  methods() { },
 };
 </script>
 
 
 <style scoped>
-@import url("https://fonts.googleapis.com");
-
 .container {
   position: relative;
   display: flex;
@@ -79,6 +68,7 @@ export default {
   flex-wrap: wrap;
   z-index: 1;
 }
+
 .container .card {
   /* background-image: url("../../../../assets/girl.png"); */
   position: relative;
@@ -101,15 +91,18 @@ export default {
   overflow: scroll;
   transition: 0.5s;
 }
+
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
   background-color: transparent;
 }
+
 .container .card:hover {
   /* background-image: url("../../../../assets/girl.png"); */
   scale: 1.1;
 }
+
 .container .card .content {
   /* padding: 20px; */
   text-align: center;
@@ -128,11 +121,13 @@ export default {
   transform: translateY(0px);
   opacity: 1; */
 }
+
 .container .card:hover .content {
   background: rgba(53, 57, 80, 0.548);
   transform: translateY(0px);
   opacity: 1;
 }
+
 .container .card .content h2 {
   position: absolute;
   top: -60px;
@@ -141,6 +136,7 @@ export default {
   color: rgba(255, 255, 255, 0.05);
   pointer-events: none;
 }
+
 .container .card .content h3 {
   cursor: pointer;
   margin-top: 30px;
@@ -163,6 +159,7 @@ export default {
   color: #fff;
   z-index: 1;
 }
+
 .container .card .content p {
   cursor: pointer;
   margin-top: 30px;
@@ -180,6 +177,7 @@ export default {
   color: #fff;
   font-weight: 300;
 }
+
 .container .card .content a {
   position: relative;
   display: inline-block;
@@ -192,6 +190,7 @@ export default {
   font-weight: 500;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+
 .content ul li {
   cursor: pointer;
   margin-top: 10px;
@@ -211,6 +210,7 @@ export default {
   border-radius: 4px;
   transition: all 0.5s;
 }
+
 .content ul li:hover {
   background: rgba(4, 4, 75, 0.178);
 }
