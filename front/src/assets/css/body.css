@@ -1,0 +1,6 @@
+.this-body {
+    display: flex;
+    flex-direction: column;
+    background-repeat: repeat;
+    background-image: url("../../assets/imgs/blizzard.webp");
+}

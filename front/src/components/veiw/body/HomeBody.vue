@@ -1,8 +1,8 @@
 <!-- 网页的主页的中间内容部分 -->
 <template>
-  <div style="display: flex; flex-direction: column">
-    <start-component  @hide="hideStartComponent" />
-    <div >
+  <div class="this-body">
+    <start-component @hide="hideStartComponent" />
+    <div>
       <!-- <ElAffix> -->
       <WebHead style="margin: 0,position:fixed;" />
       <!-- </ElAffix> -->
@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       showHeadAndFoot: false,
-      showStartComponent:true
+      showStartComponent: true,
     };
   },
   methods: {
@@ -66,7 +66,6 @@ export default {
       setTimeout(() => {
         this.showHeadAndFoot = true;
       }, 50);
-
     },
   },
 };
@@ -90,4 +89,5 @@ export default {
   margin-left: 20px;
   flex-grow: 1;
 }
+
 </style>

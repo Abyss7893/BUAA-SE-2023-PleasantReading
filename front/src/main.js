@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import _store from 'store2'
-
+import './assets/css/body.css'
 import App from './App.vue'
 import router from './route/index'
 import store from './store/index'
