@@ -15,6 +15,7 @@
     "element-plus": "^2.3.4",
     "hover.css": "^2.3.2",
     "lodash": "^4.17.21",
+    "marked": "^5.0.4",
     "qrcodejs2": "^0.0.2",
     "sass-loader": "^13.2.2",
     "store2": "^2.14.2",

@@ -1,17 +1,48 @@
 <template>
   <div>
     <!-- <transition name="fade"> -->
-    <div class="video-box" :style="{
-      // backgroundImage: `url(${backgroundImage})`,
-      marginTop: showComponent ? '' : 'calc(-106vh )',
-    }">
-      <video class="video-background" preload="auto" loop playsinline autoplay :src="backgroundImage" tabindex="-1"
-        muted="muted"></video>
-      <div v-if="hidethis" class="start-component" :class="{ 'start-component-hidden': !showComponent }" :style="{
+    <div
+      class="video-box"
+      :style="{
         // backgroundImage: `url(${backgroundImage})`,
         marginTop: showComponent ? '' : 'calc(-106vh )',
-      }" ref="startComponentRef">
-        <img src="../../../assets/logo-yixinyuedu.png" class="start-image" style="position: relative; margin-top: 4%" />
+      }"
+    >
+      <video
+        class="video-background"
+        preload="auto"
+        loop
+        playsinline
+        autoplay
+        :src="backgroundImage"
+        tabindex="-1"
+        muted="muted"
+      ></video>
+      <div
+        v-if="hidethis"
+        class="start-component"
+        :class="{ 'start-component-hidden': !showComponent }"
+        :style="{
+          // backgroundImage: `url(${backgroundImage})`,
+          marginTop: showComponent ? '' : 'calc(-106vh )',
+        }"
+        ref="startComponentRef"
+      >
+        <div
+          style="
+            width: 30%;
+            min-height: 16%;
+            margin-top: 3%;
+            align-items: center;
+            position: relative;
+          "
+        >
+          <img
+            src="../../../assets/logo-yixinyuedu.png"
+            class="start-image"
+            style="position: relative; margin: auto"
+          />
+        </div>
         <div style="height: 15%">
           <div class="hello-user" style="position: relative">
             <div class="content">
@@ -25,7 +56,11 @@
         <div v-if="this.$store.state.isLogin" style="max-height: 300px">
           <slide-card> </slide-card>
         </div>
-        <button class="start-button" @click="hideComponent" style="position: relative">
+        <button
+          class="start-button"
+          @click="hideComponent"
+          style="position: relative"
+        >
           {{ this.$store.state.isLogin ? "探索更多" : "开始探索" }} >
         </button>
         <flip-clock style="position: relative; left: -30%; bottom: 7%" />
@@ -148,8 +183,8 @@ export default {
       }
       index = index2;
       const img = new Image();
-      img.onload = () => { };
-      img.onerror = () => { };
+      img.onload = () => {};
+      img.onerror = () => {};
       img.src = this.imgs[index];
 
       setTimeout(() => {
@@ -228,17 +263,18 @@ export default {
 
 <style scoped>
 .start-image {
-  max-width: 32%;
+  max-width: 100%;
   /* backdrop-filter: blur(3px) invert(5%); */
   /* border-radius: 30px; */
   /* box-shadow:inset(0.5, 0.5, 0.5, 0 ); */
   /* border: solid rgba(212, 184, 6, 0.164) 1px; */
   transition: all 0.5s;
+  margin-bottom: 2%;
 }
 
 .start-image:hover {
   scale: 1.1;
-  max-width: 32%;
+  /* max-width: 32%; */
   backdrop-filter: blur(3px) invert(5%);
   border-radius: 30px;
   /* box-shadow:inset(0.5, 0.5, 0.5, 0 ); */
@@ -266,12 +302,10 @@ export default {
   /* filter: grayscale(1) contrast(9); */
   /* backdrop-filter: blur(10px); */
 }
-
 .fullscreenVideo {
   width: inherit;
   height: inherit;
 }
-
 .start-component {
   margin-top: -3%;
   /* position: fixed; */
@@ -331,7 +365,6 @@ export default {
   transition: all 0.5s;
   z-index: 10;
 }
-
 * {
   margin: 0;
   padding: 0;

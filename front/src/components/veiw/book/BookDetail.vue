@@ -59,10 +59,10 @@
 
             <div class="book-counts hidden-sm">
               <div
-                class="count-item flex-view pointer hvr-bounce-to-right"
+                class="count-item flex-view pointer "
                 @click="gotoRead()"
               >
-                <div class="count-box flex-view">
+                <div class="count-box flex-view hvr-bounce-to-right">
                   <div class="count-text-box">
                     <span class="count-title">开始阅读</span>
                   </div>
@@ -76,18 +76,18 @@
                 class="count-item flex-view pointer"
                 @click="collect()"
               >
-                <div class="count-box flex-view">
-                  <div class="count-text-box hvr-bounce-to-right">
+                <div class="count-box flex-view hvr-bounce-to-right">
+                  <div class="count-text-box">
                     <span class="count-title">收藏</span>
                   </div>
                 </div>
               </div>
               <div
                 v-if="isColected"
-                class="count-item flex-view pointer"
+                class="count-item flex-view pointer hvr-bounce-to-right"
                 @click="collect()"
               >
-                <div class="count-box flex-view hvr-bounce-to-right">
+                <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">已收藏</span>
                   </div>
@@ -608,11 +608,12 @@ export default {
   }
 
   .count-item {
-    height: 64px;
+    min-height: 69px;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
     cursor: pointer;
+    border-bottom:solid rgb(255, 215, 215) 2px ;
   }
 
   .count-img {
@@ -631,7 +632,7 @@ export default {
   .count-box {
     // border-radius: 0 13px 13px 13px;
     position: relative;
-  
+
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -642,7 +643,7 @@ export default {
     -ms-flex: 1;
     flex: 1;
 
-    height: 100%;
+    height: 63px;
   }
 
   // .count-box:hover {
@@ -900,7 +901,7 @@ export default {
   display: flex;
 }
 .detail-content-top {
-  min-height: 389px;
+  min-height: 410px;
 }
 .book-comment {
   .title {
