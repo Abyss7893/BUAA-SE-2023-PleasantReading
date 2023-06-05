@@ -1,15 +1,17 @@
 <!-- 网页的主页的中间内容部分 -->
 <template>
   <head-and-foot>
-    <div class="box-center">
-      <!-- <div class="novel-body">
+    <div class="this-body">
+      <div class="box-center">
+        <!-- <div class="novel-body">
         <div class="category-component-wrapper">
           <CategoryComponent />
         </div>
         <div class="recommend-component-wrapper"> -->
-      <RankComponent />
-      <!-- </div> -->
-      <!-- </div> -->
+        <RankComponent />
+        <!-- </div> -->
+        <!-- </div> -->
+      </div>
     </div>
   </head-and-foot>
 </template>

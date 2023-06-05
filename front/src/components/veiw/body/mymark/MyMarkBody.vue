@@ -1,70 +1,74 @@
 <template>
   <head-and-foot>
-    <!-- <check-login></check-login> -->
-    <!-- <el-space direction="vertical" alignment="start" :size="30"> -->
-    <div class="box-center">
-      <!-- <el-divider /> -->
-      <!-- <transition name="el-zoom-in-top"> -->
-      <!-- <little-card /> -->
-      <div v-if="!this.$store.state.isLogin">
-        <el-empty
-          description="未登录ovo"
-          :image="require('assets/imgs/unlogin.gif')"
-          image-size="200px"
-        />
-        <div
-          style="
-            margin: auto;
-            width: 400px;
-            margin-top: 30px;
-            align-items: center;
-          "
-        >
+    <div class="this-body">
+      <!-- <check-login></check-login> -->
+      <!-- <el-space direction="vertical" alignment="start" :size="30"> -->
+      <div class="box-center">
+        <el-divider />
+        <!-- <transition name="el-zoom-in-top"> -->
+        <!-- <little-card /> -->
+        <div v-if="!this.$store.state.isLogin">
+          <el-empty
+            description="未登录ovo"
+            :image="require('assets/imgs/unlogin.gif')"
+            image-size="200px"
+          />
           <div
-            class="btn twinkle"
-            @click="
-              () => {
-                this.$store.commit('showlogin');
-              }
+            style="
+              margin: auto;
+              width: 400px;
+              margin-top: 30px;
+              align-items: center;
             "
           >
-            登录
+            <div
+              class="btn twinkle"
+              @click="
+                () => {
+                  this.$store.commit('showlogin');
+                }
+              "
+            >
+              登录
+            </div>
           </div>
         </div>
-      </div>
-      <div v-else>
-        <div v-if="mybooks.length > 0">
-          <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
-            <el-col
-              v-for="o in colsize"
-              :key="(ro - 1) * colsize + o - 1"
-              :span="24 / colsize"
-            >
-              <little-card :book="mybooks[(ro - 1) * colsize + o - 1]" />
-            </el-col>
-            <el-divider />
-          </el-row>
-
-          <div v-if="mybooks.length - (rownum - 1) * colsize > 0">
-            <el-row gutter="60">
+        <div v-else>
+          <div v-if="mybooks.length > 0">
+            <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
               <el-col
-                v-for="o in mybooks.length - (rownum - 1) * colsize"
-                :key="(rownum - 1) * colsize + o - 1"
+                v-for="o in colsize"
+                :key="(ro - 1) * colsize + o - 1"
                 :span="24 / colsize"
               >
-                <little-card :book="mybooks[(rownum - 1) * colsize + o - 1]" />
+                <little-card :book="mybooks[(ro - 1) * colsize + o - 1]" />
               </el-col>
               <el-divider />
             </el-row>
+
+            <div v-if="mybooks.length - (rownum - 1) * colsize > 0">
+              <el-row gutter="60">
+                <el-col
+                  v-for="o in mybooks.length - (rownum - 1) * colsize"
+                  :key="(rownum - 1) * colsize + o - 1"
+                  :span="24 / colsize"
+                >
+                  <little-card
+                    :book="mybooks[(rownum - 1) * colsize + o - 1]"
+                  />
+                </el-col>
+                <el-divider />
+              </el-row>
+            </div>
           </div>
-        </div>
-        <!-- <transition name="el-fade-in"> -->
-        <div v-if="mybooks.length === 0">
-          <el-empty
-            description="暂无书籍"
-            :image="require('assets/imgs/book_null.png')"
-            image-size="300px"
-          />
+          <!-- <transition name="el-fade-in"> -->
+          <div v-if="mybooks.length === 0">
+            <el-empty
+              description="暂无书籍"
+              :image="require('assets/imgs/book_null.png')"
+              image-size="300px"
+            />
+          </div>
         </div>
       </div>
     </div>

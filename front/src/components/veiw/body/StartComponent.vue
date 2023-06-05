@@ -353,7 +353,7 @@ export default {
 }
 
 .start-button {
-  min-height: 20px;
+  /* min-height: 20px; */
   padding: 12px 24px;
   margin-top: 5%;
   background-color: #00000073;

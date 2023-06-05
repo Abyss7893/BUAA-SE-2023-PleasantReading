@@ -2,6 +2,7 @@
   <HeadTop :holdplace="true" />
   <div class="contain">
     <div class="mask" v-if="showMyCard"></div>
+    <div class="mask" v-if="showChangePwd"></div>
     <MyCard class="mycard" v-if="showMyCard" @close="showMyCard = false"></MyCard>
     <ElDialog v-model="test" :destroy-on-close="true" width="600px">
       <CropComponent @close="test = false" @reloadAvatar="setAvatar" v-if="test" />
@@ -9,9 +10,9 @@
     <ElDialog v-model="showPayDialog" title="充值VIP" :destroy-on-close="true" width="900px">
       <PayComponent />
     </ElDialog>
-    <ElDialog v-model="showChangePwd" title="修改密码" :destroy-on-close="true" width="25%">
-      <ChangePwd @close="showChangePwd = false" />
-    </ElDialog>
+    <!-- <ElDialog v-model="showChangePwd" v-if="showChangePwd" draggable style="border: none; background-color: transparent;" modal="true"  :destroy-on-close="true" width="25%"> -->
+      <ChangePwd class="change-pwd" v-if="showChangePwd" @close="showChangePwd = false" />
+    <!-- </ElDialog> -->
     <div class="PersonTop">
       <div class="PersonTop_image">
         <ElAvatar :src="avatar" shape="circle" fit="fill" :size="140"></ElAvatar>
@@ -537,5 +538,11 @@ export default {
   min-height: 480px;
   margin-top: 40px;
   margin-right: 30px;
+}
+.change-pwd{
+  z-index: 1000;
+  display: flex;
+  position: absolute;
+  margin: 200px 0 0 600px;
 }
 </style>

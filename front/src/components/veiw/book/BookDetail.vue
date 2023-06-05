@@ -1,194 +1,195 @@
 <template>
   <head-and-foot>
-    <div class="detail box-center">
-      <div class="detail-content">
-        <div class="detail-content-top">
-          <div class="book-infos-view">
-            <div class="book-infos">
-              <div class="book-img-box-detail">
-                <img :src="detailData.cover" />
-              </div>
-              <div class="book-info-box">
-                <h1 class="book-name flex-view">
-                  {{ detailData.title }}
-                  <span>
-                    <a
-                      :href="'/author/' + detailData.author"
-                      class="author-name"
-                      >{{ detailData.author }}著</a
-                    >
-                  </span>
-                </h1>
-                <!-- <el-divider></el-divider> -->
+    <div class="this-body">
+      <div class="detail box-center">
+        <div class="detail-content">
+          <div class="detail-content-top">
+            <div class="book-infos-view">
+              <div class="book-infos">
+                <div class="book-img-box-detail">
+                  <img :src="detailData.cover" />
+                </div>
+                <div class="book-info-box">
+                  <h1 class="book-name flex-view">
+                    {{ detailData.title }}
+                    <span>
+                      <a
+                        :href="'/author/' + detailData.author"
+                        class="author-name"
+                        >{{ detailData.author }}著</a
+                      >
+                    </span>
+                  </h1>
+                  <!-- <el-divider></el-divider> -->
 
-                <div class="book-state">
-                  <span class="state hidden-sm">{{ detailData.status }}</span>
-                  <span class="state hidden-sm">{{ detailData.vip }}</span>
-                  <span class="state hidden-sm">{{
-                    detailData.simpleSizes
-                  }}</span>
-                  <span class="state hidden-sm">{{ detailData.category }}</span>
-                </div>
-                <div class="translators flex-view" style="">
-                  <span>字数：</span>
-                  <span class="name">{{ detailData.size }}</span>
-                </div>
-                <div class="translators flex-view" style="">
-                  <span class="rate-text">评分：</span>
-                  <span class="name rate-text">{{ detailData.rating }}</span>
-                  <el-rate
-                    v-model="detailData.rating"
-                    style="--el-rate-fill-color: #ff7d7dc9"
-                    :disabled="true"
-                  ></el-rate>
-                  <!-- <span class="name">{{ detailData.size }}</span> -->
-                </div>
+                  <div class="book-state">
+                    <span class="state hidden-sm">{{ detailData.status }}</span>
+                    <span class="state hidden-sm">{{ detailData.vip }}</span>
+                    <span class="state hidden-sm">{{
+                      detailData.simpleSizes
+                    }}</span>
+                    <span class="state hidden-sm">{{
+                      detailData.category
+                    }}</span>
+                  </div>
+                  <div class="translators flex-view" style="">
+                    <span>字数：</span>
+                    <span class="name">{{ detailData.size }}</span>
+                  </div>
+                  <div class="translators flex-view" style="">
+                    <span class="rate-text">评分：</span>
+                    <span class="name rate-text">{{ detailData.rating }}</span>
+                    <el-rate
+                      v-model="detailData.rating"
+                      style="--el-rate-fill-color: #ff7d7dc9"
+                      :disabled="true"
+                    ></el-rate>
+                    <!-- <span class="name">{{ detailData.size }}</span> -->
+                  </div>
 
-                <!-- <div class="translators flex-view" style="">
+                  <!-- <div class="translators flex-view" style="">
                   <span>分类：</span>
                   <span class="name">{{ detailData.category }}</span>
                 </div> -->
-                <div class="translators flex-view" style="">
-                  <span>简介：</span>
-                  <span class="name animate__fadeInDown">{{
-                    detailData.intro
-                  }}</span>
+                  <div class="translators flex-view" style="">
+                    <span>简介：</span>
+                    <span class="name animate__fadeInDown">{{
+                      detailData.intro
+                    }}</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="book-counts hidden-sm">
-              <div
-                class="count-item flex-view pointer "
-                @click="gotoRead()"
-              >
-                <div class="count-box flex-view hvr-bounce-to-right">
-                  <div class="count-text-box">
-                    <span class="count-title">开始阅读</span>
-                  </div>
-                  <div class="count-num-box">
-                    <span class="num-text">{{ detailData.wish_count }}</span>
+              <div class="book-counts hidden-sm">
+                <div class="count-item flex-view pointer" @click="gotoRead()">
+                  <div class="count-box flex-view hvr-bounce-to-right">
+                    <div class="count-text-box">
+                      <span class="count-title">开始阅读</span>
+                    </div>
+                    <div class="count-num-box">
+                      <span class="num-text">{{ detailData.wish_count }}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                v-if="!isColected"
-                class="count-item flex-view pointer"
-                @click="collect()"
-              >
-                <div class="count-box flex-view hvr-bounce-to-right">
-                  <div class="count-text-box">
-                    <span class="count-title">收藏</span>
+                <div
+                  v-if="!isColected"
+                  class="count-item flex-view pointer"
+                  @click="collect()"
+                >
+                  <div class="count-box flex-view hvr-bounce-to-right">
+                    <div class="count-text-box">
+                      <span class="count-title">收藏</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                v-if="isColected"
-                class="count-item flex-view pointer hvr-bounce-to-right"
-                @click="collect()"
-              >
-                <div class="count-box flex-view">
-                  <div class="count-text-box">
-                    <span class="count-title">已收藏</span>
+                <div
+                  v-if="isColected"
+                  class="count-item flex-view pointer hvr-bounce-to-right"
+                  @click="collect()"
+                >
+                  <div class="count-box flex-view">
+                    <div class="count-text-box">
+                      <span class="count-title">已收藏</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <!-- <div class="count-item flex-view pointer" @click="comment()">
+                <!-- <div class="count-item flex-view pointer" @click="comment()">
                 <div class="count-box flex-view">
                   <div class="count-text-box">
                     <span class="count-title">评论</span>
                   </div>
                 </div>
               </div> -->
-              <div
-                class="count-item flex-view pointer"
-                @click="showRate = !showRate"
-              >
-                <div class="count-box flex-view hvr-bounce-to-right">
-                  <div class="count-text-box">
-                    <span class="count-title">评分</span>
-                  </div>
-                </div>
-              </div>
-              <transition name="el-fade-in">
                 <div
-                  v-if="showRate"
-                  class="animate__fadeInDown animate__fadeOutDown translators flex-view"
-                  style="flex-direction: column"
+                  class="count-item flex-view pointer"
+                  @click="showRate = !showRate"
                 >
-                  <!-- <span class="rate-text">评分：</span> -->
-                  <!-- <span class="name rate-text">{{ detailData.rating }}</span> -->
-                  <div class="rate-loyar">
-                    <el-rate
-                      v-model="valueRate"
-                      allow-half
-                      style="--el-rate-fill-color: #ff7d7dc9"
-                      :texts="['shit', '厕纸', '一般', '好好好', '神中神']"
-                      show-text
-                    ></el-rate>
+                  <div class="count-box flex-view hvr-bounce-to-right">
+                    <div class="count-text-box">
+                      <span class="count-title">评分</span>
+                    </div>
                   </div>
-                  <div>
-                    <el-button
-                      type="danger"
-                      plain
-                      size="small"
-                      @click="submitRate"
-                      >提交</el-button
-                    >
-                  </div>
-                  <!-- <span class="name">{{ detailData.size }}</span> -->
                 </div>
-              </transition>
-            </div>
-          </div>
-        </div>
-      </div>
-      <transition name="el-zoom-in-top">
-        <div v-show="isContent">
-          <el-divider>
-            目录
-            <el-icon
-              v-show="Order"
-              @click="changeOrder"
-              style="--color: #315c9e"
-            >
-              <SortDown />
-            </el-icon>
-            <el-icon
-              v-show="!Order"
-              @click="changeOrder"
-              style="--color: #315c9e"
-            >
-              <SortUp />
-            </el-icon>
-          </el-divider>
-
-          <div class="novel-directory">
-            <div
-              v-for="(row, index) in rows"
-              :key="index"
-              class="directory-row"
-            >
-              <!-- <a href="#"> -->
-              <div
-                v-for="chapter in row"
-                :key="chapter.id"
-                class="chapter-title"
-                @click="gotoReadChapter(chapter.id)"
-                style="cursor: pointer"
-              >
-                {{ chapter.title }}
+                <transition name="el-fade-in">
+                  <div
+                    v-if="showRate"
+                    class="animate__fadeInDown animate__fadeOutDown translators flex-view"
+                    style="flex-direction: column"
+                  >
+                    <!-- <span class="rate-text">评分：</span> -->
+                    <!-- <span class="name rate-text">{{ detailData.rating }}</span> -->
+                    <div class="rate-loyar">
+                      <el-rate
+                        v-model="valueRate"
+                        allow-half
+                        style="--el-rate-fill-color: #ff7d7dc9"
+                        :texts="['shit', '厕纸', '一般', '好好好', '神中神']"
+                        show-text
+                      ></el-rate>
+                    </div>
+                    <div>
+                      <el-button
+                        type="danger"
+                        plain
+                        size="small"
+                        @click="submitRate"
+                        >提交</el-button
+                      >
+                    </div>
+                    <!-- <span class="name">{{ detailData.size }}</span> -->
+                  </div>
+                </transition>
               </div>
-              <!-- </a> -->
             </div>
           </div>
-
-          <div class="book-content-view flex-view">
-            <div class="main-content"></div>
-          </div>
         </div>
-      </transition>
-      <div v-show="!isContent"></div>
+        <transition name="el-zoom-in-top">
+          <div v-show="isContent">
+            <el-divider>
+              目录
+              <el-icon
+                v-show="Order"
+                @click="changeOrder"
+                style="--color: #315c9e"
+              >
+                <SortDown />
+              </el-icon>
+              <el-icon
+                v-show="!Order"
+                @click="changeOrder"
+                style="--color: #315c9e"
+              >
+                <SortUp />
+              </el-icon>
+            </el-divider>
+
+            <div class="novel-directory">
+              <div
+                v-for="(row, index) in rows"
+                :key="index"
+                class="directory-row"
+              >
+                <!-- <a href="#"> -->
+                <div
+                  v-for="chapter in row"
+                  :key="chapter.id"
+                  class="chapter-title hvr-radial-out"
+                  @click="gotoReadChapter(chapter.id)"
+                  style="cursor: pointer"
+                >
+                  {{ chapter.title }}
+                </div>
+                <!-- </a> -->
+              </div>
+            </div>
+
+            <div class="book-content-view flex-view">
+              <div class="main-content"></div>
+            </div>
+          </div>
+        </transition>
+        <div v-show="!isContent"></div>
+      </div>
     </div>
   </head-and-foot>
 </template>
@@ -613,7 +614,7 @@ export default {
     -ms-flex-align: center;
     align-items: center;
     cursor: pointer;
-    border-bottom:solid rgb(255, 215, 215) 2px ;
+    border-bottom: solid rgb(255, 215, 215) 2px;
   }
 
   .count-img {
@@ -1096,16 +1097,18 @@ export default {
 }
 
 .chapter-title {
-  width: 30%;
+  width: 33%;
   /* background-color: #f0f0f0; */
   padding: 10px;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 10px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
-.chapter-title:hover {
+/* .chapter-title:hover {
   background-color: rgba(249, 26, 26, 0.144);
-}
+} */
 </style>
 
 <style scoped>
@@ -1160,5 +1163,67 @@ export default {
   border-radius: 13px;
   -webkit-transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
   transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+}
+</style>
+<style >
+.hvr-radial-out {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  position: relative;
+  overflow: hidden;
+  background: #e1e1e100;
+  background: #e1e1e100;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.3s;
+}
+
+.hvr-radial-out:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(249, 26, 26, 0.39);
+  border-radius: 100%;
+
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+
+.hvr-radial-out:hover,
+.hvr-radial-out:focus,
+.hvr-radial-out:active {
+  /* border: solid red; */
+  color: white;
+}
+
+.hvr-radial-out:hover:before,
+.hvr-radial-out:focus:before,
+.hvr-radial-out:active:before {
+  -webkit-transform: scale(2);
+  transform: scale(2);
+}
+
+.el-divider__text {
+  position: absolute;
+  background-color: #dedede;
+  padding: 0 20px;
+  font-weight: 500;
+  color: #eb8989 !important;
+  font-size: 14px;
+  border-radius: 6px;
 }
 </style>

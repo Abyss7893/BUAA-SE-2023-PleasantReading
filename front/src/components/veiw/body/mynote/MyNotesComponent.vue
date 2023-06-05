@@ -2,39 +2,56 @@
   <head-and-foot>
     <!-- <check-login></check-login> -->
     <!-- <el-space direction="vertical" alignment="start" :size="30"> -->
-    <div class="box-center" style="width: 1400px">
-      <el-divider />
-      <div v-if="!this.$store.state.isLogin">
-        <el-empty description="未登录ovo" :image="require('assets/imgs/unlogin.gif')" image-size="200px" />
-        <div style="
+    <div class="this-body">
+      <div class="box-center" style="width: 1400px">
+        <el-divider />
+        <div v-if="!this.$store.state.isLogin">
+          <el-empty
+            description="未登录ovo"
+            :image="require('assets/imgs/unlogin.gif')"
+            image-size="200px"
+          />
+          <div
+            style="
               margin: auto;
               width: 400px;
               margin-top: 30px;
               align-items: center;
-            ">
-          <div class="btn twinkle" @click="
-            () => {
-              this.$store.commit('showlogin');
-            }
-          ">
-            登录
+            "
+          >
+            <div
+              class="btn twinkle"
+              @click="
+                () => {
+                  this.$store.commit('showlogin');
+                }
+              "
+            >
+              登录
+            </div>
           </div>
         </div>
-      </div>
-      <div v-else>
-        <vue-good-table :columns="columns" :rows="rows" theme="black-rhino" :pagination-options="{
-          enabled: true,
-          mode: 'pages',
-          jumpFirstOrLast: true,
-          firstLabel: '首页',
-          lastLabel: '尾页',
-          nextLabel: '下一页',
-          prevLabel: '上一页',
-          rowsPerPageLabel: '每页展示',
-          pageLabel: '第',
-          ofLabel: '页，共有',
-        }" @cell-click="onCellClick" />
-        <el-divider />
+        <div v-else>
+          <vue-good-table
+            :columns="columns"
+            :rows="rows"
+            theme="black-rhino"
+            :pagination-options="{
+              enabled: true,
+              mode: 'pages',
+              jumpFirstOrLast: true,
+              firstLabel: '首页',
+              lastLabel: '尾页',
+              nextLabel: '下一页',
+              prevLabel: '上一页',
+              rowsPerPageLabel: '每页展示',
+              pageLabel: '第',
+              ofLabel: '页，共有',
+            }"
+            @cell-click="onCellClick"
+          />
+          <el-divider />
+        </div>
       </div>
     </div>
 
