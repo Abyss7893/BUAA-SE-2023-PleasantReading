@@ -6,7 +6,7 @@
       <div class="animated-banner">
         <div class="layer"><img src="~assets/imgs/headlayer1.webp" data-height="141" data-width="1500" height="155"
             width="1650"
-            style="height: 155.1px; width: 1650px; transform: translate(0px, 0px) rotate(0deg) scale(1); opacity: 1;">
+            style="height: 155.1px; width: 100%; transform: translate(0px, 0px) rotate(0deg) scale(1); opacity: 1;">
         </div>
         <div class="layer"><img src="~assets/imgs/headlayer2.webp" data-height="247" data-width="999" height="185"
             width="749"
@@ -247,7 +247,7 @@ export default {
 .logo {
   cursor: pointer;
   position: relative;
-  z-index: 200;
+  z-index: 150;
   height: 100px;
 }
 
