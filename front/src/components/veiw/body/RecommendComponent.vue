@@ -166,6 +166,10 @@ export default {
 }
 </style>
 <style scoped>
+.rank-dropdown-menu[data-v-27f72f6c] {
+  --el-dropdown-menuItem-hover-fill: rgb(255, 132, 132);
+  --el-dropdown-menuItem-hover-color: #f9f9f9;
+}
 .block-col-2 .demonstration {
   display: inline-block;
   /* 将 display 属性改为 inline-block */
