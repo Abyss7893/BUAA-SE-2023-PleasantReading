@@ -182,7 +182,7 @@
     </div>
     <HeartSwitch v-if="navishow" :switch="value2" @swithChange="swithChange"></HeartSwitch>
   <!-- <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
-                                                                    style="--el-switch-on-color: #f8b2b2" /> -->
+                                                                      style="--el-switch-on-color: #f8b2b2" /> -->
   </div>
 </template>
 
@@ -399,7 +399,7 @@ export default {
   position: fixed;
   top: 0;
   width: 100%;
-  min-width: 1200px;
+  min-width: 1000px;
   z-index: 200;
   animation: headerSlideDown 0.3s linear forwards;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
