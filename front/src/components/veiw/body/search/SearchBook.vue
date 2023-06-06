@@ -53,7 +53,7 @@ export default {
     return {
       bookids: [],
       pages: 0,
-      books: [],
+      books: ["123"],
     }
   },
   methods: {
@@ -124,6 +124,6 @@ em {
 }
 
 .main-search-conten {
-  min-height: 640px;
+  min-height: 800px;
 }
 </style>
