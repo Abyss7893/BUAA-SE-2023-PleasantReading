@@ -30,7 +30,7 @@
       </li>
       <li navi-id="3">
         <a href="#" @mouseenter="showBookRank" @mouseleave="closeBookRank">
-          <div class="navi-word" >作品排行</div>
+          <div class="navi-word">作品排行</div>
           <book-rank :style="{ display: bookRank ? 'flex' : 'none' }"></book-rank>
         </a>
       </li>
@@ -180,8 +180,9 @@
         </li>
       </ul>
     </div>
-    <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
-      style="--el-switch-on-color: #f8b2b2" />
+    <HeartSwitch v-if="navishow" :switch="value2" @swithChange="swithChange"></HeartSwitch>
+  <!-- <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
+                                            style="--el-switch-on-color: #f8b2b2" /> -->
   </div>
 </template>
 
@@ -195,6 +196,7 @@ import { ElAvatar, ElDialog } from "element-plus";
 import RecommendCard from "./RecommendCard.vue";
 import popUserInfo from "./popUserInfo.vue";
 import BookRank from './BookRank.vue'
+import HeartSwitch from "./HeartSwitch.vue";
 export default {
   name: "Head_Top",
   components: {
@@ -203,7 +205,8 @@ export default {
     newLogin,
     ElDialog,
     RecommendCard,
-    BookRank
+    BookRank,
+    HeartSwitch,
   },
   props: {
     navishow: {
@@ -249,7 +252,6 @@ export default {
 
     };
   },
-
   computed: {
     avatar() {
       return this.$store.state.userAvatar;
@@ -266,10 +268,17 @@ export default {
     loginshow() {
       this.showLogin = true;
     },
+    value2(val) {
+      this.$store.commit('changeShowSakura', val)
+    }
   },
   created() {
     this.getRandomHots();
-    this.changeSakuraInit();
+    var temp=this.value2;
+    this.$store.commit('changeShowSakura', false)
+    if (temp) {
+      this.$store.commit('changeShowSakura', true)
+    }
   },
   mounted() {
     this.keywords = this.$route.query.keywords
@@ -277,20 +286,13 @@ export default {
       : "";
   },
   methods: {
+    swithChange(val) {
+      this.value2 = val
+    },
     changeSakura() {
       this.$nextTick(() => {
         this.$store.commit("changeShowSakura", this.value2);
       });
-    },
-    changeSakuraInit() {
-      let temp = this.$store.state.showSakura ? true : false;
-      console.log("init showSakura", this.$store.state.showSakura);
-      this.$store.commit("changeShowSakura", false);
-      console.log("init showSakura", temp);
-
-      this.value2 = temp;
-      this.$store.commit("changeShowSakura", this.value2);
-
     },
     getRandomHots() {
       this.randomHots = [];
@@ -361,13 +363,13 @@ export default {
         if (!this.$refs.login.showStatus()) this.$refs.login.changeForm();
       }, 200);
     },
-    showBookRank(){
+    showBookRank() {
 
-      this.bookRank=true;
+      this.bookRank = true;
     },
-    closeBookRank(){
+    closeBookRank() {
 
-      this.bookRank=false;
+      this.bookRank = false;
     },
     showRecommendCard() {
       this.recommendCard = true;
@@ -401,7 +403,7 @@ export default {
   z-index: 200;
   animation: headerSlideDown 0.3s linear forwards;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-  background-image: url("../../../assets/imgs/text3.png");
+  background-image: url("https://leeibo.sh1a.qingstor.com/text3.png?expires=1686650682&signature=8sRc/tJUD4jjU3WV4o4KcPRwBu0Os5rO/k3h+JPZ3fs=&access_key_id=FEOPWMJLWZSOJNLWJHVS");
 }
 
 @keyframes headerSlideDown {
@@ -677,7 +679,7 @@ export default {
   width: 64px;
   display: flex;
   justify-content: center;
-  line-height: 76px;
+  line-height: 64px;
   height: 56px;
   /* color: #fff; */
   font-size: 16px;
@@ -727,13 +729,13 @@ export default {
     transform: translateY(0);
   }
 }
-.hover-card{
+
+.hover-card {
   display: none;
   width: 300px;
   height: 500px;
   position: relative;
-  margin-top:500px;
+  margin-top: 500px;
   background-color: #ff7575;
 }
-
 </style>
