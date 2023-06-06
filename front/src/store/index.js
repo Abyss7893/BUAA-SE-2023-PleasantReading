@@ -88,9 +88,8 @@ const store = createStore({
   mutations: {
     changeShowSakura(state, bool) {
       state.showSakura = bool;
-      console.log('changeShow', this.showSakura);
-      if (bool) { console.log('changeShowOk', bool); startSakura(); }
-      else { stopp(); console.log('changeShow', bool); }
+      if (bool) { startSakura(); }
+      else { stopp(); }
     },
     resetAllState(state, payload) {
       if (payload instanceof Array === false) { // 验证传入的是一个数组
@@ -120,7 +119,6 @@ const store = createStore({
     },
     changeShowLogin(state) {
       state.showLogin = !state.showLogin
-      console.log("1111")
     },
     setTempAvatar(state, url) {
       state.tempAvatar = url

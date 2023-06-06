@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
   <div class="placeholder" style="height: 64px" v-if="holdplace"></div>
-  <div class="head-top" :class="navishow ? 'slide-down' : ''" :id="navishow ? 'fixheight' : ''">
+  <div class="head-top" :class="navishow ? 'slide-down' : ''" :id="navishow ? 'fixheight' : ''" :style="{
+    position: fix ? 'fixed' : 'absolute'
+  }">
     <!-- <check-login/> -->
     <div v-if="navishow">
       <a class="logoa hvr-buzz-out" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt="" /></a>
@@ -211,6 +213,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    fix: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -275,10 +281,6 @@ export default {
     },
     changeSakuraInit() {
       this.value2 = this.$store.state.showSakura;
-      console.log("showSakura", this.$store.state.showSakura);
-      //   this.$nextTick(() => {
-      //    this.$store.commit("changeShowSakura", this.value2);
-      //   });
     },
     getRandomHots() {
       this.randomHots = [];
