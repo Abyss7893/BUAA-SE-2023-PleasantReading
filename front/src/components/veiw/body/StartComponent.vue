@@ -238,7 +238,7 @@ export default {
 .startquote {
   font-family: kaiti;
   max-width: 700px;
-  color: #e2e6ec;
+  color: #ffffff;
   white-space: normal;
   max-height: 200px;
   word-break: break-all;
@@ -305,7 +305,7 @@ export default {
   color: #fff;
   margin-bottom: 20px;
   max-height: 100px;
-  text-shadow: 2px 1px #000000b5;
+  text-shadow: 1px 1px #000000b5;
 }
 
 .start-button {
