@@ -393,7 +393,14 @@ export default {
 }
 </script>
 <style scoped>
-
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
 
 /* Generic */
 body {
@@ -431,7 +438,7 @@ body {
   margin-bottom: 10px;
 }
 
-.main .container {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
