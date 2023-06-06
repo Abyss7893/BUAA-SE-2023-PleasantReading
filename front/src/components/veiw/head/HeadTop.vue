@@ -30,7 +30,7 @@
       </li>
       <li navi-id="3">
         <a href="#" @mouseenter="showBookRank" @mouseleave="closeBookRank">
-          <div class="navi-word" >作品排行</div>
+          <div class="navi-word">作品排行</div>
           <book-rank :style="{ display: bookRank ? 'flex' : 'none' }"></book-rank>
         </a>
       </li>
@@ -182,7 +182,7 @@
     </div>
     <HeartSwitch v-if="navishow" :switch="value2" @swithChange="swithChange"></HeartSwitch>
   <!-- <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
-                                      style="--el-switch-on-color: #f8b2b2" /> -->
+                                          style="--el-switch-on-color: #f8b2b2" /> -->
   </div>
 </template>
 
@@ -289,19 +289,6 @@ export default {
         this.$store.commit("changeShowSakura", this.value2);
       });
     },
-<<<<<<< HEAD
-=======
-    changeSakuraInit() {
-      let temp = this.$store.state.showSakura ? true : false;
-      console.log("init showSakura", this.$store.state.showSakura);
-      this.$store.commit("changeShowSakura", false);
-      console.log("init showSakura", temp);
-
-      this.value2 = temp;
-      this.$store.commit("changeShowSakura", this.value2);
-
-    },
->>>>>>> 7a0073dce109f2b537902cbec6ec4625ff3046bf
     getRandomHots() {
       this.randomHots = [];
       for (let k = 0; k < 5; k++) {
@@ -371,13 +358,13 @@ export default {
         if (!this.$refs.login.showStatus()) this.$refs.login.changeForm();
       }, 200);
     },
-    showBookRank(){
+    showBookRank() {
 
-      this.bookRank=true;
+      this.bookRank = true;
     },
-    closeBookRank(){
+    closeBookRank() {
 
-      this.bookRank=false;
+      this.bookRank = false;
     },
     showRecommendCard() {
       this.recommendCard = true;
@@ -687,7 +674,7 @@ export default {
   width: 64px;
   display: flex;
   justify-content: center;
-  line-height: 76px;
+  line-height: 64px;
   height: 56px;
   /* color: #fff; */
   font-size: 16px;
@@ -737,13 +724,13 @@ export default {
     transform: translateY(0);
   }
 }
-.hover-card{
+
+.hover-card {
   display: none;
   width: 300px;
   height: 500px;
   position: relative;
-  margin-top:500px;
+  margin-top: 500px;
   background-color: #ff7575;
 }
-
 </style>
