@@ -281,7 +281,7 @@ export default {
       }
     }
     async function register() {
-      const emailReg = /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/;
+      const emailReg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/;
       if (!emailReg.test(userRegisterForm.email)) {
         ElMessage({
           message: '请输入正确的邮箱地址',
