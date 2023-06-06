@@ -29,8 +29,9 @@
         </a>
       </li>
       <li navi-id="3">
-        <a href="#" class="hover-me">
-          <div class="navi-word">作品排行</div>
+        <a href="#" @mouseenter="showBookRank" @mouseleave="closeBookRank">
+          <div class="navi-word" >作品排行</div>
+          <book-rank :style="{ display: bookRank ? 'flex' : 'none' }"></book-rank>
         </a>
       </li>
     </div>
@@ -193,6 +194,7 @@ import { mapGetters } from "vuex";
 import { ElAvatar, ElDialog } from "element-plus";
 import RecommendCard from "./RecommendCard.vue";
 import popUserInfo from "./popUserInfo.vue";
+import BookRank from './BookRank.vue'
 export default {
   name: "Head_Top",
   components: {
@@ -201,6 +203,7 @@ export default {
     newLogin,
     ElDialog,
     RecommendCard,
+    BookRank
   },
   props: {
     navishow: {
@@ -242,6 +245,8 @@ export default {
       popShow: 0,
       throttling1: false,
       recommendCard: false,
+      bookRank: false,
+
     };
   },
 
@@ -355,6 +360,14 @@ export default {
       setTimeout(() => {
         if (!this.$refs.login.showStatus()) this.$refs.login.changeForm();
       }, 200);
+    },
+    showBookRank(){
+
+      this.bookRank=true;
+    },
+    closeBookRank(){
+
+      this.bookRank=false;
     },
     showRecommendCard() {
       this.recommendCard = true;
@@ -692,7 +705,7 @@ export default {
 
 .left-navi a div.navi-word {
   position: absolute;
-  bottom: 0;
+
   height: 100%;
 }
 
@@ -714,4 +727,13 @@ export default {
     transform: translateY(0);
   }
 }
+.hover-card{
+  display: none;
+  width: 300px;
+  height: 500px;
+  position: relative;
+  margin-top:500px;
+  background-color: #ff7575;
+}
+
 </style>
