@@ -53,7 +53,7 @@ export default {
     return {
       bookids: [],
       pages: 0,
-      books: ["123"],
+      books: [],
     }
   },
   methods: {
