@@ -2,11 +2,7 @@
   <div class="book-gallery">
     <!-- <div class="book-row" v-for="(row, rowIndex) in bookRows" :key="rowIndex"> -->
     <div v-if="displayedBooks.length > 1">
-      <div
-        class="book-row"
-        v-for="(row, rowIndex) in displayedBooks"
-        :key="rowIndex"
-      >
+      <div class="book-row" v-for="(row, rowIndex) in displayedBooks" :key="rowIndex">
         <!-- <el-col v-for="book in displayedBooks" :key="book.id" :span="12"> -->
         <el-row :gutter="40">
           <el-col v-for="book in row" :key="book.id" :span="12">
@@ -18,11 +14,7 @@
       </div>
     </div>
     <div v-if="displayedBooks.length == 1">
-      <div
-        class="book-row"
-        v-for="(row, rowIndex) in displayedBooks"
-        :key="rowIndex"
-      >
+      <div class="book-row" v-for="(row, rowIndex) in displayedBooks" :key="rowIndex">
         <!-- <el-col v-for="book in displayedBooks" :key="book.id" :span="12"> -->
         <book-mini-card :book="row[0]"></book-mini-card>
 
@@ -30,47 +22,22 @@
       </div>
     </div>
     <div class="pagination" v-if="displayedBooks.length > 1">
-      <el-button
-        type="danger"
-        plain
-        @click="firstPage"
-        :disabled="currentPage === 1"
-        >首页</el-button
-      >
-      <el-button
-        type="danger"
-        plain
-        @click="previousPage"
-        :disabled="currentPage === 1"
-      >
+      <el-button type="danger" plain @click="firstPage" :disabled="currentPage === 1">首页</el-button>
+      <el-button type="danger" plain @click="previousPage" :disabled="currentPage === 1">
         上一页
       </el-button>
       <!-- <div > -->
       <span class="nuber"> 第{{ this.currentPage }}页 </span>
       <!-- </div>/ -->
-      <el-button
-        type="danger"
-        plain
-        @click="nextPage"
-        :disabled="currentPage * pageSize >= books.length"
-      >
+      <el-button type="danger" plain @click="nextPage" :disabled="currentPage * pageSize >= books.length">
         下一页
       </el-button>
-      <el-button
-        type="danger"
-        plain
-        @click="lastPage"
-        :disabled="currentPage * pageSize >= books.length"
-      >
+      <el-button type="danger" plain @click="lastPage" :disabled="currentPage * pageSize >= books.length">
         尾页
       </el-button>
     </div>
     <div v-if="displayedBooks.length == 0">
-      <el-empty
-        description="暂无书籍"
-        :image="require('assets/imgs/book_null.png')"
-        image-size="300px"
-      />
+      <el-empty description="暂无书籍" :image="require('assets/imgs/book_null.png')" image-size="300px" />
     </div>
   </div>
 </template>
