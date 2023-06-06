@@ -494,7 +494,7 @@ def getRecentHistory(request):
         return JsonResponse({'message': 'login please'}, status=201)
     userid = getUsername(request)
 
-    latest_history = History.objects.filter(userID=userid).filter(bookID=OuterRef('bookID')).order_by('timestamp')
+    latest_history = History.objects.filter(userID=userid).filter(bookID=OuterRef('bookID')).order_by('-timestamp')
     result = History.objects.filter(id=Subquery(latest_history.values('id')[:1]))
     print(result.order_by('timestamp').values('bookID', 'chapter', 'userID'))
 
