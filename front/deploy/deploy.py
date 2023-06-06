@@ -2,6 +2,12 @@ import subprocess
 import sys
 import paramiko  # 是py的第三方库，需要自己使用pip安装
 import os
+ret = subprocess.call("npm install", shell=True)
+print(f"安装完毕,状态码为:{ret}")
+if ret != 0:
+    print("安装出错!请检查文件配置")
+    sys.exit()
+
 ret = subprocess.call("npm run build", shell=True)
 print(f"打包完毕,状态码为:{ret}")
 if ret != 0:
@@ -15,7 +21,7 @@ if ret != 0:
     sys.exit()
 
 trans = paramiko.Transport('47.120.6.129', 22)  # 此处为服务器ip和端口，可自行更改
-trans.connect(username='root', password="###")
+trans.connect(username='root', password="91216wyf@")
 sftp = paramiko.SFTPClient.from_transport(trans)
 path = os.path.abspath('.') + '\dist\PleasantReading.war'
 print(f'传递文件绝对位置为{path}')
@@ -27,7 +33,7 @@ ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 # 链接服务器
 ssh.connect(hostname='47.120.6.129', port=22,
-            username='root', password="###")
+            username='root', password="91216wyf@")
 command = "cd /PleasantReading/front; rm -rf dist; unzip PleasantReading.war -d dist;rm -rf PleasantReading.war; nginx -s reload;"
 stdin, stdout, stderr = ssh.exec_command(command)
 res = stdout.read()

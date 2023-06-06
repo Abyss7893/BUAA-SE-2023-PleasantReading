@@ -151,14 +151,6 @@ export function startSakura() {
 }
 
 
-window.onresize = function () {
-  let canvasSnow = document.getElementById('canvas_sakura');
-  canvasSnow.width = window.innerWidth;
-  canvasSnow.height = window.innerHeight;
-}
-
-
-
 export function stopp() {
   if (staticx) {
     let child = document.getElementById("canvas_sakura");

@@ -180,8 +180,9 @@
         </li>
       </ul>
     </div>
-    <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
-      style="--el-switch-on-color: #f8b2b2" />
+    <HeartSwitch v-if="navishow" :switch="value2" @swithChange="swithChange"></HeartSwitch>
+  <!-- <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
+                                      style="--el-switch-on-color: #f8b2b2" /> -->
   </div>
 </template>
 
@@ -195,6 +196,7 @@ import { ElAvatar, ElDialog } from "element-plus";
 import RecommendCard from "./RecommendCard.vue";
 import popUserInfo from "./popUserInfo.vue";
 import BookRank from './BookRank.vue'
+import HeartSwitch from "./HeartSwitch.vue";
 export default {
   name: "Head_Top",
   components: {
@@ -203,7 +205,8 @@ export default {
     newLogin,
     ElDialog,
     RecommendCard,
-    BookRank
+    BookRank,
+    HeartSwitch,
   },
   props: {
     navishow: {
@@ -249,7 +252,6 @@ export default {
 
     };
   },
-
   computed: {
     avatar() {
       return this.$store.state.userAvatar;
@@ -266,10 +268,12 @@ export default {
     loginshow() {
       this.showLogin = true;
     },
+    value2(val) {
+      this.$store.commit('changeShowSakura', val)
+    }
   },
   created() {
     this.getRandomHots();
-    this.changeSakuraInit();
   },
   mounted() {
     this.keywords = this.$route.query.keywords
@@ -277,17 +281,13 @@ export default {
       : "";
   },
   methods: {
+    swithChange(val) {
+      this.value2 = val
+    },
     changeSakura() {
       this.$nextTick(() => {
         this.$store.commit("changeShowSakura", this.value2);
       });
-    },
-    changeSakuraInit() {
-      let temp = this.$store.state.showSakura ? true : false;
-      this.$store.commit("changeShowSakura", false);
-      this.value2 = temp;
-      this.$store.commit("changeShowSakura", this.value2);
-
     },
     getRandomHots() {
       this.randomHots = [];
