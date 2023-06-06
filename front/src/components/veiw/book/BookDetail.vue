@@ -13,11 +13,7 @@
                   <h1 class="book-name flex-view">
                     {{ detailData.title }}
                     <span>
-                      <a
-                        :href="'/author/' + detailData.author"
-                        class="author-name"
-                        >{{ detailData.author }}著</a
-                      >
+                      <a :href="'/author/' + detailData.author" class="author-name">{{ detailData.author }}著</a>
                     </span>
                   </h1>
                   <!-- <el-divider></el-divider> -->
@@ -39,11 +35,8 @@
                   <div class="translators flex-view" style="">
                     <span class="rate-text">评分：</span>
                     <span class="name rate-text">{{ detailData.rating }}</span>
-                    <el-rate
-                      v-model="detailData.rating"
-                      style="--el-rate-fill-color: #ff7d7dc9"
-                      :disabled="true"
-                    ></el-rate>
+                    <el-rate v-model="detailData.rating" style="--el-rate-fill-color: #ff7d7dc9"
+                      :disabled="true"></el-rate>
                     <!-- <span class="name">{{ detailData.size }}</span> -->
                   </div>
 
@@ -71,22 +64,14 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  v-if="!isColected"
-                  class="count-item flex-view pointer"
-                  @click="collect()"
-                >
+                <div v-if="!isColected" class="count-item flex-view pointer" @click="collect()">
                   <div class="count-box flex-view hvr-bounce-to-right">
                     <div class="count-text-box">
                       <span class="count-title">收藏</span>
                     </div>
                   </div>
                 </div>
-                <div
-                  v-if="isColected"
-                  class="count-item flex-view pointer hvr-bounce-to-right"
-                  @click="collect()"
-                >
+                <div v-if="isColected" class="count-item flex-view pointer hvr-bounce-to-right" @click="collect()">
                   <div class="count-box flex-view">
                     <div class="count-text-box">
                       <span class="count-title">已收藏</span>
@@ -100,10 +85,7 @@
                   </div>
                 </div>
               </div> -->
-                <div
-                  class="count-item flex-view pointer"
-                  @click="showRate = !showRate"
-                >
+                <div class="count-item flex-view pointer" @click="showRate = !showRate">
                   <div class="count-box flex-view hvr-bounce-to-right">
                     <div class="count-text-box">
                       <span class="count-title">评分</span>
@@ -111,30 +93,16 @@
                   </div>
                 </div>
                 <transition name="el-fade-in">
-                  <div
-                    v-if="showRate"
-                    class="animate__fadeInDown animate__fadeOutDown translators flex-view"
-                    style="flex-direction: column"
-                  >
+                  <div v-if="showRate" class="animate__fadeInDown animate__fadeOutDown translators flex-view"
+                    style="flex-direction: column">
                     <!-- <span class="rate-text">评分：</span> -->
                     <!-- <span class="name rate-text">{{ detailData.rating }}</span> -->
                     <div class="rate-loyar">
-                      <el-rate
-                        v-model="valueRate"
-                        allow-half
-                        style="--el-rate-fill-color: #ff7d7dc9"
-                        :texts="['shit', '厕纸', '一般', '好好好', '神中神']"
-                        show-text
-                      ></el-rate>
+                      <el-rate v-model="valueRate" allow-half style="--el-rate-fill-color: #ff7d7dc9"
+                        :texts="['shit', '厕纸', '一般', '好好好', '神中神']" show-text></el-rate>
                     </div>
                     <div>
-                      <el-button
-                        type="danger"
-                        plain
-                        size="small"
-                        @click="submitRate"
-                        >提交</el-button
-                      >
+                      <el-button type="danger" plain size="small" @click="submitRate">提交</el-button>
                     </div>
                     <!-- <span class="name">{{ detailData.size }}</span> -->
                   </div>
@@ -147,36 +115,19 @@
           <div v-show="isContent">
             <el-divider>
               目录
-              <el-icon
-                v-show="Order"
-                @click="changeOrder"
-                style="--color: #315c9e"
-              >
+              <el-icon v-show="Order" @click="changeOrder" style="--color: #315c9e">
                 <SortDown />
               </el-icon>
-              <el-icon
-                v-show="!Order"
-                @click="changeOrder"
-                style="--color: #315c9e"
-              >
+              <el-icon v-show="!Order" @click="changeOrder" style="--color: #315c9e">
                 <SortUp />
               </el-icon>
             </el-divider>
 
             <div class="novel-directory">
-              <div
-                v-for="(row, index) in rows"
-                :key="index"
-                class="directory-row"
-              >
+              <div v-for="(row, index) in rows" :key="index" class="directory-row">
                 <!-- <a href="#"> -->
-                <div
-                  v-for="chapter in row"
-                  :key="chapter.id"
-                  class="chapter-title hvr-radial-out"
-                  @click="gotoReadChapter(chapter.id)"
-                  style="cursor: pointer"
-                >
+                <div v-for="chapter in row" :key="chapter.id" class="chapter-title hvr-radial-out"
+                  @click="gotoReadChapter(chapter.id)" style="cursor: pointer">
                   {{ chapter.title }}
                 </div>
                 <!-- </a> -->
@@ -294,7 +245,7 @@ export default {
             this.alertMessage();
           }
         })
-        .catch(() => {});
+        .catch(() => { });
     },
     alertMessage() {
       ElMessage({
@@ -303,12 +254,7 @@ export default {
       });
     },
     generateChater() {
-      // for (let i = 1; i <= 400; i++) {
-      //   i;
-      //   this.chapters.push({ id: i, title: "Chapter " + i });
-      // }
       getBookContent(this.bookId).then((bookContents) => {
-        // console.log(bookContents);
         for (let content of bookContents.outline) {
           this.chapters.push(content);
         }
@@ -357,9 +303,7 @@ export default {
     this.bookId = this.$route.params.id;
     this.initRating();
     getBookDetiles(this.bookId).then((data) => {
-      // console.log(data);
       this.isColected = data.fav;
-      // console.log(data);
       this.detailData = {
         cover: data.cover,
         title: data.title,
@@ -377,7 +321,6 @@ export default {
     });
     // this.generateChater();
     getBookContent(this.bookId).then((bookContents) => {
-      console.log(bookContents);
       let i = 1;
       for (let content of bookContents.outline) {
         this.chapters.push({ id: i, title: content });
@@ -902,9 +845,11 @@ export default {
 .flex-view {
   display: flex;
 }
+
 .detail-content-top {
   min-height: 410px;
 }
+
 .book-comment {
   .title {
     font-weight: 600;

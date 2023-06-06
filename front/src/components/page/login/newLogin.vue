@@ -229,8 +229,8 @@ export default {
               });
             axios
               .get('http://154.8.183.51/book/briefinfo')
-              .then((res)=>{
-                store.commit('updateNum',res.data)
+              .then((res) => {
+                store.commit('updateNum', res.data)
               })
             axios
               .get(
@@ -243,13 +243,13 @@ export default {
 
               })
               .catch(() => {
-                
+
               });
 
           })
           .catch(() => {
             // 处理登录错误
-            
+
             userLoginForm.password = userLoginForm.username = "";
             ElMessage({
               message: '账号或密码错误',
@@ -259,7 +259,7 @@ export default {
             main.value.classList.remove("disable")
           });
       } catch (_) {
-        
+
         // 处理错误
         userLoginForm.password = userLoginForm.username = "";
       }
@@ -310,7 +310,6 @@ export default {
             }
           })
         if (res.status === 200) {
-          console.log(res.data.message)
           if (res.data.message === 'success') {
             //注册成功
             ElMessage({

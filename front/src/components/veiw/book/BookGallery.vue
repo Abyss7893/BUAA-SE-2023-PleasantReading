@@ -1,11 +1,7 @@
 <template>
   <div class="book-gallery">
     <!-- <div class="book-row" v-for="(row, rowIndex) in bookRows" :key="rowIndex"> -->
-    <div
-      class="book-row"
-      v-for="(row, rowIndex) in displayedBooks"
-      :key="rowIndex"
-    >
+    <div class="book-row" v-for="(row, rowIndex) in displayedBooks" :key="rowIndex">
       <!-- <el-col v-for="book in displayedBooks" :key="book.id" :span="12"> -->
       <el-row :gutter="40">
         <el-col v-for="book in row" :key="book.id" :span="12">
@@ -16,38 +12,17 @@
       <el-divider />
     </div>
     <div class="pagination">
-      <el-button
-        type="danger"
-        plain
-        @click="firstPage"
-        :disabled="currentPage === 1"
-        >首页</el-button
-      >
-      <el-button
-        type="danger"
-        plain
-        @click="previousPage"
-        :disabled="currentPage === 1"
-      >
+      <el-button type="danger" plain @click="firstPage" :disabled="currentPage === 1">首页</el-button>
+      <el-button type="danger" plain @click="previousPage" :disabled="currentPage === 1">
         上一页
       </el-button>
       <!-- <div > -->
       <span class="nuber"> 第{{ this.currentPage }}页 </span>
       <!-- </div>/ -->
-      <el-button
-        type="danger"
-        plain
-        @click="nextPage"
-        :disabled="currentPage * pageSize >= books.length"
-      >
+      <el-button type="danger" plain @click="nextPage" :disabled="currentPage * pageSize >= books.length">
         下一页
       </el-button>
-      <el-button
-        type="danger"
-        plain
-        @click="lastPage"
-        :disabled="currentPage * pageSize >= books.length"
-      >
+      <el-button type="danger" plain @click="lastPage" :disabled="currentPage * pageSize >= books.length">
         尾页
       </el-button>
     </div>
@@ -86,13 +61,11 @@ export default {
     };
   },
   created() {
-    // this.generateTestData();
     var defaultOptions = this.Option;
     for (let key in defaultOptions) {
-      // console.log(key, defaultOptions[key]);
+
       if (defaultOptions[key] === "null") defaultOptions[key] = "";
     }
-    // console.log(defaultOptions);
     this.flashData(defaultOptions);
   },
 
@@ -178,10 +151,6 @@ export default {
               status: data.status,
               simpleSizes: this.getSimpleSize(data.cnt),
             };
-            if (i === 1) {
-              console.log(data);
-              console.log(this.books[i]);
-            }
             i++;
           });
           j++;
@@ -260,7 +229,6 @@ export default {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
       const tmpbook = this.books.slice(startIndex, endIndex);
-      // // console.log(tmpbook);
       const rows = [];
       let row = [];
       for (let i = 0; i < tmpbook.length; i++) {

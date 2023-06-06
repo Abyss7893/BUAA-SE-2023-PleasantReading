@@ -72,7 +72,6 @@ export default {
     },
   },
   created() {
-    console.log(this.value)
     this.book = this.bookinfo
   },
   mounted() { }

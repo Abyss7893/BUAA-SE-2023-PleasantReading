@@ -6,15 +6,15 @@
     </div>
     <div class="bubble">
       <p>下次不要忘记密码噢QAQ</p>
-   </div>
+    </div>
     <div class="form-container">
       <el-form ref="form" :model="formData" :rules="rules" label-width="100px">
-        <el-form-item label="邮箱" prop="email" >
-            <el-input  v-model.trim="formData.email" />
-          </el-form-item>
-        <el-form-item label="账号" prop="username" >
-            <el-input  v-model.trim="formData.username" />
-          </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model.trim="formData.email" />
+        </el-form-item>
+        <el-form-item label="账号" prop="username">
+          <el-input v-model.trim="formData.username" />
+        </el-form-item>
         <el-form-item label="新密码" prop="password">
           <el-input type="password" v-model.trim="formData.password" />
         </el-form-item>
@@ -35,7 +35,7 @@
 <script>
 import axios from 'axios';
 import { ref } from 'vue';
-import { ElForm, ElFormItem, ElInput, ElButton ,ElMessage} from 'element-plus';
+import { ElForm, ElFormItem, ElInput, ElButton, ElMessage } from 'element-plus';
 import '../../../../node_modules/element-plus/theme-chalk/index.css';
 //import axios from 'axios';
 
@@ -49,12 +49,12 @@ export default {
   emits: ['submit'],
   setup(_, { emit }) {
 
-    let waitCheck=ref(false)
+    let waitCheck = ref(false)
     const formData = ref({
       email: '',
       password: '',
       confirmPassword: '',
-      username:''
+      username: ''
     });
     const rules = {
       email: [
@@ -83,7 +83,7 @@ export default {
       }
     }
     // 提交表单
-    
+
     function submitForm() {
       const data = {
         email: formData.value.email,
@@ -96,27 +96,25 @@ export default {
         console.log('1');
       }, 1000);
       axios.post('http://154.8.183.51/user/sendemail', data)
-        .then(response => {
-          console.log(response.data);
-
+        .then(() => {
           ElMessage({
             message: '邮箱验证码已发送,请查收',
             grouping: true,
             type: 'success',
           })
-         
+
           emit('submit')
           // 处理响应数据
         })
         .catch(error => {
-          if(error.response.data.error=='not match'){
+          if (error.response.data.error == 'not match') {
             ElMessage({
               message: '用户名与邮箱不匹配',
               grouping: true,
               type: 'error',
             })
           }
-          else{
+          else {
             ElMessage({
               message: '已超时,请重新处理',
               grouping: true,
@@ -130,18 +128,18 @@ export default {
           waitCheck.value = false;
           loader.classList.remove('visible'); // 隐藏加载器
         });
-      
-      
+
+
     }
 
     // 重置表单
     function resetForm() {
-      waitCheck.value=false;
+      waitCheck.value = false;
       formData.value = {
         email: '',
         password: '',
         confirmPassword: '',
-        username:''
+        username: ''
       };
       document.querySelectorAll('.el-form-item.is-error').forEach((item) => {
         item.classList.remove('is-error');
@@ -150,13 +148,13 @@ export default {
         item.style.display = 'none';
       });
     }
-   
+
 
     return {
       formData,
       rules,
       waitCheck,
-      
+
       submitForm,
       resetForm
     };
@@ -176,12 +174,19 @@ export default {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
 .loader.visible {
   display: block;
 }
+
 .loader:not(.visible) {
   display: none;
 }
@@ -191,10 +196,12 @@ export default {
   align-items: center;
   /* 垂直居中 */
 }
-.image{
+
+.image {
   width: 30%;
   display: inline-flex;
 }
+
 .image img {
   border-radius: 10px;
   width: 100%;
@@ -210,31 +217,30 @@ export default {
   width: 55%;
   /* 填满剩余空间 */
 }
+
 .bubble {
-    position: relative;
-    border-radius: 20px;
-    background-color:lightgray;
-    color: black;
-   
-    font-size: 1em;
-    margin-bottom: auto;
-    padding: 20px 20px;
-    /* bottom: 100px; */
-    width: 15%;
-    height: auto;
+  position: relative;
+  border-radius: 20px;
+  background-color: lightgray;
+  color: black;
+
+  font-size: 1em;
+  margin-bottom: auto;
+  padding: 20px 20px;
+  /* bottom: 100px; */
+  width: 15%;
+  height: auto;
 }
 
 .bubble::after {
-    content: "";
-    position: absolute;
-    display: block;
-    bottom: 0px; 
-    left: 0px;
-    width: 0;
-    height: 0;
-    border-bottom: 20px solid lightgray; 
-    border-right: 20px solid transparent;
+  content: "";
+  position: absolute;
+  display: block;
+  bottom: 0px;
+  left: 0px;
+  width: 0;
+  height: 0;
+  border-bottom: 20px solid lightgray;
+  border-right: 20px solid transparent;
 }
-
-
 </style>

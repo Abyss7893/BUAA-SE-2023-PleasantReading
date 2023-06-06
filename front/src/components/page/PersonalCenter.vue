@@ -11,7 +11,7 @@
       <PayComponent />
     </ElDialog>
     <!-- <ElDialog v-model="showChangePwd" v-if="showChangePwd" draggable style="border: none; background-color: transparent;" modal="true"  :destroy-on-close="true" width="25%"> -->
-      <ChangePwd class="change-pwd" v-if="showChangePwd" @close="showChangePwd = false" />
+    <ChangePwd class="change-pwd" v-if="showChangePwd" @close="showChangePwd = false" />
     <!-- </ElDialog> -->
     <div class="PersonTop">
       <div class="PersonTop_image">
@@ -49,16 +49,16 @@
           </div>
           <el-divider style="width: 500px; margin: 20px 0 0 20px;"></el-divider>
           <div class="user_num">
-            <div class="collections"  @click="$router.push('/mybook')">
-              <div class="num_number">{{num.collections}}</div>
+            <div class="collections" @click="$router.push('/mybook')">
+              <div class="num_number">{{ num.collections }}</div>
               <span class="num_text">收藏</span>
             </div>
-            <div class="mark"  @click="$router.push('/mark')">
-              <div class="num_number">{{num.marks}}</div>
+            <div class="mark" @click="$router.push('/mark')">
+              <div class="num_number">{{ num.marks }}</div>
               <span class="num_text">书签</span>
             </div>
             <div class="note" @click="$router.push('/mynote')">
-              <div class="num_number" >{{num.notes}}</div>
+              <div class="num_number">{{ num.notes }}</div>
               <span class="num_text">笔记</span>
             </div>
           </div>
@@ -99,7 +99,7 @@
               <el-icon>
                 <Notebook />
               </el-icon>
-              <span class="text" >我的笔记</span>
+              <span class="text">我的笔记</span>
             </el-menu-item>
             <el-menu-item class="menu-item" @click="$router.push('/mark')">
               <el-icon>
@@ -196,7 +196,7 @@ export default {
         store.commit('updateNum', value);
       }
     });
-    
+
     const VIP = computed(() => {
       return store.state.isVip;
     });
@@ -211,7 +211,6 @@ export default {
     }
     function openPayDia() {
       showPayDialog.value = true;
-      console.log(num)
     }
     function setAvatar() {
       const input = document.createElement('input');
@@ -462,13 +461,15 @@ export default {
   color: #f8b2b27d;
   cursor: pointer;
 }
+
 .user_num .collections:hover .num_text,
 .user_num .note:hover .num_text,
 .user_num .mark:hover .num_text {
   color: #f8b2b27d;
   cursor: pointer;
 }
-.user_num{
+
+.user_num {
   width: 200px;
   height: 100px;
   margin: -50px 0 0 20px;
@@ -539,10 +540,10 @@ export default {
   margin-top: 40px;
   margin-right: 30px;
 }
-.change-pwd{
+
+.change-pwd {
   z-index: 1000;
   display: flex;
   position: absolute;
   margin: 200px 0 0 600px;
-}
-</style>
+}</style>

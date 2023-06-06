@@ -1,17 +1,11 @@
 <template>
   <div style="border-left: 2px solid #dfe1e3;margin-top: 30px;">
     <div class="block-col-2">
-      <el-dropdown
-        @command="handleCommand"
-        style="line-height: 150%"
-        trigger="hover"
-        
-      >
+      <el-dropdown @command="handleCommand" style="line-height: 150%" trigger="hover">
         <span class="demonstration ">
           {{ cod
           }}<el-icon class="el-icon--right">
-            <arrow-down /><i class="arrow-down"></i
-          ></el-icon>
+            <arrow-down /><i class="arrow-down"></i></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu class="rank-dropdown-menu">
@@ -99,9 +93,7 @@ export default {
 
   methods: {
     handleCommand(command) {
-      // console.log(this.$refs);
       let books = this.$refs.child.books;
-      console.log(books);
 
       if (command === "1") {
         books.sort((a, b) => b.rating - a.rating);
@@ -128,17 +120,10 @@ export default {
         this.cod = "按收藏升序";
       }
     },
-    // f() {
-    //   this.handleCommand("1");
-    //   console.log("11");
-    // },
     setFilteredNovelList(newValue) {
       this.filteredNovelList = newValue;
     },
   },
-  // created(){
-  //   this.f();
-  // },
 
   watch: {
     "$route.query": function (newValue, oldValue) {
@@ -171,6 +156,7 @@ export default {
   --el-dropdown-menuItem-hover-fill: rgb(255, 132, 132);
   --el-dropdown-menuItem-hover-color: #f9f9f9;
 }
+
 .block-col-2 .demonstration {
   display: inline-block;
   /* 将 display 属性改为 inline-block */

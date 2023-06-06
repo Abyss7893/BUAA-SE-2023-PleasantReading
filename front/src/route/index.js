@@ -123,8 +123,8 @@ router.beforeEach((to, from, next) => {
   // 如果token过期了
   if (token && flag) {
     ElMessage.error("用户登录过期，请重新登录")
-    this.$store.commit("signOut")
-
+    if (this.$store)
+      this.$store.commit("signOut")
   }
   next()
 })

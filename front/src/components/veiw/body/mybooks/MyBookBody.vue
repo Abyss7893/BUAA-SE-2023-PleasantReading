@@ -6,66 +6,42 @@
       <div class="box-center">
         <el-divider />
         <div v-if="!this.$store.state.isLogin">
-          <el-empty
-            description="未登录ovo"
-            :image="require('assets/imgs/unlogin.gif')"
-            image-size="200px"
-          />
-          <div
-            style="
-              margin: auto;
-              width: 400px;
-              margin-top: 30px;
-              align-items: center;
-            "
-          >
-            <div
-              class="btn twinkle"
-              @click="
-                () => {
-                  this.$store.commit('showlogin');
-                }
-              "
-            >
+          <el-empty description="未登录ovo" :image="require('assets/imgs/unlogin.gif')" image-size="200px" />
+          <div style="
+                margin: auto;
+                width: 400px;
+                margin-top: 30px;
+                align-items: center;
+              ">
+            <div class="btn twinkle" @click="
+              () => {
+                this.$store.commit('showlogin');
+              }
+            ">
               登录
             </div>
           </div>
         </div>
         <div v-else>
           <div v-if="mybooks.length === 0">
-            <el-empty
-              description="暂无书籍"
-              :image="require('assets/imgs/book_null.png')"
-              image-size="300px"
-            />
+            <el-empty description="暂无书籍" :image="require('assets/imgs/book_null.png')" image-size="300px" />
           </div>
           <div v-else>
             <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
-              <el-col
-                v-for="o in colsize"
-                :key="(ro - 1) * colsize + o - 1"
-                :span="24 / colsize"
-              >
-                <book-card
-                  :cover="mybooks[(ro - 1) * colsize + o - 1].cover"
+              <el-col v-for="o in colsize" :key="(ro - 1) * colsize + o - 1" :span="24 / colsize">
+                <book-card :cover="mybooks[(ro - 1) * colsize + o - 1].cover"
                   :name="mybooks[(ro - 1) * colsize + o - 1].name"
-                  :bookid="mybooks[(ro - 1) * colsize + o - 1].bookid"
-                ></book-card>
+                  :bookid="mybooks[(ro - 1) * colsize + o - 1].bookid"></book-card>
               </el-col>
               <el-divider />
             </el-row>
             <div v-if="mybooks.length - (rownum - 1) * colsize > 0">
               <el-row gutter="60">
-                <el-col
-                  v-for="o in mybooks.length - (rownum - 1) * colsize"
-                  :key="(rownum - 1) * colsize + o - 1"
-                  :span="24 / colsize"
-                >
-                  <book-card
-                    :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
+                <el-col v-for="o in mybooks.length - (rownum - 1) * colsize" :key="(rownum - 1) * colsize + o - 1"
+                  :span="24 / colsize">
+                  <book-card :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
                     :name="mybooks[(rownum - 1) * colsize + o - 1].name"
-                    :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid"
-                  />
+                    :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid" />
                 </el-col>
                 <el-divider />
               </el-row>
@@ -96,16 +72,8 @@ export default {
   },
   methods: {},
   created() {
-    // for (let i = 0; i < 99; i++) {
-    //   this.mybooks.push({
-    //     name: "逆天邪ddddddddddddddddddd神",
-    //     cover: require("../../../../assets/imgs/bookcv.png"),
-    //   });
-    // }
-
     this.$nextTick(() => {
       getMyBook().then((data) => {
-        // // console.log(data);
         try {
           if ("books" in data)
             for (let book of data.books) {
@@ -119,7 +87,6 @@ export default {
         } catch (e) {
           console.log(e);
         }
-        // // console.log(this.mybooks);
       });
     });
   },

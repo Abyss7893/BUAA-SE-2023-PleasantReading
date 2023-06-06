@@ -49,24 +49,9 @@ export default {
     };
   },
   methods: {
-    // handleScroll(event) {
-    //   // 获取滚动容器的scrollTop属性，表示滚动的距离
-    //   const scrollTop = event.target.scrollTop;
-
-    //   // 定义允许向下滚动的距离
-    //   const allowedScrollDistance = 1.06 * window.innerHeight; // 100为示例值，您可以根据实际情况调整
-
-    //   // 判断是否允许向上滚动
-    //   if (scrollTop > allowedScrollDistance) {
-    //     // 如果滚动距离超过允许的距离，禁止向上滚动
-    //     event.target.scrollTop = allowedScrollDistance;
-    //     console.log("scrollTop: " + scrollTop);
-    //   }
-    // },
     hideStartComponent() {
       setTimeout(() => {
         this.showHeadAndFoot = true;
-        // startSakura();
       }, 50);
     },
   },

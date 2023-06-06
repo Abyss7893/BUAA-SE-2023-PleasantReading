@@ -1,47 +1,24 @@
 <template>
   <div>
     <!-- <transition name="fade"> -->
-    <div
-      class="video-box"
-      :style="{
+    <div class="video-box" :style="{
+      // backgroundImage: `url(${backgroundImage})`,
+      marginTop: showComponent ? '' : 'calc(-106vh )',
+    }">
+      <video class="video-background" preload="auto" loop playsinline autoplay :src="backgroundImage" tabindex="-1"
+        muted="muted"></video>
+      <div v-if="hidethis" class="start-component" :class="{ 'start-component-hidden': !showComponent }" :style="{
         // backgroundImage: `url(${backgroundImage})`,
         marginTop: showComponent ? '' : 'calc(-106vh )',
-      }"
-    >
-      <video
-        class="video-background"
-        preload="auto"
-        loop
-        playsinline
-        autoplay
-        :src="backgroundImage"
-        tabindex="-1"
-        muted="muted"
-      ></video>
-      <div
-        v-if="hidethis"
-        class="start-component"
-        :class="{ 'start-component-hidden': !showComponent }"
-        :style="{
-          // backgroundImage: `url(${backgroundImage})`,
-          marginTop: showComponent ? '' : 'calc(-106vh )',
-        }"
-        ref="startComponentRef"
-      >
-        <div
-          style="
-            width: 30%;
-            min-height: 16%;
-            margin-top: 3%;
-            align-items: center;
-            position: relative;
-          "
-        >
-          <img
-            src="../../../assets/logo-yixinyuedu.png"
-            class="start-image"
-            style="position: relative; margin: auto"
-          />
+      }" ref="startComponentRef">
+        <div style="
+              width: 30%;
+              min-height: 16%;
+              margin-top: 3%;
+              align-items: center;
+              position: relative;
+            ">
+          <img src="../../../assets/logo-yixinyuedu.png" class="start-image" style="position: relative; margin: auto" />
         </div>
         <div style="height: 15%">
           <div class="hello-user" style="position: relative">
@@ -56,11 +33,7 @@
         <div v-if="this.$store.state.isLogin" style="max-height: 300px">
           <slide-card> </slide-card>
         </div>
-        <button
-          class="start-button"
-          @click="hideComponent"
-          style="position: relative"
-        >
+        <button class="start-button" @click="hideComponent" style="position: relative">
           {{ this.$store.state.isLogin ? "探索更多" : "开始探索" }} >
         </button>
         <flip-clock style="position: relative; left: -30%; bottom: 7%" />
@@ -127,7 +100,6 @@ export default {
       }
     },
     changeShowLastRead() {
-      console.log(this.showLastRead);
       this.showLastRead = !this.showLastRead;
     },
     typingreverse() {
@@ -144,13 +116,10 @@ export default {
       }
     },
     startBackgroundRotation(index) {
-      // console.log(this.imgs[index]);
       this.backgroundImage = this.backgroundImage = this.imgs[index];
       setInterval(() => {
         index = (index + 1) % this.imgs.length;
         this.backgroundImage = this.imgs[index];
-        // console.log(this.imgs[index]);
-        console.log(this.imgs);
       }, 10000);
     },
     preloadImages(imagePaths, callback) {
@@ -162,7 +131,6 @@ export default {
         loadedCounter++;
         if (loadedCounter === imageCount) {
           // 所有图片加载完成后调用回调函数
-          console.log("Loading", loadedCounter);
           callback();
         }
       }
@@ -183,8 +151,8 @@ export default {
       }
       index = index2;
       const img = new Image();
-      img.onload = () => {};
-      img.onerror = () => {};
+      img.onload = () => { };
+      img.onerror = () => { };
       img.src = this.imgs[index];
 
       setTimeout(() => {
@@ -195,8 +163,6 @@ export default {
   computed: {
     username() {
       // const store = this.$store.state;
-      console.log("是否登录");
-      console.log(this.$store.state.isLogin);
       return this.$store.state.isLogin
         ? this.$store.state.userInfo.username
         : "读者";
@@ -242,18 +208,6 @@ export default {
       "https://i.imgloc.com/2023/05/29/Vtg73Z.jpeg",
       "https://i.imgloc.com/2023/05/29/VtgxD8.jpeg",
     ];
-
-    // for (let i = 0; i < this.imgs.length; i++) {
-    //   this.imgs[i] = require("../../../assets/imgs/homepage/" +
-    //     this.imgs[i].substring(2));
-    // }
-
-    // let img = imgs[Math.floor(Math.random() * imgs.length)];
-    // let path = ;
-    // console.log(path);
-    // let index = Math.floor(Math.random() * this.imgs.length);
-    // this.randomBg(index);
-    // this.backgroundImage = require("./test2.mp4");
     this.backgroundImage =
       "https://leeibo.sh1a.qingstor.com/test2.mp4?expires=1686461028&signature=Bj/9Uc68hCbf2rccniiryxI+DyNJ/fCK7Yi9+56C3sc=&access_key_id=FEOPWMJLWZSOJNLWJHVS"; // "https://public.sn.files.1drv.com/y4m5a7rSF9xTyH2p0-lCHVJcuP5OVBmn41Mjy039JIJozmuQ6Z_tgk0gHqbSpPXeXZfhY4pn3JC8u9neannjT2J49bw_YuRa3a02UpjfuKu5wo36hB691n0CMuMNcC7t45KZEh3sxAPZ9bNQ0X9boFJMsFDZcXOm4ZElAZBjmRIuO8DTbMw0pfCe2MgJt9sSXYLRydy-E3gBm_uSffnsi1beFF6AqAMktF_BO73lDJWmfw?AVOverride=1";
     this.typing();
@@ -302,10 +256,12 @@ export default {
   /* filter: grayscale(1) contrast(9); */
   /* backdrop-filter: blur(10px); */
 }
+
 .fullscreenVideo {
   width: inherit;
   height: inherit;
 }
+
 .start-component {
   margin-top: -3%;
   /* position: fixed; */
@@ -365,6 +321,7 @@ export default {
   transition: all 0.5s;
   z-index: 10;
 }
+
 * {
   margin: 0;
   padding: 0;

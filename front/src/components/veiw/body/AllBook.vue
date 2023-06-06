@@ -6,11 +6,7 @@
     <!-- </ElAffix> -->
     <div class="this-body">
       <div class="box-center">
-        <newLogin
-          class="mycard"
-          v-if="this.$store.state.showLogin"
-          @close="showLogin = false"
-        ></newLogin>
+        <newLogin class="mycard" v-if="this.$store.state.showLogin" @close="showLogin = false"></newLogin>
         <div class="novel-body">
           <div class="category-component-wrapper">
             <CategoryComponent />
@@ -26,7 +22,7 @@
   </div>
 </template>
   
-  <script>
+<script>
 import newLogin from "@/components/page/login/newLogin.vue";
 import WebHead from "../head/WebHead.vue";
 import FootComponents from "../foot/WebFoot.vue";
@@ -61,22 +57,23 @@ export default {
       }
       if (key === "wordCount") this.Option["range"] = this.$route.query[key];
       this.Option[key] = this.$route.query[key];
-      // console.log(key, this.Option[key]);
     }
   },
 };
 </script>
   
-  <style scoped>
+<style scoped>
 .box-center {
   margin-left: auto;
   margin-right: auto;
   width: 1200px;
   min-height: 100vh;
 }
+
 .mycard {
   z-index: 100;
 }
+
 .category-component-wrapper {
   width: 200px;
   float: left;

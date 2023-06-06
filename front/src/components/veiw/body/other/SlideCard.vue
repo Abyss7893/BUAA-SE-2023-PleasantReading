@@ -8,116 +8,79 @@
         <transition name="el-zoom-in-center">
           <div v-if="isshow">
             <transition name="fade">
-              <div
-                @touchend="end"
-                @touchstart="start"
-                @touchmove="move"
-                class="swiper"
-              >
-                <div
-                  @click="chooseItem(item, index)"
-                  v-for="(item, index) in imgs"
-                  :style="config5[index]"
-                  :key="item.cover"
-                  @mouseover="touchcenter(config5[index].id === 'center')"
-                  @mouseout="leavecenter(config5[index].id === 'center')"
-                  style="
-                    /* background-color: red; */
-                    width: 150px;
-                    height: 208px;
-                    border-radius: 20px;
-                  "
-                  :class="{
-                    'hover-effect': config5[index].id === 'center',
-                    'other-hover-effect': config5[index].id !== 'center',
-                  }"
-                  class="card-control"
-                >
-                  <img
-                    :src="item.cover"
-                    class="card-img"
-                    style="z-index: 4 !important"
-                  />
+              <div @touchend="end" @touchstart="start" @touchmove="move" class="swiper">
+                <div @click="chooseItem(item, index)" v-for="(item, index) in imgs" :style="config5[index]"
+                  :key="item.cover" @mouseover="touchcenter(config5[index].id === 'center')"
+                  @mouseout="leavecenter(config5[index].id === 'center')" style="
+                        /* background-color: red; */
+                        width: 150px;
+                        height: 208px;
+                        border-radius: 20px;
+                      " :class="{
+                        'hover-effect': config5[index].id === 'center',
+                        'other-hover-effect': config5[index].id !== 'center',
+                      }" class="card-control">
+                  <img :src="item.cover" class="card-img" style="z-index: 4 !important" />
                   <!-- <div class="wordblock"
             style="z-index: 9999;"> -->
                   <el-collapse-transition>
-                    <el-tooltip
-                      class="box-item"
-                      effect="dark"
-                      :content="item.id"
-                      placement="right"
-                    >
+                    <el-tooltip class="box-item" effect="dark" :content="item.id" placement="right">
                       <!-- <el-button>right</el-button> -->
 
                       <router-link :to="{ path: '/book/' + item.bookId }">
-                        <p
-                          v-if="config5[index].id === 'center'"
-                          style="
-                            /* position: absolute; */
-                            /* color: rgba(126, 84, 84, 0.582); */
-                            color: rgba(202, 197, 197, 0);
-                            /* left: 10%; */
-                            text-align: center;
-                            margin: 3px;
-                            bottom: 50px;
-                            transition: ease-in-out 0.2s;
-                            z-index: 3 !important;
-                            -webkit-user-select: none;
-                            -moz-user-select: none;
-                            -ms-user-select: none;
-                            user-select: none;
-                            white-space: normal;
-                            word-break: break-all;
-                            text-overflow: ellipsis;
-                            display: -webkit-box;
-                            -webkit-box-orient: vertical;
-                            -webkit-line-clamp: 1;
-                            /* 这里是超出几行省略 */
-                            overflow: hidden;
-                          "
-                          class="content-effect"
-                        >
+                        <p v-if="config5[index].id === 'center'" style="
+                                /* position: absolute; */
+                                /* color: rgba(126, 84, 84, 0.582); */
+                                color: rgba(202, 197, 197, 0);
+                                /* left: 10%; */
+                                text-align: center;
+                                margin: 3px;
+                                bottom: 50px;
+                                transition: ease-in-out 0.2s;
+                                z-index: 3 !important;
+                                -webkit-user-select: none;
+                                -moz-user-select: none;
+                                -ms-user-select: none;
+                                user-select: none;
+                                white-space: normal;
+                                word-break: break-all;
+                                text-overflow: ellipsis;
+                                display: -webkit-box;
+                                -webkit-box-orient: vertical;
+                                -webkit-line-clamp: 1;
+                                /* 这里是超出几行省略 */
+                                overflow: hidden;
+                              " class="content-effect">
                           {{ item.id }}
                         </p>
                       </router-link>
                     </el-tooltip>
                   </el-collapse-transition>
                   <el-collapse-transition>
-                    <el-tooltip
-                      class="box-item"
-                      effect="dark"
-                      :content="item.chapter"
-                      placement="right"
-                    >
-                      <router-link
-                        :to="{
-                          path: '/reader/' + item.bookId + '/' + item.chapterid,
-                        }"
-                      >
-                        <p
-                          v-if="config5[index].id === 'center'"
-                          style="
-                            /* position: absolute; */
-                            bottom: 30px;
-                            /* margin-left: 10px; */
-                            left: 10%;
-                            color: rgba(216, 212, 203, 0);
-                            text-align: center;
-                            font-family: kaiti;
-                            margin: 3px;
-                            transition: 0.2s;
-                            z-index: 3 !important;
-                            white-space: normal;
-                            word-break: break-all;
-                            text-overflow: ellipsis;
-                            display: -webkit-box;
-                            -webkit-box-orient: vertical;
-                            -webkit-line-clamp: 3;
-                            /* 这里是超出几行省略 */
-                            overflow: hidden;
-                          "
-                          class="content-effect"
-                        >
+                    <el-tooltip class="box-item" effect="dark" :content="item.chapter" placement="right">
+                      <router-link :to="{
+                        path: '/reader/' + item.bookId + '/' + item.chapterid,
+                      }">
+                        <p v-if="config5[index].id === 'center'" style="
+                                /* position: absolute; */
+                                bottom: 30px;
+                                /* margin-left: 10px; */
+                                left: 10%;
+                                color: rgba(216, 212, 203, 0);
+                                text-align: center;
+                                font-family: kaiti;
+                                margin: 3px;
+                                transition: 0.2s;
+                                z-index: 3 !important;
+                                white-space: normal;
+                                word-break: break-all;
+                                text-overflow: ellipsis;
+                                display: -webkit-box;
+                                -webkit-box-orient: vertical;
+                                -webkit-line-clamp: 3;
+                                /* 这里是超出几行省略 */
+                                overflow: hidden;
+                              " class="content-effect">
                           {{ item.chapter }}
                         </p>
                       </router-link>
@@ -128,8 +91,8 @@
                 </div>
               </div>
             </transition>
-          </div></transition
-        >
+          </div>
+        </transition>
         <!-- <div style="display: flex; align-items: center">
       <h1 @click="prev">上一个</h1>
       |
@@ -141,7 +104,7 @@
     </div>
   </div>
 </template>
-    <script>
+<script>
 // import { da } from 'element-plus/es/locale';
 // import { fa } from "element-plus/es/locale";
 // import BookCard from "../mybooks/BookCard.vue";
@@ -414,9 +377,8 @@ export default {
       this.centerCard();
       this.centerIndex("prev");
     },
-    // 滑动下一个
+
     next() {
-      // this.imgs.push(this.imgs.shift());
       this.config5.unshift(this.config5.pop());
       this.currentIndex = this.currentIndex + 1;
       if (this.currentIndex > this.imgs.length - 1) {
@@ -424,7 +386,6 @@ export default {
       }
       this.centerCard();
       this.centerIndex("next");
-      // console.log(this.currentIndex);
     },
     // 开始移动端滑动屏幕
     start(event) {
@@ -456,12 +417,10 @@ export default {
     },
     formatSwiper() {
       if (this.startX > this.endX) {
-        console.log("左边滑动");
         if (this.startX > this.endX + 40) {
           this.next();
         }
       } else {
-        console.log("右边滑动");
         if (this.endX > this.startX + 40) {
           this.prev();
         }
@@ -498,7 +457,6 @@ export default {
     // 点击
     chooseItem(item) {
       let cycles = item.index;
-      console.log("this :" + cycles);
       if (cycles == 0 || cycles == 6) return;
       if (this.mode == 3) {
         if (cycles == 1 || cycles == 5) return;
@@ -506,7 +464,6 @@ export default {
       if (this.mode == 1) {
         if (cycles == 1 || cycles == 5 || cycles == 2 || cycles == 4) return;
       }
-      console.log(item);
       // let halfindex=0;
       // if(this.mode == 7) halfindex = 3;
       // else if(this.mode == 5) halfindex = 2;
@@ -516,15 +473,12 @@ export default {
 
       if (item.index < 3) {
         for (let i = 0; i < 3 - cycles; i++) {
-          console.log(item.index);
           this.prev();
         }
       } else if (item.index > 3) {
         for (let i = -1; i < item.index - 3; i++) {
           this.next();
         }
-      } else if (item.index == 3) {
-        console.log("投票");
       }
     },
     // 计算中间卡片信息
@@ -539,7 +493,6 @@ export default {
       if (this.imgs.length > 7) {
         let addtime = this.imgs.length - 7;
         for (let i = 0; i < addtime; i++) {
-          console.log("add");
           this.config5.push({
             id: "center",
             position: "absolute",
@@ -615,7 +568,6 @@ export default {
         let i = 0;
         // if (data.length > 0) {
         // console.log("response", data);
-        console.log("book", i);
         for (let book of data) {
           this.imgs[i] = {
             id: book.name,
@@ -630,11 +582,9 @@ export default {
           // console.log("book", i);
         }
         // }
-        console.log("imgs", this.imgs);
         if (i >= 7) {
           this.mode = 7;
           this.imgs = this.imgs.slice(0, 7);
-          // console.log("end", this.imgs);
           for (let i = 0; i < 3; i++) this.prev();
           setTimeout(() => (this.isshow = true), 100);
         } else {
@@ -676,11 +626,10 @@ export default {
         }
       });
     },
-    initThis() {},
+    initThis() { },
   },
   created() {
     this.setData();
-    console.log(this.imgs);
     this.getData();
 
     this.centerCard(); // 获取中间卡片信息
@@ -693,7 +642,7 @@ export default {
 };
 </script>
     
-    <style lang="less" scoped>
+<style lang="less" scoped>
 .card-control {
   .card-img {
     // display:inline-block;
@@ -708,18 +657,19 @@ export default {
     transition: all 0.5s;
     border-left: solid rgba(187, 183, 183, 0.361);
     border-top: solid rgba(130, 127, 127, 0.425);
-    -webkit-filter: drop-shadow(
-      10px 10px 10px rgba(0, 0, 0, 0.5)
-    ); /*考虑浏览器兼容性：兼容 Chrome, Safari, Opera */
+    -webkit-filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));
+    /*考虑浏览器兼容性：兼容 Chrome, Safari, Opera */
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));
   }
 }
+
 .other-hover-effect:hover {
   .card-img {
     margin-top: -50px;
     z-index: 5;
   }
 }
+
 // .hover-effect {
 //   transition: all 0.5s;
 //   .content-effect {
@@ -738,6 +688,7 @@ export default {
   /* 或者修改文本颜色 */
   color: rgb(7, 7, 7);
   top: 40px !important;
+
   .card-img {
     margin-top: -100px;
     max-width: 150px !important;
@@ -752,6 +703,7 @@ export default {
     color: rgb(202, 197, 197) !important;
   }
 }
+
 .card-item {
   width: 200px;
   height: 288px;
@@ -786,11 +738,13 @@ export default {
   //   border: 1px red solid;
   height: 400px;
   position: relative;
+
   //   overflow: hidden;
   div {
     opacity: 0;
   }
 }
+
 .quote {
   font-size: 24px;
   color: #fff;

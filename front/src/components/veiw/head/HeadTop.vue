@@ -279,10 +279,7 @@ export default {
     },
     changeSakuraInit() {
       let temp = this.$store.state.showSakura ? true : false;
-      console.log("init showSakura", this.$store.state.showSakura);
       this.$store.commit("changeShowSakura", false);
-      console.log("init showSakura", temp);
-
       this.value2 = temp;
       this.$store.commit("changeShowSakura", this.value2);
 

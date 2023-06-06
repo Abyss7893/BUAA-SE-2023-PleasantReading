@@ -19,7 +19,6 @@ function getMyNote() {
   };
   return axios(config)
     .catch(function (error) {
-      console.log(error);
       return error;
     });
 }
@@ -37,11 +36,9 @@ function getBookDetiles(bookid) {
   };
   return axios(config)
     .then(function (response) {
-      // console.log(JSON.stringify(response.data));
       return response.data;
     })
     .catch(function () {
-      // alert("书籍信息不存在！")
     });
 
 }
@@ -49,7 +46,6 @@ function getBookContent(bookid) {
   var url = back + "/book/outline/" + bookid;
   return axios.get(url).then(res => {
     var data = res.data;
-    // console.log(data);
     return data;
   });
 }
@@ -103,7 +99,6 @@ function getBookList(options) {
 
   return axios(config)
     .then(function (response) {
-      // console.log(response.data);
       return response.data;
     })
     .catch(function (error) {
@@ -126,7 +121,6 @@ function getMyBook() {
 
   return axios(config)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
       return response.data;
     })
     .catch(function (error) {
@@ -145,7 +139,6 @@ function getBookComments(bookid, chapter, page) {
 
   return axios(config)
     .then(function (response) {
-      // console.log(response.data);
       return response.data;
     })
     .catch(function (error) {
@@ -168,7 +161,6 @@ function submitBookComment(bookid, chapter, comment) {
 function addBookmark(bookid, chapter) {
   var token = localStorage.getItem("token")
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  // console.log(axios.defaults.headers.common['Authorization'])
   return axios({
     method: 'post',
     url: 'http://154.8.183.51/book/mark/' + bookid + '/' + chapter,
@@ -209,11 +201,8 @@ function addColection(bookid) {
       'Content-Type': 'application/json'
     }
   };
-  // console.log(config);
-
   return axios(config)
     .then(function () {
-      // console.log(JSON.stringify(response.data));
       return true;
     })
     .catch(function (error) {
@@ -264,10 +253,6 @@ function getMyRating(bookid) {
   };
 
   return axios(config)
-    // .then(function (response) {
-    //   // console.log(JSON.stringify(response.data));
-    //   return response;
-    // })
     .catch(function (response) {
       return response;
     });

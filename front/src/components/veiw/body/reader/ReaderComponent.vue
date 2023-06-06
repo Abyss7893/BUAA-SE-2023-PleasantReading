@@ -154,15 +154,11 @@ export default {
         })
     },
     initChapter() {
-      // console.log(0)
-      // this.bookInfo.bookId =this.$route.params.bookid;
       this.bookInfo.chapterId = parseInt(this.$route.params.chapter);
-      // console.log([this.bookInfo.bookId, this.bookInfo.chapterId]);
       getBookDetiles(this.$route.params.bookid).then((data) => {
         this.bookInfo.bookName = data.title;
         this.bookInfo.bookId = data.id;
         this.bookInfo.bookAuthor = data.author;
-        // console.log(data);
         getBookCharpter(this.$route.params.bookid, this.$route.params.chapter).then((data) => {
 
           if (!data.status && data.response.status == 401) {
