@@ -2,7 +2,11 @@
   <div class="book-gallery">
     <!-- <div class="book-row" v-for="(row, rowIndex) in bookRows" :key="rowIndex"> -->
     <div v-if="displayedBooks.length > 1">
-      <div class="book-row" v-for="(row, rowIndex) in displayedBooks" :key="rowIndex">
+      <div
+        class="book-row"
+        v-for="(row, rowIndex) in displayedBooks"
+        :key="rowIndex"
+      >
         <!-- <el-col v-for="book in displayedBooks" :key="book.id" :span="12"> -->
         <el-row :gutter="40">
           <el-col v-for="book in row" :key="book.id" :span="12">
@@ -14,29 +18,59 @@
       </div>
     </div>
     <div v-if="displayedBooks.length == 1">
-      <div class="book-row" v-for="(row, rowIndex) in displayedBooks" :key="rowIndex">
+      <div
+        class="book-row"
+        v-for="(row, rowIndex) in displayedBooks"
+        :key="rowIndex"
+      >
         <!-- <el-col v-for="book in displayedBooks" :key="book.id" :span="12"> -->
         <book-mini-card :book="row[0]"></book-mini-card>
+
         <!-- <el-divider /> -->
       </div>
     </div>
     <div class="pagination" v-if="displayedBooks.length > 1">
-      <el-button type="danger" plain @click="firstPage" :disabled="currentPage === 1">首页</el-button>
-      <el-button type="danger" plain @click="previousPage" :disabled="currentPage === 1">
+      <el-button
+        type="danger"
+        plain
+        @click="firstPage"
+        :disabled="currentPage === 1"
+        >首页</el-button
+      >
+      <el-button
+        type="danger"
+        plain
+        @click="previousPage"
+        :disabled="currentPage === 1"
+      >
         上一页
       </el-button>
       <!-- <div > -->
       <span class="nuber"> 第{{ this.currentPage }}页 </span>
       <!-- </div>/ -->
-      <el-button type="danger" plain @click="nextPage" :disabled="currentPage * pageSize >= books.length">
+      <el-button
+        type="danger"
+        plain
+        @click="nextPage"
+        :disabled="currentPage * pageSize >= books.length"
+      >
         下一页
       </el-button>
-      <el-button type="danger" plain @click="lastPage" :disabled="currentPage * pageSize >= books.length">
+      <el-button
+        type="danger"
+        plain
+        @click="lastPage"
+        :disabled="currentPage * pageSize >= books.length"
+      >
         尾页
       </el-button>
     </div>
     <div v-if="displayedBooks.length == 0">
-      <el-empty description="暂无书籍" :image="require('assets/imgs/book_null.png')" image-size="300px" />
+      <el-empty
+        description="暂无书籍"
+        :image="require('assets/imgs/book_null.png')"
+        image-size="300px"
+      />
     </div>
   </div>
 </template>
@@ -73,11 +107,13 @@ export default {
     };
   },
   created() {
+    // this.generateTestData();
     var defaultOptions = this.Option;
     for (let key in defaultOptions) {
-
+      // console.log(key, defaultOptions[key]);
       if (defaultOptions[key] === "null") defaultOptions[key] = "";
     }
+    // console.log(defaultOptions);
     this.flashData(defaultOptions);
   },
 
@@ -100,7 +136,7 @@ export default {
           id: i,
           title: `Book ${i}`,
           status: "加载中",
-          cover: require("assets/imgs/img_loading.gif"),
+          cover: 'https://leeibo.sh1a.qingstor.com/img_loading.gif?expires=1686662342&signature=+qFm+89URJ8IwBmAjZonTuD+wpHBgVNd85FKppNN9mI=&access_key_id=FEOPWMJLWZSOJNLWJHVS',
           author: "加载中",
           category: "加载中",
           summary: "加载中",
@@ -241,6 +277,7 @@ export default {
       const startIndex = (this.currentPage - 1) * this.pageSize;
       const endIndex = startIndex + this.pageSize;
       const tmpbook = this.books.slice(startIndex, endIndex);
+      // // console.log(tmpbook);
       const rows = [];
       let row = [];
       for (let i = 0; i < tmpbook.length; i++) {

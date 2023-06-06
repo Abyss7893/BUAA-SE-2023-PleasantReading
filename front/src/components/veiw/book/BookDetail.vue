@@ -169,7 +169,7 @@ export default {
       Order: true,
       bookId: "",
       detailData: {
-        cover: require("assets/imgs/img_loading.gif"),
+        cover: 'https://leeibo.sh1a.qingstor.com/img_loading.gif?expires=1686662342&signature=+qFm+89URJ8IwBmAjZonTuD+wpHBgVNd85FKppNN9mI=&access_key_id=FEOPWMJLWZSOJNLWJHVS',
         title: "正在加载",
         author: "正在加载",
         size: "0",

@@ -8,7 +8,7 @@
         <div v-if="!this.$store.state.isLogin">
           <el-empty
             description="未登录ovo"
-            :image="require('assets/imgs/unlogin.gif')"
+            image="https://leeibo.sh1a.qingstor.com/unlogin.gif?expires=1686662939&signature=U/GicJ1CHLo56OLoHPNElO12k4uR2XDIPbfIVuq+xmA=&access_key_id=FEOPWMJLWZSOJNLWJHVS"
             image-size="200px"
           />
           <div

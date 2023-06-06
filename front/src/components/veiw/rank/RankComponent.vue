@@ -6,7 +6,7 @@
         margin: 30px 0px 20px 0px;
         color: rgb(75, 74, 74);
         width: 100%;
-        border-bottom:solid 2px rgb(215, 209, 209) ;
+        border-bottom: solid 2px rgb(215, 209, 209);
       "
     >
       小说排行榜！
@@ -323,37 +323,43 @@ export default {
   created() {
     for (let i = 0; i < 10; i++) {
       this.collectionlist.push({
-        cover: require("../../../assets/imgs/img_loading.gif"),
+        cover:
+          "https://leeibo.sh1a.qingstor.com/img_loading.gif?expires=1686662342&signature=+qFm+89URJ8IwBmAjZonTuD+wpHBgVNd85FKppNN9mI=&access_key_id=FEOPWMJLWZSOJNLWJHVS",
         author: "加载中",
         name: "加载中",
         state: ["加载中", "加载中", "加载中"],
       });
       this.ratelist.push({
-        cover: require("../../../assets/imgs/img_loading.gif"),
+        cover:
+          "https://leeibo.sh1a.qingstor.com/img_loading.gif?expires=1686662342&signature=+qFm+89URJ8IwBmAjZonTuD+wpHBgVNd85FKppNN9mI=&access_key_id=FEOPWMJLWZSOJNLWJHVS",
         author: "加载中",
         name: "加载中",
         state: ["加载中", "加载中", "加载中"],
       });
       this.weekpoplist.push({
-        cover: require("../../../assets/imgs/img_loading.gif"),
+        cover:
+          "https://leeibo.sh1a.qingstor.com/img_loading.gif?expires=1686662342&signature=+qFm+89URJ8IwBmAjZonTuD+wpHBgVNd85FKppNN9mI=&access_key_id=FEOPWMJLWZSOJNLWJHVS",
         author: "加载中",
         name: "加载中",
         state: ["加载中", "加载中", "加载中"],
       });
       this.monthpop.push({
-        cover: require("../../../assets/imgs/img_loading.gif"),
+        cover:
+          "https://leeibo.sh1a.qingstor.com/img_loading.gif?expires=1686662342&signature=+qFm+89URJ8IwBmAjZonTuD+wpHBgVNd85FKppNN9mI=&access_key_id=FEOPWMJLWZSOJNLWJHVS",
         author: "加载中",
         name: "加载中",
         state: ["加载中", "加载中", "加载中"],
       });
       this.yearpop.push({
-        cover: require("../../../assets/imgs/img_loading.gif"),
+        cover:
+          "https://leeibo.sh1a.qingstor.com/img_loading.gif?expires=1686662342&signature=+qFm+89URJ8IwBmAjZonTuD+wpHBgVNd85FKppNN9mI=&access_key_id=FEOPWMJLWZSOJNLWJHVS",
         author: "加载中",
         name: "加载中",
         state: ["加载中", "加载中", "加载中"],
       });
       this.finished.push({
-        cover: require("../../../assets/imgs/img_loading.gif"),
+        cover:
+          "https://leeibo.sh1a.qingstor.com/img_loading.gif?expires=1686662342&signature=+qFm+89URJ8IwBmAjZonTuD+wpHBgVNd85FKppNN9mI=&access_key_id=FEOPWMJLWZSOJNLWJHVS",
         author: "加载中",
         name: "加载中",
         state: ["加载中", "加载中", "加载中"],
