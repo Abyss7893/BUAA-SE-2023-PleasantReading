@@ -17,7 +17,7 @@
   <div class="author-content" v-if="this.books.length != 0">
     <h2>全部作品</h2>
     <li v-for="(book, idx) in this.books" :key="idx">
-      <BookInfoCompnent :book="book" />
+      <BookInfoCompnent :bookinfo="book" />
     </li>
     <div class="line"></div>
   </div>

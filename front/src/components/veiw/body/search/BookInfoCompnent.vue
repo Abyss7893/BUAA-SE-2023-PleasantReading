@@ -7,7 +7,7 @@
         book.category
       }}</span><em>|</em><span>{{
   book.status }}</span></p>
-      <el-rate :value="book.score" style="--el-rate-fill-color: #ff7d7dc9" :disabled="true"></el-rate>
+      <el-rate v-model="book.score" style="--el-rate-fill-color: #ff7d7dc9" :disabled="true"></el-rate>
       <p class="brief">{{ book.brief }}</p>
     </div>
     <div class="book-info-right">
@@ -27,9 +27,10 @@ import 'css/search/search.css'
 export default {
   name: 'BookInfo',
   components: {},
-  props: { book: Object, },
+  props: { bookinfo: Object, },
   data() {
     return {
+      book: {},
     };
   },
   watch: {},
@@ -50,7 +51,6 @@ export default {
               grouping: true,
               type: 'success',
             })
-            
             break;
           case 401:
             ElMessage({
@@ -58,16 +58,23 @@ export default {
               grouping: true,
               type: 'warning',
             })
-            
             this.$store.commit('refresh')
             break;
           default:
+            ElMessage({
+              message: '书籍已经收藏！',
+              grouping: true,
+              type: 'warning',
+            })
             break;
         }
       })
     },
   },
-  created() { },
+  created() {
+    console.log(this.value)
+    this.book = this.bookinfo
+  },
   mounted() { }
 };
 </script>
