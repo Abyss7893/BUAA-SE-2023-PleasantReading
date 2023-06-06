@@ -28,6 +28,7 @@ import WebHead from "../head/WebHead.vue";
 import FootComponents from "../foot/WebFoot.vue";
 // import { ElAffix } from "element-plus";
 import StartComponent from "./StartComponent.vue";
+// import { startSakura } from "@/api/sakura";
 import CategoryComponent from "./CategoryComponent.vue";
 import RecommendComponent from "./RecommendComponent.vue";
 export default {
@@ -65,6 +66,7 @@ export default {
     hideStartComponent() {
       setTimeout(() => {
         this.showHeadAndFoot = true;
+        // startSakura();
       }, 50);
     },
   },
@@ -89,5 +91,4 @@ export default {
   margin-left: 20px;
   flex-grow: 1;
 }
-
 </style>

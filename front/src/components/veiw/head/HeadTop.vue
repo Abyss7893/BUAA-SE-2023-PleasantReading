@@ -1,18 +1,38 @@
 <!-- 网页头部顶侧，包含logo、登录&&注册、搜索栏等 -->
 <template>
   <div class="proeffect">
-    <ElDialog v-model="showLogin" style="background-color: transparent; width: 800px;">
-      <newLogin class="mycardlogin" v-if="showLogin" style="z-index: 1000; background-color: transparent;"
-        @submit="showLogin = false" ref="login"></newLogin>
+    <ElDialog
+      v-model="showLogin"
+      style="background-color: transparent; width: 800px"
+    >
+      <newLogin
+        class="mycardlogin"
+        v-if="showLogin"
+        style="z-index: 1000; background-color: transparent"
+        @submit="showLogin = false"
+        ref="login"
+      ></newLogin>
     </ElDialog>
   </div>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
-  <div class="placeholder" style="height: 64px;" v-if="holdplace"></div>
-  <div class="head-top" :class="navishow ? 'slide-down' : ''" :id="navishow ? 'fixheight' : ''">
+  <link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"
+  />
+  <div class="placeholder" style="height: 64px" v-if="holdplace"></div>
+  <div
+    class="head-top"
+    :class="navishow ? 'slide-down' : ''"
+    :id="navishow ? 'fixheight' : ''"
+  >
     <!-- <check-login/> -->
     <div v-if="navishow">
-      <a class="logoa hvr-buzz-out" href="/"><img class="logo" src="~assets/logo-yixinyuedu.png" alt="" /></a>
+      <a class="logoa hvr-buzz-out" href="/"
+        ><img class="logo" src="~assets/logo-yixinyuedu.png" alt=""
+      /></a>
     </div>
     <div class="left-navi" v-if="navishow">
       <li navi-id="1">
@@ -23,7 +43,9 @@
       <li navi-id="2">
         <a @mouseenter="showRecommendCard" @mouseleave="closeRecommendCard">
           <div class="navi-word">全部作品</div>
-          <RecommendCard :style="{ display: recommendCard ? 'block' : 'none' }" />
+          <RecommendCard
+            :style="{ display: recommendCard ? 'block' : 'none' }"
+          />
         </a>
       </li>
       <li navi-id="3">
@@ -35,12 +57,29 @@
     <div class="dropdown">
       <div class="search">
         <div class="shell">
-          <input type="text" placeholder="Search" v-model="keywords" @focusin="drop" @focusout="hide">
-          <svg @mousedown="clearwords" v-show="keywords !== ''" class="clear" width="16" height="16" viewBox="0 0 16 16"
-            fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd"
+          <input
+            type="text"
+            placeholder="Search"
+            v-model="keywords"
+            @focusin="drop"
+            @focusout="hide"
+          />
+          <svg
+            @mousedown="clearwords"
+            v-show="keywords !== ''"
+            class="clear"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
               d="M8 14.75C11.7279 14.75 14.75 11.7279 14.75 8C14.75 4.27208 11.7279 1.25 8 1.25C4.27208 1.25 1.25 4.27208 1.25 8C1.25 11.7279 4.27208 14.75 8 14.75ZM9.64999 5.64303C9.84525 5.44777 10.1618 5.44777 10.3571 5.64303C10.5524 5.83829 10.5524 6.15487 10.3571 6.35014L8.70718 8.00005L10.3571 9.64997C10.5524 9.84523 10.5524 10.1618 10.3571 10.3571C10.1618 10.5523 9.84525 10.5523 9.64999 10.3571L8.00007 8.70716L6.35016 10.3571C6.15489 10.5523 5.83831 10.5523 5.64305 10.3571C5.44779 10.1618 5.44779 9.84523 5.64305 9.64997L7.29296 8.00005L5.64305 6.35014C5.44779 6.15487 5.44779 5.83829 5.64305 5.64303C5.83831 5.44777 6.15489 5.44777 6.35016 5.64303L8.00007 7.29294L9.64999 5.64303Z"
-              fill="#fff"></path>
+              fill="#fff"
+            ></path>
           </svg>
           <div class="proshake">
             <a @click="searchBooks">
@@ -52,60 +91,175 @@
       </div>
       <div class="dropdown-content" ref="hidden">
         <div class="first-want">大家都想看</div>
-        <div class="want" v-for="(searchHot, idx) in searchHots" :key="idx" @click="searchBooks(searchHot)">{{ searchHot
-        }}</div>
+        <div
+          class="want"
+          v-for="(searchHot, idx) in searchHots"
+          :key="idx"
+          @click="searchBooks(searchHot)"
+        >
+          {{ searchHot }}
+        </div>
       </div>
     </div>
     <div class="right-navi" :id="navishow ? 'fixmargin' : ''">
       <div class="login-register">
         <template v-if="!isLogin">
           <div class="avatar">
-            <el-popover trigger="hover" :show-arrow=false transition="el-zoom-in-top" width="480">
+            <el-popover
+              trigger="hover"
+              :show-arrow="false"
+              transition="el-zoom-in-top"
+              width="480"
+            >
               <div class="logininfo">登录后你可以</div>
               <div class="login-pri">
-                <li><svg t="1685433487956" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" p-id="2670" width="24" height="24">
+                <li>
+                  <svg
+                    t="1685433487956"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="2670"
+                    width="24"
+                    height="24"
+                  >
                     <path
                       d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32z m-40 656H184V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v584z"
-                      p-id="2671" fill="#ed4259"></path>
+                      p-id="2671"
+                      fill="#ed4259"
+                    ></path>
                     <path
                       d="M639.5 414h-45c-3 0-5.8 1.7-7.1 4.4L514 563.8h-2.8l-73.4-145.4c-1.4-2.7-4.1-4.4-7.1-4.4h-46c-1.3 0-2.7 0.3-3.8 1-3.9 2.1-5.3 7-3.2 10.9l89.3 164h-48.6c-4.4 0-8 3.6-8 8v21.3c0 4.4 3.6 8 8 8h65.1v33.7h-65.1c-4.4 0-8 3.6-8 8v21.3c0 4.4 3.6 8 8 8h65.1V752c0 4.4 3.6 8 8 8h41.3c4.4 0 8-3.6 8-8v-53.8h65.4c4.4 0 8-3.6 8-8v-21.3c0-4.4-3.6-8-8-8h-65.4v-33.7h65.4c4.4 0 8-3.6 8-8v-21.3c0-4.4-3.6-8-8-8h-49.1l89.3-164.1c0.6-1.2 1-2.5 1-3.8 0.1-4.4-3.4-8-7.9-8z"
-                      p-id="2672" fill="#ed4259"></path>
-                  </svg>免费阅读大量书籍</li>
-                <li><svg t="1685433539490" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" p-id="3810" width="24" height="24">
-                    <path d="M192 320l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3811"></path>
-                    <path d="M320 320l448 0 0 64-448 0 0-64Z" fill="#ed4259" p-id="3812"></path>
-                    <path d="M192 512l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3813"></path>
-                    <path d="M320 512l448 0 0 64-448 0 0-64Z" fill="#ed4259" p-id="3814"></path>
-                    <path d="M192 704l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3815"></path>
-                    <path d="M320 704l448 0 0 64-448 0 0-64Z" fill="#ed4259" p-id="3816"></path>
-                    <path d="M320 64l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3817"></path>
+                      p-id="2672"
+                      fill="#ed4259"
+                    ></path></svg
+                  >免费阅读大量书籍
+                </li>
+                <li>
+                  <svg
+                    t="1685433539490"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="3810"
+                    width="24"
+                    height="24"
+                  >
+                    <path
+                      d="M192 320l64 0 0 64-64 0 0-64Z"
+                      fill="#ed4259"
+                      p-id="3811"
+                    ></path>
+                    <path
+                      d="M320 320l448 0 0 64-448 0 0-64Z"
+                      fill="#ed4259"
+                      p-id="3812"
+                    ></path>
+                    <path
+                      d="M192 512l64 0 0 64-64 0 0-64Z"
+                      fill="#ed4259"
+                      p-id="3813"
+                    ></path>
+                    <path
+                      d="M320 512l448 0 0 64-448 0 0-64Z"
+                      fill="#ed4259"
+                      p-id="3814"
+                    ></path>
+                    <path
+                      d="M192 704l64 0 0 64-64 0 0-64Z"
+                      fill="#ed4259"
+                      p-id="3815"
+                    ></path>
+                    <path
+                      d="M320 704l448 0 0 64-448 0 0-64Z"
+                      fill="#ed4259"
+                      p-id="3816"
+                    ></path>
+                    <path
+                      d="M320 64l64 0 0 64-64 0 0-64Z"
+                      fill="#ed4259"
+                      p-id="3817"
+                    ></path>
                     <path
                       d="M832 75.776l0 65.984C872.64 161.152 896 200.704 896 256l0 576c0 66.688-45.312 128-128 128L192 960c-61.312 0-128-64-128-128L64 256c0-46.592 25.6-87.872 64-110.272L128 75.776C53.568 102.208 0 172.544 0 256l0 576c0 106.048 85.952 192 192 192l576 0c106.048 0 192-85.952 192-192L960 256C960 172.544 906.432 102.208 832 75.776z"
-                      fill="#ed4259" p-id="3818"></path>
-                    <path d="M576 64l64 0 0 64-64 0 0-64Z" fill="#ed4259" p-id="3819"></path>
-                    <path d="M192 0l64 0 0 192-64 0 0-192Z" fill="#ed4259" p-id="3820"></path>
-                    <path d="M448 0l64 0 0 192-64 0 0-192Z" fill="#ed4259" p-id="3821"></path>
-                    <path d="M704 0l64 0 0 192-64 0 0-192Z" fill="#ed4259" p-id="3822"></path>
-                  </svg>发表评论/记录笔记</li>
-                <li><svg t="1685433591589" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" p-id="4934" width="24" height="24">
+                      fill="#ed4259"
+                      p-id="3818"
+                    ></path>
+                    <path
+                      d="M576 64l64 0 0 64-64 0 0-64Z"
+                      fill="#ed4259"
+                      p-id="3819"
+                    ></path>
+                    <path
+                      d="M192 0l64 0 0 192-64 0 0-192Z"
+                      fill="#ed4259"
+                      p-id="3820"
+                    ></path>
+                    <path
+                      d="M448 0l64 0 0 192-64 0 0-192Z"
+                      fill="#ed4259"
+                      p-id="3821"
+                    ></path>
+                    <path
+                      d="M704 0l64 0 0 192-64 0 0-192Z"
+                      fill="#ed4259"
+                      p-id="3822"
+                    ></path></svg
+                  >发表评论/记录笔记
+                </li>
+                <li>
+                  <svg
+                    t="1685433591589"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="4934"
+                    width="24"
+                    height="24"
+                  >
                     <path
                       d="M282.766507 610.432L100.494507 401.92 370.361173 340.48 512.014507 102.656l141.610666 237.909333 269.824 61.397334-182.272 208.512 27.306667 300.757333a42.666667 42.666667 0 0 0 84.992-7.722667l-24.021333-264.405333 174.634666-199.722667c38.144-43.648 19.2-102.229333-37.418666-115.114666l-258.474667-58.794667-135.68-228.010667c-29.738667-49.877333-91.306667-49.92-121.045333 0L315.74784 265.429333 57.273173 324.224C0.953173 337.066667-18.33216 395.648 19.854507 439.338667l174.634666 199.722666-24.021333 264.405334c-5.248 57.770667 44.544 94.037333 97.877333 71.125333l260.48-111.786667a42.666667 42.666667 0 1 0-33.706666-78.378666L257.721173 886.314667l25.045334-275.882667z"
-                      fill="#ed4259" p-id="4935"></path>
-                  </svg>收藏喜欢的图书</li>
-                <li><svg t="1685433451224" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" p-id="1480" width="24" height="24">
+                      fill="#ed4259"
+                      p-id="4935"
+                    ></path></svg
+                  >收藏喜欢的图书
+                </li>
+                <li>
+                  <svg
+                    t="1685433451224"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="1480"
+                    width="24"
+                    height="24"
+                  >
                     <path
                       d="M748.739048 352.865524c-32.743619-40.496762-29.915429 86.893714-68.169143 67.462095-38.253714-19.431619-27.087238-285.891048-259.169524-354.230857-92.769524-27.306667 36.766476 218.35581-104.374857 331.751619-141.165714 113.371429-340.845714 359.765333 113.615238 562.151619 0 0-235.398095-269.409524 68.144762-427.227429 69.632-36.205714-22.723048 89.941333 90.89219 179.882667 113.615238 89.965714 0 247.344762 0 247.344762s516.291048-165.059048 159.061334-607.134476z"
-                      p-id="1481" fill="#ed4259"></path>
-                  </svg>热门书籍看不停</li>
+                      p-id="1481"
+                      fill="#ed4259"
+                    ></path></svg
+                  >热门书籍看不停
+                </li>
               </div>
-              <el-button class="login-button" type="primary" color="#f33f3f" @click="showLoginblock">立即登录</el-button>
-              <div class="register"><span>首次使用?<a @click="showRegister">点我注册</a></span></div>
+              <el-button
+                class="login-button"
+                type="primary"
+                color="#f33f3f"
+                @click="showLoginblock"
+                >立即登录</el-button
+              >
+              <div class="register">
+                <span>首次使用?<a @click="showRegister">点我注册</a></span>
+              </div>
               <template #reference>
-                <ElAvatar class="login-avatar" size="large"><span @click="showLoginblock">登录</span></ElAvatar>
+                <ElAvatar class="login-avatar" size="large"
+                  ><span @click="showLoginblock">登录</span></ElAvatar
+                >
               </template>
             </el-popover>
           </div>
@@ -118,7 +272,11 @@
                 <ElAvatar :src="avatar" size="large"></ElAvatar>
               </router-link>
             </div>
-            <div :style="{ opacity: popShow }" class="popuserinfo hidden" ref="popuserinfo">
+            <div
+              :style="{ opacity: popShow }"
+              class="popuserinfo hidden"
+              ref="popuserinfo"
+            >
               <popUserInfo />
             </div>
           </div>
@@ -127,65 +285,98 @@
       <ul v-if="navishow">
         <li navi-id="4">
           <a href="#">
-            <div class="navi-word"><svg class="icon" style="vertical-align: middle; overflow: hidden;"
-                viewBox="0 0 1081 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <div class="navi-word">
+              <svg
+                class="icon"
+                style="vertical-align: middle; overflow: hidden"
+                viewBox="0 0 1081 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
                   d="M356.577333 1023.999988a25.9364 25.9364 0 0 1-19.035889-8.328202L148.574547 812.059152a25.960194 25.960194 0 0 1 38.071779-35.299677l175.070697 188.705153 250.024513-139.616353a26.959579 26.959579 0 0 0 13.527379-19.190556l57.869104-346.215242a25.948297 25.948297 0 0 1 51.158953 8.554253l-57.881001 346.215242a78.523045 78.523045 0 0 1-39.428087 55.917925L369.224302 1020.716297a25.900707 25.900707 0 0 1-12.646969 3.283691z"
-                  fill="#0E4F53"></path>
+                  fill="#0E4F53"
+                ></path>
                 <path
                   d="M1002.500759 404.786295a25.9364 25.9364 0 0 1-19.476094-43.044906c67.910536-77.416583 60.177206-195.66515-17.239378-263.599481S770.096342 37.9766 702.197704 115.393183a25.942348 25.942348 0 0 1-39.011677-34.205114c86.756067-98.867652 237.85344-108.837699 336.804374-22.034042s108.813904 237.877235 22.022145 336.804374a25.84122 25.84122 0 0 1-19.511787 8.827894z"
-                  fill="#9B4537"></path>
+                  fill="#9B4537"
+                ></path>
                 <path
                   d="M389.354756 824.658532c-1.189743 0-2.379486 0-3.640614-0.083282L79.307704 810.667153a25.960194 25.960194 0 0 1-24.365939-21.415376L1.260557 487.294979a78.523045 78.523045 0 0 1 18.38153-65.959358L297.090178 105.078111c103.757496-118.236669 284.419985-130.050818 402.704244-26.293323s130.098408 284.419985 26.35281 402.692347L448.675347 797.734645a78.523045 78.523045 0 0 1-59.320591 26.923887z m-1.29682-51.920389a27.364091 27.364091 0 0 0 21.617632-9.220509l277.44809-316.245613C772.011829 350.498317 762.363012 202.684634 665.577411 117.784567s-244.575489-75.227456-329.487454 21.58194L58.701353 455.576428a26.983373 26.983373 0 0 0-6.305638 22.605118L102.448207 759.758046z"
-                  fill="#0E4F53"></path>
+                  fill="#0E4F53"
+                ></path>
                 <path
                   d="M525.16393 376.291947a98.582113 98.582113 0 1 1 74.23997-33.57455 97.975344 97.975344 0 0 1-67.672588 33.312807c-2.201025 0.178461-4.390152 0.261743-6.567382 0.261743z m0.154667-145.315222A46.685519 46.685519 0 1 0 560.380326 308.452796a46.673622 46.673622 0 0 0-35.061729-77.476071zM962.834724 552.945003a98.6416 98.6416 0 1 1 52.420081-15.240609 98.582113 98.582113 0 0 1-52.420081 15.240609z m-0.309333-145.315222a46.947263 46.947263 0 1 0 10.410252 1.189743 46.399981 46.399981 0 0 0-10.410252-1.189743z"
-                  fill="#0E4F53"></path>
+                  fill="#0E4F53"
+                ></path>
                 <path
                   d="M133.060297 617.797899a25.960194 25.960194 0 0 1-25.579476-21.867478l-17.608198-110.348672a25.995887 25.995887 0 0 1 5.544202-20.511171l71.289407-87.065401a25.948297 25.948297 0 0 1 40.15383 32.872602l-63.913 78.047148 15.764096 98.879549a25.9364 25.9364 0 0 1-21.53435 29.743577 25.460502 25.460502 0 0 1-4.116511 0.249846z"
-                  fill="#CDC1AD"></path>
-              </svg>我的书签</div>
+                  fill="#CDC1AD"
+                ></path></svg
+              >我的书签
+            </div>
           </a>
         </li>
         <li navi-id="5">
           <a href="#">
-            <div class="navi-word"> <svg class="icon" style="vertical-align: middle; overflow: hidden;"
-                viewBox="0 0 1097 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+            <div class="navi-word">
+              <svg
+                class="icon"
+                style="vertical-align: middle; overflow: hidden"
+                viewBox="0 0 1097 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
-                  d="M998.58390632 852.14701166H126.84569332A41.51236 41.51236 0 0 0 85.33333332 893.65937166v62.26854a41.51236 41.51236 0 0 0 41.51236 41.51236h871.738213a41.51236 41.51236 0 0 0 41.51236-41.51236v-62.26854a41.51236 41.51236 0 0 0-41.51236-41.51236z m-29.293426 83.014048h-813.172704a8.537246 8.537246 0 0 1-8.537246-8.537246v-3.681687a8.537246 8.537246 0 0 1 8.537246-8.537247h813.172704a8.537246 8.537246 0 0 1 8.537246 8.537247v3.681687a8.537246 8.537246 0 0 1-8.537246 8.537246zM126.84569332 810.63465166h124.537079a41.51236 41.51236 0 0 0 41.51236-41.51236V229.47228566a41.51236 41.51236 0 0 0-41.51236-41.51236H126.84569332A41.51236 41.51236 0 0 0 85.33333332 229.47228566v539.650006a41.51236 41.51236 0 0 0 41.51236 41.51236zM156.72605532 246.49342066h64.883071a12.805869 12.805869 0 0 1 12.805869 12.805869v479.995998a12.805869 12.805869 0 0 1-12.805869 12.80587H156.72605532a12.805869 12.805869 0 0 1-12.80587-12.80587V259.29928966a12.805869 12.805869 0 0 1 12.80587-12.805869z m239.939305 564.141231h124.53708a41.51236 41.51236 0 0 0 41.51236-41.51236V278.62548066l291.653674 510.335237 0.266789 0.480221a41.619075 41.619075 0 0 0 56.826045 15.527116l107.932136-62.962191A42.600859 42.600859 0 0 0 1034.18422332 684.02729066L727.73976932 147.49337866l-0.266789-0.48022a41.619075 41.619075 0 0 0-56.826045-15.527116l-107.932135 62.962191V84.17902666A41.51236 41.51236 0 0 0 521.20244032 42.66666666h-124.53708a41.51236 41.51236 0 0 0-41.51236 41.51236v684.943265a41.51236 41.51236 0 0 0 41.51236 41.51236z m296.295802-597.938055a3.735045 3.735045 0 0 1 5.122348 1.376631l259.841761 454.608363a12.805869 12.805869 0 0 1-4.663471 17.415982l-56.271124 32.825712a12.805869 12.805869 0 0 1-17.544041-4.663471L624.11894332 267.59109066a12.805869 12.805869 0 0 1 4.663471-17.415983zM426.49236432 101.20016166h64.883072a12.805869 12.805869 0 0 1 12.805869 12.805869v625.289257a12.805869 12.805869 0 0 1-12.805869 12.80587h-64.883072a12.805869 12.805869 0 0 1-12.805869-12.80587V114.00603066a12.805869 12.805869 0 0 1 12.805869-12.805869z m0 0">
-                </path>
-              </svg>我的书架</div>
+                  d="M998.58390632 852.14701166H126.84569332A41.51236 41.51236 0 0 0 85.33333332 893.65937166v62.26854a41.51236 41.51236 0 0 0 41.51236 41.51236h871.738213a41.51236 41.51236 0 0 0 41.51236-41.51236v-62.26854a41.51236 41.51236 0 0 0-41.51236-41.51236z m-29.293426 83.014048h-813.172704a8.537246 8.537246 0 0 1-8.537246-8.537246v-3.681687a8.537246 8.537246 0 0 1 8.537246-8.537247h813.172704a8.537246 8.537246 0 0 1 8.537246 8.537247v3.681687a8.537246 8.537246 0 0 1-8.537246 8.537246zM126.84569332 810.63465166h124.537079a41.51236 41.51236 0 0 0 41.51236-41.51236V229.47228566a41.51236 41.51236 0 0 0-41.51236-41.51236H126.84569332A41.51236 41.51236 0 0 0 85.33333332 229.47228566v539.650006a41.51236 41.51236 0 0 0 41.51236 41.51236zM156.72605532 246.49342066h64.883071a12.805869 12.805869 0 0 1 12.805869 12.805869v479.995998a12.805869 12.805869 0 0 1-12.805869 12.80587H156.72605532a12.805869 12.805869 0 0 1-12.80587-12.80587V259.29928966a12.805869 12.805869 0 0 1 12.80587-12.805869z m239.939305 564.141231h124.53708a41.51236 41.51236 0 0 0 41.51236-41.51236V278.62548066l291.653674 510.335237 0.266789 0.480221a41.619075 41.619075 0 0 0 56.826045 15.527116l107.932136-62.962191A42.600859 42.600859 0 0 0 1034.18422332 684.02729066L727.73976932 147.49337866l-0.266789-0.48022a41.619075 41.619075 0 0 0-56.826045-15.527116l-107.932135 62.962191V84.17902666A41.51236 41.51236 0 0 0 521.20244032 42.66666666h-124.53708a41.51236 41.51236 0 0 0-41.51236 41.51236v684.943265a41.51236 41.51236 0 0 0 41.51236 41.51236z m296.295802-597.938055a3.735045 3.735045 0 0 1 5.122348 1.376631l259.841761 454.608363a12.805869 12.805869 0 0 1-4.663471 17.415982l-56.271124 32.825712a12.805869 12.805869 0 0 1-17.544041-4.663471L624.11894332 267.59109066a12.805869 12.805869 0 0 1 4.663471-17.415983zM426.49236432 101.20016166h64.883072a12.805869 12.805869 0 0 1 12.805869 12.805869v625.289257a12.805869 12.805869 0 0 1-12.805869 12.80587h-64.883072a12.805869 12.805869 0 0 1-12.805869-12.80587V114.00603066a12.805869 12.805869 0 0 1 12.805869-12.805869z m0 0"
+                ></path></svg
+              >我的书架
+            </div>
           </a>
         </li>
         <li navi-id="6">
           <a href="#">
-            <div class="navi-word"><svg class="icon" viewBox="0 0 1024 1590" version="1.1"
-                xmlns="http://www.w3.org/2000/svg">
+            <div class="navi-word">
+              <svg
+                class="icon"
+                viewBox="0 0 1024 1590"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <path
-                  d="M192 309.333333H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333333h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333333 21.333333 21.333333 0 0 1-21.333333 21.333333zM192 423.04H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333334 21.333333 21.333333 0 0 1-21.333333 21.333333zM192 536.96H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333334 21.333333 21.333333 0 0 1-21.333333 21.333333zM192 650.666667H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333334 21.333333 21.333333 0 0 1 21.333333-21.333333h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333333 21.333333 21.333333 0 0 1-21.333333 21.333334zM917.333333 650.666667h-170.666666a106.666667 106.666667 0 0 1-106.666667-106.666667v-85.333333a106.666667 106.666667 0 0 1 106.666667-106.666667h170.666666a106.666667 106.666667 0 0 1 106.666667 106.666667v85.333333a106.666667 106.666667 0 0 1-106.666667 106.666667z m-170.666666-256a64 64 0 0 0-64 64v85.333333a64 64 0 0 0 64 64h170.666666a64 64 0 0 0 64-64v-85.333333a64 64 0 0 0-64-64z">
-                </path>
+                  d="M192 309.333333H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333333h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333333 21.333333 21.333333 0 0 1-21.333333 21.333333zM192 423.04H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333334 21.333333 21.333333 0 0 1-21.333333 21.333333zM192 536.96H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333334 21.333333 21.333333 0 0 1-21.333333 21.333333zM192 650.666667H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333334 21.333333 21.333333 0 0 1 21.333333-21.333333h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333333 21.333333 21.333333 0 0 1-21.333333 21.333334zM917.333333 650.666667h-170.666666a106.666667 106.666667 0 0 1-106.666667-106.666667v-85.333333a106.666667 106.666667 0 0 1 106.666667-106.666667h170.666666a106.666667 106.666667 0 0 1 106.666667 106.666667v85.333333a106.666667 106.666667 0 0 1-106.666667 106.666667z m-170.666666-256a64 64 0 0 0-64 64v85.333333a64 64 0 0 0 64 64h170.666666a64 64 0 0 0 64-64v-85.333333a64 64 0 0 0-64-64z"
+                ></path>
                 <path
-                  d="M832 1024H192a106.666667 106.666667 0 0 1-106.666667-106.666667V106.666667a106.666667 106.666667 0 0 1 106.666667-106.666667h640a106.666667 106.666667 0 0 1 106.666667 106.666667v288h-192a64 64 0 0 0-64 64v85.333333a64 64 0 0 0 64 64h192V917.333333a106.666667 106.666667 0 0 1-106.666667 106.666667zM192 42.666667a64 64 0 0 0-64 64v810.666666a64 64 0 0 0 64 64h640a64 64 0 0 0 64-64V650.666667h-149.333333a106.666667 106.666667 0 0 1-106.666667-106.666667v-85.333333a106.666667 106.666667 0 0 1 106.666667-106.666667h149.333333V106.666667a64 64 0 0 0-64-64z">
-                </path>
-              </svg>我的笔记</div>
+                  d="M832 1024H192a106.666667 106.666667 0 0 1-106.666667-106.666667V106.666667a106.666667 106.666667 0 0 1 106.666667-106.666667h640a106.666667 106.666667 0 0 1 106.666667 106.666667v288h-192a64 64 0 0 0-64 64v85.333333a64 64 0 0 0 64 64h192V917.333333a106.666667 106.666667 0 0 1-106.666667 106.666667zM192 42.666667a64 64 0 0 0-64 64v810.666666a64 64 0 0 0 64 64h640a64 64 0 0 0 64-64V650.666667h-149.333333a106.666667 106.666667 0 0 1-106.666667-106.666667v-85.333333a106.666667 106.666667 0 0 1 106.666667-106.666667h149.333333V106.666667a64 64 0 0 0-64-64z"
+                ></path></svg
+              >我的笔记
+            </div>
           </a>
         </li>
       </ul>
     </div>
-    <div v-if="navishow" style="width: 100px;height: 10px;"></div>
+    <el-switch
+      v-if="navishow"
+      v-model="value2"
+      class="ml-2"
+      @click="changeSakura"
+      style="--el-switch-on-color: #eb89c4; "
+    />
+
+    <div v-if="navishow" style="width: 100px; height: 10px"></div>
   </div>
 </template>
 
 
 <script>
 import "css/head/headtop.css";
+import { ref } from "vue";
 import newLogin from "@/components/page/login/newLogin.vue";
 import { mapGetters } from "vuex";
-import {
-  ElAvatar, ElDialog,
-} from "element-plus";
-import RecommendCard from "./RecommendCard.vue"
-import popUserInfo from "./popUserInfo.vue"
+import { startSakura, stopp } from "@/api/sakura";
+import { ElAvatar, ElDialog } from "element-plus";
+import RecommendCard from "./RecommendCard.vue";
+import popUserInfo from "./popUserInfo.vue";
 export default {
   name: "Head_Top",
   components: {
@@ -198,23 +389,30 @@ export default {
   props: {
     navishow: {
       type: Boolean,
-      default: true
+      default: true,
     },
     holdplace: {
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   data() {
     return {
-      searchHots: ["青春北航男童不会梦到清华女学长", "重生之我在北航卖西瓜", "飘飘何所似", "红楼梦", "杨过"],
+      value2: ref(true),
+      searchHots: [
+        "青春北航男童不会梦到清华女学长",
+        "重生之我在北航卖西瓜",
+        "飘飘何所似",
+        "红楼梦",
+        "杨过",
+      ],
       clearExit: false,
       keywords: "",
       showLogin: false,
       popShow: 0,
       throttling1: false,
       recommendCard: false,
-    }
+    };
   },
 
   computed: {
@@ -225,83 +423,88 @@ export default {
       return this.$store.state.isLogin;
     },
     clearShow() {
-      return this.clearExit
+      return this.clearExit;
     },
-    ...mapGetters(['loginshow']),
+    ...mapGetters(["loginshow"]),
   },
   watch: {
     loginshow() {
-      this.showLogin = true
-    }
+      this.showLogin = true;
+    },
   },
   mounted() {
-    this.keywords = this.$route.query.keywords ? this.$route.query.keywords : ""
+    this.keywords = this.$route.query.keywords
+      ? this.$route.query.keywords
+      : "";
   },
   methods: {
+    changeSakura() {
+      if (this.value2) startSakura();
+      else stopp();
+    },
     onCloseDialog(value) {
       // 接收到子组件传递过来的布尔值，赋值给 showLogin 属性
       this.showLogin = value;
     },
     drop() {
-      this.$refs.hidden.style.maxHeight = '500px';
-      this.$refs.hidden.style.paddingBottom = '10px'
+      this.$refs.hidden.style.maxHeight = "500px";
+      this.$refs.hidden.style.paddingBottom = "10px";
     },
     hide() {
-      this.$refs.hidden.style.maxHeight = '0';
-      this.$refs.hidden.style.paddingBottom = '0'
+      this.$refs.hidden.style.maxHeight = "0";
+      this.$refs.hidden.style.paddingBottom = "0";
     },
     searchBooks(keywords) {
-      if (typeof (keywords) != "string")
-        keywords = this.keywords
-      if (keywords === '')
-        return
-      this.$router.push({ path: '/search', query: { "keywords": keywords, page: 1 } })
+      if (typeof keywords != "string") keywords = this.keywords;
+      if (keywords === "") return;
+      this.$router.push({
+        path: "/search",
+        query: { keywords: keywords, page: 1 },
+      });
     },
     clearwords() {
-      this.keywords = ""
-    }, showLogina() {
-      this
+      this.keywords = "";
+    },
+    showLogina() {
+      this;
     },
     popover() {
       if (!this.throttling2) {
-        this.throttling2 = true
-        this.$refs.popuserinfo.classList.remove("hidden")
-        this.popShow = "1"
-        this.$refs.edavatar.classList.add("large")
+        this.throttling2 = true;
+        this.$refs.popuserinfo.classList.remove("hidden");
+        this.popShow = "1";
+        this.$refs.edavatar.classList.add("large");
         // this.$refs.edavatar.classList.add("large")
       }
     },
     popleave() {
-      this.$refs.edavatar.classList.remove("large")
-      this.$refs.popuserinfo.classList.add("hidden")
-      this.popShow = "0"
+      this.$refs.edavatar.classList.remove("large");
+      this.$refs.popuserinfo.classList.add("hidden");
+      this.popShow = "0";
       setTimeout(() => {
-        this.throttling2 = false
+        this.throttling2 = false;
       }, 400);
     },
     showLoginblock() {
-      this.showLogin = true
+      this.showLogin = true;
       setTimeout(() => {
-        if (this.$refs.login.showStatus())
-          this.$refs.login.changeForm()
-      }, 200)
+        if (this.$refs.login.showStatus()) this.$refs.login.changeForm();
+      }, 200);
     },
     showRegister() {
-      this.showLogin = true
+      this.showLogin = true;
       setTimeout(() => {
-        if (!this.$refs.login.showStatus())
-          this.$refs.login.changeForm()
-      }, 200)
+        if (!this.$refs.login.showStatus()) this.$refs.login.changeForm();
+      }, 200);
     },
     showRecommendCard() {
-      this.recommendCard = true
+      this.recommendCard = true;
     },
     closeRecommendCard() {
-      this.recommendCard = false
+      this.recommendCard = false;
     },
   },
-
-}
+};
 </script>
 <style scoped>
 #fixheight {
@@ -325,8 +528,8 @@ export default {
   min-width: 1200px;
   z-index: 200;
   background-color: #f5f5f5;
-  animation: headerSlideDown .3s linear forwards;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+  animation: headerSlideDown 0.3s linear forwards;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 @keyframes headerSlideDown {
@@ -342,7 +545,6 @@ export default {
 .mycardlogin {
   z-index: 1000;
   background-color: transparent;
-
 }
 
 .hidden {
@@ -382,7 +584,7 @@ export default {
   width: 76%;
   height: 20px;
   color: #fff;
-  font: 300 16px '优设标题黑';
+  font: 300 16px "优设标题黑";
   border: 0;
   background-color: transparent;
 }
@@ -404,7 +606,7 @@ export default {
 
 .shell a .fa {
   margin: 2px 7px;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .head-top .dropdown {
@@ -421,7 +623,6 @@ export default {
   opacity: 0;
 }
 
-
 .shell .proshake:hover a .fa-search {
   transform: translateX(0);
   opacity: 0;
@@ -433,7 +634,7 @@ export default {
 }
 
 .shell a::before {
-  content: 'GO!';
+  content: "GO!";
   position: absolute;
   display: block;
   font-size: 12px;
@@ -442,7 +643,7 @@ export default {
   top: 12px;
   right: 2px;
   border-radius: 2px;
-  transition: .3s;
+  transition: 0.3s;
   opacity: 0;
   animation: box 1s infinite ease;
 }
@@ -473,7 +674,7 @@ export default {
 .clear path {
   position: relative;
   top: 2px;
-  transition: fill .3s;
+  transition: fill 0.3s;
 }
 
 .clear:hover path {
@@ -513,7 +714,6 @@ export default {
 
 .icon {
   width: 18px;
-
 }
 
 .login-pri {
@@ -533,19 +733,18 @@ export default {
   margin-right: 8px;
 }
 
-
 .edavatar {
   height: auto;
   background-color: transparent;
   position: relative;
   top: 0;
   right: 0;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   z-index: 100;
 }
 
 .edavatar:hover .el-avatar {
-  box-shadow: 0 1px 20px rgba(0, 0, 0, .2);
+  box-shadow: 0 1px 20px rgba(0, 0, 0, 0.2);
 }
 
 .large {
@@ -554,7 +753,7 @@ export default {
 }
 
 .popuserinfo {
-  transition: all .3s ease-in;
+  transition: all 0.3s ease-in;
   position: absolute;
   z-index: 99;
 }
@@ -588,7 +787,6 @@ export default {
   /* height: 55px; */
 }
 
-
 .head-top .right-navi#fixmargin {
   width: 480px;
 }
@@ -603,7 +801,7 @@ export default {
 }
 
 .left-navi a,
-.right-navi ul li>a {
+.right-navi ul li > a {
   width: 64px;
   display: flex;
   justify-content: center;
@@ -617,12 +815,12 @@ export default {
   padding: 0 12px;
 }
 
-.right-navi ul li>a svg {
+.right-navi ul li > a svg {
   display: block;
   margin: auto;
 }
 
-.right-navi ul li>a {
+.right-navi ul li > a {
   line-height: 48px;
 }
 
@@ -634,7 +832,7 @@ export default {
 
 .left-navi a:hover div.navi-word,
 .right-navi a:hover div.navi-word {
-  animation: jump .3s;
+  animation: jump 0.3s;
 }
 
 @keyframes jump {
