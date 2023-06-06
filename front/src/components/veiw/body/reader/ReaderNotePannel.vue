@@ -200,6 +200,7 @@ export default {
   float: left;
   padding-bottom: 24px;
   padding-right: 24px;
+  min-height: 320px;
 }
 
 .note ul {
@@ -231,6 +232,7 @@ export default {
 
 .null-note {
   height: 30vh;
+  min-height: 200px;
   display: flex;
   justify-content: center;
   flex-direction: column;
