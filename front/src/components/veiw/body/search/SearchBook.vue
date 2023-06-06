@@ -124,6 +124,6 @@ em {
 }
 
 .main-search-conten {
-  min-height: 640px;
+  min-height: 800px;
 }
 </style>
