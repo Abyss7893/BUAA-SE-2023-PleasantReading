@@ -16,7 +16,8 @@ const store = createStore({
       num: {
         notes: Number,
         marks: Number,
-        collections: Number
+        collections: Number,
+        comments: Number,
       },
       userInfo: {
         username: null,
@@ -149,6 +150,7 @@ const store = createStore({
       state.num.notes = num.notes
       state.num.marks = num.marks
       state.num.collections = num.collections
+      state.num.comments = num.comments
     },
     updateUserInfo(state, userInfo) {
       state.userInfo = userInfo

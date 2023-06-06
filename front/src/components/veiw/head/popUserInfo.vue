@@ -30,6 +30,10 @@
           <div class="num">{{ briefdata.marks }}</div>
           <div>书签</div>
         </div>
+        <div class="comments">
+          <div class="num">{{ briefdata.comments }}</div>
+          <div>评论</div>
+        </div>
       </div>
       <div class="vip-entry-containter">
         <div class="vip-entry-desc">
@@ -202,7 +206,8 @@ export default {
 
 .fav div.shelf,
 .fav div.note,
-.fav div.mark {
+.fav div.mark,
+.fav div.comments {
   transition: color .2s;
   margin: 16px;
   color: #9499A0;
@@ -219,14 +224,16 @@ export default {
 
 .fav .shelf:hover,
 .fav .note:hover,
-.fav .mark:hover {
+.fav .mark:hover,
+.fav .comments:hover {
   color: #f8b2b27d;
   cursor: pointer;
 }
 
 .fav .shelf:hover .num,
 .fav .note:hover .num,
-.fav .mark:hover .num {
+.fav .mark:hover .num,
+.fav .comments:hover num {
   color: #f8b2b27d;
   cursor: pointer;
 }
