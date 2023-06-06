@@ -4,6 +4,11 @@
   width: 100%;
   justify-content: space-between;
   background: linear-gradient(to right, #e4534cde, #e1a7a4de);
+  background-image: url('../../imgs/text.jpg');
+  background-image: url('../../imgs/text2.png');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  /* background-attachment: fixed; */
   color: #fff;
   font-size: 14px;
   /* position: fixed; */

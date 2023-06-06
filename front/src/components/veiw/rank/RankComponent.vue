@@ -1,12 +1,22 @@
 <template>
   <div class="book-rank">
-    <h1 style="padding-bottom: 15px">小说排行榜！</h1>
+    <h1
+      style="
+        padding: 10px 10px 10px 30px;
+        margin: 30px 0px 20px 0px;
+        color: rgb(75, 74, 74);
+        width: 100%;
+        border-bottom:solid 2px rgb(215, 209, 209) ;
+      "
+    >
+      小说排行榜！
+    </h1>
     <!-- <transition name="el-zoom-in-top"> -->
     <!-- <el-divider width-="100%"></el-divider> -->
     <el-space direction="vertical" alignment="start" :size="30">
       <el-row style="width: 100%" gutter="30">
         <el-col span="8" style="max-width: 30%">
-          <rank-card :booklist="collectionlist"  title="收藏总榜"></rank-card>
+          <rank-card :booklist="collectionlist" title="收藏总榜"></rank-card>
         </el-col>
         <el-col span="8" style="max-width: 30%">
           <rank-card :booklist="ratelist" title="好评总榜"></rank-card>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="border-left: 2px solid #dfe1e3;margin-top: 30px;">
     <div class="block-col-2">
       <el-dropdown
         @command="handleCommand"
@@ -187,7 +187,7 @@ export default {
 
 .rank-dropdown-menu {
   --el-dropdown-menuItem-hover-fill: rgb(255, 132, 132);
-  --el-dropdown-menuItem-hover-color: rgb(255, 132, 132);
+  --el-dropdown-menuItem-hover-color: #f9f9f9;
 }
 </style>
 <style >

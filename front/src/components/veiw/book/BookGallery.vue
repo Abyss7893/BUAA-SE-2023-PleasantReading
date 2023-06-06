@@ -291,7 +291,7 @@ export default {
 
 .book-gallery {
   /* display: flex; */
-  border-left: 2px solid #dfe1e3;
+  /* border-left: 2px solid #dfe1e3; */
   padding-left: 10px;
   flex-wrap: wrap;
   justify-content: space-between;
