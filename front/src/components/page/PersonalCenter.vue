@@ -160,11 +160,12 @@ import "../../../node_modules/cropperjs/dist/cropper.min.css";
 import WebFoot from "../veiw/foot/WebFoot.vue";
 import { ElAvatar, ElDialog } from "element-plus";
 import HeadTop from "../veiw/head/HeadTop";
-//import axios from 'axios';
+import axios from 'axios';
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import PayComponent from "./Personal/PayComponent.vue";
+import { onMounted } from "vue";
 export default {
   name: "PersonalCenter",
   inject: ["reload"],
@@ -207,7 +208,37 @@ export default {
       return store.state.userAvatar;
     });
     // router.push({ name: 'info' });
+    function update(){
+      axios
+        .get(`http://154.8.183.51/user/getinfo/${store.state.userInfo.username}`)
+        .then((response) => {
+          // 从响应数据中获取用户信息，并保存到 vuex 的 userInfo 中
+          store.commit("updateUserInfo", response.data);
 
+        })
+        .catch(() => {
+          // 处理错误情况
+        });
+      axios
+        .get('http://154.8.183.51/book/briefinfo')
+        .then((res) => {
+          store.commit('updateNum', res.data)
+        })
+      axios
+        .get(
+          `http://154.8.183.51/user/getavatar/${store.state.userInfo.username}`,
+          {}
+        )
+        .then((response) => {
+          const url = response.data.url;
+          store.commit("setAvatarUrl", url);
+
+        })
+        .catch(() => {
+
+        });
+    }
+    
     function signOut() {
       store.commit("signOut");
       router.push("/");
@@ -238,6 +269,9 @@ export default {
     function closeCrop() {
       test.value = false;
     }
+    onMounted(()=>{
+      update();
+    })
     return {
       avatar,
       design,
@@ -257,6 +291,7 @@ export default {
       closeCrop,
     };
   },
+  
 };
 </script>
 <style>
