@@ -71,8 +71,8 @@
                     </div>
                   </div>
                 </div>
-                <div v-if="isColected" class="count-item flex-view pointer hvr-bounce-to-right" @click="collect()">
-                  <div class="count-box flex-view">
+                <div v-if="isColected" class="count-item flex-view pointer " @click="collect()">
+                  <div class="count-box flex-view hvr-bounce-to-right">
                     <div class="count-text-box">
                       <span class="count-title">已收藏</span>
                     </div>
