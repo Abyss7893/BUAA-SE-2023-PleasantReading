@@ -274,7 +274,9 @@ export default {
   },
   created() {
     this.getRandomHots();
-    if (this.value2) {
+    var temp=this.value2;
+    this.$store.commit('changeShowSakura', false)
+    if (temp) {
       this.$store.commit('changeShowSakura', true)
     }
   },
