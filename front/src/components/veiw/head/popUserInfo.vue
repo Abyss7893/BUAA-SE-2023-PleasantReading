@@ -265,7 +265,8 @@ export default {
 .motto {
   padding-top: 8px;
   font-weight: 100;
-  font-size: 16px;
+  opacity: 0.5;
+  font-size: 14px;
 }
 
 .vip-on,

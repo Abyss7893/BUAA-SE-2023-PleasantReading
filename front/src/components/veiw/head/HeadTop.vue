@@ -30,7 +30,7 @@
       </li>
       <li navi-id="3">
         <a href="#" @mouseenter="showBookRank" @mouseleave="closeBookRank">
-          <div class="navi-word" >作品排行</div>
+          <div class="navi-word">作品排行</div>
           <book-rank :style="{ display: bookRank ? 'flex' : 'none' }"></book-rank>
         </a>
       </li>
@@ -358,13 +358,13 @@ export default {
         if (!this.$refs.login.showStatus()) this.$refs.login.changeForm();
       }, 200);
     },
-    showBookRank(){
+    showBookRank() {
 
-      this.bookRank=true;
+      this.bookRank = true;
     },
-    closeBookRank(){
+    closeBookRank() {
 
-      this.bookRank=false;
+      this.bookRank = false;
     },
     showRecommendCard() {
       this.recommendCard = true;
@@ -674,7 +674,7 @@ export default {
   width: 64px;
   display: flex;
   justify-content: center;
-  line-height: 76px;
+  line-height: 64px;
   height: 56px;
   /* color: #fff; */
   font-size: 16px;
@@ -724,13 +724,13 @@ export default {
     transform: translateY(0);
   }
 }
-.hover-card{
+
+.hover-card {
   display: none;
   width: 300px;
   height: 500px;
   position: relative;
-  margin-top:500px;
+  margin-top: 500px;
   background-color: #ff7575;
 }
-
 </style>

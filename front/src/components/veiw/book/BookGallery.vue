@@ -17,7 +17,6 @@
       <div class="book-row" v-for="(row, rowIndex) in displayedBooks" :key="rowIndex">
         <!-- <el-col v-for="book in displayedBooks" :key="book.id" :span="12"> -->
         <book-mini-card :book="row[0]"></book-mini-card>
-
         <!-- <el-divider /> -->
       </div>
     </div>
