@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e9743a1f-e364-4595-81de-58259e63b0f9" name="更改" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2Q3bhIJzhnJ0A9Pg9YTbSWk5k9Q" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;back&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="PleasantReading" type="Python.DjangoServer" factoryName="Django server">
+      <module name="PleasantReading" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="PleasantReading.settings" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Program Files\Python311\python.exe" />
+      <option name="SDK_NAME" value="Python 3.11" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8888" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="e9743a1f-e364-4595-81de-58259e63b0f9" name="更改" comment="" />
+      <created>1684585331340</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1684585331340</updated>
+      <workItem from="1684585333664" duration="10658000" />
+      <workItem from="1684632092984" duration="4330000" />
+      <workItem from="1684652378592" duration="623000" />
+      <workItem from="1684679547823" duration="8000" />
+      <workItem from="1684722048914" duration="18572000" />
+      <workItem from="1684761613362" duration="2712000" />
+      <workItem from="1684773042679" duration="5394000" />
+      <workItem from="1684778612719" duration="28000" />
+      <workItem from="1684806424423" duration="8503000" />
+      <workItem from="1684818815075" duration="2705000" />
+      <workItem from="1684830232333" duration="496000" />
+      <workItem from="1684830749521" duration="20490000" />
+      <workItem from="1684909213200" duration="7720000" />
+      <workItem from="1684918680806" duration="2604000" />
+      <workItem from="1684933028737" duration="3906000" />
+      <workItem from="1684937362759" duration="924000" />
+      <workItem from="1684940809894" duration="16902000" />
+      <workItem from="1684994774145" duration="3754000" />
+      <workItem from="1685000603844" duration="12514000" />
+      <workItem from="1685013219778" duration="17000" />
+      <workItem from="1685022747623" duration="1169000" />
+      <workItem from="1685029748839" duration="15000" />
+      <workItem from="1685029821848" duration="11841000" />
+      <workItem from="1685113501471" duration="443000" />
+      <workItem from="1685152309184" duration="9833000" />
+      <workItem from="1685173345485" duration="2000" />
+      <workItem from="1685173481490" duration="894000" />
+      <workItem from="1685174392338" duration="40000" />
+      <workItem from="1685174719717" duration="201000" />
+      <workItem from="1685177859089" duration="88000" />
+      <workItem from="1685178139592" duration="144000" />
+      <workItem from="1685178572926" duration="67000" />
+      <workItem from="1685178708693" duration="278000" />
+      <workItem from="1685364606948" duration="57000" />
+      <workItem from="1685376020234" duration="542000" />
+      <workItem from="1685376801283" duration="144000" />
+      <workItem from="1685377724010" duration="1410000" />
+      <workItem from="1685410492267" duration="314000" />
+      <workItem from="1685423686771" duration="16000" />
+      <workItem from="1685437739014" duration="184000" />
+      <workItem from="1685446385746" duration="1654000" />
+      <workItem from="1685451583244" duration="2107000" />
+      <workItem from="1685542605673" duration="222000" />
+      <workItem from="1685715425616" duration="266000" />
+      <workItem from="1685715763770" duration="362000" />
+      <workItem from="1685722925914" duration="324000" />
+      <workItem from="1685724886846" duration="641000" />
+      <workItem from="1685856959739" duration="600000" />
+      <workItem from="1685858402708" duration="93000" />
+      <workItem from="1685859446020" duration="251000" />
+      <workItem from="1685860184536" duration="1521000" />
+      <workItem from="1685892158691" duration="1218000" />
+      <workItem from="1685981457682" duration="129000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
