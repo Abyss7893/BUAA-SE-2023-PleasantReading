@@ -77,7 +77,7 @@ export default {
 .category-component-wrapper {
   width: 200px;
   float: left;
-  /* flex-grow: 0; */
+  flex-grow: 0;
 }
 
 .recommend-component-wrapper {

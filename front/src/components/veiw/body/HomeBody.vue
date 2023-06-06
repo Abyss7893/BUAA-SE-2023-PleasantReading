@@ -63,6 +63,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 1200px;
+  min-height: 100vh;
 }
 
 .category-component-wrapper {
