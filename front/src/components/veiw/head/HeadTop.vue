@@ -459,7 +459,8 @@ export default {
     },
     changeSakuraInit() {
       this.value2 = this.$store.state.showSakura;
-      console.log("showSakura", this.$store.state.showSakura);
+      this.$store.commit("changeShowSakura", false);
+      console.log("showSakura", this.value2);
       this.$nextTick(() => {
         this.$store.commit("changeShowSakura", this.value2);
       });
@@ -563,7 +564,7 @@ export default {
   width: 100%;
   min-width: 1200px;
   z-index: 200;
-  
+
   animation: headerSlideDown 0.3s linear forwards;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   background-image: url("../../../assets/imgs/text3.png");

@@ -88,7 +88,7 @@ const store = createStore({
   mutations: {
     changeShowSakura(state, bool) {
       state.showSakura = bool;
-      console.log('changeShow', this.showSakura);
+      console.log('changeShow', state.showSakura);
       if (bool) { console.log('changeShowOk', bool); startSakura(); }
       else { stopp(); console.log('changeShow', bool); }
     },
