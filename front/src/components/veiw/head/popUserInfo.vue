@@ -233,7 +233,7 @@ export default {
 .fav .shelf:hover .num,
 .fav .note:hover .num,
 .fav .mark:hover .num,
-.fav .comments:hover num {
+.fav .comments:hover .num {
   color: #f8b2b27d;
   cursor: pointer;
 }

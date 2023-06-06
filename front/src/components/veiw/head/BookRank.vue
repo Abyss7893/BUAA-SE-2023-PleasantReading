@@ -1,23 +1,19 @@
 <template>
-  <div>
-
-    <div class="leaderboard">
-      <h1>
-        <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M822.997333 910.037333H201.002667a33.450667 33.450667 0 0 1-30.336-34.133333 32.64 32.64 0 0 1 30.336-30.336H477.866667v-166.869333a227.456 227.456 0 0 1-189.610667-166.869334h-3.797333A111.744 111.744 0 0 1 170.666667 398.037333V170.496h113.792a62.506667 62.506667 0 0 1 64.469333-56.874667h326.186667a62.506667 62.506667 0 0 1 64.469333 56.874667H853.333333v227.541333a111.701333 111.701333 0 0 1-113.749333 113.792h-7.594667a222.378667 222.378667 0 0 1-189.653333 166.869334v166.869333H819.2a29.866667 29.866667 0 0 1 30.336 30.336 28.330667 28.330667 0 0 1-26.538667 34.133333zM348.928 178.090667v276.864a163.114667 163.114667 0 0 0 326.186667 0V178.090667z m390.656 56.874666v212.394667a50.176 50.176 0 0 0 49.28-49.322667V234.965333z m-504.448 0v163.072a50.218667 50.218667 0 0 0 49.322667 49.493334V235.136z">
-          </path>
-        </svg>
-        好评排行榜
-      </h1>
-      <ol>
-        <li v-for="(item, index) in tableData.slice(0, 5)" :key="index" @click="console.log(item.id)">
-          <mark>{{ item.title || '还未加载' }}</mark>
-          <small>{{ item.score.slice(0, 4) || '还未加载' }}</small>
-        </li>
-      </ol>
-    </div>
-
+  <div class="leaderboard">
+    <h1>
+      <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M822.997333 910.037333H201.002667a33.450667 33.450667 0 0 1-30.336-34.133333 32.64 32.64 0 0 1 30.336-30.336H477.866667v-166.869333a227.456 227.456 0 0 1-189.610667-166.869334h-3.797333A111.744 111.744 0 0 1 170.666667 398.037333V170.496h113.792a62.506667 62.506667 0 0 1 64.469333-56.874667h326.186667a62.506667 62.506667 0 0 1 64.469333 56.874667H853.333333v227.541333a111.701333 111.701333 0 0 1-113.749333 113.792h-7.594667a222.378667 222.378667 0 0 1-189.653333 166.869334v166.869333H819.2a29.866667 29.866667 0 0 1 30.336 30.336 28.330667 28.330667 0 0 1-26.538667 34.133333zM348.928 178.090667v276.864a163.114667 163.114667 0 0 0 326.186667 0V178.090667z m390.656 56.874666v212.394667a50.176 50.176 0 0 0 49.28-49.322667V234.965333z m-504.448 0v163.072a50.218667 50.218667 0 0 0 49.322667 49.493334V235.136z">
+        </path>
+      </svg>
+      好评排行榜
+    </h1>
+    <ol>
+      <li v-for="(item, index) in tableData.slice(0, 5)" :key="index" @click="this.$router.push('/book/' + item.id)">
+        <mark>{{ item.title || '还未加载' }}</mark>
+        <small>{{ item.score.slice(0, 4) || '还未加载' }}</small>
+      </li>
+    </ol>
   </div>
 </template>
 
@@ -29,19 +25,26 @@ import { reactive } from 'vue';
 export default {
   setup() {
     const tableData = reactive([])
-
     const Options = reactive({ page: 1, order: 'score' });
+    function compareNum(y, x) {
+      if (x.score < y.score) {
+        return -1;
+      } else if (x.score == y.score) {
+        return 0;
+      } else if (x.score > y.score) {
+        return 1;
+      }
+    }
     function getdata() {
       var token = localStorage.getItem("token")
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      getBookList(Options).then((books) => {
 
-        let sbooks = books.books;
-        sbooks.sort((a, b) => (a - b))
+      getBookList(Options).then((books) => {
+        var sbooks = books.books;
         for (let bookid of sbooks) {
           getBookDetiles(bookid).then((book) => {
             tableData.push(book);
-
+            tableData.sort(compareNum)
           });
         }
 
@@ -57,21 +60,22 @@ export default {
 
 <style lang="scss" scoped>
 .leaderboard {
-  position: relative;
-  top: 200px;
-  margin-left: 450px;
-  transform: translate(-50%, -50%);
-  width: 285px;
-  height: 308px;
-  background: linear-gradient(to bottom, #3a404d, #181c26);
+  animation-name: fadeIn;
+  animation-duration: .3s;
+  position: absolute;
+  top: 100%;
+  width: 300px;
+  height: 100%px;
+  background: white;
   border-radius: 10px;
   box-shadow: 0 7px 30px rgba(62, 9, 11, 0.3);
 }
 
 .leaderboard h1 {
   font-size: 18px;
-  color: #e1e1e1;
-  padding: 12px 13px 18px;
+  color: white;
+  background-color: #8eb1e552;
+  padding: 12px 13px 12px;
 }
 
 .leaderboard h1 svg {
@@ -85,6 +89,7 @@ export default {
 
 .leaderboard ol {
   counter-reset: leaderboard;
+  cursor: default;
 }
 
 .icon {
@@ -93,6 +98,7 @@ export default {
 }
 
 .leaderboard ol li {
+  line-height: 24px;
   position: relative;
   z-index: 1;
   font-size: 14px;
@@ -113,20 +119,22 @@ export default {
   width: 20px;
   height: 20px;
   line-height: 20px;
-  color: #c24448;
+  color: #f8b2b27d;
   background: #fff;
   border-radius: 20px;
   text-align: center;
 }
 
 .leaderboard ol li mark {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   position: absolute;
   z-index: 2;
   top: 0;
   left: 0;
-  width: 100%;
   height: 100%;
-  padding: 18px 10px 18px 50px;
+  padding: 16px 10px 9px 50px;
   margin: 0;
   background: none;
   color: #fff;
@@ -139,7 +147,7 @@ export default {
   z-index: 1;
   bottom: -11px;
   left: -9px;
-  border-top: 10px solid #c24448;
+  border-top: 10px solid #f8b2b27d;
   border-left: 10px solid transparent;
   transition: all 0.1s ease-in-out;
   opacity: 0;
@@ -153,6 +161,7 @@ export default {
 }
 
 .leaderboard ol li small {
+  color: #fff;
   position: relative;
   z-index: 2;
   display: block;
@@ -167,56 +176,56 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #fa6855;
+  background: #f8b2b27d;
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease-in-out;
   opacity: 0;
 }
 
 .leaderboard ol li:nth-child(1) {
-  background: #fa6855;
+  background: #f8b2b27d;
 }
 
 .leaderboard ol li:nth-child(1)::after {
-  background: #fa6855;
+  background: #f8b2b27d;
 }
 
 .leaderboard ol li:nth-child(2) {
-  background: #e0574f;
+  background: #f8b2b27d;
 }
 
 .leaderboard ol li:nth-child(2)::after {
-  background: #e0574f;
+  background: #f8b2b27d;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
 }
 
 .leaderboard ol li:nth-child(2) mark::before,
 .leaderboard ol li:nth-child(2) mark::after {
-  border-top: 6px solid #ba4741;
+  border-top: 6px solid #f8b2b27d;
   bottom: -7px;
 }
 
 .leaderboard ol li:nth-child(3) {
-  background: #d7514d;
+  background: #f8b2b27d;
 }
 
 .leaderboard ol li:nth-child(3)::after {
-  background: #d7514d;
+  background: #f8b2b27d;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.11);
 }
 
 .leaderboard ol li:nth-child(3) mark::before,
 .leaderboard ol li:nth-child(3) mark::after {
-  border-top: 2px solid #b0433f;
+  border-top: 2px solid #f8b2b27d;
   bottom: -3px;
 }
 
 .leaderboard ol li:nth-child(4) {
-  background: #cd4b4b;
+  background: #f8b2b27d;
 }
 
 .leaderboard ol li:nth-child(4)::after {
-  background: #cd4b4b;
+  background: #f8b2b27d;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
 }
 
@@ -225,16 +234,16 @@ export default {
   top: -7px;
   bottom: auto;
   border-top: none;
-  border-bottom: 6px solid #a63d3d;
+  border-bottom: 6px solid #f8b2b27d;
 }
 
 .leaderboard ol li:nth-child(5) {
-  background: #c24448;
+  background: #f8b2b27d;
   border-radius: 0 0 10px 10px;
 }
 
 .leaderboard ol li:nth-child(5)::after {
-  background: #c24448;
+  background: #f8b2b27d;
   box-shadow: 0 -2.5px 0 rgba(0, 0, 0, 0.12);
   border-radius: 0 0 10px 10px;
 }
@@ -244,7 +253,7 @@ export default {
   top: -9px;
   bottom: auto;
   border-top: none;
-  border-bottom: 8px solid #993639;
+  border-bottom: 8px solid #f8b2b27d;
 }
 
 .leaderboard ol li:hover {
@@ -255,12 +264,6 @@ export default {
 .leaderboard ol li:hover::after {
   opacity: 1;
   transform: scaleX(1.06) scaleY(1.03);
-}
-
-.leaderboard ol li:hover mark::before,
-.leaderboard ol li:hover mark::after {
-  opacity: 1;
-  transition: all 0.35s ease-in-out;
 }
 
 .the-most {

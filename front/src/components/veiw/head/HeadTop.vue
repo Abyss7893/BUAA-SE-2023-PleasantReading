@@ -24,14 +24,14 @@
       </li>
       <li navi-id="2">
         <a @mouseenter="showRecommendCard" @mouseleave="closeRecommendCard">
-          <div class="navi-word">全部作品</div>
+          <div @click="this.$router.push('/allbook')" class="navi-word">全部作品</div>
           <RecommendCard :style="{ display: recommendCard ? 'block' : 'none' }" />
         </a>
       </li>
       <li navi-id="3">
-        <a href="#" @mouseenter="showBookRank" @mouseleave="closeBookRank">
-          <div class="navi-word">作品排行</div>
-          <book-rank :style="{ display: bookRank ? 'flex' : 'none' }"></book-rank>
+        <a @mouseenter="showBookRank" @mouseleave="closeBookRank">
+          <div @click="this.$router.push('/rank')" class="navi-word">作品排行</div>
+          <book-rank :style="{ display: bookRank ? 'block' : 'none' }"></book-rank>
         </a>
       </li>
     </div>
@@ -140,7 +140,7 @@
       </div>
       <ul v-if="navishow">
         <li navi-id="4">
-          <a href="#">
+          <a href="/mark">
             <div class="navi-word">
               <svg t="1686031363278" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 p-id="2221" width="18" height="18">
@@ -155,7 +155,7 @@
           </a>
         </li>
         <li navi-id="5">
-          <a href="#">
+          <a href="/mybook">
             <div class="navi-word">
               <svg t="1686031420019" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 p-id="2536" width="18" height="18">
@@ -167,7 +167,7 @@
           </a>
         </li>
         <li navi-id="6">
-          <a href="#">
+          <a href="/mynote">
             <div class="navi-word">
               <svg t="1686031457356" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 p-id="2798" width="18" height="18">
@@ -182,7 +182,7 @@
     </div>
     <HeartSwitch v-if="navishow" :switch="value2" @swithChange="swithChange"></HeartSwitch>
   <!-- <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
-                                            style="--el-switch-on-color: #f8b2b2" /> -->
+                                                                    style="--el-switch-on-color: #f8b2b2" /> -->
   </div>
 </template>
 
@@ -274,7 +274,7 @@ export default {
   },
   created() {
     this.getRandomHots();
-    var temp=this.value2;
+    var temp = this.value2;
     this.$store.commit('changeShowSakura', false)
     if (temp) {
       this.$store.commit('changeShowSakura', true)
@@ -674,8 +674,9 @@ export default {
   margin-right: 110px;
 }
 
-.left-navi a,
+.left-navi li>a,
 .right-navi ul li>a {
+  position: relative;
   width: 64px;
   display: flex;
   justify-content: center;
