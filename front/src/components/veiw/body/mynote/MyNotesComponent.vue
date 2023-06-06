@@ -48,8 +48,13 @@
               pageLabel: '第',
               ofLabel: '页，共有',
             }"
+            :search-options="{
+              enabled: true,
+            }"
             @cell-click="onCellClick"
-          />
+          >
+            <template #emptystate> 还没有笔记哟~ </template></vue-good-table
+          >
           <el-divider />
         </div>
       </div>
@@ -88,8 +93,8 @@ export default {
           label: "时间",
           field: "timestamp",
           type: "date",
-          dateInputFormat: "yyyy-MM-dd",
-          dateOutputFormat: "yyyy-MM-dd",
+          dateInputFormat: "yyyy-MM-dd hh:mm:ss",
+          dateOutputFormat: "yyyy-MM-dd hh:mm",
           width: "80px",
         },
       ],
@@ -123,7 +128,7 @@ export default {
           text: note.text,
           chapter: note.chapter,
           chaptername: note.title,
-          timestamp: dayjs(note.timestamp).format("YYYY-MM-DD"),
+          timestamp: dayjs(note.timestamp).format("YYYY-MM-DD hh:mm:ss"),
         });
     });
   },
@@ -192,6 +197,16 @@ export default {
 }
 </style>
 <style>
+.vgt-wrap.black-rhino .vgt-global-search {
+  border: 1px solid #ffbbc7;
+  background: #ffbbc7;
+}
+.vgt-wrap.black-rhino .vgt-global-search__input .vgt-input,
+.vgt-wrap.black-rhino .vgt-global-search__input .vgt-select {
+  color: #ffffff;
+  background-color: #c8abab5e;
+  border: 1px solid transparent;
+}
 .btn {
   width: 170px;
   height: 80px;
