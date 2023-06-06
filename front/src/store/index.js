@@ -82,7 +82,8 @@ const store = createStore({
     tempAvatar: state => state.tempAvatar,
     islogin: state => state.isLogin,
     loginshow: state => state.loginShow,
-    markupdate: state => state.num.marks
+    markupdate: state => state.num.marks,
+    showSakura: state => state.showSakura
     // ...
   },
   mutations: {

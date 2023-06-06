@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
   <div class="placeholder" style="height: 64px" v-if="holdplace"></div>
   <div class="head-top" :class="navishow ? 'slide-down' : ''" :id="navishow ? 'fixheight' : ''" :style="{
-    position: fix ? 'fixed' : 'absolute'
+    position: fix ? 'fixed' : 'absolute',
   }">
     <!-- <check-login/> -->
     <div v-if="navishow">
@@ -278,11 +278,14 @@ export default {
       });
     },
     changeSakuraInit() {
-      this.value2 = this.$store.state.showSakura;
-      console.log("showSakura", this.$store.state.showSakura);
-      //   this.$nextTick(() => {
-      //    this.$store.commit("changeShowSakura", this.value2);
-      //   });
+      let temp = this.$store.state.showSakura ? true : false;
+      console.log("init showSakura", this.$store.state.showSakura);
+      this.$store.commit("changeShowSakura", false);
+      console.log("init showSakura", temp);
+
+      this.value2 = temp;
+      this.$store.commit("changeShowSakura", this.value2);
+
     },
     getRandomHots() {
       this.randomHots = [];
@@ -383,7 +386,6 @@ export default {
   width: 100%;
   min-width: 1200px;
   z-index: 200;
-  background-color: #f5f5f5;
   animation: headerSlideDown 0.3s linear forwards;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   background-image: url("../../../assets/imgs/text3.png");
