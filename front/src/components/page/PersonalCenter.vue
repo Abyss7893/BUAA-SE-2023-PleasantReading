@@ -385,7 +385,7 @@ export default {
   min-height: 200px;
   padding-top: 100px;
   background-color: white;
-  background-image: url(http://localhost:8080/img/text4.25bc5450.png);
+  background-image: url(https://leeibo.sh1a.qingstor.com/text4.png?expires=1686657463&signature=4IPP2NOT2QWOuOfTL3Wv1ZIuVBnHrRL8+NQxvLEFPCA=&access_key_id=FEOPWMJLWZSOJNLWJHVS);
   background-size: 100%;
   background-repeat: no-repeat;
   /* background-position: 720px -70px; */
