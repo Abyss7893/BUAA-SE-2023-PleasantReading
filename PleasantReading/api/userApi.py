@@ -249,5 +249,5 @@ def userCheck(request, ID, pwd):
     user = User.objects.get(username=ID)
     user.set_password(pwd)
     user.save()
-    weburl = "https://imgloc.com/i/ViGR5E"
+    weburl = "http://154.8.183.51:9000/"
     return render(request, 'email_check.html', {'url': weburl})
