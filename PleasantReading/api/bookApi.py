@@ -101,7 +101,7 @@ def getBookContent(request, bookid, chapter):
         if notAnonymous(request):
             userid = getUsername(request)
             is_marked = Bookmark.objects.filter(bookID=bookid, chapter=chapter, userID=userid).count() > 0
-            History.objects.create(bookID=bookid, userID=userid, chapter=chapter, timestamp=date.today())
+            History.objects.create(bookID=bookid, userID=userid, chapter=chapter, timestamp=datetime.now())
         if book.isVIP:
             if notAnonymous(request):
                 if isVIP(request):
@@ -494,9 +494,9 @@ def getRecentHistory(request):
         return JsonResponse({'message': 'login please'}, status=201)
     userid = getUsername(request)
 
-    latest_history = History.objects.filter(userID=userid).filter(bookID=OuterRef('bookID')).order_by('-timestamp')
+    latest_history = History.objects.filter(userID=userid).filter(bookID=OuterRef('bookID')).order_by('timestamp')
     result = History.objects.filter(id=Subquery(latest_history.values('id')[:1]))
-    print(result.order_by('-timestamp').values('bookID', 'chapter', 'userID'))
+    print(result.order_by('timestamp').values('bookID', 'chapter', 'userID'))
 
     latest_chapters = result.order_by('-timestamp')[:8]
     subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name', 'img')[:1]
