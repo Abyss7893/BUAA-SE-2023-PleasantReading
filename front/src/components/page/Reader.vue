@@ -1,5 +1,5 @@
 <template>
-  <HeadTop :holdplace="true" />
+  <HeadTop :holdplace="true" :fix="false" />
   <ReaderBody />
   <WebFoot />
 </template>
@@ -7,7 +7,6 @@
 import HeadTop from "../veiw/head/HeadTop.vue";
 import WebFoot from "../veiw/foot/WebFoot.vue";
 import ReaderBody from "../veiw/body/ReaderBody.vue";
-import { stopp } from "@/api/sakura";
 export default {
   name: "ReaderComponent",
   components: {
@@ -16,7 +15,7 @@ export default {
     ReaderBody,
   },
   created() {
-    stopp();
+    this.$store.commit("changeShowSakura", false)
   },
 };
 </script>
