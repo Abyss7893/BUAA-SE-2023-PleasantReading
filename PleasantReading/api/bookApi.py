@@ -494,11 +494,11 @@ def getRecentHistory(request):
         return JsonResponse({'message': 'login please'}, status=201)
     userid = getUsername(request)
 
-    latest_history = History.objects.filter(bookID=OuterRef('bookID')).order_by('-timestamp')
+    latest_history = History.objects.filter(userID=userid).filter(bookID=OuterRef('bookID')).order_by('-timestamp')
     result = History.objects.filter(id=Subquery(latest_history.values('id')[:1]))
-    print(result.values('bookID', 'chapter'))
+    print(result.order_by('-timestamp').values('bookID', 'chapter', 'userID'))
 
-    latest_chapters = result[:8]
+    latest_chapters = result.order_by('-timestamp')[:8]
     subquery = BookBasicInfo.objects.filter(bookID=OuterRef('bookID')).values('name', 'img')[:1]
     latest_chapters = latest_chapters.annotate(
         name=Subquery(subquery.values('name')), img=Subquery(subquery.values('img'))
