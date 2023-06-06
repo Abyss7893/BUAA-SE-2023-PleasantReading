@@ -10,6 +10,7 @@
   padding: 12px;
   animation: fadeIn .5s;
   box-sizing: border-box;
+
 }
 
 /* .head-top .logoa {
@@ -84,7 +85,7 @@
 .dropdown-content .want {
   font-size: 14px;
   padding: 4px 0 4px 10px;
-  margin: 0 8px;
+  margin: 0 8px 4px 8px;
   border-radius: 5px;
 }
 

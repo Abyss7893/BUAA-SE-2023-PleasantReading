@@ -4,9 +4,10 @@
       <el-dropdown
         @command="handleCommand"
         style="line-height: 150%"
-        trigger="click"
+        trigger="hover"
+        
       >
-        <span class="demonstration hvr-bubble-bottom">
+        <span class="demonstration ">
           {{ cod
           }}<el-icon class="el-icon--right">
             <arrow-down /><i class="arrow-down"></i

@@ -2,19 +2,14 @@
   <el-card :body-style="{ padding: '0px' }" shadow="hover" @click="gotoRead">
     <img :src="cover" class="image" />
     <div class="title">
-      <el-tooltip
-        class="box-item"
-        effect="dark"
-        :content="name"
-        placement="bottom"
-      >
+      <el-tooltip class="box-item" effect="dark" :content="name" placement="bottom">
         <span>{{ name }}</span>
       </el-tooltip>
     </div>
   </el-card>
 </template>
   
-  <script>
+<script>
 // import { nextTick } from 'vue';
 export default {
   props: {
@@ -26,7 +21,7 @@ export default {
     gotoRead() {
       console.log("gotoRead" + this.bookid);
       this.$router.push({
-        path: "/book/" + this.bookid ,
+        path: "/book/" + this.bookid,
       });
     },
   },
@@ -64,7 +59,9 @@ export default {
   transition: all 0.5s;
   border-radius: 15px;
   background-color: rgba(255, 0, 0, 0.1);
+  cursor: pointer;
 }
+
 .el-card:hover {
   margin-top: -7px;
 }

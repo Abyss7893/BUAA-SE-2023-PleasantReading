@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import _ from 'lodash'
 import _store from 'store2'
+import { startSakura, stopp } from '@/api/sakura'
 const store = createStore({
   state() {
     return {
@@ -8,6 +9,7 @@ const store = createStore({
       showLogin: false,
       isLogin: false,
       isVIP: true,
+      showSakura: true,
       userId: null,
       userAvatar: null,
       loginShow: false,
@@ -80,10 +82,16 @@ const store = createStore({
     tempAvatar: state => state.tempAvatar,
     islogin: state => state.isLogin,
     loginshow: state => state.loginShow,
-    markupdate: state => state.num.marks
+    markupdate: state => state.num.marks,
+    showSakura: state => state.showSakura
     // ...
   },
   mutations: {
+    changeShowSakura(state, bool) {
+      state.showSakura = bool;
+      if (bool) { startSakura(); }
+      else { stopp(); }
+    },
     resetAllState(state, payload) {
       if (payload instanceof Array === false) { // 验证传入的是一个数组
         return
@@ -112,7 +120,6 @@ const store = createStore({
     },
     changeShowLogin(state) {
       state.showLogin = !state.showLogin
-      console.log("1111")
     },
     setTempAvatar(state, url) {
       state.tempAvatar = url

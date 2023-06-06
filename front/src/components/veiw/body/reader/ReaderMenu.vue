@@ -185,8 +185,8 @@ export default {
       return -(this.pageWidth / 2) - 68 + 'px'
     },
     menuTop() {
-      if (this.Top < 64)
-        return "64"
+      if (this.Top < 0)
+        return "0"
       else
         return this.Top + "px"
     },
