@@ -1,7 +1,20 @@
 <template>
   <body>
+    <div class="forgetPwd">
+      <el-dialog title="重置密码" v-if="showForget" :show-close="false" v-model="showForget" :before-close="handleClose" :close-on-click-modal="false"
+        :close-on-press-escape="false" :append-to-body="false" style="
+            border-radius: 25px;
+            border: 1px solid black;
+            backdrop-filter: blur(5px);
+            box-shadow: -5px -5px 10px rgb(39, 65, 65), 5px 5px 20px aqua;
+            animation: animate 5s linear infinite;
+          ">
+        <forget-dialog @submit="showForgetDialog" @cancle="showForget=false"/>
+      </el-dialog>
+    </div>
+    
     <div class="main" id="mycard" ref="main">
-
+      
       <div class="container a-container" id="a-container">
         <form class="form" id="b-form" method="" action="">
           <h2 class="form_title title">登录账号</h2>
@@ -27,8 +40,8 @@
           </div>
 
           <input class="form__input" type="text" placeholder="username" v-model="userLoginForm.username">
-          <input class="form__input" type="password" placeholder="Password" v-model="userLoginForm.password"><a
-            class="form__link">忘记密码?</a>
+          <input class="form__input" type="password" placeholder="Password" v-model="userLoginForm.password" >
+          <a class="form__link" @click="showForget = true" style="cursor: pointer;">忘记密码?</a>
           <button class="form__button button submit" @click.prevent="userList">登录</button>
         </form>
       </div>
@@ -93,10 +106,12 @@
 import { ref, onMounted, reactive } from 'vue';
 import axios from 'axios'
 import { useStore } from "vuex";
-
+import forgetDialog from './ForgetPwd.vue';
 import { ElMessage } from 'element-plus'
+
 export default {
   name: 'newLoginComponent',
+  components:{forgetDialog},
   emits: ['submit'],
   setup(_, { emit }) {
     const store = useStore();
@@ -110,6 +125,7 @@ export default {
     const aContainer = ref(null)
     const bContainer = ref(null)
     const allButtons = ref([])
+    const showForget=ref(false)
     const main = ref(null)
     const userLoginForm = reactive({
       username: '',
@@ -367,6 +383,7 @@ export default {
       allButtons,
       userLoginForm,
       userRegisterForm,
+      showForget,
       userList,
       register,
       showStatus,
@@ -375,15 +392,8 @@ export default {
   }
 }
 </script>
-<style  scoped>
-*,
-*::after,
-*::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  user-select: none;
-}
+<style scoped>
+
 
 /* Generic */
 body {
@@ -421,7 +431,7 @@ body {
   margin-bottom: 10px;
 }
 
-.container {
+.main .container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -697,7 +707,9 @@ body {
     width: 500px;
   }
 }
-
+.forgetPwd .el-dialog__headerbtn{
+  left: 0% !important; 
+}
 .disable {
   pointer-events: none;
 }

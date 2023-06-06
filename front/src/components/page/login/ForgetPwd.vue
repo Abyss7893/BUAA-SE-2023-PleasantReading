@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container2">
     <!-- 展示别的内容 -->
+    <div class="close-icon" @click="close"><svg class="closeicon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M851.416 217.84l-45.256-45.248L512 466.744l-294.152-294.16-45.256 45.256L466.744 512l-294.152 294.16 45.248 45.256L512 557.256l294.16 294.16 45.256-45.256L557.256 512z" fill="#272536"></path></svg></div>
     <div class="image">
       <img src="../../../assets/girl.png">
     </div>
@@ -83,7 +84,9 @@ export default {
       }
     }
     // 提交表单
-
+    function close(){
+      emit('cancle')
+    }
     function submitForm() {
       const data = {
         email: formData.value.email,
@@ -154,7 +157,7 @@ export default {
       formData,
       rules,
       waitCheck,
-
+      close,
       submitForm,
       resetForm
     };
@@ -162,7 +165,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .loader {
   border: 5px solid #f3f3f3;
   border-top: 5px solid #3498db;
@@ -191,9 +194,10 @@ export default {
   display: none;
 }
 
-.container {
+.container2 {
   display: flex;
   align-items: center;
+
   /* 垂直居中 */
 }
 
@@ -217,7 +221,14 @@ export default {
   width: 55%;
   /* 填满剩余空间 */
 }
-
+.close-icon{
+  width: 18px;
+  position: absolute;
+  left: 100%;
+  margin-left: -50px;
+  top: 0;
+  margin-top: 20px;
+}
 .bubble {
   position: relative;
   border-radius: 20px;
@@ -242,5 +253,20 @@ export default {
   height: 0;
   border-bottom: 20px solid lightgray;
   border-right: 20px solid transparent;
+}
+.close-icon{
+ 
+
+  
+  cursor: pointer;
+  
+}
+.closeicon{
+    
+  width: 20px;
+transition: transform .4s ease-in-out;
+}
+.close-icon:hover .closeicon{
+  transform: rotate(120deg);
 }
 </style>
