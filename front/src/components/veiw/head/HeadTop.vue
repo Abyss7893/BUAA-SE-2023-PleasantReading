@@ -44,13 +44,14 @@
         <a @mouseenter="showRecommendCard" @mouseleave="closeRecommendCard">
           <div class="navi-word">全部作品</div>
           <RecommendCard
-            :style="{ display: recommendCard ? 'block' : 'none' }"
+            :style="{display: recommendCard ? 'block' : 'none'}"
           />
         </a>
       </li>
       <li navi-id="3">
-        <a href="#" class="hover-me">
-          <div class="navi-word">作品排行</div>
+        <a href="#" @mouseenter="showBookRank" @mouseleave="closeBookRank">
+          <div class="navi-word" >作品排行</div>
+          <book-rank :style="{ display: bookRank ? 'flex' : 'none' }"></book-rank>
         </a>
       </li>
     </div>
@@ -287,8 +288,8 @@
           <a href="#">
             <div class="navi-word">
               <svg
-                class="icon"
-                style="vertical-align: middle; overflow: hidden"
+                class="svgicon"
+                
                 viewBox="0 0 1081 1024"
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -321,8 +322,8 @@
           <a href="#">
             <div class="navi-word">
               <svg
-                class="icon"
-                style="vertical-align: middle; overflow: hidden"
+                class="svgicon"
+                
                 viewBox="0 0 1097 1024"
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -337,19 +338,7 @@
         <li navi-id="6">
           <a href="#">
             <div class="navi-word">
-              <svg
-                class="icon"
-                viewBox="0 0 1024 1590"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M192 309.333333H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333333h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333333 21.333333 21.333333 0 0 1-21.333333 21.333333zM192 423.04H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333334 21.333333 21.333333 0 0 1-21.333333 21.333333zM192 536.96H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333333 21.333333 21.333333 0 0 1 21.333333-21.333334h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333334 21.333333 21.333333 0 0 1-21.333333 21.333333zM192 650.666667H21.333333a21.333333 21.333333 0 0 1-21.333333-21.333334 21.333333 21.333333 0 0 1 21.333333-21.333333h170.666667a21.333333 21.333333 0 0 1 21.333333 21.333333 21.333333 21.333333 0 0 1-21.333333 21.333334zM917.333333 650.666667h-170.666666a106.666667 106.666667 0 0 1-106.666667-106.666667v-85.333333a106.666667 106.666667 0 0 1 106.666667-106.666667h170.666666a106.666667 106.666667 0 0 1 106.666667 106.666667v85.333333a106.666667 106.666667 0 0 1-106.666667 106.666667z m-170.666666-256a64 64 0 0 0-64 64v85.333333a64 64 0 0 0 64 64h170.666666a64 64 0 0 0 64-64v-85.333333a64 64 0 0 0-64-64z"
-                ></path>
-                <path
-                  d="M832 1024H192a106.666667 106.666667 0 0 1-106.666667-106.666667V106.666667a106.666667 106.666667 0 0 1 106.666667-106.666667h640a106.666667 106.666667 0 0 1 106.666667 106.666667v288h-192a64 64 0 0 0-64 64v85.333333a64 64 0 0 0 64 64h192V917.333333a106.666667 106.666667 0 0 1-106.666667 106.666667zM192 42.666667a64 64 0 0 0-64 64v810.666666a64 64 0 0 0 64 64h640a64 64 0 0 0 64-64V650.666667h-149.333333a106.666667 106.666667 0 0 1-106.666667-106.666667v-85.333333a106.666667 106.666667 0 0 1 106.666667-106.666667h149.333333V106.666667a64 64 0 0 0-64-64z"
-                ></path></svg
-              >我的笔记
+              <svg class="svgicon" viewBox="0 0 1081 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M777.728 925.184H246.272a128 128 0 0 1-128-128V195.072a128.512 128.512 0 0 1 128-128h531.456a128.512 128.512 0 0 1 128 128v602.112a128 128 0 0 1-128 128zM246.272 118.272a77.312 77.312 0 0 0-76.8 76.8v602.112a76.8 76.8 0 0 0 76.8 76.8h531.456a76.8 76.8 0 0 0 76.8-76.8V195.072a77.312 77.312 0 0 0-76.8-76.8z" fill="#333333"></path><path d="M880.128 601.6h-288.256a105.472 105.472 0 0 1 0-210.944h288.256v51.2h-288.256a54.272 54.272 0 1 0 0 108.544h288.256z" fill="#333333"></path></svg>我的笔记
             </div>
           </a>
         </li>
@@ -377,6 +366,7 @@ import { startSakura, stopp } from "@/api/sakura";
 import { ElAvatar, ElDialog } from "element-plus";
 import RecommendCard from "./RecommendCard.vue";
 import popUserInfo from "./popUserInfo.vue";
+import BookRank from './BookRank.vue'
 export default {
   name: "Head_Top",
   components: {
@@ -385,6 +375,7 @@ export default {
     newLogin,
     ElDialog,
     RecommendCard,
+    BookRank
   },
   props: {
     navishow: {
@@ -412,6 +403,8 @@ export default {
       popShow: 0,
       throttling1: false,
       recommendCard: false,
+      bookRank: false,
+
     };
   },
 
@@ -496,6 +489,14 @@ export default {
       setTimeout(() => {
         if (!this.$refs.login.showStatus()) this.$refs.login.changeForm();
       }, 200);
+    },
+    showBookRank(){
+
+      this.bookRank=true;
+    },
+    closeBookRank(){
+
+      this.bookRank=false;
     },
     showRecommendCard() {
       this.recommendCard = true;
@@ -715,7 +716,11 @@ export default {
 .icon {
   width: 18px;
 }
-
+.svgicon{
+  width: 25px;
+  position: relative;
+  top:10px;
+}
 .login-pri {
   width: 100%;
   margin-top: 36px;
@@ -826,7 +831,7 @@ export default {
 
 .left-navi a div.navi-word {
   position: absolute;
-  bottom: 0;
+
   height: 100%;
 }
 
@@ -848,4 +853,13 @@ export default {
     transform: translateY(0);
   }
 }
+.hover-card{
+  display: none;
+  width: 300px;
+  height: 500px;
+  position: relative;
+  margin-top:500px;
+  background-color: #ff7575;
+}
+
 </style>
