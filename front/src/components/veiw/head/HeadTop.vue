@@ -281,18 +281,11 @@ export default {
     },
     changeSakuraInit() {
       this.value2 = this.$store.state.showSakura;
-<<<<<<< HEAD
       this.$store.commit("changeShowSakura", false);
       console.log("showSakura", this.value2);
       this.$nextTick(() => {
         this.$store.commit("changeShowSakura", this.value2);
       });
-=======
-      console.log("showSakura", this.$store.state.showSakura);
-      //   this.$nextTick(() => {
-      //    this.$store.commit("changeShowSakura", this.value2);
-      //   });
->>>>>>> c7c4c91bb927ee27420192f17390788949aef8f0
     },
     getRandomHots() {
       this.randomHots = [];
@@ -393,11 +386,6 @@ export default {
   width: 100%;
   min-width: 1200px;
   z-index: 200;
-<<<<<<< HEAD
-
-=======
-  background-color: #f5f5f5;
->>>>>>> c7c4c91bb927ee27420192f17390788949aef8f0
   animation: headerSlideDown 0.3s linear forwards;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   background-image: url("../../../assets/imgs/text3.png");
