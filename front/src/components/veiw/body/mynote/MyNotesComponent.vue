@@ -6,35 +6,50 @@
       <div class="box-center" style="width: 1400px">
         <el-divider />
         <div v-if="!this.$store.state.isLogin">
-          <el-empty description="未登录ovo" :image="require('assets/imgs/unlogin.gif')" image-size="200px" />
-          <div style="
-                margin: auto;
-                width: 400px;
-                margin-top: 30px;
-                align-items: center;
-              ">
-            <div class="btn twinkle" @click="
-              () => {
-                this.$store.commit('showlogin');
-              }
-            ">
+          <el-empty
+            description="未登录ovo"
+            :image="require('assets/imgs/unlogin.gif')"
+            image-size="200px"
+          />
+          <div
+            style="
+              margin: auto;
+              width: 400px;
+              margin-top: 30px;
+              align-items: center;
+            "
+          >
+            <div
+              class="btn twinkle"
+              @click="
+                () => {
+                  this.$store.commit('showlogin');
+                }
+              "
+            >
               登录
             </div>
           </div>
         </div>
         <div v-else>
-          <vue-good-table :columns="columns" :rows="rows" theme="black-rhino" :pagination-options="{
-            enabled: true,
-            mode: 'pages',
-            jumpFirstOrLast: true,
-            firstLabel: '首页',
-            lastLabel: '尾页',
-            nextLabel: '下一页',
-            prevLabel: '上一页',
-            rowsPerPageLabel: '每页展示',
-            pageLabel: '第',
-            ofLabel: '页，共有',
-          }" @cell-click="onCellClick" />
+          <vue-good-table
+            :columns="columns"
+            :rows="rows"
+            theme="black-rhino"
+            :pagination-options="{
+              enabled: true,
+              mode: 'pages',
+              jumpFirstOrLast: true,
+              firstLabel: '首页',
+              lastLabel: '尾页',
+              nextLabel: '下一页',
+              prevLabel: '上一页',
+              rowsPerPageLabel: '每页展示',
+              pageLabel: '第',
+              ofLabel: '页，共有',
+            }"
+            @cell-click="onCellClick"
+          />
           <el-divider />
         </div>
       </div>
@@ -121,12 +136,11 @@ export default {
 </style>
 <style >
 .vgt-table.black-rhino.bordered th {
-  color: #fbfdff;
-  text-shadow: 1px 1px #b25050;
+  color: #ffffff;
+  text-shadow: 1px 1px #b2505000;
   border-bottom: 1px solid #435169;
-  background: linear-gradient(#de6464, #f07f7f);
+  background: #ffbbc7;
 }
-
 .vgt-table.black-rhino {
   border: 1px solid #435169;
   background-color: #fff7f7;
@@ -144,7 +158,7 @@ export default {
 .vgt-wrap.black-rhino .vgt-wrap__footer {
   color: #dae2f0;
   border: 1px solid #435169;
-  background: linear-gradient(#de6464, #f07f7f);
+  background: #ffbbc7;
 }
 
 .vgt-wrap.black-rhino .vgt-wrap__footer .footer__row-count__select {
