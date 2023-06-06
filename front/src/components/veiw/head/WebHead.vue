@@ -185,7 +185,7 @@ export default {
         }
         if (i > 16 && i <= 20) {
           layers[i].style.transition = `0s`
-          layers[i].style.transform = `translate(${parseInt(layerloc[i][0]) + disx / 9}px, ${layerloc[i][1]}px)`
+          layers[i].style.transform = `translate(${parseInt(layerloc[i][0]) + disx / 12}px, ${layerloc[i][1]}px)`
           continue
         }
       }
