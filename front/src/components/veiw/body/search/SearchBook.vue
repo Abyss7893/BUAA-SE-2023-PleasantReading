@@ -11,7 +11,7 @@
       <div class="result-list">
         <ul>
           <li v-for="(book, bookidx) in books" :key="bookidx">
-            <BookInfoCompnent :book="book" />
+            <BookInfoCompnent :bookinfo="book" />
           </li>
         </ul>
       </div>
@@ -68,7 +68,7 @@ export default {
               grouping: true,
               type: 'error',
             })
-           
+
             return
           }
           if (this.bookids.length == 0) {
@@ -86,7 +86,7 @@ export default {
             grouping: true,
             type: 'warning',
           })
-          
+
         }
       })
     },
@@ -97,7 +97,7 @@ export default {
           grouping: true,
           type: 'error',
         })
-        
+
         return
       }
       if (page <= 0 || page > this.pages) {
@@ -106,7 +106,7 @@ export default {
           grouping: true,
           type: 'warning',
         })
-        
+
         return
       }
       this.$router.push({ path: '/search', query: { "keywords": this.$route.query.keywords, "page": page } })
@@ -121,5 +121,9 @@ em {
 
 .search-result-null {
   margin-top: 24px;
+}
+
+.main-search-conten {
+  min-height: 640px;
 }
 </style>
