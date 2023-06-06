@@ -460,9 +460,9 @@ export default {
     changeSakuraInit() {
       this.value2 = this.$store.state.showSakura;
       console.log("showSakura", this.$store.state.showSakura);
-      //   this.$nextTick(() => {
-      //    this.$store.commit("changeShowSakura", this.value2);
-      //   });
+      this.$nextTick(() => {
+        this.$store.commit("changeShowSakura", this.value2);
+      });
     },
     getRandomHots() {
       this.randomHots = [];
