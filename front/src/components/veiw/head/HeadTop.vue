@@ -401,7 +401,7 @@ export default {
   z-index: 200;
   animation: headerSlideDown 0.3s linear forwards;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-  background-image: url("../../../assets/imgs/text3.png");
+  background-image: url("https://leeibo.sh1a.qingstor.com/text3.png?expires=1686650682&signature=8sRc/tJUD4jjU3WV4o4KcPRwBu0Os5rO/k3h+JPZ3fs=&access_key_id=FEOPWMJLWZSOJNLWJHVS");
 }
 
 @keyframes headerSlideDown {

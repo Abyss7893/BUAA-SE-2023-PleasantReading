@@ -4,8 +4,8 @@
   width: 100%;
   justify-content: space-between;
   background: linear-gradient(to right, #e4534cde, #e1a7a4de);
-  background-image: url('../../imgs/text.jpg');
-  background-image: url('../../imgs/text2.png');
+  /* background-image: url('../../imgs/text.jpg'); */
+  background-image: url('https://leeibo.sh1a.qingstor.com/text2.png?expires=1686650639&signature=M5fiWcv88/FXk/kTYZUXv3+7al53sq+wOGwqbv5puHM=&access_key_id=FEOPWMJLWZSOJNLWJHVS');
   background-repeat: no-repeat;
   background-size: 100% auto;
   /* background-attachment: fixed; */
