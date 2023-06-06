@@ -1,7 +1,7 @@
 <!-- home页面 -->
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png">
-                                                                                                                                                                                                                                                                                                                        <LoginComponent /> -->
+                                                                                                                                                                                                                                                                                                                                <LoginComponent /> -->
   <div id="app">
     <RouterView :key="$route.fullPath" prefetch></RouterView>
   </div>
@@ -156,6 +156,7 @@ body.dark #app>div.basic-bcg>div.reader-menu.float>div:nth-child(3)>div>div>ul>l
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+body.dark #app>div.basic-bcg>div.reader-menu.float>div>div>ul>li>a:hover,
 body.dark #app>div.basic-bcg>div.reader-menu.float>div:nth-child(3)>div>div>ul>li>cite span:hover,
 body.dark #app>div.basic-bcg>div.reader-menu.float>div:nth-child(3)>div>div>ul>li>cite>span:hover svg path {
   fill: #ed4259;

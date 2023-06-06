@@ -48,12 +48,13 @@
           </el-icon>
         </li>
       </router-link>
-      <li class="service">
+      <li class="service" @mouseenter="recommendService = true" @mouseleave="recommendService = false">
         <div><el-icon>
             <Star />
           </el-icon>推荐服务</div><el-icon>
           <ArrowRight />
         </el-icon>
+        <RecommendService v-if="recommendService" />
       </li>
       <el-divider direction="horizontal" />
       <li class="logout" @click="signOut()">
@@ -70,28 +71,19 @@
 
 <script>
 import PayComponent from '@/components/page/Personal/PayComponent.vue';
+import RecommendService from './RecommendService.vue';
 // import { getBriefInfo } from '@/api/api'
 export default {
   name: "popUserInfo",
-  components: { PayComponent, },
+  components: { PayComponent, RecommendService, },
   data() {
     return {
       pay: false,
-      
+      recommendService: false,
     };
   },
-
-  // created() {
-  //   briefdata=this.$store.state.num
-  //   getBriefInfo().then((data) => {
-  //     if (data.status && data.status == 200)
-  //       this.briefdata = data.data
-  //     else
-  //       console.log(data)
-  //   })
-  // },
-  computed:{
-    briefdata(){
+  computed: {
+    briefdata() {
       return this.$store.state.num
     }
   },
@@ -166,7 +158,6 @@ export default {
 }
 
 .pop li {
-  cursor: pointer;
   transition: background-color .3s ease-in-out;
   display: flex;
   justify-content: space-between;
@@ -176,6 +167,14 @@ export default {
   font-size: 18px;
   text-align: center;
   position: relative;
+}
+
+.pop li.logout {
+  cursor: pointer;
+}
+
+.pop li.service {
+  cursor: default;
 }
 
 .pop li .el-icon {
