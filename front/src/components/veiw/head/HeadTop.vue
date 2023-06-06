@@ -178,7 +178,7 @@
       </ul>
     </div>
     <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
-      style="--el-switch-on-color: #eb89c4; " />
+      style="--el-switch-on-color: #eb89c4" />
 
     <div v-if="navishow" style="width: 100px; height: 10px"></div>
   </div>
@@ -187,10 +187,9 @@
 
 <script>
 import "css/head/headtop.css";
-import { ref } from "vue";
+
 import newLogin from "@/components/page/login/newLogin.vue";
 import { mapGetters } from "vuex";
-import { startSakura, stopp } from "@/api/sakura";
 import { ElAvatar, ElDialog } from "element-plus";
 import RecommendCard from "./RecommendCard.vue";
 import popUserInfo from "./popUserInfo.vue";
@@ -215,8 +214,7 @@ export default {
   },
   data() {
     return {
-      value2: ref(true),
-      randomHots: [],
+      value2: this.$store.state.showSakura,
       searchHots: [
         "亚丁的女神",
         "神雕之在下杨过",
@@ -261,7 +259,8 @@ export default {
     },
   },
   created() {
-    this.getRandomHots()
+    this.getRandomHots();
+    this.changeSakuraInit();
   },
   mounted() {
     this.keywords = this.$route.query.keywords
@@ -270,12 +269,21 @@ export default {
   },
   methods: {
     changeSakura() {
-      if (this.value2) startSakura();
-      else stopp();
+      this.$nextTick(() => {
+        this.$store.commit("changeShowSakura", this.value2);
+      });
+    },
+    changeSakuraInit() {
+      this.value2 = this.$store.state.showSakura;
+      console.log("showSakura", this.$store.state.showSakura);
+      //   this.$nextTick(() => {
+      //    this.$store.commit("changeShowSakura", this.value2);
+      //   });
     },
     getRandomHots() {
-      this.randomHots = []
-      for (let k = 0; k < 5; k++) {//获取随机数不重复的三个数字循环三次
+      this.randomHots = [];
+      for (let k = 0; k < 5; k++) {
+        //获取随机数不重复的三个数字循环三次
         let id = Math.ceil(Math.random() * (this.searchHots.length - 1));
         if (this.randomHots.indexOf(this.searchHots[id]) === -1) {
           this.randomHots.push(this.searchHots[id]);
@@ -290,7 +298,7 @@ export default {
       this.showLogin = value;
     },
     drop() {
-      this.getRandomHots()
+      this.getRandomHots();
       this.$refs.hidden.style.maxHeight = "500px";
       this.$refs.hidden.style.paddingBottom = "10px";
     },

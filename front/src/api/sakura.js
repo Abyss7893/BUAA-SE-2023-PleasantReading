@@ -167,9 +167,7 @@ export function stopp() {
         child.parentNode.removeChild(child);
         window.cancelAnimationFrame(stop);
         staticx = false;
-    } else {
-        startSakura();
-    }
+    } 
 }
 
 
