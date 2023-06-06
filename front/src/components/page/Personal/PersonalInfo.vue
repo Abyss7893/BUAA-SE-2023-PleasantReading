@@ -12,6 +12,7 @@
         </div>
         <div class="data">
           <h3>{{ userbdata?.comments || 0 }}<br><span>评论</span></h3>
+          <h3>{{ userbdata?.collections || 0 }}<br><span>收藏</span></h3>
           <h3>{{ userbdata?.notes || 0 }}<br><span>笔记</span></h3>
           <h3>{{ userbdata?.marks || 0 }}<br><span>书签</span></h3>
         </div>
