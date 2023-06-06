@@ -18,7 +18,7 @@
     </div>
     <div class="left-navi" v-if="navishow">
       <li navi-id="1">
-        <a href="#">
+        <a href="/">
           <div class="navi-word">首页</div>
         </a>
       </li>
@@ -180,9 +180,7 @@
       </ul>
     </div>
     <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
-      style="--el-switch-on-color: #eb89c4" />
-
-    <div v-if="navishow" style="width: 100px; height: 10px"></div>
+      style="--el-switch-on-color: #f8b2b2" />
   </div>
 </template>
 
@@ -671,6 +669,13 @@ export default {
   font-weight: 300;
   cursor: pointer;
   padding: 0 12px;
+}
+
+.right-navi ul li>a .navi-word,
+.right-navi ul li>a .navi-word svg path,
+.left-navi a .navi-word {
+  color: #f5f5f5;
+  fill: #f5f5f5;
 }
 
 .right-navi ul li>a svg {
