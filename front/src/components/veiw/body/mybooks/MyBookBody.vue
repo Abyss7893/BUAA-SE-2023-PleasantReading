@@ -1,18 +1,19 @@
 <template>
   <head-and-foot>
-    <!-- <check-login></check-login> -->
-    <!-- <el-space direction="vertical" alignment="start" :size="30"> -->
     <div class="this-body">
       <div class="box-center">
         <el-divider />
         <div v-if="!this.$store.state.isLogin">
-          <el-empty description="未登录ovo" image="https://leeibo.sh1a.qingstor.com/unlogin.gif?expires=1686662939&signature=U/GicJ1CHLo56OLoHPNElO12k4uR2XDIPbfIVuq+xmA=&access_key_id=FEOPWMJLWZSOJNLWJHVS" image-size="200px" />
-          <div style="
-                margin: auto;
-                width: 400px;
-                margin-top: 30px;
-                align-items: center;
-              ">
+          <el-empty description="未登录ovo"
+            image="https://leeibo.sh1a.qingstor.com/unlogin.gif?expires=1686662939&signature=U/GicJ1CHLo56OLoHPNElO12k4uR2XDIPbfIVuq+xmA=&access_key_id=FEOPWMJLWZSOJNLWJHVS"
+            image-size="200px" />
+          <div
+            style="
+                                                                                                                                    margin: auto;
+                                                                                                                                    width: 400px;
+                                                                                                                                    margin-top: 30px;
+                                                                                                                                    align-items: center;
+                                                                                                                                  ">
             <div class="btn twinkle" @click="
               () => {
                 this.$store.commit('showlogin');
@@ -23,30 +24,40 @@
           </div>
         </div>
         <div v-else>
-          <div v-if="mybooks.length === 0">
-            <el-empty description="暂无书籍" :image="require('assets/imgs/book_null.png')" image-size="300px" />
-          </div>
-          <div v-else>
-            <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
-              <el-col v-for="o in colsize" :key="(ro - 1) * colsize + o - 1" :span="24 / colsize">
-                <book-card :cover="mybooks[(ro - 1) * colsize + o - 1].cover"
-                  :name="mybooks[(ro - 1) * colsize + o - 1].name"
-                  :bookid="mybooks[(ro - 1) * colsize + o - 1].bookid"></book-card>
-              </el-col>
-              <el-divider />
-            </el-row>
-            <div v-if="mybooks.length - (rownum - 1) * colsize > 0">
-              <el-row gutter="60">
-                <el-col v-for="o in mybooks.length - (rownum - 1) * colsize" :key="(rownum - 1) * colsize + o - 1"
-                  :span="24 / colsize">
-                  <book-card :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
-                    :name="mybooks[(rownum - 1) * colsize + o - 1].name"
-                    :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid" />
-                </el-col>
-                <el-divider />
-              </el-row>
-            </div>
-          </div>
+          <el-skeleton :loading="loading" animated style="width: 1200px" :count="14">
+            <template #template>
+              <div style="float: left;">
+                <el-skeleton-item variant="image" style="width: 140px; height: 170px; margin: 0 15px 0 15px;" />
+                <el-skeleton-item variant="text" style="width: 140px; margin: 15px 0 15px 16px;" />
+              </div>
+            </template>
+            <template #default>
+              <div v-if="mybooks.length === 0">
+                <el-empty description="暂无书籍" :image="require('assets/imgs/book_null.png')" image-size="300px" />
+              </div>
+              <div v-else>
+                <el-row v-for="ro in rownum - 1" :key="ro" gutter="60">
+                  <el-col v-for="o in colsize" :key="(ro - 1) * colsize + o - 1" :span="24 / colsize">
+                    <book-card :cover="mybooks[(ro - 1) * colsize + o - 1].cover"
+                      :name="mybooks[(ro - 1) * colsize + o - 1].name"
+                      :bookid="mybooks[(ro - 1) * colsize + o - 1].bookid"></book-card>
+                  </el-col>
+                  <el-divider />
+                </el-row>
+                <div v-if="mybooks.length - (rownum - 1) * colsize > 0">
+                  <el-row gutter="60">
+                    <el-col v-for="o in mybooks.length - (rownum - 1) * colsize" :key="(rownum - 1) * colsize + o - 1"
+                      :span="24 / colsize">
+                      <book-card :cover="mybooks[(rownum - 1) * colsize + o - 1].cover"
+                        :name="mybooks[(rownum - 1) * colsize + o - 1].name"
+                        :bookid="mybooks[(rownum - 1) * colsize + o - 1].bookid" />
+                    </el-col>
+                    <el-divider />
+                  </el-row>
+                </div>
+              </div>
+            </template>
+          </el-skeleton>
         </div>
       </div>
     </div>
@@ -68,6 +79,7 @@ export default {
       mybooks: [],
       rownum: 1,
       colsize: 6,
+      loading: true,
     };
   },
   methods: {},
@@ -87,6 +99,7 @@ export default {
         } catch (e) {
           console.log(e);
         }
+        this.loading = false
       });
     });
   },

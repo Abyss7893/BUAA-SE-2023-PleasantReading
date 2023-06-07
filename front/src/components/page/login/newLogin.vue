@@ -1,20 +1,20 @@
 <template>
   <body>
     <div class="forgetPwd">
-      <el-dialog title="重置密码" v-if="showForget" :show-close="false" v-model="showForget" :before-close="handleClose" :close-on-click-modal="false"
-        :close-on-press-escape="false" :append-to-body="false" style="
-            border-radius: 25px;
-            border: 1px solid black;
-            backdrop-filter: blur(5px);
-            box-shadow: -5px -5px 10px rgb(39, 65, 65), 5px 5px 20px aqua;
-            animation: animate 5s linear infinite;
-          ">
-        <forget-dialog @submit="showForgetDialog" @cancle="showForget=false"/>
+      <el-dialog title="重置密码" v-if="showForget" :show-close="false" v-model="showForget" :before-close="handleClose"
+        :close-on-click-modal="false" :close-on-press-escape="false" :append-to-body="false" style="
+                border-radius: 25px;
+                border: 1px solid black;
+                backdrop-filter: blur(5px);
+                box-shadow: -5px -5px 10px rgb(39, 65, 65), 5px 5px 20px aqua;
+                animation: animate 5s linear infinite;
+              ">
+        <forget-dialog @submit="showForgetDialog" @cancle="showForget = false" />
       </el-dialog>
     </div>
-    
+
     <div class="main" id="mycard" ref="main">
-      
+
       <div class="container a-container" id="a-container">
         <form class="form" id="b-form" method="" action="">
           <h2 class="form_title title">登录账号</h2>
@@ -40,7 +40,7 @@
           </div>
 
           <input class="form__input" type="text" placeholder="username" v-model="userLoginForm.username">
-          <input class="form__input" type="password" placeholder="Password" v-model="userLoginForm.password" >
+          <input class="form__input" type="password" placeholder="Password" v-model="userLoginForm.password">
           <a class="form__link" @click="showForget = true" style="cursor: pointer;">忘记密码?</a>
           <button class="form__button button submit" @click.prevent="userList">登录</button>
         </form>
@@ -111,7 +111,7 @@ import { ElMessage } from 'element-plus'
 
 export default {
   name: 'newLoginComponent',
-  components:{forgetDialog},
+  components: { forgetDialog },
   emits: ['submit'],
   setup(_, { emit }) {
     const store = useStore();
@@ -125,7 +125,7 @@ export default {
     const aContainer = ref(null)
     const bContainer = ref(null)
     const allButtons = ref([])
-    const showForget=ref(false)
+    const showForget = ref(false)
     const main = ref(null)
     const userLoginForm = reactive({
       username: '',
@@ -238,7 +238,6 @@ export default {
               .then((response) => {
                 // 从响应数据中获取用户信息，并保存到 vuex 的 userInfo 中
                 store.commit("updateUserInfo", response.data);
-
               })
               .catch(() => {
                 // 处理错误情况
@@ -265,8 +264,6 @@ export default {
           })
           .catch(() => {
             // 处理登录错误
-
-            userLoginForm.password = userLoginForm.username = "";
             ElMessage({
               message: '账号或密码错误',
               grouping: true,
@@ -393,8 +390,6 @@ export default {
 }
 </script>
 <style scoped>
-
-
 /* Generic */
 body {
   width: 50%;
@@ -707,9 +702,11 @@ body {
     width: 500px;
   }
 }
-.forgetPwd .el-dialog__headerbtn{
-  left: 0% !important; 
+
+.forgetPwd .el-dialog__headerbtn {
+  left: 0% !important;
 }
+
 .disable {
   pointer-events: none;
 }

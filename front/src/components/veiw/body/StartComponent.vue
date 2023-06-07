@@ -12,12 +12,12 @@
         marginTop: showComponent ? '' : 'calc(-106vh )',
       }" ref="startComponentRef">
         <div style="
-              width: 30%;
-              min-height: 16%;
-              margin-top: 3%;
-              align-items: center;
-              position: relative;
-            ">
+                      width: 30%;
+                      min-height: 16%;
+                      margin-top: 3%;
+                      align-items: center;
+                      position: relative;
+                    ">
           <img src="../../../assets/logo-yixinyuedu.png" class="start-image" style="position: relative; margin: auto" />
         </div>
         <div style="height: 15%">
@@ -84,6 +84,9 @@ export default {
         this.$emit("hide");
         setTimeout(() => {
           this.hidethis = false;
+          setTimeout(() => {
+            this.$router.push('/allbook')
+          }, 3000)
         }, 500);
       }, 50);
     },

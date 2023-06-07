@@ -87,7 +87,7 @@ export default {
 <style lang="scss" scoped>
 .left-navi div.left {
   animation: fadeIn .3s;
-  top: 60px;
+  top: 54px;
   position: absolute;
   background: white;
   width: 240px;
