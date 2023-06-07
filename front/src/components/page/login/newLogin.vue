@@ -3,12 +3,12 @@
     <div class="forgetPwd">
       <el-dialog title="重置密码" v-if="showForget" :show-close="false" v-model="showForget" :before-close="handleClose"
         :close-on-click-modal="false" :close-on-press-escape="false" :append-to-body="false" style="
-                border-radius: 25px;
-                border: 1px solid black;
-                backdrop-filter: blur(5px);
-                box-shadow: -5px -5px 10px rgb(39, 65, 65), 5px 5px 20px aqua;
-                animation: animate 5s linear infinite;
-              ">
+                  border-radius: 25px;
+                  border: 1px solid black;
+                  backdrop-filter: blur(5px);
+                  box-shadow: -5px -5px 10px rgb(39, 65, 65), 5px 5px 20px aqua;
+                  animation: animate 5s linear infinite;
+                ">
         <forget-dialog @submit="showForgetDialog" @cancle="showForget = false" />
       </el-dialog>
     </div>
@@ -390,6 +390,15 @@ export default {
 }
 </script>
 <style scoped>
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
 /* Generic */
 body {
   width: 50%;
@@ -426,7 +435,7 @@ body {
   margin-bottom: 10px;
 }
 
-.main .container {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
