@@ -247,7 +247,6 @@ export default {
 .logo {
   cursor: pointer;
   position: relative;
-  z-index: 150;
   height: 100px;
 }
 

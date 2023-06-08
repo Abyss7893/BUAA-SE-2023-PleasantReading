@@ -15,4 +15,16 @@ module.exports = defineConfig({
       // .set("base", resolve("baseConfig"))
       .set("public", resolve("public"));
   },
+  configureWebpack: {
+    externals: {
+      vue: 'Vue',
+      'vue-router': 'VueRouter',
+      vuex: 'Vuex',
+      axios: 'axios',
+      ElementPlus: "element-plus",
+      _store: "store2",
+      VueGoodTablePlugin: 'vue-good-table',
+      hovercss: 'hover.css',
+    },
+  },
 })

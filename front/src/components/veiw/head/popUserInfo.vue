@@ -68,23 +68,33 @@
       </li>
     </div>
   </div>
-  <el-dialog v-model="pay" title="充值VIP" :destroy-on-close="true" width="900px">
-    <PayComponent />
-  </el-dialog>
 </template>
 
 <script>
-import PayComponent from '@/components/page/Personal/PayComponent.vue';
 import RecommendService from './RecommendService.vue';
 // import { getBriefInfo } from '@/api/api'
 export default {
   name: "popUserInfo",
-  components: { PayComponent, RecommendService, },
+  props: {
+    payshow: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  created() {
+    this.pay = this.payshow
+  },
+  components: { RecommendService, },
   data() {
     return {
       pay: false,
       recommendService: false,
     };
+  },
+  watch: {
+    pay() {
+      this.$emit("changePay")
+    }
   },
   computed: {
     briefdata() {
@@ -102,7 +112,7 @@ export default {
         this.$router.push('/');
     },
     openPay() {
-      this.pay = true
+      this.pay = !this.pay
     },
   },
 };

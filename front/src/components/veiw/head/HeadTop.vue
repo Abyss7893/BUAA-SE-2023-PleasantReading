@@ -133,7 +133,7 @@
               </router-link>
             </div>
             <div :style="{ opacity: popShow }" class="popuserinfo hidden" ref="popuserinfo">
-              <popUserInfo />
+              <popUserInfo :payshow="pay" @changePay="pay = !pay" />
             </div>
           </div>
         </template>
@@ -182,14 +182,17 @@
     </div>
     <HeartSwitch v-if="navishow" :switch="value2" @swithChange="swithChange"></HeartSwitch>
   <!-- <el-switch v-if="navishow" v-model="value2" class="ml-2" @click="changeSakura"
-                                                                      style="--el-switch-on-color: #f8b2b2" /> -->
+                                                                                  style="--el-switch-on-color: #f8b2b2" /> -->
+    <el-dialog v-model="pay" title="充值VIP" :destroy-on-close="true" width="900px" style="z-index: 12;">
+      <PayComponent />
+    </el-dialog>
   </div>
 </template>
 
 
 <script>
 import "css/head/headtop.css";
-
+import PayComponent from '@/components/page/Personal/PayComponent.vue';
 import newLogin from "@/components/page/login/newLogin.vue";
 import { mapGetters } from "vuex";
 import { ElAvatar, ElDialog } from "element-plus";
@@ -207,6 +210,7 @@ export default {
     RecommendCard,
     BookRank,
     HeartSwitch,
+    PayComponent,
   },
   props: {
     navishow: {
@@ -224,6 +228,7 @@ export default {
   },
   data() {
     return {
+      pay: false,
       value2: this.$store.state.showSakura,
       searchHots: [
         "亚丁的女神",

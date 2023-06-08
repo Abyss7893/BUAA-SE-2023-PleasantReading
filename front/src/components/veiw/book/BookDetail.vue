@@ -351,7 +351,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 1200px;
-  min-height: 100vh;
+  min-height: 70vh;
   border-left: solid 1px rgba(255, 0, 0, 0.13);
   border-right: solid 1px rgba(255, 0, 0, 0.13);
   // background-color: rgba(99, 93, 93, 0.039);

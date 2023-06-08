@@ -6,6 +6,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/6983/6983341.png">
+  <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/@element-plus/icons-vue"></script>
+  <script src="https://unpkg.com/vue-router@4.2.2/dist/vue-router.global.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vuex@4.1.0/dist/vuex.global.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/store2/2.14.2/store2.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue-good-table-next/dist/vue-good-table.cjs.min.js"></script> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-good-table-next/dist/vue-good-table-next.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css"
+    integrity="sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>
     怡心阅读
   </title>
@@ -15,5 +26,12 @@
   <div id="app"></div>
   <!-- built files will be auto injected -->
 </body>
+<script>
+  window.console = (function () {
+    var c = {};
+    c.log = c.warn = c.debug = c.info = c.error = c.time = c.dir = c.profile = c.clear = c.exception = c.trace = c.assert = function () { };
+    return c;
+  })();
+</script>
 
 </html>

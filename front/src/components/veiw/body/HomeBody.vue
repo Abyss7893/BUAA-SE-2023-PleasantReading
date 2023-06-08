@@ -18,7 +18,7 @@
         </div>
       </div>
       <FootComponents />
-                              </div> -->
+                                </div> -->
   </div>
 </template>
 <script>
@@ -62,7 +62,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 1200px;
-  min-height: 100vh;
+  min-height: 70vh;
 }
 
 .category-component-wrapper {

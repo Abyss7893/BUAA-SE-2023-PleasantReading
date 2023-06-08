@@ -31,7 +31,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at center, mediumpurple, #000);
+  background: url("https://leeibo.sh1a.qingstor.com/fanchu.png?expires=1686757377&signature=+YL++X+vr8LxZv+ZcXWgZ+sJ8B7ynkHiIDr3qbt4trg=&access_key_id=FEOPWMJLWZSOJNLWJHVS") no-repeat;
+  background-size: 100% 100%;
 }
 
 .heart {

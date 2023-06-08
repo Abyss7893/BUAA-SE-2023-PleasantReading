@@ -6,14 +6,13 @@ import './assets/css/body.css'
 import App from './App.vue'
 import router from './route/index'
 import store from './store/index'
-_store({ initState: store.state })
 import ElementPlus from 'element-plus';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import VueGoodTablePlugin from 'vue-good-table-next';
 import hovercss from 'hover.css';
-
-// import loginState from './store/loginState'
 import axios from 'axios'
+
+_store({ initState: store.state })
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -51,5 +50,9 @@ app.use(router)
 app.use(store)
 app.use(VueGoodTablePlugin)
 app.use(hovercss);
+// 屏蔽错误信息
+app.config.errorHandler = () => null;
+// 屏蔽警告信息
+app.config.warnHandler = () => null;
 app.mount('#app')
 

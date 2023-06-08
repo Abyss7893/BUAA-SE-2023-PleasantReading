@@ -14,38 +14,38 @@
       </div>
     </div>
   </div>
-  <div class="author-content" v-if="this.books.length != 0">
-    <h2>全部作品</h2>
-    <el-skeleton animated :loading="loading" :count="2">
-      <template #template>
-        <div class="result-list">
-          <li>
-            <el-skeleton-item variant="image" style="width: 120px; height: 160px; float: left;" />
-            <div style="width: 100%;height: 24px;">
-              <el-skeleton-item variant="h3" style="width: 64px; margin-left: 16px;float: left;" />
-            </div>
-            <div style="width: 600px;float: left;">
-              <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;width: 160px;" />
-              <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 240px;" />
-              <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 360px;" />
-              <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 480px;" />
-              <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 600px;" />
-              <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 720px;" />
-            </div>
-          </li>
-        </div>
-      </template>
-      <template #default>
+  <el-skeleton animated :loading="loading" :count="2">
+    <template #template>
+      <div class="result-list">
+        <li>
+          <el-skeleton-item variant="image" style="width: 120px; height: 160px; float: left;" />
+          <div style="width: 100%;height: 24px;">
+            <el-skeleton-item variant="h3" style="width: 64px; margin-left: 16px;float: left;" />
+          </div>
+          <div style="width: 600px;float: left;">
+            <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;width: 160px;" />
+            <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 240px;" />
+            <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 360px;" />
+            <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 480px;" />
+            <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 600px;" />
+            <el-skeleton-item variant="text" style="margin:8px 0 8px 16px;float: left;width: 720px;" />
+          </div>
+        </li>
+      </div>
+    </template>
+    <template #default>
+      <div class="author-content" v-if="this.books.length != 0">
+        <h2>全部作品</h2>
         <li v-for="(book, idx) in this.books" :key="idx">
           <BookInfoCompnent :bookinfo="book" />
         </li>
-        <div class="line"></div>
-        <div class="author-content-null" v-if="this.books.length == 0">
-          <el-empty description="该作者暂无作品哦~" :image="require('assets/imgs/book_null.png')" image-size="300px" />
-        </div>
-      </template>
-    </el-skeleton>
-  </div>
+      </div>
+      <div class="line"></div>
+      <div class="author-content-null" v-if="this.books.length == 0">
+        <el-empty description="该作者暂无作品哦~" :image="require('assets/imgs/book_null.png')" image-size="300px" />
+      </div>
+    </template>
+  </el-skeleton>
 </template>
 
 <script>
@@ -96,7 +96,9 @@ export default {
             grouping: true,
             type: 'error',
           })
+          this.loading = false
         }
+        this.loading = false
       })
     }
   },
