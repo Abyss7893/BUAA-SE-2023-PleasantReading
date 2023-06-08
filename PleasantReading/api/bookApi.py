@@ -351,11 +351,11 @@ def submitComments(request, bookid, chapter):
 
 def getScore(request, bookid):
     if not notAnonymous(request):
-        return JsonResponse({'message': 'login please'}, status=401)
+        return JsonResponse({'message': 'success', 'score': 0})
     userid = getUsername(request)
     ret = Score.objects.filter(userID=userid, bookID=bookid)
     if ret.count() == 0:
-        return JsonResponse({'message': 'no score'}, status=404)
+        return JsonResponse({'message': 'success', 'score': 0})
     else:
         return JsonResponse({'message': 'success', 'score': ret.first().score})
 
