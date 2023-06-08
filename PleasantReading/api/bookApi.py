@@ -370,13 +370,19 @@ def putScore(request, bookid, score):
     ret = Score.objects.filter(userID=userid, bookID=bookid)
     if ret.count() > 0:
         book = BookBasicInfo.objects.get(bookID=bookid)
-        book.totScore = float(book.totScore) + score - float(ret.first().score)
+        print(book.totScore)
+        book.totScore = float(book.totScore) - float(ret.first().score)
+        book.rateNumber = book.rateNumber - 1
+        print(book.totScore)
         book.save()
+        print(book.totScore)
         print(ret.first().score)
         record = ret.first()
         record.score = score
         record.save()
         print(ret.first().score, score)
+        print(book.totScore)
+        print(BookBasicInfo.objects.get(bookID=bookid).totScore)
     else:
         Score.objects.create(userID=userid, bookID=bookid, score=score)
     return JsonResponse({'message': 'success'})
